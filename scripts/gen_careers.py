@@ -1,0 +1,297 @@
+#!/usr/bin/env python3
+"""Generate expanded career_paths.json with 500+ players."""
+import json
+
+players = []
+
+# ============================================================
+# LEGENDARY TIER (~50 players)
+# ============================================================
+legendary = [
+    {"id":1,"name":"Lionel Messi","nationality":"Argentina","position":"Forward","career":[
+        {"club":"FC Barcelona","from":2004,"to":2021},{"club":"Paris Saint-Germain","from":2021,"to":2023},{"club":"Inter Miami CF","from":2023,"to":2025}]},
+    {"id":2,"name":"Cristiano Ronaldo","nationality":"Portugal","position":"Forward","career":[
+        {"club":"Sporting CP","from":2002,"to":2003},{"club":"Manchester United","from":2003,"to":2009},{"club":"Real Madrid","from":2009,"to":2018},{"club":"Juventus","from":2018,"to":2021},{"club":"Manchester United","from":2021,"to":2022},{"club":"Al-Nassr","from":2023,"to":2025}]},
+    {"id":3,"name":"Zinedine Zidane","nationality":"France","position":"Midfielder","career":[
+        {"club":"AS Cannes","from":1989,"to":1992},{"club":"Bordeaux","from":1992,"to":1996},{"club":"Juventus","from":1996,"to":2001},{"club":"Real Madrid","from":2001,"to":2006}]},
+    {"id":4,"name":"Ronaldinho","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Gremio","from":1998,"to":2001},{"club":"Paris Saint-Germain","from":2001,"to":2003},{"club":"FC Barcelona","from":2003,"to":2008},{"club":"AC Milan","from":2008,"to":2010},{"club":"Flamengo","from":2011,"to":2012},{"club":"Atletico Mineiro","from":2012,"to":2014}]},
+    {"id":5,"name":"David Beckham","nationality":"England","position":"Midfielder","career":[
+        {"club":"Manchester United","from":1993,"to":2003},{"club":"Real Madrid","from":2003,"to":2007},{"club":"LA Galaxy","from":2007,"to":2012},{"club":"AC Milan","from":2009,"to":2010},{"club":"Paris Saint-Germain","from":2013,"to":2013}]},
+    {"id":6,"name":"Thierry Henry","nationality":"France","position":"Forward","career":[
+        {"club":"AS Monaco","from":1994,"to":1999},{"club":"Juventus","from":1999,"to":1999},{"club":"Arsenal","from":1999,"to":2007},{"club":"FC Barcelona","from":2007,"to":2010},{"club":"New York Red Bulls","from":2010,"to":2014}]},
+    {"id":7,"name":"Paolo Maldini","nationality":"Italy","position":"Defender","career":[
+        {"club":"AC Milan","from":1985,"to":2009}]},
+    {"id":8,"name":"Ronaldo Nazario","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Cruzeiro","from":1993,"to":1994},{"club":"PSV Eindhoven","from":1994,"to":1996},{"club":"FC Barcelona","from":1996,"to":1997},{"club":"Inter Milan","from":1997,"to":2002},{"club":"Real Madrid","from":2002,"to":2007},{"club":"AC Milan","from":2007,"to":2008},{"club":"Corinthians","from":2009,"to":2011}]},
+    {"id":9,"name":"Neymar","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Santos","from":2009,"to":2013},{"club":"FC Barcelona","from":2013,"to":2017},{"club":"Paris Saint-Germain","from":2017,"to":2023},{"club":"Al-Hilal","from":2023,"to":2025}]},
+    {"id":10,"name":"Kaka","nationality":"Brazil","position":"Midfielder","career":[
+        {"club":"Sao Paulo","from":2001,"to":2003},{"club":"AC Milan","from":2003,"to":2009},{"club":"Real Madrid","from":2009,"to":2013},{"club":"AC Milan","from":2013,"to":2014},{"club":"Orlando City","from":2015,"to":2017}]},
+    {"id":11,"name":"Andres Iniesta","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"FC Barcelona","from":2002,"to":2018},{"club":"Vissel Kobe","from":2018,"to":2023}]},
+    {"id":12,"name":"Wayne Rooney","nationality":"England","position":"Forward","career":[
+        {"club":"Everton","from":2002,"to":2004},{"club":"Manchester United","from":2004,"to":2017},{"club":"Everton","from":2017,"to":2018},{"club":"DC United","from":2018,"to":2019},{"club":"Derby County","from":2020,"to":2021}]},
+    {"id":13,"name":"Xavi Hernandez","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"FC Barcelona","from":1998,"to":2015},{"club":"Al Sadd","from":2015,"to":2019}]},
+    {"id":14,"name":"Zlatan Ibrahimovic","nationality":"Sweden","position":"Forward","career":[
+        {"club":"Malmo FF","from":1999,"to":2001},{"club":"Ajax","from":2001,"to":2004},{"club":"Juventus","from":2004,"to":2006},{"club":"Inter Milan","from":2006,"to":2009},{"club":"FC Barcelona","from":2009,"to":2010},{"club":"AC Milan","from":2010,"to":2012},{"club":"Paris Saint-Germain","from":2012,"to":2016},{"club":"Manchester United","from":2016,"to":2018},{"club":"LA Galaxy","from":2018,"to":2019},{"club":"AC Milan","from":2020,"to":2023}]},
+    {"id":15,"name":"Frank Lampard","nationality":"England","position":"Midfielder","career":[
+        {"club":"West Ham United","from":1996,"to":2001},{"club":"Chelsea","from":2001,"to":2014},{"club":"Manchester City","from":2014,"to":2015},{"club":"New York City FC","from":2015,"to":2016}]},
+    {"id":16,"name":"Steven Gerrard","nationality":"England","position":"Midfielder","career":[
+        {"club":"Liverpool","from":1998,"to":2015},{"club":"LA Galaxy","from":2015,"to":2016}]},
+    {"id":17,"name":"Andrea Pirlo","nationality":"Italy","position":"Midfielder","career":[
+        {"club":"Brescia","from":1995,"to":1998},{"club":"Inter Milan","from":1998,"to":2001},{"club":"Brescia","from":1999,"to":2001},{"club":"AC Milan","from":2001,"to":2011},{"club":"Juventus","from":2011,"to":2015},{"club":"New York City FC","from":2015,"to":2017}]},
+    {"id":18,"name":"Gianluigi Buffon","nationality":"Italy","position":"Goalkeeper","career":[
+        {"club":"Parma","from":1995,"to":2001},{"club":"Juventus","from":2001,"to":2018},{"club":"Paris Saint-Germain","from":2018,"to":2019},{"club":"Juventus","from":2019,"to":2021},{"club":"Parma","from":2021,"to":2023}]},
+    {"id":19,"name":"Diego Maradona","nationality":"Argentina","position":"Forward","career":[
+        {"club":"Argentinos Juniors","from":1976,"to":1981},{"club":"Boca Juniors","from":1981,"to":1982},{"club":"FC Barcelona","from":1982,"to":1984},{"club":"Napoli","from":1984,"to":1991},{"club":"Sevilla","from":1992,"to":1993},{"club":"Newell's Old Boys","from":1993,"to":1994},{"club":"Boca Juniors","from":1995,"to":1997}]},
+    {"id":20,"name":"Pele","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Santos","from":1956,"to":1974},{"club":"New York Cosmos","from":1975,"to":1977}]},
+    {"id":21,"name":"Johan Cruyff","nationality":"Netherlands","position":"Forward","career":[
+        {"club":"Ajax","from":1964,"to":1973},{"club":"FC Barcelona","from":1973,"to":1978},{"club":"LA Aztecs","from":1979,"to":1980},{"club":"Washington Diplomats","from":1980,"to":1981},{"club":"Levante","from":1981,"to":1981},{"club":"Ajax","from":1981,"to":1983},{"club":"Feyenoord","from":1983,"to":1984}]},
+    {"id":22,"name":"Franz Beckenbauer","nationality":"Germany","position":"Defender","career":[
+        {"club":"Bayern Munich","from":1964,"to":1977},{"club":"New York Cosmos","from":1977,"to":1980},{"club":"Hamburg","from":1980,"to":1982},{"club":"New York Cosmos","from":1983,"to":1984}]},
+    {"id":23,"name":"Marco van Basten","nationality":"Netherlands","position":"Forward","career":[
+        {"club":"Ajax","from":1982,"to":1987},{"club":"AC Milan","from":1987,"to":1995}]},
+    {"id":24,"name":"Roberto Baggio","nationality":"Italy","position":"Forward","career":[
+        {"club":"Vicenza","from":1982,"to":1985},{"club":"Fiorentina","from":1985,"to":1990},{"club":"Juventus","from":1990,"to":1995},{"club":"AC Milan","from":1995,"to":1997},{"club":"Bologna","from":1997,"to":1998},{"club":"Inter Milan","from":1998,"to":2000},{"club":"Brescia","from":2000,"to":2004}]},
+    {"id":25,"name":"George Best","nationality":"Northern Ireland","position":"Forward","career":[
+        {"club":"Manchester United","from":1963,"to":1974},{"club":"Stockport County","from":1975,"to":1975},{"club":"LA Aztecs","from":1976,"to":1978},{"club":"Fulham","from":1976,"to":1977},{"club":"Hibernian","from":1979,"to":1980}]},
+    {"id":26,"name":"Michel Platini","nationality":"France","position":"Midfielder","career":[
+        {"club":"Nancy","from":1972,"to":1979},{"club":"Saint-Etienne","from":1979,"to":1982},{"club":"Juventus","from":1982,"to":1987}]},
+    {"id":27,"name":"Eusebio","nationality":"Portugal","position":"Forward","career":[
+        {"club":"Benfica","from":1961,"to":1975},{"club":"Boston Minutemen","from":1975,"to":1976},{"club":"Toronto Metros","from":1976,"to":1977},{"club":"Las Vegas Quicksilvers","from":1977,"to":1978}]},
+    {"id":28,"name":"Alfredo Di Stefano","nationality":"Argentina","position":"Forward","career":[
+        {"club":"River Plate","from":1945,"to":1949},{"club":"Millonarios","from":1949,"to":1953},{"club":"Real Madrid","from":1953,"to":1964},{"club":"Espanyol","from":1964,"to":1966}]},
+    {"id":29,"name":"Rivaldo","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Mogi Mirim","from":1991,"to":1992},{"club":"Corinthians","from":1993,"to":1994},{"club":"Palmeiras","from":1994,"to":1996},{"club":"Deportivo La Coruna","from":1996,"to":1997},{"club":"FC Barcelona","from":1997,"to":2002},{"club":"AC Milan","from":2002,"to":2004},{"club":"Olympiacos","from":2004,"to":2007}]},
+    {"id":30,"name":"Romario","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Vasco da Gama","from":1985,"to":1988},{"club":"PSV Eindhoven","from":1988,"to":1993},{"club":"FC Barcelona","from":1993,"to":1995},{"club":"Flamengo","from":1995,"to":1998},{"club":"Valencia","from":1996,"to":1997},{"club":"Fluminense","from":2002,"to":2004},{"club":"Vasco da Gama","from":2005,"to":2008}]},
+    {"id":31,"name":"Ronaldo de Assis Moreira","nationality":"Brazil","position":"Midfielder","career":[
+        {"club":"Sao Paulo","from":1993,"to":1994},{"club":"PSV Eindhoven","from":1994,"to":1996},{"club":"FC Barcelona","from":1996,"to":1997},{"club":"Inter Milan","from":1997,"to":2002}]},
+    {"id":32,"name":"Dennis Bergkamp","nationality":"Netherlands","position":"Forward","career":[
+        {"club":"Ajax","from":1986,"to":1993},{"club":"Inter Milan","from":1993,"to":1995},{"club":"Arsenal","from":1995,"to":2006}]},
+    {"id":33,"name":"Ruud Gullit","nationality":"Netherlands","position":"Midfielder","career":[
+        {"club":"HFC Haarlem","from":1979,"to":1982},{"club":"Feyenoord","from":1982,"to":1985},{"club":"PSV Eindhoven","from":1985,"to":1987},{"club":"AC Milan","from":1987,"to":1993},{"club":"Sampdoria","from":1993,"to":1994},{"club":"AC Milan","from":1994,"to":1995},{"club":"Sampdoria","from":1995,"to":1996},{"club":"Chelsea","from":1996,"to":1998}]},
+    {"id":34,"name":"Patrick Vieira","nationality":"France","position":"Midfielder","career":[
+        {"club":"AS Cannes","from":1993,"to":1995},{"club":"AC Milan","from":1995,"to":1996},{"club":"Arsenal","from":1996,"to":2005},{"club":"Juventus","from":2005,"to":2006},{"club":"Inter Milan","from":2006,"to":2010},{"club":"Manchester City","from":2010,"to":2011}]},
+    {"id":35,"name":"Roy Keane","nationality":"Ireland","position":"Midfielder","career":[
+        {"club":"Cobh Ramblers","from":1989,"to":1990},{"club":"Nottingham Forest","from":1990,"to":1993},{"club":"Manchester United","from":1993,"to":2005},{"club":"Celtic","from":2006,"to":2006}]},
+    {"id":36,"name":"Eric Cantona","nationality":"France","position":"Forward","career":[
+        {"club":"Auxerre","from":1983,"to":1988},{"club":"Martigues","from":1988,"to":1989},{"club":"Marseille","from":1989,"to":1991},{"club":"Nimes","from":1991,"to":1992},{"club":"Leeds United","from":1992,"to":1992},{"club":"Manchester United","from":1992,"to":1997}]},
+    {"id":37,"name":"Samuel Eto'o","nationality":"Cameroon","position":"Forward","career":[
+        {"club":"Real Madrid","from":1997,"to":2000},{"club":"Mallorca","from":2000,"to":2004},{"club":"FC Barcelona","from":2004,"to":2009},{"club":"Inter Milan","from":2009,"to":2011},{"club":"Anzhi Makhachkala","from":2011,"to":2013},{"club":"Chelsea","from":2013,"to":2014},{"club":"Everton","from":2014,"to":2015},{"club":"Antalyaspor","from":2015,"to":2018}]},
+    {"id":38,"name":"Didier Drogba","nationality":"Ivory Coast","position":"Forward","career":[
+        {"club":"Le Mans","from":2001,"to":2002},{"club":"Guingamp","from":2002,"to":2003},{"club":"Marseille","from":2003,"to":2004},{"club":"Chelsea","from":2004,"to":2012},{"club":"Shanghai Shenhua","from":2012,"to":2013},{"club":"Galatasaray","from":2013,"to":2014},{"club":"Chelsea","from":2014,"to":2015},{"club":"Montreal Impact","from":2015,"to":2016},{"club":"Phoenix Rising","from":2017,"to":2018}]},
+    {"id":39,"name":"Gheorghe Hagi","nationality":"Romania","position":"Midfielder","career":[
+        {"club":"Sportul Studentesc","from":1982,"to":1987},{"club":"Steaua Bucharest","from":1987,"to":1990},{"club":"Real Madrid","from":1990,"to":1992},{"club":"Brescia","from":1992,"to":1994},{"club":"FC Barcelona","from":1994,"to":1996},{"club":"Galatasaray","from":1996,"to":2001}]},
+    {"id":40,"name":"Hristo Stoichkov","nationality":"Bulgaria","position":"Forward","career":[
+        {"club":"CSKA Sofia","from":1985,"to":1990},{"club":"FC Barcelona","from":1990,"to":1995},{"club":"Parma","from":1995,"to":1996},{"club":"FC Barcelona","from":1996,"to":1998},{"club":"Al-Nassr","from":1998,"to":1999},{"club":"CSKA Sofia","from":1999,"to":1999},{"club":"DC United","from":2003,"to":2003}]},
+    {"id":41,"name":"George Weah","nationality":"Liberia","position":"Forward","career":[
+        {"club":"Tonnerre Yaounde","from":1986,"to":1988},{"club":"AS Monaco","from":1988,"to":1992},{"club":"Paris Saint-Germain","from":1992,"to":1995},{"club":"AC Milan","from":1995,"to":2000},{"club":"Chelsea","from":2000,"to":2000},{"club":"Manchester City","from":2000,"to":2001},{"club":"Marseille","from":2001,"to":2002}]},
+    {"id":42,"name":"Alessandro Del Piero","nationality":"Italy","position":"Forward","career":[
+        {"club":"Padova","from":1991,"to":1993},{"club":"Juventus","from":1993,"to":2012},{"club":"Sydney FC","from":2012,"to":2014},{"club":"Delhi Dynamos","from":2014,"to":2015}]},
+    {"id":43,"name":"Francesco Totti","nationality":"Italy","position":"Forward","career":[
+        {"club":"Roma","from":1993,"to":2017}]},
+    {"id":44,"name":"Raul Gonzalez","nationality":"Spain","position":"Forward","career":[
+        {"club":"Real Madrid","from":1994,"to":2010},{"club":"Schalke 04","from":2010,"to":2012},{"club":"Al Sadd","from":2012,"to":2014},{"club":"New York Cosmos","from":2014,"to":2015}]},
+    {"id":45,"name":"Michael Owen","nationality":"England","position":"Forward","career":[
+        {"club":"Liverpool","from":1996,"to":2004},{"club":"Real Madrid","from":2004,"to":2005},{"club":"Newcastle United","from":2005,"to":2009},{"club":"Manchester United","from":2009,"to":2012},{"club":"Stoke City","from":2012,"to":2013}]},
+    {"id":46,"name":"Lev Yashin","nationality":"Soviet Union","position":"Goalkeeper","career":[
+        {"club":"Dynamo Moscow","from":1950,"to":1970}]},
+    {"id":47,"name":"Franco Baresi","nationality":"Italy","position":"Defender","career":[
+        {"club":"AC Milan","from":1978,"to":1997}]},
+    {"id":48,"name":"Cafu","nationality":"Brazil","position":"Defender","career":[
+        {"club":"Sao Paulo","from":1989,"to":1994},{"club":"Real Zaragoza","from":1994,"to":1995},{"club":"Palmeiras","from":1995,"to":1997},{"club":"Roma","from":1997,"to":2003},{"club":"AC Milan","from":2003,"to":2008}]},
+    {"id":49,"name":"Roberto Carlos","nationality":"Brazil","position":"Defender","career":[
+        {"club":"Palmeiras","from":1991,"to":1995},{"club":"Inter Milan","from":1995,"to":1996},{"club":"Real Madrid","from":1996,"to":2007},{"club":"Fenerbahce","from":2007,"to":2009},{"club":"Corinthians","from":2009,"to":2010},{"club":"Anzhi Makhachkala","from":2011,"to":2012}]},
+    {"id":50,"name":"Fabio Cannavaro","nationality":"Italy","position":"Defender","career":[
+        {"club":"Napoli","from":1993,"to":1995},{"club":"Parma","from":1995,"to":2002},{"club":"Inter Milan","from":2002,"to":2004},{"club":"Juventus","from":2004,"to":2006},{"club":"Real Madrid","from":2006,"to":2009},{"club":"Juventus","from":2009,"to":2010},{"club":"Al Ahli","from":2010,"to":2011}]},
+]
+
+for p in legendary:
+    p["tier"] = "legendary"
+    p["normalized_name"] = p["name"].lower().replace("é","e").replace("á","a").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ã","a").replace("ö","o").replace("ü","u").replace("ç","c").replace("ë","e").replace("ï","i")
+    p["image_url"] = ""
+players.extend(legendary)
+
+# ============================================================
+# WORLD CLASS TIER (~80 players)
+# ============================================================
+world_class = [
+    {"id":51,"name":"Kylian Mbappe","nationality":"France","position":"Forward","career":[
+        {"club":"AS Monaco","from":2015,"to":2017},{"club":"Paris Saint-Germain","from":2017,"to":2024},{"club":"Real Madrid","from":2024,"to":2025}]},
+    {"id":52,"name":"Erling Haaland","nationality":"Norway","position":"Forward","career":[
+        {"club":"Bryne","from":2016,"to":2017},{"club":"Molde","from":2017,"to":2019},{"club":"Red Bull Salzburg","from":2019,"to":2020},{"club":"Borussia Dortmund","from":2020,"to":2022},{"club":"Manchester City","from":2022,"to":2025}]},
+    {"id":53,"name":"Kevin De Bruyne","nationality":"Belgium","position":"Midfielder","career":[
+        {"club":"Genk","from":2009,"to":2012},{"club":"Chelsea","from":2012,"to":2014},{"club":"Werder Bremen","from":2012,"to":2013},{"club":"VfL Wolfsburg","from":2014,"to":2015},{"club":"Manchester City","from":2015,"to":2025}]},
+    {"id":54,"name":"Luka Modric","nationality":"Croatia","position":"Midfielder","career":[
+        {"club":"Dinamo Zagreb","from":2003,"to":2008},{"club":"Tottenham Hotspur","from":2008,"to":2012},{"club":"Real Madrid","from":2012,"to":2025}]},
+    {"id":55,"name":"Toni Kroos","nationality":"Germany","position":"Midfielder","career":[
+        {"club":"Bayern Munich","from":2007,"to":2014},{"club":"Bayer Leverkusen","from":2009,"to":2010},{"club":"Real Madrid","from":2014,"to":2024}]},
+    {"id":56,"name":"Karim Benzema","nationality":"France","position":"Forward","career":[
+        {"club":"Lyon","from":2005,"to":2009},{"club":"Real Madrid","from":2009,"to":2023},{"club":"Al-Ittihad","from":2023,"to":2025}]},
+    {"id":57,"name":"Robert Lewandowski","nationality":"Poland","position":"Forward","career":[
+        {"club":"Znicz Pruszkow","from":2006,"to":2008},{"club":"Lech Poznan","from":2008,"to":2010},{"club":"Borussia Dortmund","from":2010,"to":2014},{"club":"Bayern Munich","from":2014,"to":2022},{"club":"FC Barcelona","from":2022,"to":2025}]},
+    {"id":58,"name":"Mohamed Salah","nationality":"Egypt","position":"Forward","career":[
+        {"club":"El Mokawloon","from":2010,"to":2012},{"club":"Basel","from":2012,"to":2014},{"club":"Chelsea","from":2014,"to":2016},{"club":"Fiorentina","from":2015,"to":2015},{"club":"Roma","from":2015,"to":2017},{"club":"Liverpool","from":2017,"to":2025}]},
+    {"id":59,"name":"Virgil van Dijk","nationality":"Netherlands","position":"Defender","career":[
+        {"club":"Groningen","from":2011,"to":2013},{"club":"Celtic","from":2013,"to":2015},{"club":"Southampton","from":2015,"to":2018},{"club":"Liverpool","from":2018,"to":2025}]},
+    {"id":60,"name":"Sadio Mane","nationality":"Senegal","position":"Forward","career":[
+        {"club":"Metz","from":2011,"to":2012},{"club":"Red Bull Salzburg","from":2012,"to":2014},{"club":"Southampton","from":2014,"to":2016},{"club":"Liverpool","from":2016,"to":2022},{"club":"Bayern Munich","from":2022,"to":2023},{"club":"Al-Nassr","from":2023,"to":2025}]},
+    {"id":61,"name":"Manuel Neuer","nationality":"Germany","position":"Goalkeeper","career":[
+        {"club":"Schalke 04","from":2004,"to":2011},{"club":"Bayern Munich","from":2011,"to":2025}]},
+    {"id":62,"name":"N'Golo Kante","nationality":"France","position":"Midfielder","career":[
+        {"club":"Boulogne","from":2010,"to":2013},{"club":"Caen","from":2013,"to":2015},{"club":"Leicester City","from":2015,"to":2016},{"club":"Chelsea","from":2016,"to":2023},{"club":"Al-Ittihad","from":2023,"to":2025}]},
+    {"id":63,"name":"Son Heung-min","nationality":"South Korea","position":"Forward","career":[
+        {"club":"Hamburger SV","from":2010,"to":2013},{"club":"Bayer Leverkusen","from":2013,"to":2015},{"club":"Tottenham Hotspur","from":2015,"to":2025}]},
+    {"id":64,"name":"Thibaut Courtois","nationality":"Belgium","position":"Goalkeeper","career":[
+        {"club":"Genk","from":2009,"to":2011},{"club":"Chelsea","from":2011,"to":2018},{"club":"Atletico Madrid","from":2011,"to":2014},{"club":"Real Madrid","from":2018,"to":2025}]},
+    {"id":65,"name":"Eden Hazard","nationality":"Belgium","position":"Forward","career":[
+        {"club":"Lille","from":2007,"to":2012},{"club":"Chelsea","from":2012,"to":2019},{"club":"Real Madrid","from":2019,"to":2023}]},
+    {"id":66,"name":"Alisson Becker","nationality":"Brazil","position":"Goalkeeper","career":[
+        {"club":"Internacional","from":2013,"to":2016},{"club":"Roma","from":2016,"to":2018},{"club":"Liverpool","from":2018,"to":2025}]},
+    {"id":67,"name":"Vinicius Junior","nationality":"Brazil","position":"Forward","career":[
+        {"club":"Flamengo","from":2017,"to":2018},{"club":"Real Madrid","from":2018,"to":2025}]},
+    {"id":68,"name":"Sergio Aguero","nationality":"Argentina","position":"Forward","career":[
+        {"club":"Independiente","from":2003,"to":2006},{"club":"Atletico Madrid","from":2006,"to":2011},{"club":"Manchester City","from":2011,"to":2021},{"club":"FC Barcelona","from":2021,"to":2021}]},
+    {"id":69,"name":"Luis Suarez","nationality":"Uruguay","position":"Forward","career":[
+        {"club":"Nacional","from":2005,"to":2006},{"club":"Groningen","from":2006,"to":2007},{"club":"Ajax","from":2007,"to":2011},{"club":"Liverpool","from":2011,"to":2014},{"club":"FC Barcelona","from":2014,"to":2020},{"club":"Atletico Madrid","from":2020,"to":2022},{"club":"Nacional","from":2022,"to":2022},{"club":"Gremio","from":2023,"to":2023},{"club":"Inter Miami CF","from":2024,"to":2025}]},
+    {"id":70,"name":"Sergio Ramos","nationality":"Spain","position":"Defender","career":[
+        {"club":"Sevilla","from":2004,"to":2005},{"club":"Real Madrid","from":2005,"to":2021},{"club":"Paris Saint-Germain","from":2021,"to":2023},{"club":"Sevilla","from":2023,"to":2024}]},
+    {"id":71,"name":"Gareth Bale","nationality":"Wales","position":"Forward","career":[
+        {"club":"Southampton","from":2006,"to":2007},{"club":"Tottenham Hotspur","from":2007,"to":2013},{"club":"Real Madrid","from":2013,"to":2022},{"club":"Tottenham Hotspur","from":2020,"to":2021},{"club":"Los Angeles FC","from":2022,"to":2023}]},
+    {"id":72,"name":"Harry Kane","nationality":"England","position":"Forward","career":[
+        {"club":"Tottenham Hotspur","from":2011,"to":2023},{"club":"Leyton Orient","from":2011,"to":2011},{"club":"Millwall","from":2012,"to":2012},{"club":"Norwich City","from":2012,"to":2013},{"club":"Leicester City","from":2013,"to":2013},{"club":"Bayern Munich","from":2023,"to":2025}]},
+    {"id":73,"name":"Antoine Griezmann","nationality":"France","position":"Forward","career":[
+        {"club":"Real Sociedad","from":2009,"to":2014},{"club":"Atletico Madrid","from":2014,"to":2019},{"club":"FC Barcelona","from":2019,"to":2021},{"club":"Atletico Madrid","from":2021,"to":2025}]},
+    {"id":74,"name":"Paul Pogba","nationality":"France","position":"Midfielder","career":[
+        {"club":"Le Havre","from":2007,"to":2009},{"club":"Manchester United","from":2009,"to":2012},{"club":"Juventus","from":2012,"to":2016},{"club":"Manchester United","from":2016,"to":2022},{"club":"Juventus","from":2022,"to":2024}]},
+    {"id":75,"name":"Thomas Muller","nationality":"Germany","position":"Forward","career":[
+        {"club":"Bayern Munich","from":2008,"to":2025}]},
+    {"id":76,"name":"David Silva","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"Valencia","from":2004,"to":2010},{"club":"Celta Vigo","from":2004,"to":2005},{"club":"Eibar","from":2005,"to":2005},{"club":"Manchester City","from":2010,"to":2020},{"club":"Real Sociedad","from":2020,"to":2023}]},
+    {"id":77,"name":"Edinson Cavani","nationality":"Uruguay","position":"Forward","career":[
+        {"club":"Danubio","from":2005,"to":2007},{"club":"Palermo","from":2007,"to":2010},{"club":"Napoli","from":2010,"to":2013},{"club":"Paris Saint-Germain","from":2013,"to":2020},{"club":"Manchester United","from":2020,"to":2022},{"club":"Valencia","from":2022,"to":2023},{"club":"Boca Juniors","from":2024,"to":2025}]},
+    {"id":78,"name":"Dani Alves","nationality":"Brazil","position":"Defender","career":[
+        {"club":"Bahia","from":2001,"to":2002},{"club":"Sevilla","from":2002,"to":2008},{"club":"FC Barcelona","from":2008,"to":2016},{"club":"Juventus","from":2016,"to":2017},{"club":"Paris Saint-Germain","from":2017,"to":2019},{"club":"Sao Paulo","from":2019,"to":2021},{"club":"FC Barcelona","from":2022,"to":2022},{"club":"UNAM","from":2022,"to":2023}]},
+    {"id":79,"name":"Marcelo","nationality":"Brazil","position":"Defender","career":[
+        {"club":"Fluminense","from":2005,"to":2007},{"club":"Real Madrid","from":2007,"to":2022},{"club":"Olympiacos","from":2022,"to":2023},{"club":"Fluminense","from":2023,"to":2024}]},
+    {"id":80,"name":"Gerard Pique","nationality":"Spain","position":"Defender","career":[
+        {"club":"FC Barcelona","from":2004,"to":2008},{"club":"Manchester United","from":2004,"to":2008},{"club":"Real Zaragoza","from":2006,"to":2007},{"club":"FC Barcelona","from":2008,"to":2022}]},
+    {"id":81,"name":"Arjen Robben","nationality":"Netherlands","position":"Forward","career":[
+        {"club":"Groningen","from":2000,"to":2002},{"club":"PSV Eindhoven","from":2002,"to":2004},{"club":"Chelsea","from":2004,"to":2007},{"club":"Real Madrid","from":2007,"to":2009},{"club":"Bayern Munich","from":2009,"to":2019},{"club":"Groningen","from":2020,"to":2021}]},
+    {"id":82,"name":"Franck Ribery","nationality":"France","position":"Forward","career":[
+        {"club":"Boulogne","from":2001,"to":2002},{"club":"Ales","from":2002,"to":2003},{"club":"Brest","from":2003,"to":2004},{"club":"Metz","from":2004,"to":2005},{"club":"Galatasaray","from":2005,"to":2005},{"club":"Marseille","from":2005,"to":2007},{"club":"Bayern Munich","from":2007,"to":2019},{"club":"Fiorentina","from":2019,"to":2021},{"club":"Salernitana","from":2022,"to":2023}]},
+    {"id":83,"name":"Thiago Silva","nationality":"Brazil","position":"Defender","career":[
+        {"club":"Fluminense","from":2006,"to":2009},{"club":"AC Milan","from":2009,"to":2012},{"club":"Paris Saint-Germain","from":2012,"to":2020},{"club":"Chelsea","from":2020,"to":2023},{"club":"Fluminense","from":2023,"to":2024}]},
+    {"id":84,"name":"Raphael Varane","nationality":"France","position":"Defender","career":[
+        {"club":"Lens","from":2010,"to":2011},{"club":"Real Madrid","from":2011,"to":2021},{"club":"Manchester United","from":2021,"to":2023},{"club":"Como","from":2024,"to":2025}]},
+    {"id":85,"name":"Bernardo Silva","nationality":"Portugal","position":"Midfielder","career":[
+        {"club":"Benfica","from":2014,"to":2015},{"club":"AS Monaco","from":2015,"to":2017},{"club":"Manchester City","from":2017,"to":2025}]},
+    {"id":86,"name":"Achraf Hakimi","nationality":"Morocco","position":"Defender","career":[
+        {"club":"Real Madrid","from":2017,"to":2020},{"club":"Borussia Dortmund","from":2018,"to":2020},{"club":"Inter Milan","from":2020,"to":2021},{"club":"Paris Saint-Germain","from":2021,"to":2025}]},
+    {"id":87,"name":"Jan Oblak","nationality":"Slovenia","position":"Goalkeeper","career":[
+        {"club":"Olimpija Ljubljana","from":2009,"to":2010},{"club":"Benfica","from":2010,"to":2014},{"club":"Atletico Madrid","from":2014,"to":2025}]},
+    {"id":88,"name":"Ruben Dias","nationality":"Portugal","position":"Defender","career":[
+        {"club":"Benfica","from":2017,"to":2020},{"club":"Manchester City","from":2020,"to":2025}]},
+    {"id":89,"name":"Ederson","nationality":"Brazil","position":"Goalkeeper","career":[
+        {"club":"Sao Paulo","from":2008,"to":2009},{"club":"Benfica","from":2009,"to":2017},{"club":"Ribeirao","from":2012,"to":2013},{"club":"Manchester City","from":2017,"to":2025}]},
+    {"id":90,"name":"Marc-Andre ter Stegen","nationality":"Germany","position":"Goalkeeper","career":[
+        {"club":"Borussia Monchengladbach","from":2011,"to":2014},{"club":"FC Barcelona","from":2014,"to":2025}]},
+    {"id":91,"name":"Bruno Fernandes","nationality":"Portugal","position":"Midfielder","career":[
+        {"club":"Boavista","from":2012,"to":2013},{"club":"Udinese","from":2013,"to":2016},{"club":"Sampdoria","from":2016,"to":2017},{"club":"Sporting CP","from":2017,"to":2020},{"club":"Manchester United","from":2020,"to":2025}]},
+    {"id":92,"name":"Casemiro","nationality":"Brazil","position":"Midfielder","career":[
+        {"club":"Sao Paulo","from":2010,"to":2013},{"club":"Real Madrid","from":2013,"to":2022},{"club":"Porto","from":2014,"to":2015},{"club":"Manchester United","from":2022,"to":2025}]},
+    {"id":93,"name":"Joshua Kimmich","nationality":"Germany","position":"Midfielder","career":[
+        {"club":"RB Leipzig","from":2013,"to":2015},{"club":"Bayern Munich","from":2015,"to":2025}]},
+    {"id":94,"name":"Frenkie de Jong","nationality":"Netherlands","position":"Midfielder","career":[
+        {"club":"Willem II","from":2015,"to":2016},{"club":"Ajax","from":2016,"to":2019},{"club":"FC Barcelona","from":2019,"to":2025}]},
+    {"id":95,"name":"Joao Cancelo","nationality":"Portugal","position":"Defender","career":[
+        {"club":"Benfica","from":2014,"to":2015},{"club":"Valencia","from":2015,"to":2017},{"club":"Inter Milan","from":2017,"to":2018},{"club":"Juventus","from":2018,"to":2019},{"club":"Manchester City","from":2019,"to":2025},{"club":"Bayern Munich","from":2023,"to":2024},{"club":"FC Barcelona","from":2024,"to":2025}]},
+    {"id":96,"name":"Trent Alexander-Arnold","nationality":"England","position":"Defender","career":[
+        {"club":"Liverpool","from":2016,"to":2025}]},
+    {"id":97,"name":"Andrew Robertson","nationality":"Scotland","position":"Defender","career":[
+        {"club":"Queen's Park","from":2012,"to":2013},{"club":"Dundee United","from":2013,"to":2014},{"club":"Hull City","from":2014,"to":2017},{"club":"Liverpool","from":2017,"to":2025}]},
+    {"id":98,"name":"Rodri","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"Villarreal","from":2015,"to":2018},{"club":"Atletico Madrid","from":2018,"to":2019},{"club":"Manchester City","from":2019,"to":2025}]},
+    {"id":99,"name":"Marquinhos","nationality":"Brazil","position":"Defender","career":[
+        {"club":"Corinthians","from":2012,"to":2013},{"club":"Roma","from":2013,"to":2013},{"club":"Paris Saint-Germain","from":2013,"to":2025}]},
+    {"id":100,"name":"Phil Foden","nationality":"England","position":"Midfielder","career":[
+        {"club":"Manchester City","from":2017,"to":2025}]},
+    {"id":101,"name":"Federico Valverde","nationality":"Uruguay","position":"Midfielder","career":[
+        {"club":"Penarol","from":2015,"to":2016},{"club":"Real Madrid","from":2016,"to":2025},{"club":"Deportivo La Coruna","from":2017,"to":2018}]},
+    {"id":102,"name":"Declan Rice","nationality":"England","position":"Midfielder","career":[
+        {"club":"West Ham United","from":2017,"to":2023},{"club":"Arsenal","from":2023,"to":2025}]},
+    {"id":103,"name":"William Saliba","nationality":"France","position":"Defender","career":[
+        {"club":"Saint-Etienne","from":2018,"to":2020},{"club":"Arsenal","from":2019,"to":2025},{"club":"Nice","from":2021,"to":2021},{"club":"Marseille","from":2021,"to":2022}]},
+    {"id":104,"name":"Jamal Musiala","nationality":"Germany","position":"Midfielder","career":[
+        {"club":"Chelsea","from":2019,"to":2019},{"club":"Bayern Munich","from":2019,"to":2025}]},
+    {"id":105,"name":"Florian Wirtz","nationality":"Germany","position":"Midfielder","career":[
+        {"club":"Bayer Leverkusen","from":2020,"to":2025}]},
+    {"id":106,"name":"Jude Bellingham","nationality":"England","position":"Midfielder","career":[
+        {"club":"Birmingham City","from":2019,"to":2020},{"club":"Borussia Dortmund","from":2020,"to":2023},{"club":"Real Madrid","from":2023,"to":2025}]},
+    {"id":107,"name":"Bukayo Saka","nationality":"England","position":"Forward","career":[
+        {"club":"Arsenal","from":2019,"to":2025}]},
+    {"id":108,"name":"Pedri","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"Las Palmas","from":2019,"to":2020},{"club":"FC Barcelona","from":2020,"to":2025}]},
+    {"id":109,"name":"Lamine Yamal","nationality":"Spain","position":"Forward","career":[
+        {"club":"FC Barcelona","from":2023,"to":2025}]},
+    {"id":110,"name":"Gavi","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"FC Barcelona","from":2021,"to":2025}]},
+    {"id":111,"name":"Eduardo Camavinga","nationality":"France","position":"Midfielder","career":[
+        {"club":"Rennes","from":2019,"to":2021},{"club":"Real Madrid","from":2021,"to":2025}]},
+    {"id":112,"name":"Ousmane Dembele","nationality":"France","position":"Forward","career":[
+        {"club":"Rennes","from":2015,"to":2016},{"club":"Borussia Dortmund","from":2016,"to":2017},{"club":"FC Barcelona","from":2017,"to":2023},{"club":"Paris Saint-Germain","from":2023,"to":2025}]},
+    {"id":113,"name":"Raheem Sterling","nationality":"England","position":"Forward","career":[
+        {"club":"Liverpool","from":2012,"to":2015},{"club":"Manchester City","from":2015,"to":2022},{"club":"Chelsea","from":2022,"to":2025},{"club":"Arsenal","from":2024,"to":2025}]},
+    {"id":114,"name":"Pierre-Emerick Aubameyang","nationality":"Gabon","position":"Forward","career":[
+        {"club":"AC Milan","from":2008,"to":2011},{"club":"Dijon","from":2008,"to":2009},{"club":"Lille","from":2009,"to":2010},{"club":"AS Monaco","from":2010,"to":2011},{"club":"Saint-Etienne","from":2011,"to":2013},{"club":"Borussia Dortmund","from":2013,"to":2018},{"club":"Arsenal","from":2018,"to":2022},{"club":"FC Barcelona","from":2022,"to":2023},{"club":"Chelsea","from":2022,"to":2023},{"club":"Marseille","from":2023,"to":2024}]},
+    {"id":115,"name":"Hugo Lloris","nationality":"France","position":"Goalkeeper","career":[
+        {"club":"Nice","from":2005,"to":2008},{"club":"Lyon","from":2008,"to":2012},{"club":"Tottenham Hotspur","from":2012,"to":2023},{"club":"Los Angeles FC","from":2024,"to":2025}]},
+    {"id":116,"name":"David de Gea","nationality":"Spain","position":"Goalkeeper","career":[
+        {"club":"Atletico Madrid","from":2009,"to":2011},{"club":"Manchester United","from":2011,"to":2023},{"club":"Fiorentina","from":2024,"to":2025}]},
+    {"id":117,"name":"Petr Cech","nationality":"Czech Republic","position":"Goalkeeper","career":[
+        {"club":"Chmel Blsany","from":1999,"to":2001},{"club":"Sparta Prague","from":2001,"to":2002},{"club":"Rennes","from":2002,"to":2004},{"club":"Chelsea","from":2004,"to":2015},{"club":"Arsenal","from":2015,"to":2019}]},
+    {"id":118,"name":"Iker Casillas","nationality":"Spain","position":"Goalkeeper","career":[
+        {"club":"Real Madrid","from":1999,"to":2015},{"club":"Porto","from":2015,"to":2020}]},
+    {"id":119,"name":"Fernando Torres","nationality":"Spain","position":"Forward","career":[
+        {"club":"Atletico Madrid","from":2001,"to":2007},{"club":"Liverpool","from":2007,"to":2011},{"club":"Chelsea","from":2011,"to":2014},{"club":"AC Milan","from":2014,"to":2015},{"club":"Atletico Madrid","from":2015,"to":2018},{"club":"Sagan Tosu","from":2018,"to":2019}]},
+    {"id":120,"name":"Alexis Sanchez","nationality":"Chile","position":"Forward","career":[
+        {"club":"Cobreloa","from":2005,"to":2006},{"club":"Udinese","from":2006,"to":2011},{"club":"Colo-Colo","from":2006,"to":2007},{"club":"River Plate","from":2007,"to":2008},{"club":"FC Barcelona","from":2011,"to":2014},{"club":"Arsenal","from":2014,"to":2018},{"club":"Manchester United","from":2018,"to":2019},{"club":"Inter Milan","from":2019,"to":2023},{"club":"Marseille","from":2023,"to":2024}]},
+    {"id":121,"name":"Angel Di Maria","nationality":"Argentina","position":"Forward","career":[
+        {"club":"Rosario Central","from":2005,"to":2007},{"club":"Benfica","from":2007,"to":2010},{"club":"Real Madrid","from":2010,"to":2014},{"club":"Manchester United","from":2014,"to":2015},{"club":"Paris Saint-Germain","from":2015,"to":2022},{"club":"Juventus","from":2022,"to":2023},{"club":"Benfica","from":2023,"to":2025}]},
+    {"id":122,"name":"James Rodriguez","nationality":"Colombia","position":"Midfielder","career":[
+        {"club":"Envigado","from":2006,"to":2008},{"club":"Banfield","from":2008,"to":2010},{"club":"Porto","from":2010,"to":2013},{"club":"AS Monaco","from":2013,"to":2014},{"club":"Real Madrid","from":2014,"to":2020},{"club":"Bayern Munich","from":2017,"to":2019},{"club":"Everton","from":2020,"to":2021},{"club":"Al-Rayyan","from":2021,"to":2022},{"club":"Olympiacos","from":2022,"to":2023},{"club":"Sao Paulo","from":2023,"to":2024}]},
+    {"id":123,"name":"Christian Eriksen","nationality":"Denmark","position":"Midfielder","career":[
+        {"club":"Ajax","from":2010,"to":2013},{"club":"Tottenham Hotspur","from":2013,"to":2020},{"club":"Inter Milan","from":2020,"to":2022},{"club":"Brentford","from":2022,"to":2022},{"club":"Manchester United","from":2022,"to":2025}]},
+    {"id":124,"name":"Riyad Mahrez","nationality":"Algeria","position":"Forward","career":[
+        {"club":"Le Havre","from":2009,"to":2014},{"club":"Leicester City","from":2014,"to":2018},{"club":"Manchester City","from":2018,"to":2023},{"club":"Al-Ahli","from":2023,"to":2025}]},
+    {"id":125,"name":"Gonzalo Higuain","nationality":"Argentina","position":"Forward","career":[
+        {"club":"River Plate","from":2005,"to":2007},{"club":"Real Madrid","from":2007,"to":2013},{"club":"Napoli","from":2013,"to":2016},{"club":"Juventus","from":2016,"to":2020},{"club":"AC Milan","from":2018,"to":2019},{"club":"Chelsea","from":2019,"to":2019},{"club":"Inter Miami CF","from":2020,"to":2022}]},
+    {"id":126,"name":"Giorgio Chiellini","nationality":"Italy","position":"Defender","career":[
+        {"club":"Livorno","from":2000,"to":2004},{"club":"Fiorentina","from":2004,"to":2005},{"club":"Juventus","from":2005,"to":2022},{"club":"Los Angeles FC","from":2022,"to":2023}]},
+    {"id":127,"name":"Leonardo Bonucci","nationality":"Italy","position":"Defender","career":[
+        {"club":"Inter Milan","from":2005,"to":2007},{"club":"Treviso","from":2007,"to":2008},{"club":"Pisa","from":2008,"to":2009},{"club":"Bari","from":2009,"to":2010},{"club":"Juventus","from":2010,"to":2017},{"club":"AC Milan","from":2017,"to":2018},{"club":"Juventus","from":2018,"to":2023},{"club":"Union Berlin","from":2023,"to":2024}]},
+    {"id":128,"name":"Sergio Busquets","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"FC Barcelona","from":2008,"to":2023},{"club":"Inter Miami CF","from":2023,"to":2025}]},
+    {"id":129,"name":"Cesc Fabregas","nationality":"Spain","position":"Midfielder","career":[
+        {"club":"Arsenal","from":2003,"to":2011},{"club":"FC Barcelona","from":2011,"to":2014},{"club":"Chelsea","from":2014,"to":2019},{"club":"AS Monaco","from":2019,"to":2022},{"club":"Como","from":2022,"to":2023}]},
+    {"id":130,"name":"Robin van Persie","nationality":"Netherlands","position":"Forward","career":[
+        {"club":"Feyenoord","from":2001,"to":2004},{"club":"Arsenal","from":2004,"to":2012},{"club":"Manchester United","from":2012,"to":2015},{"club":"Fenerbahce","from":2015,"to":2018},{"club":"Feyenoord","from":2018,"to":2019}]},
+]
+
+for p in world_class:
+    p["tier"] = "world_class"
+    p["normalized_name"] = p["name"].lower().replace("é","e").replace("á","a").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ã","a").replace("ö","o").replace("ü","u").replace("ç","c").replace("ë","e").replace("ï","i")
+    p["image_url"] = ""
+players.extend(world_class)
+
+print(f"Legendary: {len(legendary)}, World Class: {len(world_class)}")
+print(f"Total so far: {len(players)}")
+
+# Save part 1
+with open("/Users/jasur/workspace/football/scripts/_careers_part1.json", "w") as f:
+    json.dump(players, f)
+print("Part 1 saved")

@@ -1,0 +1,28 @@
+{
+  "app_name": "Football Quiz - Daily Trivia",
+  "short_description": "Daily football trivia: guess the mystery player and solve the Immaculate Grid!",
+  "full_description": "Test your football knowledge every day with two addictive game modes!\n\nWHO ARE YA?\nA mystery footballer is hiding behind the silhouette. You have 8 guesses to figure out who it is. Each guess reveals clues about the target player's team, league, nationality, position, and market value. Use the color-coded hints to narrow it down!\n\nIMMACULATE GRID\nA 3x3 grid of football trivia. Each cell has two criteria (team, league, nationality, or position) and you must name a player who matches both. Fill all 9 cells to complete the grid. New grid every day!\n\nFEATURES:\n- New daily puzzles at midnight UTC\n- 12,000+ real footballers from Europe's top 5 leagues\n- Track your winning streak and compete on the leaderboard\n- Share your results with friends using visual scorecards\n- Works offline - play anywhere, anytime\n- Retro-themed design inspired by classic football culture\n- No ads in gameplay - clean, focused experience\n- Privacy-first: no personal data collected\n\nSTATS & STREAKS:\n- Daily streak counter with freeze protection\n- Detailed stats: games played, win rate, guess distribution\n- Global leaderboard rankings\n\nPERFECT FOR:\n- Football fans who love trivia\n- Daily puzzle enthusiasts\n- Fans of Wordle-style guessing games\n- Anyone who wants a quick 5-minute brain teaser\n\nNew content updated regularly with the latest transfer data. Download now and start your streak!",
+  "keywords": [
+    "football trivia",
+    "soccer quiz",
+    "daily football",
+    "who are ya",
+    "immaculate grid",
+    "football guessing game",
+    "player quiz",
+    "football wordle",
+    "soccer trivia",
+    "daily puzzle",
+    "football knowledge",
+    "premier league quiz",
+    "serie a quiz",
+    "la liga quiz",
+    "bundesliga quiz"
+  ],
+  "category": "Games",
+  "subcategory": "Trivia",
+  "content_rating": "Everyone",
+  "privacy_policy_url": "https://footballquiz.app/privacy-policy.html",
+  "support_url": "https://footballquiz.app",
+  "marketing_url": "https://footballquiz.app"
+}

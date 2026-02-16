@@ -1,0 +1,344 @@
+{
+  "version": "1.0",
+  "generated": "2026-02-15",
+  "game_modes": {
+    "who-are-ya": {
+      "required_fields": ["name", "nationality", "current_team", "league", "position", "market_value", "image_url"],
+      "source_category": "Statistical Database",
+      "current_coverage": "full",
+      "current_count": 12173,
+      "target_count": 12173,
+      "gap_analysis": "No gaps. All 12,173 players have all required fields. 790 players have zero market_value which may reduce Higher/Lower pool but does not affect Who Are Ya."
+    },
+    "immaculate-grid": {
+      "required_fields": ["name", "current_team", "league", "nationality", "position"],
+      "source_category": "Statistical Database",
+      "current_coverage": "full",
+      "current_count": 12173,
+      "target_count": 12173,
+      "gap_analysis": "No gaps. Pre-indexed grid intersections available. 176 unique teams across 5 leagues provide rich grid criteria."
+    },
+    "career-path": {
+      "required_fields": ["name", "nationality", "position", "image_url", "tier", "career_history"],
+      "source_category": "Crowdsourced Wiki",
+      "current_coverage": "partial",
+      "current_count": 120,
+      "target_count": 500,
+      "gap_analysis": "Major gap: only 120 of 500 target players have career data. Tier distribution is uneven: legendary=18, world_class=22, professional=34, semi_pro=17, amateur=20, beginner=9. Beginner tier is underpopulated (9 vs ~83 target per tier). Need 380+ additional career histories."
+    },
+    "missing-xi": {
+      "required_fields": ["match_id", "date", "competition", "season", "opponent_a", "opponent_b", "score", "lineup_a_ids", "lineup_b_ids", "lineup_a_names", "lineup_b_names"],
+      "source_category": "Match Archive",
+      "current_coverage": "partial",
+      "current_count": 50,
+      "target_count": 200,
+      "gap_analysis": "Major gap: only 50 of 200 target matches. Coverage is skewed toward UCL Finals (20) and UCL Semi-Finals (10). Need more domestic league matches, Copa America, Euro matches, and earlier decades. All 50 existing matches have complete 11-player lineups."
+    },
+    "connections": {
+      "required_fields": ["name", "nationality", "current_team", "league", "position"],
+      "source_category": "Statistical Database",
+      "current_coverage": "full",
+      "current_count": 12173,
+      "target_count": 12173,
+      "gap_analysis": "No gaps for basic grouping criteria. Could be enhanced with additional fields (e.g., birth_year, shirt_number, previous_teams) for richer grouping options, but not required."
+    },
+    "badge-quiz": {
+      "required_fields": ["team_name", "badge_primary_color", "badge_secondary_color", "badge_pattern"],
+      "source_category": "Curated Assets",
+      "current_coverage": "good",
+      "current_count": 73,
+      "target_count": 176,
+      "gap_analysis": "Partial gap: teamColors.ts covers 73 unique teams (some duplicates with aliases). 176 unique teams exist in players_db but only 73 have color/pattern data. Missing ~103 teams for full coverage."
+    },
+    "higher-lower": {
+      "required_fields": ["name", "current_team", "market_value", "image_url"],
+      "source_category": "Statistical Database",
+      "current_coverage": "full",
+      "current_count": 11383,
+      "target_count": 12173,
+      "gap_analysis": "Minor gap: 790 players have zero or missing market_value and must be excluded from comparisons. Effective pool is 11,383 players which is sufficient, but enriching the 790 missing values would improve coverage."
+    },
+    "transfer-agent": {
+      "required_fields": ["player_name", "player_id", "transfer_history", "transfer_fees", "club_names"],
+      "source_category": "Transfer Record Database",
+      "current_coverage": "partial",
+      "current_count": 106,
+      "target_count": 500,
+      "gap_analysis": "Major gap: only 106 of 500 target players have transfer data. 98 of 106 have at least one paid transfer fee. Need 394+ additional player transfer histories with fee data."
+    },
+    "stats-profile": {
+      "required_fields": [],
+      "source_category": "Client State",
+      "current_coverage": "full",
+      "current_count": null,
+      "target_count": null,
+      "gap_analysis": "No player data required. XP tracking and guess distribution handled by Zustand client stores."
+    },
+    "modes-hub": {
+      "required_fields": [],
+      "source_category": "None",
+      "current_coverage": "full",
+      "current_count": null,
+      "target_count": null,
+      "gap_analysis": "No player data required. Navigation-only screen."
+    },
+    "pro-support": {
+      "required_fields": [],
+      "source_category": "None",
+      "current_coverage": "full",
+      "current_count": null,
+      "target_count": null,
+      "gap_analysis": "No player data required. Upgrade/support screen."
+    }
+  },
+  "data_fields": {
+    "name": {
+      "description": "Player full name",
+      "source_categories": ["Statistical Database", "Crowdsourced Wiki"],
+      "current_sources": ["players_db_v1.json", "career_paths.json", "transfers.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "immaculate-grid", "career-path", "connections", "higher-lower", "transfer-agent"],
+      "priority": "NONE"
+    },
+    "normalized_name": {
+      "description": "Lowercase normalized player name for matching",
+      "source_categories": ["Statistical Database"],
+      "current_sources": ["players_db_v1.json", "career_paths.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "immaculate-grid"],
+      "priority": "NONE"
+    },
+    "nationality": {
+      "description": "Player nationality / country",
+      "source_categories": ["Statistical Database", "Crowdsourced Wiki"],
+      "current_sources": ["players_db_v1.json", "career_paths.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "immaculate-grid", "career-path", "connections"],
+      "priority": "NONE"
+    },
+    "current_team": {
+      "description": "Player current club team",
+      "source_categories": ["Statistical Database"],
+      "current_sources": ["players_db_v1.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "immaculate-grid", "connections", "higher-lower"],
+      "priority": "NONE"
+    },
+    "league": {
+      "description": "Current league (5 leagues covered)",
+      "source_categories": ["Statistical Database"],
+      "current_sources": ["players_db_v1.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "immaculate-grid", "connections"],
+      "priority": "NONE"
+    },
+    "position": {
+      "description": "Player position (Attack, Midfield, Defender, Goalkeeper)",
+      "source_categories": ["Statistical Database"],
+      "current_sources": ["players_db_v1.json", "career_paths.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "immaculate-grid", "career-path", "connections"],
+      "priority": "NONE"
+    },
+    "market_value": {
+      "description": "Player market value in euros",
+      "source_categories": ["Statistical Database", "Transfer Record Database"],
+      "current_sources": ["players_db_v1.json"],
+      "coverage": "11383/12173",
+      "used_by": ["who-are-ya", "higher-lower"],
+      "priority": "LOW",
+      "notes": "790 players have zero/missing values. Impacts Higher/Lower pool size."
+    },
+    "image_url": {
+      "description": "Player portrait image URL",
+      "source_categories": ["Statistical Database"],
+      "current_sources": ["players_db_v1.json", "career_paths.json"],
+      "coverage": "12173/12173",
+      "used_by": ["who-are-ya", "career-path", "higher-lower"],
+      "priority": "NONE"
+    },
+    "career_history": {
+      "description": "Full club-by-club career with years (club, from, to)",
+      "source_categories": ["Crowdsourced Wiki", "Statistical Database"],
+      "current_sources": ["career_paths.json"],
+      "coverage": "120/12173",
+      "used_by": ["career-path"],
+      "priority": "HIGH",
+      "notes": "Career Path game needs 500+ players across 6 difficulty tiers. Currently only 120 players."
+    },
+    "difficulty_tier": {
+      "description": "Player difficulty tier for Career Path (legendary, world_class, professional, semi_pro, amateur, beginner)",
+      "source_categories": ["Manual Curation"],
+      "current_sources": ["career_paths.json"],
+      "coverage": "120/500",
+      "used_by": ["career-path"],
+      "priority": "HIGH",
+      "notes": "Tier assignment requires editorial judgment. Beginner tier severely underpopulated (9 players)."
+    },
+    "transfer_history": {
+      "description": "Transfer records with clubs, dates, and fees",
+      "source_categories": ["Transfer Record Database"],
+      "current_sources": ["transfers.json"],
+      "coverage": "106/12173",
+      "used_by": ["transfer-agent"],
+      "priority": "HIGH",
+      "notes": "Transfer Agent needs 500+ players. Only 106 currently available."
+    },
+    "transfer_fees": {
+      "description": "Monetary transfer fee amounts",
+      "source_categories": ["Transfer Record Database"],
+      "current_sources": ["transfers.json"],
+      "coverage": "98/106",
+      "used_by": ["transfer-agent"],
+      "priority": "HIGH",
+      "notes": "98 of 106 transfer records include at least one paid fee. 8 players have only free transfers/null fees."
+    },
+    "match_metadata": {
+      "description": "Match date, competition, season, teams, score",
+      "source_categories": ["Match Archive"],
+      "current_sources": ["matches_db.json"],
+      "coverage": "50/200",
+      "used_by": ["missing-xi"],
+      "priority": "HIGH",
+      "notes": "Need 150+ more matches. Current set is skewed to UCL Finals (20) and World Cup knockout stages."
+    },
+    "match_lineups": {
+      "description": "Full 11-player starting lineups with player IDs and names",
+      "source_categories": ["Match Archive"],
+      "current_sources": ["matches_db.json"],
+      "coverage": "50/200",
+      "used_by": ["missing-xi"],
+      "priority": "HIGH",
+      "notes": "All 50 existing matches have complete lineups. Player IDs use negative placeholder IDs for players not in players_db."
+    },
+    "badge_colors": {
+      "description": "Team badge primary/secondary colors and pattern",
+      "source_categories": ["Curated Assets"],
+      "current_sources": ["teamColors.ts"],
+      "coverage": "73/176",
+      "used_by": ["badge-quiz"],
+      "priority": "MEDIUM",
+      "notes": "73 unique teams have color data (some with aliases). 103 teams in players_db lack badge color entries."
+    }
+  },
+  "gaps": [
+    {
+      "field": "career_history",
+      "current_count": 120,
+      "target_count": 500,
+      "deficit": 380,
+      "priority": "HIGH",
+      "affected_modes": ["career-path"],
+      "recommended_source": "Wikipedia player pages, Transfermarkt career tables",
+      "notes": "Career Path game needs 500+ players across 6 difficulty tiers. Beginner tier (9 players) and semi_pro tier (17 players) are most underpopulated. Each career entry needs club name, start year, and end year."
+    },
+    {
+      "field": "transfer_history",
+      "current_count": 106,
+      "target_count": 500,
+      "deficit": 394,
+      "priority": "HIGH",
+      "affected_modes": ["transfer-agent"],
+      "recommended_source": "Transfermarkt transfer history pages",
+      "notes": "Transfer Agent requires players with meaningful transfer fee data. Prioritize players with 3+ transfers and at least one fee above 10M euros for interesting gameplay."
+    },
+    {
+      "field": "match_lineups",
+      "current_count": 50,
+      "target_count": 200,
+      "deficit": 150,
+      "priority": "HIGH",
+      "affected_modes": ["missing-xi"],
+      "recommended_source": "Wikipedia match articles, Transfermarkt match lineups, football-data.co.uk",
+      "notes": "Current matches are heavily skewed toward UCL Finals and World Cup knockout. Need domestic league derbies, Euro matches, Copa America, and more group stage matches for variety. Each match needs full 11-player lineups for both teams."
+    },
+    {
+      "field": "badge_colors",
+      "current_count": 73,
+      "target_count": 176,
+      "deficit": 103,
+      "priority": "MEDIUM",
+      "affected_modes": ["badge-quiz"],
+      "recommended_source": "Team Wikipedia pages, official club websites for hex codes",
+      "notes": "73 of 176 teams in players_db have color/pattern data. Badge Quiz can function with 73 teams but fuller coverage improves replay value. Alias deduplication needed (e.g., Brighton and Brighton & Hove Albion are duplicated)."
+    },
+    {
+      "field": "market_value",
+      "current_count": 11383,
+      "target_count": 12173,
+      "deficit": 790,
+      "priority": "LOW",
+      "affected_modes": ["higher-lower"],
+      "recommended_source": "Transfermarkt player valuation pages",
+      "notes": "790 players have zero or missing market_value. Higher/Lower already has 11,383 usable players which is sufficient, but filling gaps would maximize pool size."
+    },
+    {
+      "field": "previous_teams",
+      "current_count": 0,
+      "target_count": 12173,
+      "deficit": 12173,
+      "priority": "LOW",
+      "affected_modes": ["immaculate-grid", "connections"],
+      "recommended_source": "Transfermarkt, Wikipedia",
+      "notes": "Optional enhancement: adding previous_teams to player records would enable richer Immaculate Grid criteria (e.g., 'played for X AND Y') and more interesting Connections groupings. Not blocking any current mode."
+    }
+  ],
+  "source_categories": {
+    "Statistical Database": {
+      "description": "Structured player statistics from Transfermarkt, FBref, and similar platforms",
+      "fields_provided": ["name", "normalized_name", "nationality", "current_team", "league", "position", "market_value", "image_url"],
+      "current_files": ["players_db_v1.json"],
+      "record_count": 12173,
+      "reliability": "high",
+      "update_frequency": "seasonal"
+    },
+    "Crowdsourced Wiki": {
+      "description": "Wikipedia and fan wikis with biographical and career history data",
+      "fields_provided": ["career_history", "nationality", "birth_date", "full_name", "previous_teams"],
+      "current_files": ["career_paths.json"],
+      "record_count": 120,
+      "reliability": "medium-high",
+      "update_frequency": "continuous"
+    },
+    "Transfer Record Database": {
+      "description": "Transfer fee records from Transfermarkt and similar sources",
+      "fields_provided": ["transfer_history", "transfer_fees", "club_names", "transfer_dates"],
+      "current_files": ["transfers.json"],
+      "record_count": 106,
+      "reliability": "high",
+      "update_frequency": "transfer-window"
+    },
+    "Match Archive": {
+      "description": "Historical match results, lineups, and competition metadata",
+      "fields_provided": ["match_lineups", "scores", "competitions", "dates", "seasons"],
+      "current_files": ["matches_db.json"],
+      "record_count": 50,
+      "reliability": "high",
+      "update_frequency": "post-match"
+    },
+    "Curated Assets": {
+      "description": "Manually curated team visual data (colors, patterns) for badge rendering",
+      "fields_provided": ["badge_colors", "badge_patterns"],
+      "current_files": ["teamColors.ts"],
+      "record_count": 73,
+      "reliability": "high",
+      "update_frequency": "manual"
+    },
+    "Client State": {
+      "description": "Runtime state managed by Zustand stores (XP, stats, preferences)",
+      "fields_provided": ["xp_tracking", "guess_distribution", "user_preferences"],
+      "current_files": [],
+      "record_count": null,
+      "reliability": "high",
+      "update_frequency": "realtime"
+    },
+    "Manual Curation": {
+      "description": "Editorial assignments requiring human judgment (difficulty tiers, grouping themes)",
+      "fields_provided": ["difficulty_tier", "connection_themes"],
+      "current_files": ["career_paths.json"],
+      "record_count": 120,
+      "reliability": "high",
+      "update_frequency": "manual"
+    }
+  }
+}

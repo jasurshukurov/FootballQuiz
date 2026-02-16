@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["TEAM_ID.com.footballquiz.app"],
+        "paths": ["/share/*"]
+      }
+    ]
+  }
+}
