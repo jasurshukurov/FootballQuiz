@@ -12,7 +12,8 @@ const DEFAULT_CONFIG: RemoteConfig = {
   message: '',
 };
 
-const CONFIG_URL = 'https://football-trivia-remote-config.s3.us-east-1.amazonaws.com/config.json';
+// Served via CloudFront (config bucket is private; OAC-only access).
+const CONFIG_URL = 'https://d295hqf6csr5wz.cloudfront.net/config.json';
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 const STORAGE_KEY = 'remote-config-cache';
 

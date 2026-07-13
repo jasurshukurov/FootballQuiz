@@ -143,9 +143,8 @@ export function decompressPuzzle(compressed: CompressedPuzzle): DecompressedPuzz
         // Expand short keys to full names
         const fullKey = keyMap[shortKey] ?? shortKey;
         const expanded = expandValue(fullKey, value);
-        result[fullKey] = typeof expanded === 'object' && expanded !== null
-          ? expandObject(expanded)
-          : expanded;
+        result[fullKey] =
+          typeof expanded === 'object' && expanded !== null ? expandObject(expanded) : expanded;
       }
       return result;
     }

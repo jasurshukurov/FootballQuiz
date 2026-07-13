@@ -98,12 +98,7 @@ function ClubSearchAutocomplete({
   return (
     <View style={styles.wrapper}>
       <View style={styles.inputContainer}>
-        <FontAwesome
-          name="search"
-          size={16}
-          color={colors.steelGray}
-          style={styles.searchIcon}
-        />
+        <FontAwesome name="search" size={16} color={colors.steelGray} style={styles.searchIcon} />
         <TextInput
           ref={inputRef}
           style={styles.input}

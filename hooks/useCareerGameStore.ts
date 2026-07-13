@@ -3,8 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CareerPlayer, CareerEntry, DifficultyTier } from '@/types/career';
-import { getRandomCareerPlayer } from '@/lib/careerData';
-import { scrambleCareer, normalizeGuess } from '@/lib/careerHelpers';
+import { getRandomCareerPlayer, getSeededCareerPlayer } from '@/lib/careerData';
+import { scrambleCareer, scrambleCareerSeeded, normalizeGuess } from '@/lib/careerHelpers';
 import { showRewardedAd } from '@/lib/ads';
 
 const MAX_ATTEMPTS = 3;
@@ -27,6 +27,8 @@ interface CareerGameState {
 
 interface CareerGameActions {
   startGame: (tier?: DifficultyTier) => void;
+  /** Daily-deterministic start: same seed -> same player and scramble every time. */
+  startDailyGame: (seed: number) => void;
   makeGuess: (playerName: string) => void;
   attemptUnlockHint: (hintId: string) => Promise<boolean>;
   resetGame: () => void;
@@ -69,6 +71,22 @@ export const useCareerGameStore = create<CareerGameStore>()(
           attemptsLeft: MAX_ATTEMPTS,
           gameStatus: 'playing',
           selectedTier: tier ?? null,
+        });
+      },
+
+      startDailyGame: (seed: number) => {
+        const player = getSeededCareerPlayer(seed);
+        const scrambled = scrambleCareerSeeded(player.career, seed);
+
+        set({
+          currentPlayer: player,
+          scrambledCareer: scrambled,
+          unlockedHints: [],
+          guessText: '',
+          guessResult: 'none',
+          attemptsLeft: MAX_ATTEMPTS,
+          gameStatus: 'playing',
+          selectedTier: null,
         });
       },
 

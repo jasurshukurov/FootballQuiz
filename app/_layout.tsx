@@ -8,13 +8,14 @@ import 'react-native-reanimated';
 
 import '../global.css';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
-import { scheduleDailyReminder } from '@/lib/notifications';
+import { useNotificationSetup } from '@/hooks/useNotificationSetup';
 import { requestTrackingPermission } from '@/lib/tracking';
 import { initPurchases } from '@/lib/purchases';
 import { fetchRemoteConfig, RemoteConfig } from '@/lib/remoteConfig';
-import StreakFrozenModal from '@/components/ui/StreakFrozenModal';
+import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
+import StreakRepairPrompt from '@/components/ui/StreakRepairPrompt';
 import MaintenanceScreen from '@/components/ui/MaintenanceScreen';
-import { colors, fonts } from '@/constants/theme';
+import { colors } from '@/constants/theme';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -67,15 +68,20 @@ function RootLayoutNav() {
   const checkAndUpdateStreak = useDailyStateStore((s) => s.checkAndUpdateStreak);
   const [remoteConfig, setRemoteConfig] = useState<RemoteConfig | null>(null);
 
+  useNotificationSetup();
+
   useEffect(() => {
     checkAndUpdateStreak();
-    scheduleDailyReminder().catch(() => {});
     initPurchases();
 
     // Request ATT permission before initializing ads
     requestTrackingPermission();
 
-    fetchRemoteConfig().then(setRemoteConfig);
+    fetchRemoteConfig().then((config) => {
+      setRemoteConfig(config);
+      // Expose globally so screens can read disabled_modes etc.
+      useRemoteConfigStore.getState().setConfig(config);
+    });
   }, [checkAndUpdateStreak]);
 
   if (remoteConfig?.maintenance_mode) {
@@ -90,7 +96,7 @@ function RootLayoutNav() {
         <Stack.Screen name="share/[puzzleId]" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
-      <StreakFrozenModal />
+      <StreakRepairPrompt />
     </ThemeProvider>
   );
 }

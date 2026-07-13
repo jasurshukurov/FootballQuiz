@@ -18,7 +18,9 @@ function TimelineViewInner({ career, showYears, isSorted }: TimelineViewProps) {
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}>
       {career.map((entry, index) => (
-        <Animated.View key={`${entry.club}-${entry.from ?? index}`} layout={LinearTransition.duration(600)}>
+        <Animated.View
+          key={`${entry.club}-${entry.from ?? index}`}
+          layout={LinearTransition.duration(600)}>
           <CareerClubCard
             club={entry.club}
             from={entry.from}

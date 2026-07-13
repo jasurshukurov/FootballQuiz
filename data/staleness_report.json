@@ -1,0 +1,411 @@
+{
+  "generated_for_reference_year": 2026,
+  "thresholds": {
+    "gameplay_fame_min": 55,
+    "high_fame_min": 70,
+    "default_market_value": 1000000,
+    "stale_age_min": 34
+  },
+  "counts": {
+    "players_db_total": 12173,
+    "fame_scores_total": 12322,
+    "gameplay_relevant_players": 1421,
+    "default_market_value": 3,
+    "zero_market_value": 58,
+    "default_or_zero_market_value": 61,
+    "missing_age": 2,
+    "stale_team_suspect": 73,
+    "missing_badge": 499,
+    "distinct_unresolved_teams": 143,
+    "high_fame_without_players_db_match": 82
+  },
+  "examples": {
+    "default_market_value": [
+      {
+        "id": 48280,
+        "name": "Edinson Cavani",
+        "fame_score": 87.25,
+        "current_team": "Boca Juniors",
+        "market_value": 1000000
+      },
+      {
+        "id": 17965,
+        "name": "Hugo Lloris",
+        "fame_score": 80.16,
+        "current_team": "Los Angeles Fc",
+        "market_value": 1000000
+      },
+      {
+        "id": 65278,
+        "name": "Pedro",
+        "fame_score": 65.29,
+        "current_team": "Zenit",
+        "market_value": 1000000
+      }
+    ],
+    "stale_team_suspect": [
+      {
+        "id": 48280,
+        "name": "Edinson Cavani",
+        "fame_score": 87.25,
+        "current_team": "Boca Juniors",
+        "market_value": 1000000
+      },
+      {
+        "id": 3455,
+        "name": "Zlatan Ibrahimović",
+        "fame_score": 86.86,
+        "current_team": "Associazione Calcio Milan",
+        "market_value": 0
+      },
+      {
+        "id": 3332,
+        "name": "Wayne Rooney",
+        "fame_score": 86.68,
+        "current_team": "Derby County",
+        "market_value": 0
+      },
+      {
+        "id": 7600,
+        "name": "Andrés Iniesta",
+        "fame_score": 86.51,
+        "current_team": "Futbol Club Barcelona",
+        "market_value": 0
+      },
+      {
+        "id": 5023,
+        "name": "Gianluigi Buffon",
+        "fame_score": 86.19,
+        "current_team": "Parma Calcio 1913",
+        "market_value": 0
+      },
+      {
+        "id": 31909,
+        "name": "Toni Kroos",
+        "fame_score": 86.18,
+        "current_team": "Real Madrid Club de Fútbol",
+        "market_value": 0
+      },
+      {
+        "id": 7607,
+        "name": "Xavi",
+        "fame_score": 85.73,
+        "current_team": "Al-Sadd Sc",
+        "market_value": 0
+      },
+      {
+        "id": 3139,
+        "name": "David Beckham",
+        "fame_score": 85.67,
+        "current_team": "Paris Saint-Germain Football Club",
+        "market_value": 0
+      },
+      {
+        "id": 26399,
+        "name": "Sergio Agüero",
+        "fame_score": 85.55,
+        "current_team": "Futbol Club Barcelona",
+        "market_value": 0
+      },
+      {
+        "id": 50202,
+        "name": "Eden Hazard",
+        "fame_score": 85.3,
+        "current_team": "Real Madrid Club de Fútbol",
+        "market_value": 0
+      }
+    ],
+    "missing_age": [
+      {
+        "id": 32966,
+        "name": "Angelo",
+        "fame_score": 59.96,
+        "current_team": "Ud Sousense",
+        "market_value": 50000
+      },
+      {
+        "id": 39073,
+        "name": "Émerson",
+        "fame_score": 57.91,
+        "current_team": "Marseille",
+        "market_value": 12000000
+      }
+    ],
+    "missing_badge": [
+      {
+        "id": 8198,
+        "name": "Cristiano Ronaldo",
+        "fame_score": 98.74,
+        "current_team": "Al-Nassr",
+        "market_value": 12000000
+      },
+      {
+        "id": 68290,
+        "name": "Neymar",
+        "fame_score": 92.36,
+        "current_team": "Santos",
+        "market_value": 25000000
+      },
+      {
+        "id": 48280,
+        "name": "Edinson Cavani",
+        "fame_score": 87.25,
+        "current_team": "Boca Juniors",
+        "market_value": 1000000
+      },
+      {
+        "id": 18922,
+        "name": "Karim Benzema",
+        "fame_score": 87.08,
+        "current_team": "Al-Hilal",
+        "market_value": 10000000
+      },
+      {
+        "id": 25557,
+        "name": "Sergio Ramos",
+        "fame_score": 87.08,
+        "current_team": "Cf Monterrey",
+        "market_value": 2000000
+      },
+      {
+        "id": 146660,
+        "name": "Ronaldo",
+        "fame_score": 86.77,
+        "current_team": "Fk Rostov",
+        "market_value": 4000000
+      },
+      {
+        "id": 3332,
+        "name": "Wayne Rooney",
+        "fame_score": 86.68,
+        "current_team": "Derby County",
+        "market_value": 0
+      },
+      {
+        "id": 44352,
+        "name": "Luis Suárez",
+        "fame_score": 86.25,
+        "current_team": "Sporting CP",
+        "market_value": 40000000
+      },
+      {
+        "id": 5023,
+        "name": "Gianluigi Buffon",
+        "fame_score": 86.19,
+        "current_team": "Parma Calcio 1913",
+        "market_value": 0
+      },
+      {
+        "id": 7607,
+        "name": "Xavi",
+        "fame_score": 85.73,
+        "current_team": "Al-Sadd Sc",
+        "market_value": 0
+      }
+    ]
+  },
+  "top_unresolved_teams": [
+    [
+      "Leeds United Association Football Club",
+      19
+    ],
+    [
+      "Burnley Football Club",
+      17
+    ],
+    [
+      "Stade Rennais Football Club",
+      16
+    ],
+    [
+      "Sunderland Association Football Club",
+      15
+    ],
+    [
+      "Bologna Football Club 1909",
+      15
+    ],
+    [
+      "Racing Club de Strasbourg Alsace",
+      14
+    ],
+    [
+      "Leicester City",
+      12
+    ],
+    [
+      "Olympique Gymnaste Club Nice Côte d'Azur",
+      12
+    ],
+    [
+      "Parma Calcio 1913",
+      11
+    ],
+    [
+      "Torino Calcio",
+      11
+    ],
+    [
+      "Sportverein Werder Bremen von 1899",
+      11
+    ],
+    [
+      "Unione Sportiva Sassuolo Calcio",
+      11
+    ],
+    [
+      "Real Club Celta de Vigo S. A. D.",
+      10
+    ],
+    [
+      "Calcio Como",
+      9
+    ],
+    [
+      "Turn- und Sportgemeinschaft 1899 Hoffenheim Fußball-Spielbetriebs",
+      9
+    ],
+    [
+      "Girona Fútbol Club S. A. D.",
+      9
+    ],
+    [
+      "Udinese Calcio",
+      8
+    ],
+    [
+      "Genoa Cricket and Football Club",
+      8
+    ],
+    [
+      "1. Fußball- und Sportverein Mainz 05",
+      8
+    ],
+    [
+      "Pisa Sporting Club",
+      8
+    ],
+    [
+      "Southampton FC",
+      8
+    ],
+    [
+      "Stade brestois 29",
+      7
+    ],
+    [
+      "Fußball-Club Augsburg 1907",
+      7
+    ],
+    [
+      "Al-Hilal",
+      6
+    ],
+    [
+      "Racing Club de Lens",
+      6
+    ],
+    [
+      "Al-Ittihad",
+      5
+    ],
+    [
+      "Al-Ahli Sfc",
+      5
+    ],
+    [
+      "Verona Hellas Football Club",
+      5
+    ],
+    [
+      "Getafe Club de Fútbol S. A. D. Team Dubai",
+      5
+    ],
+    [
+      "1. Fußballclub Union Berlin",
+      5
+    ]
+  ],
+  "high_fame_without_match_examples": [
+    {
+      "name": "Ronaldo de Assis Moreira",
+      "fame_score": 96.42
+    },
+    {
+      "name": "Pele",
+      "fame_score": 95
+    },
+    {
+      "name": "Diego Maradona",
+      "fame_score": 95
+    },
+    {
+      "name": "Gheorghe Hagi",
+      "fame_score": 92.95
+    },
+    {
+      "name": "Hristo Stoichkov",
+      "fame_score": 92.29
+    },
+    {
+      "name": "Zinedine Zidane",
+      "fame_score": 88.8
+    },
+    {
+      "name": "Ronaldo Nazario",
+      "fame_score": 86.77
+    },
+    {
+      "name": "Ronaldinho",
+      "fame_score": 86.52
+    },
+    {
+      "name": "Xavi Hernandez",
+      "fame_score": 85.73
+    },
+    {
+      "name": "Thierry Henry",
+      "fame_score": 85.49
+    },
+    {
+      "name": "Iker Casillas",
+      "fame_score": 85.03
+    },
+    {
+      "name": "Paolo Maldini",
+      "fame_score": 84.89
+    },
+    {
+      "name": "Son Heung-min",
+      "fame_score": 83.7
+    },
+    {
+      "name": "Raul Gonzalez",
+      "fame_score": 83.65
+    },
+    {
+      "name": "Mesut Ozil",
+      "fame_score": 83.63
+    },
+    {
+      "name": "Alessandro Del Piero",
+      "fame_score": 83.58
+    },
+    {
+      "name": "N'Golo Kante",
+      "fame_score": 83.56
+    },
+    {
+      "name": "Roberto Carlos",
+      "fame_score": 83.39
+    },
+    {
+      "name": "Angel Di Maria",
+      "fame_score": 83.23
+    },
+    {
+      "name": "Samuel Eto'o",
+      "fame_score": 82.61
+    }
+  ]
+}

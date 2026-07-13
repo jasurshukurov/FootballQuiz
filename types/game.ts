@@ -16,7 +16,7 @@ export interface GuessResult {
     league: ComparisonResult;
     nationality: ComparisonResult;
     position: ComparisonResult;
-    marketValue: ComparisonResult;
+    age: ComparisonResult;
   };
   isCorrect: boolean;
 }

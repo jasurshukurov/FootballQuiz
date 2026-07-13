@@ -17,12 +17,7 @@ interface GameOverCardProps {
   onNextPlayer: () => void;
 }
 
-function GameOverCard({
-  playerName,
-  playerImage,
-  isWin,
-  onNextPlayer,
-}: GameOverCardProps) {
+function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOverCardProps) {
   const translateY = useSharedValue(50);
   const opacity = useSharedValue(0);
 
@@ -44,9 +39,7 @@ function GameOverCard({
           {isWin ? 'Correct!' : 'Game Over'}
         </Text>
 
-        {playerImage ? (
-          <Image source={{ uri: playerImage }} style={styles.image} />
-        ) : null}
+        {playerImage ? <Image source={{ uri: playerImage }} style={styles.image} /> : null}
 
         <Text style={styles.playerName}>{playerName}</Text>
 

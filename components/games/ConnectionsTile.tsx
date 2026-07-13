@@ -6,8 +6,8 @@ import Animated, {
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
 import { colors, fonts, borderRadius } from '@/constants/theme';
+import { triggerImpact } from '@/lib/haptics';
 
 interface ConnectionsTileProps {
   name: string;
@@ -61,11 +61,14 @@ export default function ConnectionsTile({
   };
 
   const handlePressOut = () => {
-    scale.value = withTiming(selected ? 1.03 : 1, { duration: 150, easing: Easing.out(Easing.quad) });
+    scale.value = withTiming(selected ? 1.03 : 1, {
+      duration: 150,
+      easing: Easing.out(Easing.quad),
+    });
   };
 
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerImpact();
     onPress();
   };
 
@@ -86,7 +89,11 @@ export default function ConnectionsTile({
       onPressOut={handlePressOut}
       disabled={disabled}
       style={[styles.tile, selected ? styles.selectedBg : styles.defaultBg, animatedStyle]}>
-      <Text style={[styles.tileText, selected && styles.selectedText]} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={2}>
+      <Text
+        style={[styles.tileText, selected && styles.selectedText]}
+        adjustsFontSizeToFit
+        minimumFontScale={0.7}
+        numberOfLines={2}>
         {name}
       </Text>
     </AnimatedPressable>

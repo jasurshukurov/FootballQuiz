@@ -2,10 +2,13 @@ import React, { useRef } from 'react';
 import { Modal, View, Text, StyleSheet } from 'react-native';
 
 import { GameStatus, GuessResult } from '@/types/game';
-import { captureAndShare } from '@/lib/sharing';
+import { buildShareText, whoAreYaStatusRows } from '@/lib/sharing';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { colors } from '@/constants/theme';
 import ShareableResult from '@/components/ShareableResult';
 import RetroButton from './RetroButton';
+import GameOverActions from './GameOverActions';
+import GameOverExtras from './GameOverExtras';
 import GlassCard from './GlassCard';
 
 interface ResultModalProps {
@@ -34,10 +37,16 @@ export default function ResultModal({
   const isWin = status === 'won';
   const shareRef = useRef<View>(null);
   const isGameOver = status === 'won' || status === 'lost';
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
-  const handleShare = () => {
-    captureAndShare(shareRef);
-  };
+  const shareText = buildShareText({
+    mode: 'who-are-ya',
+    dailyNumber,
+    dailyStreak,
+    won: isWin,
+    maxGuesses,
+    statusRows: whoAreYaStatusRows(guesses),
+  });
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
@@ -55,11 +64,22 @@ export default function ResultModal({
           )}
           {!isWin && <Text style={styles.loseText}>Better luck next time!</Text>}
           <View style={styles.buttons}>
-            {isGameOver && <RetroButton title="Share Result" onPress={handleShare} />}
-            <RetroButton title="Play Again" onPress={onPlayAgain} />
+            {isGameOver ? (
+              <GameOverActions
+                shareRef={shareRef}
+                shareText={shareText}
+                win={isWin}
+                onPlayAgain={onPlayAgain}
+                includeExtras={false}
+              />
+            ) : (
+              <RetroButton title="Play Again" onPress={onPlayAgain} />
+            )}
             <RetroButton title="Close" onPress={onClose} variant="secondary" />
           </View>
         </GlassCard>
+
+        {isGameOver && <GameOverExtras win={isWin} />}
 
         {/* Offscreen shareable view for capture */}
         <View style={styles.offscreen}>

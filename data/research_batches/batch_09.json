@@ -1,0 +1,440 @@
+{
+  "batch": 9,
+  "generated_utc": "2026-07-12T17:48:47.576691+00:00",
+  "reference_date": "2026-07-12",
+  "fame_min": 70,
+  "fame_range_in_batch": [
+    70.16,
+    70.88
+  ],
+  "count": 40,
+  "schema": {
+    "description": "Research each player's status as of 2026-07-12 and fill these fields. Do NOT change id or name. Save the completed file(s) as data/research_patches/patch_NN.json with the same {id, ...} objects.",
+    "fields": {
+      "id": "int - players_db id, unchanged (join key, do not edit)",
+      "name": "string - unchanged, for human reference",
+      "status": "'active' or 'retired'",
+      "current_team": "the club's COMMON name as of July 2026 (e.g. 'Real Madrid', 'Inter Miami', 'Al-Nassr'). For a RETIRED player, their LAST professional club. Name normalisation to the app's official club string happens automatically at apply time -- just give the common name.",
+      "league": "for ACTIVE players, one of known_leagues below (the club's current league). For RETIRED players LEAVE THIS OUT / null -- their last league is kept automatically; do NOT write 'Retired'.",
+      "market_value_eur": "integer euros, 0..300000000; use 0 for retired players",
+      "retired_year": "integer year if retired, otherwise null"
+    },
+    "known_leagues": [
+      "Premier League",
+      "La Liga",
+      "Serie A",
+      "Bundesliga",
+      "Ligue 1"
+    ],
+    "market_value_bounds_eur": [
+      0,
+      300000000
+    ],
+    "notes": [
+      "current_team is normalised at apply time; unresolvable clubs are logged to research_patches/unresolved_clubs.json and skipped (other fields still apply).",
+      "league is never set to 'Retired' or any new string -- retirement is carried by status + retired_year."
+    ]
+  },
+  "players": [
+    {
+      "id": 242086,
+      "name": "Patrik Schick",
+      "nationality": "Czech Republic",
+      "position": "Attack",
+      "current_team": "Bayer 04 Leverkusen Fußball",
+      "market_value": 27000000,
+      "fame_score": 70.88,
+      "birth_year": 1996
+    },
+    {
+      "id": 730581,
+      "name": "Loïc Badé",
+      "nationality": "France",
+      "position": "Defender",
+      "current_team": "Bayer 04 Leverkusen Fußball",
+      "market_value": 25000000,
+      "fame_score": 70.87,
+      "birth_year": 2000
+    },
+    {
+      "id": 257455,
+      "name": "João Palhinha",
+      "nationality": "Portugal",
+      "position": "Midfield",
+      "current_team": "Tottenham Hotspur Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.86,
+      "birth_year": 1995
+    },
+    {
+      "id": 842341,
+      "name": "Maxime Estève",
+      "nationality": "France",
+      "position": "Defender",
+      "current_team": "Burnley Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.86,
+      "birth_year": 2002
+    },
+    {
+      "id": 263236,
+      "name": "Kevin Danso",
+      "nationality": "Austria",
+      "position": "Defender",
+      "current_team": "Tottenham Hotspur Football Club",
+      "market_value": 22000000,
+      "fame_score": 70.77,
+      "birth_year": 1981
+    },
+    {
+      "id": 51152,
+      "name": "Aleksandar Mitrović",
+      "nationality": "Serbia",
+      "position": "Attack",
+      "current_team": "Al-Rayyan",
+      "market_value": 28000000,
+      "fame_score": 70.76,
+      "birth_year": 1994
+    },
+    {
+      "id": 741238,
+      "name": "Omari Hutchinson",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "Nottingham Forest Football Club",
+      "market_value": 30000000,
+      "fame_score": 70.74,
+      "birth_year": 2003
+    },
+    {
+      "id": 215,
+      "name": "Roque Santa Cruz",
+      "nationality": "Paraguay",
+      "position": "Attack",
+      "current_team": "Club Libertad Asunción",
+      "market_value": 250000,
+      "fame_score": 70.71,
+      "birth_year": 1981
+    },
+    {
+      "id": 401173,
+      "name": "Jadon Sancho",
+      "nationality": "England",
+      "position": "Attack",
+      "current_team": "Aston Villa Football Club",
+      "market_value": 20000000,
+      "fame_score": 70.71,
+      "birth_year": 1975
+    },
+    {
+      "id": 553875,
+      "name": "Pedro Porro",
+      "nationality": "Spain",
+      "position": "Defender",
+      "current_team": "Tottenham Hotspur Football Club",
+      "market_value": 40000000,
+      "fame_score": 70.71,
+      "birth_year": 1999
+    },
+    {
+      "id": 32816,
+      "name": "Danilo",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Nottingham Forest",
+      "market_value": 28000000,
+      "fame_score": 70.69,
+      "birth_year": 2001
+    },
+    {
+      "id": 145707,
+      "name": "Danilo",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Nottingham Forest",
+      "market_value": 28000000,
+      "fame_score": 70.69,
+      "birth_year": 2001
+    },
+    {
+      "id": 502821,
+      "name": "Riccardo Calafiori",
+      "nationality": "Italy",
+      "position": "Defender",
+      "current_team": "Arsenal Football Club",
+      "market_value": 50000000,
+      "fame_score": 70.69,
+      "birth_year": 2002
+    },
+    {
+      "id": 743600,
+      "name": "Andrey Santos",
+      "nationality": "Brazil",
+      "position": "Midfield",
+      "current_team": "Chelsea Football Club",
+      "market_value": 40000000,
+      "fame_score": 70.69,
+      "birth_year": 2004
+    },
+    {
+      "id": 808509,
+      "name": "Danilo",
+      "nationality": "Brazil",
+      "position": "Midfield",
+      "current_team": "Nottingham Forest Football Club",
+      "market_value": 28000000,
+      "fame_score": 70.69,
+      "birth_year": 2001
+    },
+    {
+      "id": 375885,
+      "name": "Ibrahim Sangaré",
+      "nationality": "Cote d'Ivoire",
+      "position": "Midfield",
+      "current_team": "Nottingham Forest Football Club",
+      "market_value": 22000000,
+      "fame_score": 70.66,
+      "birth_year": 1997
+    },
+    {
+      "id": 404842,
+      "name": "Vitaliy Mykolenko",
+      "nationality": "Ukraine",
+      "position": "Defender",
+      "current_team": "Everton Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.65,
+      "birth_year": 1999
+    },
+    {
+      "id": 810092,
+      "name": "Warren Zaïre-Emery",
+      "nationality": "France",
+      "position": "Midfield",
+      "current_team": "Paris Saint-Germain Football Club",
+      "market_value": 50000000,
+      "fame_score": 70.63,
+      "birth_year": 2006
+    },
+    {
+      "id": 503981,
+      "name": "Tino Livramento",
+      "nationality": "England",
+      "position": "Defender",
+      "current_team": "Newcastle United Football Club",
+      "market_value": 40000000,
+      "fame_score": 70.57,
+      "birth_year": 2002
+    },
+    {
+      "id": 333241,
+      "name": "Joelinton",
+      "nationality": "Brazil",
+      "position": "Midfield",
+      "current_team": "Newcastle United Football Club",
+      "market_value": 30000000,
+      "fame_score": 70.56,
+      "birth_year": 1996
+    },
+    {
+      "id": 739443,
+      "name": "Igor Thiago",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Brentford Football Club",
+      "market_value": 35000000,
+      "fame_score": 70.56,
+      "birth_year": 2001
+    },
+    {
+      "id": 890719,
+      "name": "Ethan Nwaneri",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "Olympique de Marseille",
+      "market_value": 40000000,
+      "fame_score": 70.49,
+      "birth_year": 2007
+    },
+    {
+      "id": 131789,
+      "name": "Roberto Firmino",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Al-Sadd Sc",
+      "market_value": 15000000,
+      "fame_score": 70.48,
+      "birth_year": 1983
+    },
+    {
+      "id": 578391,
+      "name": "Rayan Aït-Nouri",
+      "nationality": "Algeria",
+      "position": "Defender",
+      "current_team": "Manchester City Football Club",
+      "market_value": 40000000,
+      "fame_score": 70.47,
+      "birth_year": 2001
+    },
+    {
+      "id": 569366,
+      "name": "Enzo Millot",
+      "nationality": "France",
+      "position": "Midfield",
+      "current_team": "Verein für Bewegungsspiele Stuttgart 1893",
+      "market_value": 30000000,
+      "fame_score": 70.44,
+      "birth_year": 2002
+    },
+    {
+      "id": 937941,
+      "name": "Thierno Barry",
+      "nationality": "France",
+      "position": "Attack",
+      "current_team": "Everton Football Club",
+      "market_value": 30000000,
+      "fame_score": 70.4,
+      "birth_year": 2002
+    },
+    {
+      "id": 670882,
+      "name": "Jamie Gittens",
+      "nationality": "England",
+      "position": "Attack",
+      "current_team": "Chelsea Football Club",
+      "market_value": 40000000,
+      "fame_score": 70.39,
+      "birth_year": 2004
+    },
+    {
+      "id": 315969,
+      "name": "Scott McTominay",
+      "nationality": "Scotland",
+      "position": "Midfield",
+      "current_team": "Società Sportiva Calcio Napoli",
+      "market_value": 30000000,
+      "fame_score": 70.38,
+      "birth_year": 1996
+    },
+    {
+      "id": 5285,
+      "name": "Patrice Evra",
+      "nationality": "France",
+      "position": "Defender",
+      "current_team": "Olympique de Marseille",
+      "market_value": 1000000,
+      "fame_score": 70.37,
+      "birth_year": 1981
+    },
+    {
+      "id": 242631,
+      "name": "Alex Iwobi",
+      "nationality": "Nigeria",
+      "position": "Attack",
+      "current_team": "Fulham Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.36,
+      "birth_year": 1996
+    },
+    {
+      "id": 321528,
+      "name": "Denzel Dumfries",
+      "nationality": "Netherlands",
+      "position": "Defender",
+      "current_team": "Football Club Internazionale Milano S.p.A.",
+      "market_value": 27000000,
+      "fame_score": 70.32,
+      "birth_year": 1996
+    },
+    {
+      "id": 926952,
+      "name": "Patrick Dorgu",
+      "nationality": "Denmark",
+      "position": "Defender",
+      "current_team": "Manchester United Football Club",
+      "market_value": 30000000,
+      "fame_score": 70.3,
+      "birth_year": 2004
+    },
+    {
+      "id": 746910,
+      "name": "Mohamed Amoura",
+      "nationality": "Algeria",
+      "position": "Attack",
+      "current_team": "Verein für Leibesübungen Wolfsburg",
+      "market_value": 32000000,
+      "fame_score": 70.27,
+      "birth_year": 2000
+    },
+    {
+      "id": 894914,
+      "name": "Antonio Nusa",
+      "nationality": "Norway",
+      "position": "Attack",
+      "current_team": "RasenBallsport Leipzig",
+      "market_value": 28000000,
+      "fame_score": 70.27,
+      "birth_year": 2005
+    },
+    {
+      "id": 903693,
+      "name": "Senny Mayulu",
+      "nationality": "France",
+      "position": "Midfield",
+      "current_team": "Paris Saint-Germain Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.27,
+      "birth_year": 2006
+    },
+    {
+      "id": 938729,
+      "name": "Mikel Jauregizar",
+      "nationality": "Spain",
+      "position": "Midfield",
+      "current_team": "Athletic Club Bilbao",
+      "market_value": 30000000,
+      "fame_score": 70.27,
+      "birth_year": 2003
+    },
+    {
+      "id": 1005575,
+      "name": "Vitor Reis",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Girona Fútbol Club S. A. D.",
+      "market_value": 30000000,
+      "fame_score": 70.26,
+      "birth_year": 2006
+    },
+    {
+      "id": 810895,
+      "name": "Eliesse Ben Seghir",
+      "nationality": "Morocco",
+      "position": "Attack",
+      "current_team": "Bayer 04 Leverkusen Fußball",
+      "market_value": 28000000,
+      "fame_score": 70.2,
+      "birth_year": 2005
+    },
+    {
+      "id": 658536,
+      "name": "Simon Adingra",
+      "nationality": "Cote d'Ivoire",
+      "position": "Attack",
+      "current_team": "Association sportive de Monaco Football Club",
+      "market_value": 22000000,
+      "fame_score": 70.19,
+      "birth_year": 2002
+    },
+    {
+      "id": 343052,
+      "name": "Nicolas Pépé",
+      "nationality": "Cote d'Ivoire",
+      "position": "Attack",
+      "current_team": "Villarreal Club de Fútbol S.A.D.",
+      "market_value": 6000000,
+      "fame_score": 70.16,
+      "birth_year": 1995
+    }
+  ]
+}

@@ -11,7 +11,6 @@ import Animated, {
 
 import { AttributeStatus } from '@/types/game';
 import { colors, fonts, borderRadius as br } from '@/constants/theme';
-import TeamCrest from './TeamCrest';
 
 interface AttributeCellProps {
   label: string;
@@ -34,7 +33,7 @@ const statusIcons: Record<AttributeStatus, string> = {
   LOWER: ' \u2193',
 };
 
-function AttributeCell({ label, value, status, delay = 0 }: AttributeCellProps) {
+function AttributeCell({ value, status, delay = 0 }: AttributeCellProps) {
   const rotation = useSharedValue(0);
 
   useEffect(() => {
@@ -66,12 +65,11 @@ function AttributeCell({ label, value, status, delay = 0 }: AttributeCellProps) 
 
       {/* Back face (colored result) */}
       <Animated.View style={[styles.pill, { backgroundColor: statusColors[status] }, backStyle]}>
-        {label === 'Team' && (
-          <View style={styles.crestRow}>
-            <TeamCrest teamName={value} size={14} />
-          </View>
-        )}
-        <Text style={styles.valueText} adjustsFontSizeToFit minimumFontScale={0.65} numberOfLines={2}>
+        <Text
+          style={styles.valueText}
+          adjustsFontSizeToFit
+          minimumFontScale={0.65}
+          numberOfLines={2}>
           {value}
           {statusIcons[status]}
         </Text>
@@ -84,7 +82,7 @@ export default React.memo(AttributeCell);
 
 const styles = StyleSheet.create({
   wrapper: {
-    minHeight: 40,
+    height: 64,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    minHeight: 40,
+    height: 64,
     paddingHorizontal: 6,
     paddingVertical: 6,
     borderRadius: br.md,
@@ -111,13 +109,12 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.3)',
     textAlign: 'center',
   },
-  crestRow: {
-    marginBottom: 2,
-  },
   valueText: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 11,
+    fontFamily: fonts.heading,
+    fontSize: 13,
+    fontWeight: '700',
     color: colors.chalkWhite,
     textAlign: 'center',
+    letterSpacing: 0.5,
   },
 });

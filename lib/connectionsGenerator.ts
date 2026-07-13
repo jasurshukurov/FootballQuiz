@@ -1,21 +1,7 @@
 import { Player } from '@/types/player';
-import { getAllPlayers } from '@/lib/playerData';
+import { getAllPlayers, isActivePlayer, getFameForPlayer } from '@/lib/playerData';
 import { colors } from '@/constants/theme';
-
-const fameScoresData = require('@/data/fame_scores.json') as {
-  name: string;
-  fame_score: number;
-}[];
-
-const fameByName: Map<string, number> = new Map();
-for (const entry of fameScoresData) {
-  const norm = entry.name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-  fameByName.set(norm, entry.fame_score);
-}
+import { shortenClubName } from '@/lib/clubNames';
 
 export interface ConnectionsCategory {
   name: string;
@@ -84,7 +70,7 @@ function seededShuffle<T>(arr: T[], rand: () => number): T[] {
 }
 
 function getTeamLabel(team: string): string {
-  return TEAM_SHORT_NAMES[team] ?? team;
+  return TEAM_SHORT_NAMES[team] ?? shortenClubName(team);
 }
 
 function buildCategorySpecs(players: Player[]): CategorySpec[] {
@@ -96,18 +82,18 @@ function buildCategorySpecs(players: Player[]): CategorySpec[] {
   const byPosition = new Map<string, Player[]>();
   const byLeague = new Map<string, Player[]>();
 
+  // Skip blank/null attribute values so we never build a "null players" or
+  // " players" category from players with missing data.
+  const add = (map: Map<string, Player[]>, val: string | undefined | null, p: Player) => {
+    if (!val || String(val).trim() === '') return;
+    if (!map.has(val)) map.set(val, []);
+    map.get(val)!.push(p);
+  };
   for (const p of players) {
-    if (!byNationality.has(p.nationality)) byNationality.set(p.nationality, []);
-    byNationality.get(p.nationality)!.push(p);
-
-    if (!byTeam.has(p.current_team)) byTeam.set(p.current_team, []);
-    byTeam.get(p.current_team)!.push(p);
-
-    if (!byPosition.has(p.position)) byPosition.set(p.position, []);
-    byPosition.get(p.position)!.push(p);
-
-    if (!byLeague.has(p.league)) byLeague.set(p.league, []);
-    byLeague.get(p.league)!.push(p);
+    add(byNationality, p.nationality, p);
+    add(byTeam, p.current_team, p);
+    add(byPosition, p.position, p);
+    add(byLeague, p.league, p);
   }
 
   // Only include groups that have at least 4 players
@@ -137,8 +123,8 @@ function buildCategorySpecs(players: Player[]): CategorySpec[] {
 
 export function generateConnectionsPuzzle(seed: number): ConnectionsPuzzle {
   const allPlayers = getAllPlayers().filter((p) => {
-    const fame = fameByName.get(p.normalized_name);
-    return fame !== undefined && fame >= 55 && (p.last_season ?? 0) >= 2024;
+    const fame = getFameForPlayer(p)?.fame_score;
+    return fame !== undefined && fame >= 55 && isActivePlayer(p);
   });
   const players = allPlayers;
   const rand = createSeededRandom(seed);
@@ -169,38 +155,85 @@ export function generateConnectionsPuzzle(seed: number): ConnectionsPuzzle {
     if (chosenSpecs.length >= 4) break;
   }
 
-  // Second pass: fill remaining from any type
-  if (chosenSpecs.length < 4) {
-    for (const spec of shuffledSpecs) {
-      if (!chosenSpecs.some((c) => c.value === spec.value && c.type === spec.type)) {
-        chosenSpecs.push(spec);
-        if (chosenSpecs.length >= 4) break;
-      }
+  // Ordered candidate specs: the type-diverse picks first, then every other
+  // spec as fallback so name-collision rejections can't starve us below 4.
+  const orderedSpecs: CategorySpec[] = [...chosenSpecs];
+  for (const spec of shuffledSpecs) {
+    if (!orderedSpecs.some((c) => c.value === spec.value && c.type === spec.type)) {
+      orderedSpecs.push(spec);
     }
   }
 
-  // Now pick 4 unique players per category, ensuring no overlaps
+  // Pick 4 players per category with:
+  //  - UNIQUE ids AND unique display names across the whole board. Two different
+  //    players sharing a name (e.g. two "André Silva"s) render as identical tiles
+  //    and, since selection is a Set<string>, collapse and make a group unsolvable.
+  //  - CROSS-CATEGORY EXCLUSIVITY: none of the 16 chosen players may satisfy any
+  //    OTHER chosen category's criterion (e.g. a Slovenian goalkeeper fitting both
+  //    "Goalkeepers" and "Slovenia players"), which would create multiple valid
+  //    solutions. A spec is rejected deterministically if it can't be satisfied
+  //    exclusively, and we continue to the next candidate spec.
+  const matchesSpec = (p: Player, spec: CategorySpec): boolean => p[spec.type] === spec.value;
+
   const usedPlayerIds = new Set<number>();
+  const usedNames = new Set<string>();
+  const chosenPlayers: Player[] = [];
+  const committedSpecs: CategorySpec[] = [];
   const categories: ConnectionsCategory[] = [];
 
-  for (let i = 0; i < chosenSpecs.length; i++) {
-    const spec = chosenSpecs[i];
-    const eligible = players.filter((p) => p[spec.type] === spec.value && !usedPlayerIds.has(p.id));
-    const picked = seededShuffle(eligible, rand).slice(0, 4);
+  for (const spec of orderedSpecs) {
+    if (categories.length >= 4) break;
+    // Reject if an already-chosen player would also satisfy this new criterion.
+    if (chosenPlayers.some((p) => matchesSpec(p, spec))) continue;
 
+    const shuffled = seededShuffle(
+      players.filter(
+        (p) =>
+          matchesSpec(p, spec) &&
+          !usedPlayerIds.has(p.id) &&
+          // must NOT also belong to any already-chosen category's criterion
+          !committedSpecs.some((cs) => matchesSpec(p, cs)),
+      ),
+      rand,
+    );
+    const picked: Player[] = [];
+    const pickedNames = new Set<string>();
+    for (const p of shuffled) {
+      if (usedNames.has(p.name) || pickedNames.has(p.name)) continue;
+      picked.push(p);
+      pickedNames.add(p.name);
+      if (picked.length >= 4) break;
+    }
     if (picked.length < 4) continue;
 
-    for (const p of picked) usedPlayerIds.add(p.id);
-
+    for (const p of picked) {
+      usedPlayerIds.add(p.id);
+      usedNames.add(p.name);
+      chosenPlayers.push(p);
+    }
+    committedSpecs.push(spec);
     categories.push({
       name: spec.label,
-      color: CATEGORY_COLORS[categories.length] ?? CATEGORY_COLORS[0],
+      color: CATEGORY_COLORS[0], // reassigned after fame-ordering below
       playerNames: picked.map((p) => p.name),
-      difficulty: categories.length,
+      difficulty: 0,
     });
-
-    if (categories.length >= 4) break;
   }
+
+  // Order easy -> hard by mean member fame (higher fame = easier), mapping onto
+  // the existing green/yellow/red/purple colour ladder.
+  const meanFame = (c: ConnectionsCategory): number => {
+    const scores = c.playerNames.map((n) => {
+      const p = players.find((pl) => pl.name === n);
+      return (p && getFameForPlayer(p)?.fame_score) ?? 0;
+    });
+    return scores.reduce((a, b) => a + b, 0) / (scores.length || 1);
+  };
+  categories.sort((a, b) => meanFame(b) - meanFame(a));
+  categories.forEach((c, i) => {
+    c.color = CATEGORY_COLORS[i] ?? CATEGORY_COLORS[0];
+    c.difficulty = i;
+  });
 
   const allNames = categories.flatMap((c) => c.playerNames);
   const shuffledNames = seededShuffle(allNames, rand);

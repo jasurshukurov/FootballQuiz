@@ -3,6 +3,7 @@ import { StyleSheet, View, Platform } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { colors, fonts, borderRadius } from '@/constants/theme';
+import { triggerImpact } from '@/lib/haptics';
 
 function TabBarIcon({
   name,
@@ -24,6 +25,11 @@ function TabBarIcon({
 export default function TabLayout() {
   return (
     <Tabs
+      screenListeners={{
+        tabPress: () => {
+          triggerImpact();
+        },
+      }}
       screenOptions={{
         tabBarActiveTintColor: colors.pitchGreen,
         tabBarInactiveTintColor: colors.steelGray,
@@ -88,9 +94,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="support"
         options={{
-          title: 'Pro',
+          title: 'Support',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="star" color={color} focused={focused} />
+            <TabBarIcon name="heart" color={color} focused={focused} />
           ),
         }}
       />
@@ -103,16 +109,20 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* Hide old game screens from tabs - they're now accessed via /games/ routes */}
-      <Tabs.Screen name="explore" options={{ href: null }} />
-      <Tabs.Screen name="career" options={{ href: null }} />
-      <Tabs.Screen name="missing11" options={{ href: null }} />
-      <Tabs.Screen name="connections" options={{ href: null }} />
-      <Tabs.Screen name="badge" options={{ href: null }} />
-      <Tabs.Screen name="higherlower" options={{ href: null }} />
-      <Tabs.Screen name="agent" options={{ href: null }} />
-      <Tabs.Screen name="blindranking" options={{ href: null }} />
-      <Tabs.Screen name="careertimeline" options={{ href: null }} />
+      {/* Hidden from the tab bar (href: null) but still reachable via router.navigate;
+          give each a proper header title so it doesn't show the raw route name. */}
+      <Tabs.Screen name="explore" options={{ href: null, title: 'Immaculate Grid' }} />
+      <Tabs.Screen name="whoareya" options={{ href: null, title: 'My name is...' }} />
+      <Tabs.Screen name="missing11" options={{ href: null, title: 'Missing XI' }} />
+      <Tabs.Screen name="connections" options={{ href: null, title: 'Connections' }} />
+      <Tabs.Screen name="toplists" options={{ href: null, title: 'Top Lists' }} />
+      <Tabs.Screen name="higherlower" options={{ href: null, title: 'Higher / Lower' }} />
+      <Tabs.Screen name="agent" options={{ href: null, title: 'Transfer Agent' }} />
+      <Tabs.Screen name="blindranking" options={{ href: null, title: 'Blind Ranking' }} />
+      <Tabs.Screen name="careertimeline" options={{ href: null, title: 'Career Timeline' }} />
+      <Tabs.Screen name="marketmovers" options={{ href: null, title: 'Market Movers' }} />
+      <Tabs.Screen name="guessmatch" options={{ href: null, title: 'Guess the Match' }} />
+      <Tabs.Screen name="archive" options={{ href: null, title: 'Archive' }} />
     </Tabs>
   );
 }

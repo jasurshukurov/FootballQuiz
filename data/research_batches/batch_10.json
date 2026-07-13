@@ -1,0 +1,110 @@
+{
+  "batch": 10,
+  "generated_utc": "2026-07-12T17:48:47.576691+00:00",
+  "reference_date": "2026-07-12",
+  "fame_min": 70,
+  "fame_range_in_batch": [
+    70.01,
+    70.12
+  ],
+  "count": 7,
+  "schema": {
+    "description": "Research each player's status as of 2026-07-12 and fill these fields. Do NOT change id or name. Save the completed file(s) as data/research_patches/patch_NN.json with the same {id, ...} objects.",
+    "fields": {
+      "id": "int - players_db id, unchanged (join key, do not edit)",
+      "name": "string - unchanged, for human reference",
+      "status": "'active' or 'retired'",
+      "current_team": "the club's COMMON name as of July 2026 (e.g. 'Real Madrid', 'Inter Miami', 'Al-Nassr'). For a RETIRED player, their LAST professional club. Name normalisation to the app's official club string happens automatically at apply time -- just give the common name.",
+      "league": "for ACTIVE players, one of known_leagues below (the club's current league). For RETIRED players LEAVE THIS OUT / null -- their last league is kept automatically; do NOT write 'Retired'.",
+      "market_value_eur": "integer euros, 0..300000000; use 0 for retired players",
+      "retired_year": "integer year if retired, otherwise null"
+    },
+    "known_leagues": [
+      "Premier League",
+      "La Liga",
+      "Serie A",
+      "Bundesliga",
+      "Ligue 1"
+    ],
+    "market_value_bounds_eur": [
+      0,
+      300000000
+    ],
+    "notes": [
+      "current_team is normalised at apply time; unresolvable clubs are logged to research_patches/unresolved_clubs.json and skipped (other fields still apply).",
+      "league is never set to 'Retired' or any new string -- retirement is carried by status + retired_year."
+    ]
+  },
+  "players": [
+    {
+      "id": 601883,
+      "name": "Matheus Nunes",
+      "nationality": "Portugal",
+      "position": "Defender",
+      "current_team": "Manchester City Football Club",
+      "market_value": 38000000,
+      "fame_score": 70.12,
+      "birth_year": 1998
+    },
+    {
+      "id": 388198,
+      "name": "Nico Schlotterbeck",
+      "nationality": "Germany",
+      "position": "Defender",
+      "current_team": "Borussia Dortmund",
+      "market_value": 40000000,
+      "fame_score": 70.09,
+      "birth_year": 1999
+    },
+    {
+      "id": 648195,
+      "name": "Enzo Fernández",
+      "nationality": "Argentina",
+      "position": "Midfield",
+      "current_team": "Chelsea Football Club",
+      "market_value": 85000000,
+      "fame_score": 70.07,
+      "birth_year": 2001
+    },
+    {
+      "id": 730893,
+      "name": "Tyrick Mitchell",
+      "nationality": "England",
+      "position": "Defender",
+      "current_team": "Crystal Palace Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.07,
+      "birth_year": 1999
+    },
+    {
+      "id": 80444,
+      "name": "Philippe Coutinho",
+      "nationality": "Brazil",
+      "position": "Midfield",
+      "current_team": "Clube De Regatas Vasco Da Gama",
+      "market_value": 7500000,
+      "fame_score": 70.04,
+      "birth_year": 1992
+    },
+    {
+      "id": 717411,
+      "name": "Yegor Yarmolyuk",
+      "nationality": "Ukraine",
+      "position": "Midfield",
+      "current_team": "Brentford Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.04,
+      "birth_year": 2004
+    },
+    {
+      "id": 418543,
+      "name": "Perr Schuurs",
+      "nationality": "Netherlands",
+      "position": "Defender",
+      "current_team": "Torino Calcio",
+      "market_value": 25000000,
+      "fame_score": 70.01,
+      "birth_year": 1999
+    }
+  ]
+}

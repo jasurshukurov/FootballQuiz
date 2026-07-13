@@ -1,0 +1,334 @@
+{
+  "note": "fame_score>=70 entries with no players_db row (mostly pre-DB legends). Not patchable by id; handle separately if needed.",
+  "count": 82,
+  "players": [
+    {
+      "name": "Ronaldo de Assis Moreira",
+      "fame_score": 96.42
+    },
+    {
+      "name": "Pele",
+      "fame_score": 95
+    },
+    {
+      "name": "Diego Maradona",
+      "fame_score": 95
+    },
+    {
+      "name": "Gheorghe Hagi",
+      "fame_score": 92.95
+    },
+    {
+      "name": "Hristo Stoichkov",
+      "fame_score": 92.29
+    },
+    {
+      "name": "Zinedine Zidane",
+      "fame_score": 88.8
+    },
+    {
+      "name": "Ronaldo Nazario",
+      "fame_score": 86.77
+    },
+    {
+      "name": "Ronaldinho",
+      "fame_score": 86.52
+    },
+    {
+      "name": "Xavi Hernandez",
+      "fame_score": 85.73
+    },
+    {
+      "name": "Thierry Henry",
+      "fame_score": 85.49
+    },
+    {
+      "name": "Iker Casillas",
+      "fame_score": 85.03
+    },
+    {
+      "name": "Paolo Maldini",
+      "fame_score": 84.89
+    },
+    {
+      "name": "Son Heung-min",
+      "fame_score": 83.7
+    },
+    {
+      "name": "Raul Gonzalez",
+      "fame_score": 83.65
+    },
+    {
+      "name": "Mesut Ozil",
+      "fame_score": 83.63
+    },
+    {
+      "name": "Alessandro Del Piero",
+      "fame_score": 83.58
+    },
+    {
+      "name": "N'Golo Kante",
+      "fame_score": 83.56
+    },
+    {
+      "name": "Roberto Carlos",
+      "fame_score": 83.39
+    },
+    {
+      "name": "Angel Di Maria",
+      "fame_score": 83.23
+    },
+    {
+      "name": "Samuel Eto'o",
+      "fame_score": 82.61
+    },
+    {
+      "name": "Thiago Silva",
+      "fame_score": 82.5
+    },
+    {
+      "name": "James Rodriguez",
+      "fame_score": 82.47
+    },
+    {
+      "name": "Arjen Robben",
+      "fame_score": 82.05
+    },
+    {
+      "name": "Alisson Becker",
+      "fame_score": 81.8
+    },
+    {
+      "name": "Raheem Sterling",
+      "fame_score": 81.54
+    },
+    {
+      "name": "Franz Beckenbauer",
+      "fame_score": 81.47
+    },
+    {
+      "name": "Leonardo Bonucci",
+      "fame_score": 81.19
+    },
+    {
+      "name": "Fabio Cannavaro",
+      "fame_score": 81.17
+    },
+    {
+      "name": "Alessandro Nesta",
+      "fame_score": 81.14
+    },
+    {
+      "name": "Johan Cruyff",
+      "fame_score": 81.13
+    },
+    {
+      "name": "Ilkay Gundogan",
+      "fame_score": 81.09
+    },
+    {
+      "name": "Robin van Persie",
+      "fame_score": 80.71
+    },
+    {
+      "name": "Rivaldo",
+      "fame_score": 80.51
+    },
+    {
+      "name": "Pepe",
+      "fame_score": 80.22
+    },
+    {
+      "name": "Romario",
+      "fame_score": 80.16
+    },
+    {
+      "name": "Michael Ballack",
+      "fame_score": 80.1
+    },
+    {
+      "name": "Patrick Vieira",
+      "fame_score": 79.99
+    },
+    {
+      "name": "Oliver Kahn",
+      "fame_score": 79.73
+    },
+    {
+      "name": "Yaya Toure",
+      "fame_score": 79.47
+    },
+    {
+      "name": "Michel Platini",
+      "fame_score": 79.02
+    },
+    {
+      "name": "Gabriel Batistuta",
+      "fame_score": 79.01
+    },
+    {
+      "name": "Victor Osimhen",
+      "fame_score": 78.87
+    },
+    {
+      "name": "Dennis Bergkamp",
+      "fame_score": 78.6
+    },
+    {
+      "name": "Franco Baresi",
+      "fame_score": 78.49
+    },
+    {
+      "name": "Alan Shearer",
+      "fame_score": 78.48
+    },
+    {
+      "name": "Lilian Thuram",
+      "fame_score": 78.29
+    },
+    {
+      "name": "Roy Keane",
+      "fame_score": 78.28
+    },
+    {
+      "name": "Edwin van der Sar",
+      "fame_score": 78.26
+    },
+    {
+      "name": "Hernan Crespo",
+      "fame_score": 77.64
+    },
+    {
+      "name": "Dimitar Berbatov",
+      "fame_score": 77.5
+    },
+    {
+      "name": "Juan Roman Riquelme",
+      "fame_score": 77.14
+    },
+    {
+      "name": "Marcel Desailly",
+      "fame_score": 77.06
+    },
+    {
+      "name": "Mario Balotelli",
+      "fame_score": 77.05
+    },
+    {
+      "name": "Alfredo Di Stefano",
+      "fame_score": 76.97
+    },
+    {
+      "name": "Michael Essien",
+      "fame_score": 76.9
+    },
+    {
+      "name": "Roberto Baggio",
+      "fame_score": 76.77
+    },
+    {
+      "name": "Robert Pires",
+      "fame_score": 76.42
+    },
+    {
+      "name": "Park Ji-sung",
+      "fame_score": 76.05
+    },
+    {
+      "name": "Sol Campbell",
+      "fame_score": 75.9
+    },
+    {
+      "name": "Peter Schmeichel",
+      "fame_score": 75.68
+    },
+    {
+      "name": "Gianfranco Zola",
+      "fame_score": 75.57
+    },
+    {
+      "name": "Marco van Basten",
+      "fame_score": 75.54
+    },
+    {
+      "name": "Claude Makelele",
+      "fame_score": 75.13
+    },
+    {
+      "name": "Eric Cantona",
+      "fame_score": 74.59
+    },
+    {
+      "name": "Ruud Gullit",
+      "fame_score": 74.48
+    },
+    {
+      "name": "Eusebio",
+      "fame_score": 73.93
+    },
+    {
+      "name": "Juan Mata",
+      "fame_score": 73.09
+    },
+    {
+      "name": "Andre Onana",
+      "fame_score": 72.77
+    },
+    {
+      "name": "Robbie Fowler",
+      "fame_score": 72.75
+    },
+    {
+      "name": "Jay-Jay Okocha",
+      "fame_score": 72.64
+    },
+    {
+      "name": "Lev Yashin",
+      "fame_score": 72.62
+    },
+    {
+      "name": "Hidetoshi Nakata",
+      "fame_score": 72.55
+    },
+    {
+      "name": "Tim Cahill",
+      "fame_score": 72.36
+    },
+    {
+      "name": "George Weah",
+      "fame_score": 72.3
+    },
+    {
+      "name": "Keisuke Honda",
+      "fame_score": 72.27
+    },
+    {
+      "name": "Adriano",
+      "fame_score": 72.25
+    },
+    {
+      "name": "Shinji Kagawa",
+      "fame_score": 72.2
+    },
+    {
+      "name": "George Best",
+      "fame_score": 71.8
+    },
+    {
+      "name": "Hakim Ziyech",
+      "fame_score": 71.68
+    },
+    {
+      "name": "Clarence Seedorf",
+      "fame_score": 71
+    },
+    {
+      "name": "Leroy Sane",
+      "fame_score": 70.56
+    },
+    {
+      "name": "Marek Hamsik",
+      "fame_score": 70.33
+    }
+  ]
+}

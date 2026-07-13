@@ -1,15 +1,14 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getTodayDateString, getYesterdayDateString } from '@/lib/dailySeed';
 
 function getToday(): string {
-  return new Date().toISOString().split('T')[0];
+  return getTodayDateString();
 }
 
 function getYesterday(): string {
-  const d = new Date();
-  d.setDate(d.getDate() - 1);
-  return d.toISOString().split('T')[0];
+  return getYesterdayDateString();
 }
 
 interface DailyState {
@@ -27,6 +26,10 @@ interface DailyState {
 
 interface DailyActions {
   checkAndUpdateStreak: () => void;
+  /** Marks today as "kept" for the daily streak. Idempotent per day so it can be
+   *  called from any completed mode without double-counting. */
+  keepStreak: () => void;
+  /** Records Who Are Ya-specific win/loss + guess distribution stats. */
   recordCompletion: (won: boolean, guessCount: number) => void;
   repairStreak: () => void;
 }
@@ -62,37 +65,36 @@ export const useDailyStateStore = create<DailyStore>()(
         });
       },
 
-      recordCompletion: (won: boolean, guessCount: number) => {
+      keepStreak: () => {
         const state = get();
         const today = getToday();
         const yesterday = getYesterday();
 
-        const newGamesPlayed = state.gamesPlayed + 1;
-        const newGamesWon = won ? state.gamesWon + 1 : state.gamesWon;
+        // Already counted today - streak is a once-per-day event.
+        if (state.lastCompletedDate === today) return;
+
+        const newStreak = state.lastCompletedDate === yesterday ? state.currentStreak + 1 : 1;
+
+        set({
+          lastPlayedDate: today,
+          lastCompletedDate: today,
+          currentStreak: newStreak,
+          maxStreak: Math.max(newStreak, state.maxStreak),
+        });
+      },
+
+      recordCompletion: (won: boolean, guessCount: number) => {
+        const state = get();
 
         const newDistribution = [...state.guessDistribution];
         if (won && guessCount >= 1 && guessCount <= 8) {
           newDistribution[guessCount - 1]++;
         }
 
-        let newStreak: number;
-        if (state.lastCompletedDate === yesterday) {
-          newStreak = state.currentStreak + 1;
-        } else if (state.lastCompletedDate === today) {
-          // Already recorded today, no change
-          newStreak = state.currentStreak;
-        } else {
-          newStreak = 1;
-        }
-
         set({
-          lastPlayedDate: today,
-          lastCompletedDate: today,
-          gamesPlayed: newGamesPlayed,
-          gamesWon: newGamesWon,
+          gamesPlayed: state.gamesPlayed + 1,
+          gamesWon: won ? state.gamesWon + 1 : state.gamesWon,
           guessDistribution: newDistribution,
-          currentStreak: newStreak,
-          maxStreak: Math.max(newStreak, state.maxStreak),
         });
       },
 

@@ -24,7 +24,6 @@ interface TimelineNodeProps {
 
 export default function TimelineNode({
   node,
-  index,
   isFirst,
   isLast,
   isActive,
@@ -123,7 +122,7 @@ export default function TimelineNode({
             {!node.hintRevealed && onHintPress && (
               <Pressable style={styles.hintButton} onPress={onHintPress} hitSlop={8}>
                 <FontAwesome name="lightbulb-o" size={14} color={colors.cardYellow} />
-                <Text style={styles.hintButtonText}>Hint</Text>
+                <Text style={styles.hintButtonText}>Hint (−5 XP)</Text>
               </Pressable>
             )}
           </View>

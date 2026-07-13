@@ -90,8 +90,7 @@ function PlayerSearchAutocomplete({
     ({ item }: { item: Player }) => (
       <Pressable
         style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
-        onPress={() => handleSelect(item)}
-      >
+        onPress={() => handleSelect(item)}>
         <Text style={styles.playerName}>{item.name}</Text>
         <Text style={styles.playerTeam}>{item.current_team}</Text>
       </Pressable>
@@ -106,12 +105,7 @@ function PlayerSearchAutocomplete({
   return (
     <View style={styles.wrapper}>
       <View style={styles.inputContainer}>
-        <FontAwesome
-          name="search"
-          size={16}
-          color={colors.steelGray}
-          style={styles.searchIcon}
-        />
+        <FontAwesome name="search" size={16} color={colors.steelGray} style={styles.searchIcon} />
         <TextInput
           ref={inputRef}
           style={styles.input}

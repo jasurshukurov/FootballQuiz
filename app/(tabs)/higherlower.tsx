@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -6,21 +6,30 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
+import { NotificationFeedbackType } from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { triggerNotification } from '@/lib/haptics';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Player } from '@/types/player';
 import { colors, fonts, spacing, borderRadius, shadows, gradients } from '@/constants/theme';
-import { generatePlayerQueue, formatMarketValue, getPlayerDifficulty } from '@/lib/higherLowerGenerator';
+import {
+  generatePlayerQueue,
+  formatMarketValue,
+  getPlayerDifficulty,
+} from '@/lib/higherLowerGenerator';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
+import { getModeSeed } from '@/lib/dailySeed';
 import StatCard from '@/components/games/StatCard';
-import RetroButton from '@/components/ui/RetroButton';
+import GameOverActions from '@/components/ui/GameOverActions';
 import ShakeView from '@/components/ui/ShakeView';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import ShareableHigherLowerResult from '@/components/ShareableHigherLowerResult';
-import { captureAndShare } from '@/lib/sharing';
+import { buildShareText } from '@/lib/sharing';
 import { playCrossbar } from '@/lib/sounds';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 const HIGH_SCORE_KEY = '@higherlower_highscore';
 const QUEUE_SIZE = 100;
@@ -36,7 +45,9 @@ export default function HigherLowerScreen() {
   const [showChallengerValue, setShowChallengerValue] = useState(false);
   const [shakeWrong, setShakeWrong] = useState(false);
   const seedRef = useRef(Date.now());
+  const isFirstGame = useRef(true);
   const shareRef = useRef<View>(null);
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
   const slideX = useSharedValue(0);
   const challengerOpacity = useSharedValue(1);
@@ -54,7 +65,8 @@ export default function HigherLowerScreen() {
 
   // Initialize game
   const startGame = useCallback(() => {
-    const seed = Date.now();
+    const seed = isFirstGame.current ? getModeSeed('higherlower') : Date.now();
+    isFirstGame.current = false;
     seedRef.current = seed;
     const players = generatePlayerQueue(seed, QUEUE_SIZE);
     setQueue(players);
@@ -117,7 +129,7 @@ export default function HigherLowerScreen() {
         (guess === 'lower' && challengerVal <= currentVal);
 
       if (isCorrect) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        triggerNotification(NotificationFeedbackType.Success);
         const newStreak = streak + 1;
         setStreak(newStreak);
         saveHighScore(newStreak);
@@ -132,7 +144,7 @@ export default function HigherLowerScreen() {
           });
         }, 1000);
       } else {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        triggerNotification(NotificationFeedbackType.Error);
         setShakeWrong(true);
         saveHighScore(streak);
         useManagerStore.getState().addXp('higher-lower', streak * 10);
@@ -162,6 +174,17 @@ export default function HigherLowerScreen() {
   const challengerAnimStyle = useAnimatedStyle(() => ({
     opacity: challengerOpacity.value,
   }));
+
+  const shareText = useMemo(
+    () =>
+      buildShareText({
+        mode: 'higherlower',
+        dailyNumber: getDailyNumber(),
+        dailyStreak,
+        streak,
+      }),
+    [dailyStreak, streak],
+  );
 
   if (!currentPlayer || !challengerPlayer) {
     return (
@@ -197,12 +220,13 @@ export default function HigherLowerScreen() {
                 {challengerPlayer.name}: {formatMarketValue(challengerPlayer.market_value)}
               </Text>
             </View>
-            <View style={styles.playAgainButton}>
-              <RetroButton title="Share Result" onPress={() => captureAndShare(shareRef)} />
-            </View>
-            <View style={styles.playAgainButton}>
-              <RetroButton title="PLAY AGAIN" onPress={startGame} variant="primary" />
-            </View>
+            <GameOverActions
+              shareRef={shareRef}
+              shareText={shareText}
+              win={streak >= 10}
+              onPlayAgain={startGame}
+              playAgainLabel="PLAY AGAIN"
+            />
           </View>
           {/* Offscreen shareable view */}
           <View style={styles.offscreen}>
@@ -284,6 +308,11 @@ export default function HigherLowerScreen() {
             <Text style={styles.lowerText}>LOWER</Text>
           </Pressable>
         </View>
+        <TutorialOverlay
+          modeKey="higherlower"
+          title="Higher or Lower"
+          description="Is the next player worth more or less? Build the longest streak you can!"
+        />
       </SafeAreaView>
     </LinearGradient>
   );

@@ -1,19 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { colors, fonts, gradients } from '@/constants/theme';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 
 interface ShareableHigherLowerResultProps {
   streak: number;
 }
 
 export default function ShareableHigherLowerResult({ streak }: ShareableHigherLowerResultProps) {
+  const currentStreak = useDailyStateStore((s) => s.currentStreak);
+
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={gradients.screenBg} style={styles.container}>
+      <Text style={styles.branding}>FOOTBALL QUIZ</Text>
       <Text style={styles.title}>Higher / Lower</Text>
       <Text style={styles.streakLabel}>STREAK</Text>
       <Text style={styles.streakValue}>{streak}</Text>
-      <Text style={styles.tagline}>Can you beat my score? #FootballQuiz2025</Text>
-      <Text style={styles.footer}>footballquiz.app</Text>
-    </View>
+      {currentStreak > 0 && <Text style={styles.dailyStreak}>{currentStreak} day streak</Text>}
+      <Text style={styles.cta}>Can you beat my score? Play at footballquiz.app</Text>
+    </LinearGradient>
   );
 }
 
@@ -21,37 +28,46 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     borderRadius: 16,
-    backgroundColor: '#1A1A2E',
-    padding: 24,
-    minWidth: 240,
+    paddingVertical: 32,
+    paddingHorizontal: 24,
+    minWidth: 320,
+  },
+  branding: {
+    fontSize: 28,
+    fontFamily: fonts.heading,
+    color: colors.pitchGreen,
+    marginBottom: 16,
+    letterSpacing: 2,
   },
   title: {
     marginBottom: 16,
     fontSize: 18,
-    fontFamily: 'BarlowCondensed-Bold',
-    color: '#F5F5F0',
+    fontFamily: fonts.heading,
+    color: colors.chalkWhite,
   },
   streakLabel: {
     fontSize: 12,
-    fontFamily: 'BarlowCondensed-SemiBold',
+    fontFamily: fonts.subheading,
     color: 'rgba(245,245,240,0.6)',
     letterSpacing: 3,
   },
   streakValue: {
-    fontSize: 64,
-    fontFamily: 'BarlowCondensed-Bold',
-    color: '#05F26C',
+    fontSize: 72,
+    fontFamily: fonts.heading,
+    color: colors.pitchGreen,
     marginBottom: 8,
   },
-  tagline: {
-    marginTop: 16,
-    fontSize: 12,
-    fontFamily: 'BarlowCondensed-SemiBold',
-    color: 'rgba(245,245,240,0.6)',
-  },
-  footer: {
+  dailyStreak: {
     marginTop: 8,
-    fontSize: 12,
-    color: '#6C757D',
+    fontSize: 14,
+    fontFamily: fonts.subheading,
+    color: colors.pitchGreen,
+  },
+  cta: {
+    marginTop: 16,
+    fontSize: 11,
+    fontFamily: fonts.body,
+    color: colors.steelGray,
+    textAlign: 'center',
   },
 });

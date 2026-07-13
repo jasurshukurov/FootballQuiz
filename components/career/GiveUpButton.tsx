@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import { fonts } from '@/constants/theme';
+import { triggerImpact } from '@/lib/haptics';
+import { ImpactFeedbackStyle } from 'expo-haptics';
 
 interface GiveUpButtonProps {
   onGiveUp: () => void;
@@ -11,7 +12,7 @@ function GiveUpButton({ onGiveUp }: GiveUpButtonProps) {
   const [pressing, setPressing] = useState(false);
 
   const handleLongPress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    triggerImpact(ImpactFeedbackStyle.Heavy);
     onGiveUp();
   };
 
@@ -22,8 +23,7 @@ function GiveUpButton({ onGiveUp }: GiveUpButtonProps) {
         delayLongPress={500}
         onPressIn={() => setPressing(true)}
         onPressOut={() => setPressing(false)}
-        style={[styles.button, pressing && styles.buttonPressed]}
-      >
+        style={[styles.button, pressing && styles.buttonPressed]}>
         <Text style={styles.label}>Give Up</Text>
       </Pressable>
       <Text style={styles.hint}>Hold to reveal</Text>

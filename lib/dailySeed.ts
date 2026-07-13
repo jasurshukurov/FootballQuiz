@@ -27,6 +27,36 @@ export function getModeSeed(mode: string, dateStr?: string): number {
   return Math.abs(baseSeed ^ modeHash);
 }
 
+/** Formats a Date as YYYY-MM-DD using its LOCAL calendar parts (Wordle-style),
+ *  so the daily rollover happens at the player's local midnight rather than UTC. */
+function formatLocalDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 export function getTodayDateString(): string {
-  return new Date().toISOString().split('T')[0];
+  return formatLocalDate(new Date());
+}
+
+export function getYesterdayDateString(): string {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return formatLocalDate(d);
+}
+
+/**
+ * Seeded pseudo-random number generator (mulberry32). Returns a function that
+ * yields deterministic values in [0, 1) for a given seed, so board shuffles and
+ * random picks can be reproduced identically for every player on a given day.
+ */
+export function createSeededRandom(seed: number): () => number {
+  let s = seed | 0;
+  return () => {
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/theme';
+import { triggerImpact } from '@/lib/haptics';
 import PopInView from './PopInView';
 import ShakeView from './ShakeView';
 
@@ -38,7 +38,7 @@ function GridCell({ state, playerName, onPress, disabled = false }: GridCellProp
   const dynamicStyle = pressed && !isDisabled ? pressedStateStyleMap[state] : stateStyleMap[state];
 
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerImpact();
     onPress?.();
   };
 
@@ -53,7 +53,11 @@ function GridCell({ state, playerName, onPress, disabled = false }: GridCellProp
         { borderColor: dynamicStyle.borderColor, backgroundColor: dynamicStyle.backgroundColor },
       ]}>
       {playerName ? (
-        <Text style={styles.playerName} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={2}>
+        <Text
+          style={styles.playerName}
+          adjustsFontSizeToFit
+          minimumFontScale={0.7}
+          numberOfLines={2}>
           {playerName}
         </Text>
       ) : (

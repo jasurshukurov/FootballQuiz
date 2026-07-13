@@ -1,5 +1,6 @@
-import { CareerEntry, CareerPlayer } from '@/types/career';
+import { CareerEntry } from '@/types/career';
 import { getAllCareerPlayers } from './careerData';
+import { rotatingPick, ROTATION_SALT } from './dailyRotation';
 
 export interface TimelineNode {
   club: string;
@@ -27,15 +28,26 @@ function seededRandom(seed: number): () => number {
   };
 }
 
-export function generateCareerTimelinePuzzle(seed: number): CareerTimelinePuzzle {
+/**
+ * @param seed    hash seed (drives which middle clubs are hidden)
+ * @param dayIndex when provided (daily play), selects the player via a
+ *   repeat-free rotation walk; when omitted (Play Again), the player is chosen
+ *   randomly from the hash seed.
+ */
+export function generateCareerTimelinePuzzle(
+  seed: number,
+  dayIndex?: number,
+): CareerTimelinePuzzle {
   const rng = seededRandom(seed);
   const allPlayers = getAllCareerPlayers();
   // Only pick well-known players (beginner/amateur/semi_pro tiers = most famous)
   const FAMOUS_TIERS = new Set(['beginner', 'amateur', 'semi_pro']);
   const eligible = allPlayers.filter((p) => p.career.length >= 3 && FAMOUS_TIERS.has(p.tier));
 
-  const playerIndex = Math.floor(rng() * eligible.length);
-  const player = eligible[playerIndex];
+  const player =
+    dayIndex === undefined
+      ? eligible[Math.floor(rng() * eligible.length)]
+      : rotatingPick(eligible, dayIndex, ROTATION_SALT.careerTimeline);
 
   const nodes: TimelineNode[] = player.career.map((entry: CareerEntry, i: number) => {
     const isFirst = i === 0;
@@ -62,16 +74,20 @@ export function generateCareerTimelinePuzzle(seed: number): CareerTimelinePuzzle
     };
   });
 
-  // Ensure at least 1 is hidden
-  const hiddenCount = nodes.filter((n) => n.isHidden).length;
-  if (hiddenCount === 0) {
-    // Pick a random middle node to hide
-    const middleIndices: number[] = [];
-    for (let i = 1; i < nodes.length - 1; i++) {
-      middleIndices.push(i);
+  // Hide at least 2 middle clubs when the career is long enough (>=4 stints);
+  // for a 3-stint career only the single middle node can be hidden.
+  const middleIndices: number[] = [];
+  for (let i = 1; i < nodes.length - 1; i++) middleIndices.push(i);
+  const desiredHidden = Math.min(2, middleIndices.length);
+  const hiddenSet = new Set(middleIndices.filter((i) => nodes[i].isHidden));
+  // Deterministically hide more middle nodes until we reach the desired count.
+  const shuffledMiddles = [...middleIndices].sort(() => rng() - 0.5);
+  for (const idx of shuffledMiddles) {
+    if (hiddenSet.size >= desiredHidden) break;
+    if (!hiddenSet.has(idx)) {
+      nodes[idx].isHidden = true;
+      hiddenSet.add(idx);
     }
-    const pickIdx = middleIndices[Math.floor(rng() * middleIndices.length)];
-    nodes[pickIdx].isHidden = true;
   }
 
   const totalHidden = nodes.filter((n) => n.isHidden).length;
@@ -102,7 +118,7 @@ const CLUB_ALIASES: Record<string, string[]> = {
   'fc barcelona': ['barca', 'barcelona'],
   'real madrid': ['real'],
   'bayern munich': ['bayern', 'fc bayern munchen', 'fc bayern münchen'],
-  'juventus': ['juve'],
+  juventus: ['juve'],
   'inter milan': ['inter', 'internazionale'],
   'atletico madrid': ['atletico', 'atletico de madrid', 'atlético de madrid'],
   'tottenham hotspur': ['spurs', 'tottenham'],

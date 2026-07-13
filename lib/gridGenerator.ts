@@ -1,6 +1,7 @@
 import { Player } from '@/types/player';
 import { CriteriaType, Grid, GridCell, GridCriteria } from '@/types/grid';
 import { getPlayersByField } from '@/lib/playerData';
+import { shortenClubName } from '@/lib/clubNames';
 
 const CRITERIA_POOLS: Record<CriteriaType, string[]> = {
   current_team: [
@@ -26,7 +27,17 @@ const CRITERIA_POOLS: Record<CriteriaType, string[]> = {
     'Paris Saint-Germain Football Club',
   ],
   league: ['Serie A', 'La Liga', 'Ligue 1', 'Premier League', 'Bundesliga'],
-  nationality: ['Italy', 'Spain', 'France', 'Germany', 'England', 'Brazil', 'Argentina', 'Portugal', 'Netherlands'],
+  nationality: [
+    'Italy',
+    'Spain',
+    'France',
+    'Germany',
+    'England',
+    'Brazil',
+    'Argentina',
+    'Portugal',
+    'Netherlands',
+  ],
   position: ['Attack', 'Defender', 'Goalkeeper', 'Midfield'],
 };
 
@@ -55,7 +66,7 @@ const TEAM_SHORT_NAMES: Record<string, string> = {
 
 function getCriteriaLabel(type: CriteriaType, value: string): string {
   if (type === 'current_team') {
-    return TEAM_SHORT_NAMES[value] ?? value;
+    return TEAM_SHORT_NAMES[value] ?? shortenClubName(value);
   }
   return value;
 }

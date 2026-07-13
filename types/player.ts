@@ -9,4 +9,6 @@ export interface Player {
   market_value: number;
   image_url: string;
   last_season?: number;
+  status?: 'active' | 'retired';
+  retired_year?: number;
 }

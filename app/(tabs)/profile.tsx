@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useGuessGameStore } from '@/hooks/useGuessGameStore';
 import { useProStore } from '@/hooks/useProStore';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { purchasePro, restorePurchases } from '@/lib/purchases';
 import { deleteUserAccount } from '@/lib/accountDeletion';
 import { isSoundEnabled, setSoundEnabled } from '@/lib/sounds';
+import { isHapticsEnabled, setHapticsEnabled } from '@/lib/haptics';
+import { isNotificationsEnabled, setNotificationsEnabled } from '@/lib/notifications';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
 import RetroButton from '@/components/ui/RetroButton';
 import GlassCard from '@/components/ui/GlassCard';
 import AnimatedBar from '@/components/ui/AnimatedBar';
@@ -29,30 +33,57 @@ function StatBox({ label, value }: { label: string; value: string }) {
 }
 
 const MODE_LABELS: Record<string, string> = {
-  'who-are-ya': 'Who Are Ya?',
+  'who-are-ya': 'My name is...',
+  careerpath: 'Career Path',
   grid: 'Grid',
   'missing-11': 'Missing 11',
   connections: 'Connections',
-  badge: 'Badge',
   'higher-lower': 'Higher/Lower',
   agent: 'Agent',
+  blindranking: 'Blind Ranking',
+  careertimeline: 'Career Timeline',
+  marketmovers: 'Market Movers',
+  guessmatch: 'Guess the Match',
+  toplists: 'Top Lists',
 };
 
 export default function ProfileScreen() {
-  const { guesses, gameStatus, dailyNumber } = useGuessGameStore();
+  const { guesses, gameStatus } = useGuessGameStore();
+  // Compute directly: the game store's dailyNumber is -1 until Who Are Ya
+  // is first opened, which showed "Daily Puzzle #-1" here.
+  const dailyNumber = getDailyNumber();
   const { currentStreak, maxStreak, gamesPlayed, gamesWon, guessDistribution } =
     useDailyStateStore();
   const isPro = useProStore((s) => s.isPro);
   const xpByMode = useManagerStore((s) => s.xpByMode);
+  const perfectDays = useDailyProgressStore((s) => s.perfectDays);
 
   const [purchasing, setPurchasing] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
+  const [hapticsOn, setHapticsOn] = useState(isHapticsEnabled());
+  const [notificationsOn, setNotificationsOn] = useState(true);
+
+  useEffect(() => {
+    isNotificationsEnabled().then(setNotificationsOn);
+  }, []);
 
   const handleToggleSound = async () => {
     const newVal = !soundOn;
     setSoundOn(newVal);
     await setSoundEnabled(newVal);
+  };
+
+  const handleToggleHaptics = async () => {
+    const newVal = !hapticsOn;
+    setHapticsOn(newVal);
+    await setHapticsEnabled(newVal);
+  };
+
+  const handleToggleNotifications = async () => {
+    const newVal = !notificationsOn;
+    setNotificationsOn(newVal);
+    await setNotificationsEnabled(newVal);
   };
 
   const winRate = gamesPlayed > 0 ? Math.round((gamesWon / gamesPlayed) * 100) : 0;
@@ -120,10 +151,18 @@ export default function ProfileScreen() {
             <StatBox label={'\uD83D\uDD25 Streak'} value={String(currentStreak)} />
             <StatBox label="Best" value={String(maxStreak)} />
           </View>
+          <Text style={styles.statsNote}>
+            Streak counts any daily challenge. Played &amp; Win % are for &ldquo;My name
+            is...&rdquo;
+          </Text>
+
+          <View style={styles.statRow}>
+            <StatBox label={'🏆 Perfect Days'} value={String(perfectDays)} />
+          </View>
 
           <GlassCard style={styles.card}>
             <View style={styles.cardInner}>
-              <Text style={styles.cardTitle}>Guess Distribution</Text>
+              <Text style={styles.cardTitle}>My name is... Distribution</Text>
               <View style={styles.distList}>
                 {guessDistribution.map((count, i) => (
                   <AnimatedBar
@@ -218,6 +257,20 @@ export default function ProfileScreen() {
                   variant="secondary"
                 />
               </View>
+              <View style={styles.settingsButtonWrap}>
+                <RetroButton
+                  title={hapticsOn ? 'Haptics: ON' : 'Haptics: OFF'}
+                  onPress={handleToggleHaptics}
+                  variant="secondary"
+                />
+              </View>
+              <View style={styles.settingsButtonWrap}>
+                <RetroButton
+                  title={notificationsOn ? 'Notifications: ON' : 'Notifications: OFF'}
+                  onPress={handleToggleNotifications}
+                  variant="secondary"
+                />
+              </View>
               <RetroButton title="Delete Account" onPress={handleDeleteAccount} variant="danger" />
             </View>
           </GlassCard>
@@ -272,9 +325,16 @@ const styles = StyleSheet.create({
     color: '#6C757D',
   },
   statRow: {
-    marginBottom: 16,
+    marginBottom: 8,
     flexDirection: 'row',
     gap: 12,
+  },
+  statsNote: {
+    marginBottom: 16,
+    fontSize: 11,
+    color: '#6C757D',
+    textAlign: 'center',
+    lineHeight: 15,
   },
   statBox: {
     flex: 1,

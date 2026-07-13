@@ -1,27 +1,7 @@
 import { Player } from '@/types/player';
-import { getAllPlayers } from './playerData';
-
-const fameScoresData: FameEntry[] = require('@/data/fame_scores.json');
-
-interface FameEntry {
-  global_id: number;
-  name: string;
-  fame_score: number;
-  difficulty_tier: string;
-  is_modern: boolean;
-  metrics: Record<string, number>;
-}
-
-// Build a lookup map from normalized name → fame entry
-const fameByName: Map<string, FameEntry> = new Map();
-for (const entry of fameScoresData) {
-  const norm = entry.name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-  fameByName.set(norm, entry);
-}
+import { getAllPlayers, isActivePlayer, getFameForPlayer } from './playerData';
+import { bandForDate, bandFameOffset, progressionForRound } from './difficultyCurve';
+import { getTodayDateString } from './dailySeed';
 
 export function formatMarketValue(value: number): string {
   if (value >= 1_000_000) {
@@ -41,7 +21,7 @@ export function formatMarketValue(value: number): string {
 
 /** Returns the fame score for a player, or undefined if not found */
 export function getFameScore(player: Player): number | undefined {
-  return fameByName.get(player.normalized_name)?.fame_score;
+  return getFameForPlayer(player)?.fame_score;
 }
 
 /** Returns a difficulty label based on the player's fame score */
@@ -65,38 +45,109 @@ function seededRandom(seed: number): () => number {
 }
 
 function getFilteredPlayers(): Player[] {
-  const currentYear = new Date().getFullYear();
   const allPlayers = getAllPlayers().filter(
-    (p) => p.market_value >= 1_000_000 && (p.last_season ?? 0) >= currentYear - 1,
+    (p) => p.market_value >= 1_000_000 && isActivePlayer(p),
   );
 
   // Try with fame_score >= 30 first
   let filtered = allPlayers.filter((p) => {
-    const fame = fameByName.get(p.normalized_name);
-    return fame !== undefined && fame.fame_score >= 30;
+    const fame = getFameForPlayer(p)?.fame_score;
+    return fame !== undefined && fame >= 30;
   });
 
   // If too few, lower threshold
   if (filtered.length < 200) {
     filtered = allPlayers.filter((p) => {
-      const fame = fameByName.get(p.normalized_name);
-      return fame !== undefined && fame.fame_score >= 20;
+      const fame = getFameForPlayer(p)?.fame_score;
+      return fame !== undefined && fame >= 20;
     });
   }
 
   return filtered;
 }
 
-export function generatePlayerQueue(seed: number, count: number): Player[] {
+/**
+ * Build the Higher/Lower queue with an IN-SESSION difficulty ramp: round i pulls
+ * a challenger whose fame >= progressionForRound(i).minFame (offset by the day's
+ * band) and whose value differs from the previous card by >= that round's gap
+ * ratio. Early rounds are famous players with obvious gaps; later rounds get
+ * obscure with tight (but always decisive) gaps. Fame floors widen gracefully so
+ * a tier can never starve the queue.
+ *
+ * `fameOffset` defaults to the current day's band offset; pass an explicit value
+ * for deterministic tests / the QA sim.
+ */
+export function generatePlayerQueue(seed: number, count: number, fameOffset?: number): Player[] {
   const players = getFilteredPlayers();
   const rng = seededRandom(seed);
 
-  // Fisher-Yates shuffle with seeded RNG
   const shuffled = [...players];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
 
-  return shuffled.slice(0, Math.min(count, shuffled.length));
+  const offset = fameOffset ?? bandFameOffset(bandForDate(getTodayDateString()));
+
+  const queue: Player[] = [];
+  const used = new Set<number>();
+  for (let i = 0; i < count; i++) {
+    const prog = progressionForRound(i);
+    const last = queue.length > 0 ? queue[queue.length - 1].market_value : null;
+    const pick = pickNextByProgression(
+      shuffled,
+      used,
+      prog.minFame + offset,
+      prog.maxFame,
+      last,
+      prog.gapRatio,
+    );
+    if (!pick) break; // pool exhausted
+    used.add(pick.id);
+    queue.push(pick);
+  }
+
+  return queue;
+}
+
+/**
+ * Find the next unused player within a fame band [floor, cap] and value-gap.
+ * Widens the fame FLOOR downward in 5-point steps if the slice is too thin
+ * (keeping the cap fixed so deep rounds never resurface household names), then
+ * relaxes the gap as a last resort (never an equal-value pair).
+ */
+function pickNextByProgression(
+  shuffled: Player[],
+  used: Set<number>,
+  fameFloor: number,
+  fameCap: number | undefined,
+  lastValue: number | null,
+  gapRatio: number,
+): Player | null {
+  const cap = fameCap ?? Infinity;
+  const gapOk = (mv: number) =>
+    lastValue === null || Math.abs(mv - lastValue) >= gapRatio * lastValue;
+  for (let floor = fameFloor; floor > -1; floor -= 5) {
+    for (const p of shuffled) {
+      if (used.has(p.id)) continue;
+      const fame = getFameScore(p) ?? 0;
+      if (fame < floor || fame > cap) continue;
+      if (!gapOk(p.market_value)) continue;
+      return p;
+    }
+  }
+  // Relax the gap; still respect the cap, and never an equal value.
+  for (const p of shuffled) {
+    if (used.has(p.id)) continue;
+    if ((getFameScore(p) ?? 0) > cap) continue;
+    if (lastValue !== null && p.market_value === lastValue) continue;
+    return p;
+  }
+  // Absolute last resort (cap-respecting slice exhausted): any non-equal value.
+  for (const p of shuffled) {
+    if (used.has(p.id)) continue;
+    if (lastValue !== null && p.market_value === lastValue) continue;
+    return p;
+  }
+  return null;
 }

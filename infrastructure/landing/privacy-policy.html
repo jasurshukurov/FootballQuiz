@@ -58,7 +58,7 @@
     <p>We collect minimal data to provide and improve the app experience:</p>
     <ul>
       <li><strong>Game state</strong> &mdash; Your scores, streaks, and completed puzzles are stored locally on your device using AsyncStorage. This data never leaves your device unless you choose to share it.</li>
-      <li><strong>Anonymous identifier</strong> &mdash; We generate a random anonymous ID via Amazon Cognito Identity Pools to sync leaderboard scores. This ID is not linked to your name, email, or any personal information.</li>
+      <li><strong>Anonymous identifier</strong> &mdash; We may generate a random anonymous ID via Amazon Cognito Identity Pools to back up your game progress in a future update. This ID is not linked to your name, email, or any personal information.</li>
       <li><strong>Anonymous analytics</strong> &mdash; We may collect anonymous usage data (e.g., which game modes are popular, crash reports) to improve app quality. This data cannot identify you.</li>
       <li><strong>Push notification tokens</strong> &mdash; If you opt in to daily reminders, your device notification token is stored locally to schedule local notifications. We do not use remote push notification services.</li>
     </ul>
@@ -73,22 +73,22 @@
     <h2>3. How We Use Data</h2>
     <ul>
       <li>To save and restore your game progress on your device.</li>
-      <li>To display anonymous leaderboard rankings.</li>
+      <li>To back up anonymous game progress across devices (future feature; not yet active).</li>
       <li>To send local push notifications for daily puzzle reminders (if opted in).</li>
       <li>To analyze aggregated, anonymous usage patterns for app improvement.</li>
     </ul>
 
     <h2>4. Data Sharing</h2>
-    <p>We do not sell, rent, or share your data with third parties. Anonymous leaderboard scores are visible to other players but contain no identifying information beyond a player-chosen display name.</p>
+    <p>We do not sell, rent, or share your data with third parties. The app has no accounts, no leaderboards, and shares nothing between players.</p>
 
     <h2>5. Data Storage and Security</h2>
-    <p>Game data is stored locally on your device. Leaderboard data is stored in Amazon Web Services (AWS) infrastructure with encryption at rest and in transit. We follow industry-standard security practices.</p>
+    <p>Game data is stored locally on your device. Any future cloud backup would use Amazon Web Services (AWS) infrastructure with encryption at rest and in transit. We follow industry-standard security practices.</p>
 
     <h2>6. Your Rights (GDPR / CCPA)</h2>
     <p>Regardless of where you live, you have the following rights:</p>
     <ul>
       <li><strong>Right to access</strong> &mdash; You can view all your stored data within the app (Settings > My Data).</li>
-      <li><strong>Right to deletion</strong> &mdash; You can delete all your data using the "Delete Account" button in the app settings. This permanently removes your anonymous ID, leaderboard scores, and all cloud-stored data.</li>
+      <li><strong>Right to deletion</strong> &mdash; You can delete all your data using the "Delete Account" button in the app settings. This permanently removes your local data and any cloud-stored data.</li>
       <li><strong>Right to portability</strong> &mdash; You can export your game data from the app settings.</li>
       <li><strong>Right to opt out</strong> &mdash; You can disable notifications and analytics at any time in the app settings or your device settings.</li>
     </ul>
@@ -100,7 +100,7 @@
 
     <h2>8. Third-Party Services</h2>
     <ul>
-      <li><strong>Amazon Web Services (AWS)</strong> &mdash; Cloud infrastructure for leaderboards and anonymous authentication.</li>
+      <li><strong>Amazon Web Services (AWS)</strong> &mdash; Cloud infrastructure for app content, remote configuration, and anonymous authentication.</li>
       <li><strong>Expo / React Native</strong> &mdash; App development framework (no data collection).</li>
     </ul>
 

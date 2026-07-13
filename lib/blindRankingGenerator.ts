@@ -1,7 +1,10 @@
 import { Player } from '@/types/player';
-import { getAllPlayers } from './playerData';
+import { getAllPlayers, isActivePlayer, getFameForPlayer } from './playerData';
 import { formatMarketValue } from './higherLowerGenerator';
 
+// fame_scores.json is kept ONLY for the ranking metrics not present in
+// fame_by_id.json (peak_game_rating, elite_exposure, wikipedia_pageviews).
+// fame_score and peak_valuation are joined by id (disambiguated) instead.
 const fameScoresData: FameEntry[] = require('@/data/fame_scores.json');
 
 interface FameEntry {
@@ -48,12 +51,6 @@ function formatExposure(v: number): string {
   return `${Math.round(v)} caps`;
 }
 
-function formatPageviews(v: number): string {
-  if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M views`;
-  if (v >= 1_000) return `${Math.round(v / 1_000)}K views`;
-  return `${v} views`;
-}
-
 function formatFame(v: number): string {
   return v.toFixed(1);
 }
@@ -93,13 +90,16 @@ const CATEGORIES: RankingCategory[] = [
   },
   {
     id: 'most_elite_exposure',
-    title: 'Senior Club Appearances',
-    description: 'Rank by senior club appearances (most first)',
+    // elite_exposure counts international caps, not club appearances —
+    // the previous "Senior Club Appearances" label graded knowledgeable
+    // players wrong.
+    title: 'International Caps',
+    description: 'Rank by international caps (most first)',
     sortField: 'elite_exposure',
     sortDirection: 'desc',
     formatValue: formatExposure,
   },
-{
+  {
     id: 'most_famous',
     title: 'Most Famous',
     description: 'Rank by overall fame score (highest first)',
@@ -121,10 +121,11 @@ function seededRandom(seed: number): () => number {
 
 function getFieldValue(player: Player, field: SortField): number {
   if (field === 'market_value') return player.market_value;
-  const fame = fameByName.get(player.normalized_name);
-  if (!fame) return 0;
-  if (field === 'fame_score') return fame.fame_score;
-  return fame.metrics[field] ?? 0;
+  // id-based (disambiguated) for the two fields fame_by_id carries.
+  if (field === 'fame_score') return getFameForPlayer(player)?.fame_score ?? 0;
+  if (field === 'peak_valuation_euros') return getFameForPlayer(player)?.peak_valuation ?? 0;
+  // remaining metrics only exist in fame_scores.json, joined by name.
+  return fameByName.get(player.normalized_name)?.metrics[field] ?? 0;
 }
 
 export interface BlindRankingPuzzle {
@@ -139,8 +140,8 @@ export function generateBlindRankingPuzzle(seed: number): BlindRankingPuzzle {
   const category = CATEGORIES[Math.floor(rng() * CATEGORIES.length)];
 
   const allPlayers = getAllPlayers().filter((p) => {
-    const fame = fameByName.get(p.normalized_name);
-    return fame !== undefined && fame.fame_score >= 65 && p.market_value >= 5_000_000 && (p.last_season ?? 0) >= 2024;
+    const fame = getFameForPlayer(p)?.fame_score;
+    return fame !== undefined && fame >= 65 && p.market_value >= 5_000_000 && isActivePlayer(p);
   });
 
   // Shuffle

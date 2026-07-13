@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/theme';
 import { playClick } from '@/lib/sounds';
+import { triggerImpact } from '@/lib/haptics';
 
 interface RetroButtonProps {
   title: string;
@@ -26,7 +26,7 @@ export default function RetroButton({
       : variantStyles[variant];
 
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerImpact();
     playClick();
     onPress();
   };

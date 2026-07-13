@@ -1,0 +1,590 @@
+[
+  {
+    "id": "world-cup-all-time-top-scorers",
+    "title": "World Cup All-Time Top Scorers",
+    "group": "international",
+    "as_of": "2026-07",
+    "note": "Mid-tournament snapshot during WC 2026; Messi, Mbappe and Kane were still active. Refresh after the final.",
+    "entries": [
+      {"rank": 1, "name": "Lionel Messi", "value": 21, "unit": "goals", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 2, "name": "Kylian Mbappe", "value": 20, "unit": "goals", "aliases": ["Mbappe"]},
+      {"rank": 3, "name": "Miroslav Klose", "value": 16, "unit": "goals", "aliases": ["Klose"]},
+      {"rank": 4, "name": "Ronaldo Nazario", "value": 15, "unit": "goals", "aliases": ["Ronaldo Nazario", "O Fenomeno", "R9"]},
+      {"rank": 5, "name": "Gerd Muller", "value": 14, "unit": "goals", "aliases": ["Gerd Muller", "Muller"]},
+      {"rank": 6, "name": "Just Fontaine", "value": 13, "unit": "goals", "aliases": ["Fontaine"]},
+      {"rank": 6, "name": "Harry Kane", "value": 13, "unit": "goals", "aliases": ["Kane"]},
+      {"rank": 8, "name": "Pele", "value": 12, "unit": "goals", "aliases": ["Pele"]}
+    ]
+  },
+  {
+    "id": "most-world-cup-appearances-player",
+    "title": "Most World Cup Appearances (Player)",
+    "group": "international",
+    "as_of": "2026-07",
+    "note": "Mid-tournament snapshot during WC 2026; Messi and Ronaldo were still active. Refresh after the final.",
+    "entries": [
+      {"rank": 1, "name": "Lionel Messi", "value": 30, "unit": "matches", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 2, "name": "Cristiano Ronaldo", "value": 27, "unit": "matches", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 3, "name": "Lothar Matthaus", "value": 25, "unit": "matches", "aliases": ["Matthaus"]},
+      {"rank": 4, "name": "Miroslav Klose", "value": 24, "unit": "matches", "aliases": ["Klose"]},
+      {"rank": 5, "name": "Paolo Maldini", "value": 23, "unit": "matches", "aliases": ["Maldini"]},
+      {"rank": 6, "name": "Diego Maradona", "value": 21, "unit": "matches", "aliases": ["Maradona"]},
+      {"rank": 6, "name": "Uwe Seeler", "value": 21, "unit": "matches", "aliases": ["Seeler"]},
+      {"rank": 6, "name": "Wladyslaw Zmuda", "value": 21, "unit": "matches", "aliases": ["Zmuda"]}
+    ]
+  },
+  {
+    "id": "most-international-caps-men",
+    "title": "Most International Caps (Men)",
+    "group": "international",
+    "as_of": "2026-07",
+    "note": "Cristiano Ronaldo and Messi still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Cristiano Ronaldo", "value": 233, "unit": "caps", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 2, "name": "Lionel Messi", "value": 205, "unit": "caps", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 3, "name": "Luka Modric", "value": 202, "unit": "caps", "aliases": ["Modric"]},
+      {"rank": 4, "name": "Bader Al-Mutawa", "value": 196, "unit": "caps", "aliases": ["Al-Mutawa"]},
+      {"rank": 5, "name": "Soh Chin Ann", "value": 195, "unit": "caps", "aliases": ["Soh Chin Ann"]},
+      {"rank": 6, "name": "Ahmed Hassan", "value": 184, "unit": "caps", "aliases": ["Ahmed Hassan"]},
+      {"rank": 7, "name": "Sergio Ramos", "value": 180, "unit": "caps", "aliases": ["Ramos"]},
+      {"rank": 7, "name": "Andres Guardado", "value": 180, "unit": "caps", "aliases": ["Guardado"]}
+    ]
+  },
+  {
+    "id": "most-international-goals-men",
+    "title": "Most International Goals (Men)",
+    "group": "international",
+    "as_of": "2026-07",
+    "note": "Messi, Lukaku, Lewandowski, Kane and Chhetri still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Cristiano Ronaldo", "value": 146, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 2, "name": "Lionel Messi", "value": 125, "unit": "goals", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 3, "name": "Ali Daei", "value": 108, "unit": "goals", "aliases": ["Daei"]},
+      {"rank": 4, "name": "Sunil Chhetri", "value": 95, "unit": "goals", "aliases": ["Chhetri"]},
+      {"rank": 5, "name": "Romelu Lukaku", "value": 93, "unit": "goals", "aliases": ["Lukaku"]},
+      {"rank": 6, "name": "Mokhtar Dahari", "value": 89, "unit": "goals", "aliases": ["Dahari"]},
+      {"rank": 6, "name": "Robert Lewandowski", "value": 89, "unit": "goals", "aliases": ["Lewandowski"]},
+      {"rank": 8, "name": "Harry Kane", "value": 85, "unit": "goals", "aliases": ["Kane"]}
+    ]
+  },
+  {
+    "id": "euro-all-time-top-scorers",
+    "title": "European Championship All-Time Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Cristiano Ronaldo", "value": 14, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 2, "name": "Michel Platini", "value": 9, "unit": "goals", "aliases": ["Platini"]},
+      {"rank": 3, "name": "Antoine Griezmann", "value": 7, "unit": "goals", "aliases": ["Griezmann"]},
+      {"rank": 3, "name": "Alan Shearer", "value": 7, "unit": "goals", "aliases": ["Shearer"]},
+      {"rank": 3, "name": "Alvaro Morata", "value": 7, "unit": "goals", "aliases": ["Morata"]},
+      {"rank": 3, "name": "Harry Kane", "value": 7, "unit": "goals", "aliases": ["Kane"]}
+    ]
+  },
+  {
+    "id": "copa-america-all-time-top-scorers",
+    "title": "Copa America All-Time Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Norberto Mendez", "value": 17, "unit": "goals", "aliases": ["Mendez", "Tucho Mendez"]},
+      {"rank": 1, "name": "Zizinho", "value": 17, "unit": "goals", "aliases": ["Zizinho"]},
+      {"rank": 3, "name": "Severino Varela", "value": 15, "unit": "goals", "aliases": ["Varela"]},
+      {"rank": 3, "name": "Lolo Fernandez", "value": 15, "unit": "goals", "aliases": ["Lolo Fernandez"]},
+      {"rank": 5, "name": "Paolo Guerrero", "value": 14, "unit": "goals", "aliases": ["Guerrero"]},
+      {"rank": 6, "name": "Gabriel Batistuta", "value": 13, "unit": "goals", "aliases": ["Batistuta", "Bati"]}
+    ]
+  },
+  {
+    "id": "world-cup-1998-top-scorers",
+    "title": "1998 World Cup Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Davor Suker", "value": 6, "unit": "goals", "aliases": ["Suker"]},
+      {"rank": 2, "name": "Gabriel Batistuta", "value": 5, "unit": "goals", "aliases": ["Batistuta", "Bati"]},
+      {"rank": 2, "name": "Christian Vieri", "value": 5, "unit": "goals", "aliases": ["Vieri"]},
+      {"rank": 4, "name": "Ronaldo Nazario", "value": 4, "unit": "goals", "aliases": ["Ronaldo Nazario", "O Fenomeno", "R9"]},
+      {"rank": 4, "name": "Marcelo Salas", "value": 4, "unit": "goals", "aliases": ["Salas"]},
+      {"rank": 4, "name": "Luis Hernandez", "value": 4, "unit": "goals", "aliases": ["Luis Hernandez"]}
+    ]
+  },
+  {
+    "id": "world-cup-2002-top-scorers",
+    "title": "2002 World Cup Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Ronaldo Nazario", "value": 8, "unit": "goals", "aliases": ["Ronaldo", "O Fenomeno", "R9"]},
+      {"rank": 2, "name": "Rivaldo", "value": 5, "unit": "goals", "aliases": ["Rivaldo"]},
+      {"rank": 2, "name": "Miroslav Klose", "value": 5, "unit": "goals", "aliases": ["Klose"]},
+      {"rank": 4, "name": "Jon Dahl Tomasson", "value": 4, "unit": "goals", "aliases": ["Tomasson"]},
+      {"rank": 4, "name": "Christian Vieri", "value": 4, "unit": "goals", "aliases": ["Vieri"]},
+      {"rank": 4, "name": "Fernando Morientes", "value": 4, "unit": "goals", "aliases": ["Morientes"]}
+    ]
+  },
+  {
+    "id": "world-cup-2006-top-scorers",
+    "title": "2006 World Cup Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Miroslav Klose", "value": 5, "unit": "goals", "aliases": ["Klose"]},
+      {"rank": 2, "name": "Hernan Crespo", "value": 3, "unit": "goals", "aliases": ["Crespo"]},
+      {"rank": 2, "name": "Ronaldo Nazario", "value": 3, "unit": "goals", "aliases": ["Ronaldo Nazario", "O Fenomeno", "R9"]},
+      {"rank": 2, "name": "Maxi Rodriguez", "value": 3, "unit": "goals", "aliases": ["Maxi Rodriguez"]},
+      {"rank": 2, "name": "Thierry Henry", "value": 3, "unit": "goals", "aliases": ["Henry"]},
+      {"rank": 2, "name": "Lukas Podolski", "value": 3, "unit": "goals", "aliases": ["Podolski"]},
+      {"rank": 2, "name": "Zinedine Zidane", "value": 3, "unit": "goals", "aliases": ["Zidane", "Zizou"]}
+    ]
+  },
+  {
+    "id": "world-cup-2010-top-scorers",
+    "title": "2010 World Cup Top Scorers",
+    "group": "international",
+    "note": "Thomas Muller won the Golden Boot on the assists/minutes tiebreaker.",
+    "entries": [
+      {"rank": 1, "name": "Thomas Muller", "value": 5, "unit": "goals", "aliases": ["Thomas Muller", "Muller"]},
+      {"rank": 1, "name": "David Villa", "value": 5, "unit": "goals", "aliases": ["Villa"]},
+      {"rank": 1, "name": "Wesley Sneijder", "value": 5, "unit": "goals", "aliases": ["Sneijder"]},
+      {"rank": 1, "name": "Diego Forlan", "value": 5, "unit": "goals", "aliases": ["Forlan"]},
+      {"rank": 5, "name": "Gonzalo Higuain", "value": 4, "unit": "goals", "aliases": ["Higuain", "Pipita"]}
+    ]
+  },
+  {
+    "id": "world-cup-2014-top-scorers",
+    "title": "2014 World Cup Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "James Rodriguez", "value": 6, "unit": "goals", "aliases": ["James", "James Rodriguez"]},
+      {"rank": 2, "name": "Thomas Muller", "value": 5, "unit": "goals", "aliases": ["Thomas Muller", "Muller"]},
+      {"rank": 3, "name": "Neymar", "value": 4, "unit": "goals", "aliases": ["Neymar"]},
+      {"rank": 3, "name": "Lionel Messi", "value": 4, "unit": "goals", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 3, "name": "Robin van Persie", "value": 4, "unit": "goals", "aliases": ["van Persie", "RvP"]}
+    ]
+  },
+  {
+    "id": "world-cup-2018-top-scorers",
+    "title": "2018 World Cup Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Harry Kane", "value": 6, "unit": "goals", "aliases": ["Kane"]},
+      {"rank": 2, "name": "Antoine Griezmann", "value": 4, "unit": "goals", "aliases": ["Griezmann"]},
+      {"rank": 2, "name": "Kylian Mbappe", "value": 4, "unit": "goals", "aliases": ["Mbappe"]},
+      {"rank": 2, "name": "Romelu Lukaku", "value": 4, "unit": "goals", "aliases": ["Lukaku"]},
+      {"rank": 2, "name": "Denis Cheryshev", "value": 4, "unit": "goals", "aliases": ["Cheryshev"]},
+      {"rank": 2, "name": "Cristiano Ronaldo", "value": 4, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]}
+    ]
+  },
+  {
+    "id": "world-cup-2022-top-scorers",
+    "title": "2022 World Cup Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Kylian Mbappe", "value": 8, "unit": "goals", "aliases": ["Mbappe"]},
+      {"rank": 2, "name": "Lionel Messi", "value": 7, "unit": "goals", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 3, "name": "Olivier Giroud", "value": 4, "unit": "goals", "aliases": ["Giroud"]},
+      {"rank": 3, "name": "Julian Alvarez", "value": 4, "unit": "goals", "aliases": ["Julian Alvarez", "Araña"]},
+      {"rank": 5, "name": "Cody Gakpo", "value": 3, "unit": "goals", "aliases": ["Gakpo"]},
+      {"rank": 5, "name": "Marcus Rashford", "value": 3, "unit": "goals", "aliases": ["Rashford"]},
+      {"rank": 5, "name": "Richarlison", "value": 3, "unit": "goals", "aliases": ["Richarlison"]}
+    ]
+  },
+  {
+    "id": "euro-2000-top-scorers",
+    "title": "Euro 2000 Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Patrick Kluivert", "value": 5, "unit": "goals", "aliases": ["Kluivert"]},
+      {"rank": 1, "name": "Savo Milosevic", "value": 5, "unit": "goals", "aliases": ["Milosevic"]},
+      {"rank": 3, "name": "Nuno Gomes", "value": 4, "unit": "goals", "aliases": ["Nuno Gomes"]},
+      {"rank": 4, "name": "Thierry Henry", "value": 3, "unit": "goals", "aliases": ["Henry"]},
+      {"rank": 4, "name": "Zlatko Zahovic", "value": 3, "unit": "goals", "aliases": ["Zahovic"]},
+      {"rank": 4, "name": "Francesco Totti", "value": 3, "unit": "goals", "aliases": ["Totti"]}
+    ]
+  },
+  {
+    "id": "euro-2004-top-scorers",
+    "title": "Euro 2004 Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Milan Baros", "value": 5, "unit": "goals", "aliases": ["Baros"]},
+      {"rank": 2, "name": "Ruud van Nistelrooy", "value": 4, "unit": "goals", "aliases": ["van Nistelrooy", "Ruud"]},
+      {"rank": 2, "name": "Wayne Rooney", "value": 4, "unit": "goals", "aliases": ["Rooney"]},
+      {"rank": 4, "name": "Zlatan Ibrahimovic", "value": 3, "unit": "goals", "aliases": ["Ibrahimovic", "Zlatan", "Ibra"]},
+      {"rank": 4, "name": "Henrik Larsson", "value": 3, "unit": "goals", "aliases": ["Larsson"]},
+      {"rank": 4, "name": "Frank Lampard", "value": 3, "unit": "goals", "aliases": ["Lampard"]}
+    ]
+  },
+  {
+    "id": "euro-2008-top-scorers",
+    "title": "Euro 2008 Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "David Villa", "value": 4, "unit": "goals", "aliases": ["Villa"]},
+      {"rank": 2, "name": "Lukas Podolski", "value": 3, "unit": "goals", "aliases": ["Podolski"]},
+      {"rank": 2, "name": "Hakan Yakin", "value": 3, "unit": "goals", "aliases": ["Yakin"]},
+      {"rank": 2, "name": "Semih Senturk", "value": 3, "unit": "goals", "aliases": ["Semih"]},
+      {"rank": 2, "name": "Roman Pavlyuchenko", "value": 3, "unit": "goals", "aliases": ["Pavlyuchenko"]}
+    ]
+  },
+  {
+    "id": "euro-2012-top-scorers",
+    "title": "Euro 2012 Top Scorers",
+    "group": "international",
+    "note": "Fernando Torres won the Golden Boot on the assists/minutes tiebreaker; all six leaders scored 3.",
+    "entries": [
+      {"rank": 1, "name": "Fernando Torres", "value": 3, "unit": "goals", "aliases": ["Torres"]},
+      {"rank": 1, "name": "Mario Gomez", "value": 3, "unit": "goals", "aliases": ["Mario Gomez"]},
+      {"rank": 1, "name": "Mario Balotelli", "value": 3, "unit": "goals", "aliases": ["Balotelli"]},
+      {"rank": 1, "name": "Alan Dzagoev", "value": 3, "unit": "goals", "aliases": ["Dzagoev"]},
+      {"rank": 1, "name": "Mario Mandzukic", "value": 3, "unit": "goals", "aliases": ["Mandzukic"]},
+      {"rank": 1, "name": "Cristiano Ronaldo", "value": 3, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]}
+    ]
+  },
+  {
+    "id": "euro-2016-top-scorers",
+    "title": "Euro 2016 Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Antoine Griezmann", "value": 6, "unit": "goals", "aliases": ["Griezmann"]},
+      {"rank": 2, "name": "Cristiano Ronaldo", "value": 3, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 2, "name": "Olivier Giroud", "value": 3, "unit": "goals", "aliases": ["Giroud"]},
+      {"rank": 2, "name": "Gareth Bale", "value": 3, "unit": "goals", "aliases": ["Bale"]},
+      {"rank": 2, "name": "Alvaro Morata", "value": 3, "unit": "goals", "aliases": ["Morata"]},
+      {"rank": 2, "name": "Nani", "value": 3, "unit": "goals", "aliases": ["Nani"]}
+    ]
+  },
+  {
+    "id": "euro-2020-top-scorers",
+    "title": "Euro 2020 Top Scorers",
+    "group": "international",
+    "entries": [
+      {"rank": 1, "name": "Patrik Schick", "value": 5, "unit": "goals", "aliases": ["Schick"]},
+      {"rank": 1, "name": "Cristiano Ronaldo", "value": 5, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 3, "name": "Karim Benzema", "value": 4, "unit": "goals", "aliases": ["Benzema"]},
+      {"rank": 3, "name": "Romelu Lukaku", "value": 4, "unit": "goals", "aliases": ["Lukaku"]},
+      {"rank": 3, "name": "Emil Forsberg", "value": 4, "unit": "goals", "aliases": ["Forsberg"]}
+    ]
+  },
+  {
+    "id": "euro-2024-top-scorers",
+    "title": "Euro 2024 Top Scorers",
+    "group": "international",
+    "note": "Dani Olmo won the Golden Boot on the assists/minutes tiebreaker; all six leaders scored 3.",
+    "entries": [
+      {"rank": 1, "name": "Dani Olmo", "value": 3, "unit": "goals", "aliases": ["Olmo", "Dani Olmo"]},
+      {"rank": 1, "name": "Harry Kane", "value": 3, "unit": "goals", "aliases": ["Kane"]},
+      {"rank": 1, "name": "Jamal Musiala", "value": 3, "unit": "goals", "aliases": ["Musiala"]},
+      {"rank": 1, "name": "Cody Gakpo", "value": 3, "unit": "goals", "aliases": ["Gakpo"]},
+      {"rank": 1, "name": "Georges Mikautadze", "value": 3, "unit": "goals", "aliases": ["Mikautadze"]},
+      {"rank": 1, "name": "Ivan Schranz", "value": 3, "unit": "goals", "aliases": ["Schranz"]}
+    ]
+  },
+  {
+    "id": "brazil-all-time-top-scorers",
+    "title": "Brazil All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Neymar still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Neymar", "value": 80, "unit": "goals", "aliases": ["Neymar", "Neymar Jr"]},
+      {"rank": 2, "name": "Pele", "value": 77, "unit": "goals", "aliases": ["Pele"]},
+      {"rank": 3, "name": "Ronaldo Nazario", "value": 62, "unit": "goals", "aliases": ["Ronaldo", "O Fenomeno", "R9"]},
+      {"rank": 4, "name": "Romario", "value": 55, "unit": "goals", "aliases": ["Romario"]},
+      {"rank": 5, "name": "Zico", "value": 48, "unit": "goals", "aliases": ["Zico"]},
+      {"rank": 6, "name": "Bebeto", "value": 38, "unit": "goals", "aliases": ["Bebeto"]},
+      {"rank": 7, "name": "Rivaldo", "value": 35, "unit": "goals", "aliases": ["Rivaldo"]},
+      {"rank": 8, "name": "Jairzinho", "value": 33, "unit": "goals", "aliases": ["Jairzinho"]}
+    ]
+  },
+  {
+    "id": "argentina-all-time-top-scorers",
+    "title": "Argentina All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Messi and Lautaro Martinez still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Lionel Messi", "value": 125, "unit": "goals", "aliases": ["Messi", "Leo Messi"]},
+      {"rank": 2, "name": "Gabriel Batistuta", "value": 56, "unit": "goals", "aliases": ["Batistuta", "Bati"]},
+      {"rank": 3, "name": "Sergio Aguero", "value": 41, "unit": "goals", "aliases": ["Aguero", "Kun"]},
+      {"rank": 4, "name": "Lautaro Martinez", "value": 39, "unit": "goals", "aliases": ["Lautaro", "Lautaro Martinez"]},
+      {"rank": 5, "name": "Hernan Crespo", "value": 35, "unit": "goals", "aliases": ["Crespo"]},
+      {"rank": 6, "name": "Diego Maradona", "value": 34, "unit": "goals", "aliases": ["Maradona"]},
+      {"rank": 7, "name": "Gonzalo Higuain", "value": 31, "unit": "goals", "aliases": ["Higuain", "Pipita"]},
+      {"rank": 7, "name": "Angel Di Maria", "value": 31, "unit": "goals", "aliases": ["Di Maria", "Fideo"]}
+    ]
+  },
+  {
+    "id": "portugal-all-time-top-scorers",
+    "title": "Portugal All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Cristiano Ronaldo and Bruno Fernandes still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Cristiano Ronaldo", "value": 146, "unit": "goals", "aliases": ["Ronaldo", "CR7", "Cristiano"]},
+      {"rank": 2, "name": "Pauleta", "value": 47, "unit": "goals", "aliases": ["Pauleta"]},
+      {"rank": 3, "name": "Eusebio", "value": 41, "unit": "goals", "aliases": ["Eusebio"]},
+      {"rank": 4, "name": "Luis Figo", "value": 32, "unit": "goals", "aliases": ["Figo"]},
+      {"rank": 5, "name": "Nuno Gomes", "value": 29, "unit": "goals", "aliases": ["Nuno Gomes"]},
+      {"rank": 5, "name": "Bruno Fernandes", "value": 29, "unit": "goals", "aliases": ["Bruno Fernandes", "Bruno"]},
+      {"rank": 7, "name": "Helder Postiga", "value": 27, "unit": "goals", "aliases": ["Postiga"]},
+      {"rank": 8, "name": "Rui Costa", "value": 26, "unit": "goals", "aliases": ["Rui Costa"]}
+    ]
+  },
+  {
+    "id": "england-all-time-top-scorers",
+    "title": "England All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Harry Kane still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Harry Kane", "value": 85, "unit": "goals", "aliases": ["Kane"]},
+      {"rank": 2, "name": "Wayne Rooney", "value": 53, "unit": "goals", "aliases": ["Rooney"]},
+      {"rank": 3, "name": "Bobby Charlton", "value": 49, "unit": "goals", "aliases": ["Charlton", "Bobby Charlton"]},
+      {"rank": 4, "name": "Gary Lineker", "value": 48, "unit": "goals", "aliases": ["Lineker"]},
+      {"rank": 5, "name": "Jimmy Greaves", "value": 44, "unit": "goals", "aliases": ["Greaves"]},
+      {"rank": 6, "name": "Michael Owen", "value": 40, "unit": "goals", "aliases": ["Owen"]},
+      {"rank": 7, "name": "Nat Lofthouse", "value": 30, "unit": "goals", "aliases": ["Lofthouse"]},
+      {"rank": 7, "name": "Alan Shearer", "value": 30, "unit": "goals", "aliases": ["Shearer"]}
+    ]
+  },
+  {
+    "id": "germany-all-time-top-scorers",
+    "title": "Germany All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Miroslav Klose", "value": 71, "unit": "goals", "aliases": ["Klose"]},
+      {"rank": 2, "name": "Gerd Muller", "value": 68, "unit": "goals", "aliases": ["Gerd Muller"]},
+      {"rank": 3, "name": "Lukas Podolski", "value": 49, "unit": "goals", "aliases": ["Podolski"]},
+      {"rank": 4, "name": "Rudi Voller", "value": 47, "unit": "goals", "aliases": ["Voller"]},
+      {"rank": 4, "name": "Jurgen Klinsmann", "value": 47, "unit": "goals", "aliases": ["Klinsmann"]},
+      {"rank": 6, "name": "Karl-Heinz Rummenigge", "value": 45, "unit": "goals", "aliases": ["Rummenigge"]},
+      {"rank": 6, "name": "Thomas Muller", "value": 45, "unit": "goals", "aliases": ["Thomas Muller"]},
+      {"rank": 8, "name": "Uwe Seeler", "value": 43, "unit": "goals", "aliases": ["Seeler"]}
+    ]
+  },
+  {
+    "id": "france-all-time-top-scorers",
+    "title": "France All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Kylian Mbappe still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Kylian Mbappe", "value": 64, "unit": "goals", "aliases": ["Mbappe"]},
+      {"rank": 2, "name": "Olivier Giroud", "value": 57, "unit": "goals", "aliases": ["Giroud"]},
+      {"rank": 3, "name": "Thierry Henry", "value": 51, "unit": "goals", "aliases": ["Henry"]},
+      {"rank": 4, "name": "Antoine Griezmann", "value": 44, "unit": "goals", "aliases": ["Griezmann"]},
+      {"rank": 5, "name": "Michel Platini", "value": 41, "unit": "goals", "aliases": ["Platini"]},
+      {"rank": 6, "name": "Karim Benzema", "value": 37, "unit": "goals", "aliases": ["Benzema"]},
+      {"rank": 7, "name": "David Trezeguet", "value": 34, "unit": "goals", "aliases": ["Trezeguet"]},
+      {"rank": 8, "name": "Zinedine Zidane", "value": 31, "unit": "goals", "aliases": ["Zidane", "Zizou"]}
+    ]
+  },
+  {
+    "id": "spain-all-time-top-scorers",
+    "title": "Spain All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Alvaro Morata and Mikel Oyarzabal still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "David Villa", "value": 59, "unit": "goals", "aliases": ["Villa"]},
+      {"rank": 2, "name": "Raul", "value": 44, "unit": "goals", "aliases": ["Raul"]},
+      {"rank": 3, "name": "Fernando Torres", "value": 38, "unit": "goals", "aliases": ["Torres"]},
+      {"rank": 4, "name": "Alvaro Morata", "value": 37, "unit": "goals", "aliases": ["Morata"]},
+      {"rank": 5, "name": "David Silva", "value": 35, "unit": "goals", "aliases": ["David Silva"]},
+      {"rank": 6, "name": "Mikel Oyarzabal", "value": 29, "unit": "goals", "aliases": ["Oyarzabal"]},
+      {"rank": 6, "name": "Fernando Hierro", "value": 29, "unit": "goals", "aliases": ["Hierro"]},
+      {"rank": 8, "name": "Fernando Morientes", "value": 27, "unit": "goals", "aliases": ["Morientes"]}
+    ]
+  },
+  {
+    "id": "italy-all-time-top-scorers",
+    "title": "Italy All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Gigi Riva", "value": 35, "unit": "goals", "aliases": ["Riva", "Gigi Riva"]},
+      {"rank": 2, "name": "Giuseppe Meazza", "value": 33, "unit": "goals", "aliases": ["Meazza"]},
+      {"rank": 3, "name": "Silvio Piola", "value": 30, "unit": "goals", "aliases": ["Piola"]},
+      {"rank": 4, "name": "Roberto Baggio", "value": 27, "unit": "goals", "aliases": ["Baggio", "Roberto Baggio"]},
+      {"rank": 4, "name": "Alessandro Del Piero", "value": 27, "unit": "goals", "aliases": ["Del Piero"]},
+      {"rank": 6, "name": "Adolfo Baloncieri", "value": 25, "unit": "goals", "aliases": ["Baloncieri"]},
+      {"rank": 6, "name": "Alessandro Altobelli", "value": 25, "unit": "goals", "aliases": ["Altobelli"]},
+      {"rank": 6, "name": "Filippo Inzaghi", "value": 25, "unit": "goals", "aliases": ["Inzaghi", "Pippo"]}
+    ]
+  },
+  {
+    "id": "netherlands-all-time-top-scorers",
+    "title": "Netherlands All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Memphis Depay still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Memphis Depay", "value": 55, "unit": "goals", "aliases": ["Depay", "Memphis"]},
+      {"rank": 2, "name": "Robin van Persie", "value": 50, "unit": "goals", "aliases": ["van Persie", "RvP"]},
+      {"rank": 3, "name": "Klaas-Jan Huntelaar", "value": 42, "unit": "goals", "aliases": ["Huntelaar"]},
+      {"rank": 4, "name": "Patrick Kluivert", "value": 40, "unit": "goals", "aliases": ["Kluivert"]},
+      {"rank": 5, "name": "Dennis Bergkamp", "value": 37, "unit": "goals", "aliases": ["Bergkamp"]},
+      {"rank": 6, "name": "Arjen Robben", "value": 36, "unit": "goals", "aliases": ["Robben"]},
+      {"rank": 7, "name": "Faas Wilkes", "value": 35, "unit": "goals", "aliases": ["Wilkes"]},
+      {"rank": 8, "name": "Ruud van Nistelrooy", "value": 34, "unit": "goals", "aliases": ["van Nistelrooy"]}
+    ]
+  },
+  {
+    "id": "belgium-all-time-top-scorers",
+    "title": "Belgium All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Romelu Lukaku still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Romelu Lukaku", "value": 93, "unit": "goals", "aliases": ["Lukaku"]},
+      {"rank": 2, "name": "Eden Hazard", "value": 33, "unit": "goals", "aliases": ["Hazard"]},
+      {"rank": 3, "name": "Paul Van Himst", "value": 30, "unit": "goals", "aliases": ["Van Himst"]},
+      {"rank": 3, "name": "Bernard Voorhoof", "value": 30, "unit": "goals", "aliases": ["Voorhoof"]},
+      {"rank": 5, "name": "Marc Wilmots", "value": 29, "unit": "goals", "aliases": ["Wilmots"]},
+      {"rank": 6, "name": "Wesley Sonck", "value": 24, "unit": "goals", "aliases": ["Sonck"]}
+    ]
+  },
+  {
+    "id": "poland-all-time-top-scorers",
+    "title": "Poland All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Robert Lewandowski still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Robert Lewandowski", "value": 89, "unit": "goals", "aliases": ["Lewandowski", "Lewy"]},
+      {"rank": 2, "name": "Wlodzimierz Lubanski", "value": 48, "unit": "goals", "aliases": ["Lubanski"]},
+      {"rank": 3, "name": "Grzegorz Lato", "value": 45, "unit": "goals", "aliases": ["Lato"]},
+      {"rank": 4, "name": "Kazimierz Deyna", "value": 41, "unit": "goals", "aliases": ["Deyna"]},
+      {"rank": 5, "name": "Ernest Pol", "value": 39, "unit": "goals", "aliases": ["Ernest Pol"]},
+      {"rank": 6, "name": "Andrzej Szarmach", "value": 32, "unit": "goals", "aliases": ["Szarmach"]}
+    ]
+  },
+  {
+    "id": "uruguay-all-time-top-scorers",
+    "title": "Uruguay All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Luis Suarez", "value": 69, "unit": "goals", "aliases": ["Suarez", "Luis Suarez"]},
+      {"rank": 2, "name": "Edinson Cavani", "value": 58, "unit": "goals", "aliases": ["Cavani"]},
+      {"rank": 3, "name": "Diego Forlan", "value": 36, "unit": "goals", "aliases": ["Forlan"]},
+      {"rank": 4, "name": "Hector Scarone", "value": 31, "unit": "goals", "aliases": ["Scarone"]},
+      {"rank": 5, "name": "Angel Romano", "value": 28, "unit": "goals", "aliases": ["Romano"]},
+      {"rank": 6, "name": "Oscar Miguez", "value": 27, "unit": "goals", "aliases": ["Miguez"]}
+    ]
+  },
+  {
+    "id": "mexico-all-time-top-scorers",
+    "title": "Mexico All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Javier Hernandez", "value": 52, "unit": "goals", "aliases": ["Chicharito", "Javier Hernandez"]},
+      {"rank": 2, "name": "Jared Borgetti", "value": 46, "unit": "goals", "aliases": ["Borgetti"]},
+      {"rank": 3, "name": "Cuauhtemoc Blanco", "value": 39, "unit": "goals", "aliases": ["Cuauhtemoc Blanco", "Blanco"]},
+      {"rank": 4, "name": "Carlos Hermosillo", "value": 35, "unit": "goals", "aliases": ["Hermosillo"]},
+      {"rank": 4, "name": "Luis Hernandez", "value": 35, "unit": "goals", "aliases": ["Luis Hernandez"]},
+      {"rank": 6, "name": "Enrique Borja", "value": 31, "unit": "goals", "aliases": ["Borja"]}
+    ]
+  },
+  {
+    "id": "usa-all-time-top-scorers",
+    "title": "USA Men's All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Clint Dempsey", "value": 57, "unit": "goals", "aliases": ["Dempsey"]},
+      {"rank": 1, "name": "Landon Donovan", "value": 57, "unit": "goals", "aliases": ["Donovan"]},
+      {"rank": 3, "name": "Jozy Altidore", "value": 42, "unit": "goals", "aliases": ["Altidore"]},
+      {"rank": 4, "name": "Eric Wynalda", "value": 34, "unit": "goals", "aliases": ["Wynalda"]},
+      {"rank": 5, "name": "Brian McBride", "value": 30, "unit": "goals", "aliases": ["McBride"]},
+      {"rank": 6, "name": "Joe-Max Moore", "value": 24, "unit": "goals", "aliases": ["Joe-Max Moore"]}
+    ]
+  },
+  {
+    "id": "sweden-all-time-top-scorers",
+    "title": "Sweden All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Zlatan Ibrahimovic", "value": 62, "unit": "goals", "aliases": ["Ibrahimovic", "Zlatan", "Ibra"]},
+      {"rank": 2, "name": "Sven Rydell", "value": 49, "unit": "goals", "aliases": ["Rydell"]},
+      {"rank": 3, "name": "Gunnar Nordahl", "value": 43, "unit": "goals", "aliases": ["Nordahl"]},
+      {"rank": 4, "name": "Henrik Larsson", "value": 37, "unit": "goals", "aliases": ["Larsson"]},
+      {"rank": 5, "name": "Gunnar Gren", "value": 32, "unit": "goals", "aliases": ["Gren"]}
+    ]
+  },
+  {
+    "id": "wales-all-time-top-scorers",
+    "title": "Wales All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Gareth Bale", "value": 41, "unit": "goals", "aliases": ["Bale"]},
+      {"rank": 2, "name": "Ian Rush", "value": 28, "unit": "goals", "aliases": ["Rush", "Ian Rush"]},
+      {"rank": 3, "name": "Ivor Allchurch", "value": 23, "unit": "goals", "aliases": ["Allchurch"]},
+      {"rank": 3, "name": "Trevor Ford", "value": 23, "unit": "goals", "aliases": ["Trevor Ford"]},
+      {"rank": 5, "name": "Dean Saunders", "value": 22, "unit": "goals", "aliases": ["Saunders"]},
+      {"rank": 6, "name": "Aaron Ramsey", "value": 20, "unit": "goals", "aliases": ["Ramsey"]}
+    ]
+  },
+  {
+    "id": "hungary-all-time-top-scorers",
+    "title": "Hungary All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Ferenc Puskas", "value": 84, "unit": "goals", "aliases": ["Puskas"]},
+      {"rank": 2, "name": "Sandor Kocsis", "value": 75, "unit": "goals", "aliases": ["Kocsis"]},
+      {"rank": 3, "name": "Imre Schlosser", "value": 59, "unit": "goals", "aliases": ["Schlosser"]},
+      {"rank": 4, "name": "Lajos Tichy", "value": 51, "unit": "goals", "aliases": ["Tichy"]},
+      {"rank": 5, "name": "Gyorgy Sarosi", "value": 42, "unit": "goals", "aliases": ["Sarosi"]},
+      {"rank": 6, "name": "Ferenc Bene", "value": 36, "unit": "goals", "aliases": ["Bene"]}
+    ]
+  },
+  {
+    "id": "japan-all-time-top-scorers",
+    "title": "Japan All-Time Top Scorers",
+    "group": "national",
+    "entries": [
+      {"rank": 1, "name": "Kunishige Kamamoto", "value": 75, "unit": "goals", "aliases": ["Kamamoto"]},
+      {"rank": 2, "name": "Kazuyoshi Miura", "value": 55, "unit": "goals", "aliases": ["Miura", "King Kazu"]},
+      {"rank": 3, "name": "Shinji Okazaki", "value": 50, "unit": "goals", "aliases": ["Okazaki"]},
+      {"rank": 4, "name": "Keisuke Honda", "value": 37, "unit": "goals", "aliases": ["Honda"]},
+      {"rank": 5, "name": "Shinji Kagawa", "value": 31, "unit": "goals", "aliases": ["Kagawa"]}
+    ]
+  },
+  {
+    "id": "south-korea-all-time-top-scorers",
+    "title": "South Korea All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Son Heung-min still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Cha Bum-kun", "value": 58, "unit": "goals", "aliases": ["Cha Bum-kun"]},
+      {"rank": 2, "name": "Son Heung-min", "value": 51, "unit": "goals", "aliases": ["Son", "Son Heung-min"]},
+      {"rank": 3, "name": "Hwang Sun-hong", "value": 50, "unit": "goals", "aliases": ["Hwang Sun-hong"]},
+      {"rank": 4, "name": "Park Lee-chun", "value": 36, "unit": "goals", "aliases": ["Park Lee-chun"]},
+      {"rank": 5, "name": "Lee Dong-gook", "value": 33, "unit": "goals", "aliases": ["Lee Dong-gook"]},
+      {"rank": 6, "name": "Kim Do-hoon", "value": 30, "unit": "goals", "aliases": ["Kim Do-hoon"]}
+    ]
+  },
+  {
+    "id": "egypt-all-time-top-scorers",
+    "title": "Egypt All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Mohamed Salah still active in 2026, one goal behind Hossam Hassan.",
+    "entries": [
+      {"rank": 1, "name": "Hossam Hassan", "value": 69, "unit": "goals", "aliases": ["Hossam Hassan"]},
+      {"rank": 2, "name": "Mohamed Salah", "value": 68, "unit": "goals", "aliases": ["Salah", "Mo Salah"]},
+      {"rank": 3, "name": "Hassan El-Shazly", "value": 42, "unit": "goals", "aliases": ["El-Shazly"]},
+      {"rank": 4, "name": "Ahmed Hassan", "value": 33, "unit": "goals", "aliases": ["Ahmed Hassan"]},
+      {"rank": 5, "name": "Mahmoud El-Khatib", "value": 30, "unit": "goals", "aliases": ["El-Khatib"]}
+    ]
+  },
+  {
+    "id": "iran-all-time-top-scorers",
+    "title": "Iran All-Time Top Scorers",
+    "group": "national",
+    "as_of": "2026-07",
+    "note": "Sardar Azmoun and Mehdi Taremi still active in 2026.",
+    "entries": [
+      {"rank": 1, "name": "Ali Daei", "value": 108, "unit": "goals", "aliases": ["Daei", "Ali Daei"]},
+      {"rank": 2, "name": "Karim Bagheri", "value": 50, "unit": "goals", "aliases": ["Bagheri"]},
+      {"rank": 3, "name": "Sardar Azmoun", "value": 45, "unit": "goals", "aliases": ["Azmoun"]},
+      {"rank": 4, "name": "Mehdi Taremi", "value": 40, "unit": "goals", "aliases": ["Taremi"]},
+      {"rank": 5, "name": "Ali Karimi", "value": 38, "unit": "goals", "aliases": ["Ali Karimi"]}
+    ]
+  }
+]

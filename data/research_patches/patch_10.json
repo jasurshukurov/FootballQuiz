@@ -1,0 +1,65 @@
+[
+  {
+    "id": 601883,
+    "name": "Matheus Nunes",
+    "status": "active",
+    "current_team": "Manchester City",
+    "league": "Premier League",
+    "market_value_eur": 40000000,
+    "retired_year": null
+  },
+  {
+    "id": 388198,
+    "name": "Nico Schlotterbeck",
+    "status": "active",
+    "current_team": "Borussia Dortmund",
+    "league": "Bundesliga",
+    "market_value_eur": 45000000,
+    "retired_year": null
+  },
+  {
+    "id": 648195,
+    "name": "Enzo Fernández",
+    "status": "active",
+    "current_team": "Chelsea",
+    "league": "Premier League",
+    "market_value_eur": 85000000,
+    "retired_year": null
+  },
+  {
+    "id": 730893,
+    "name": "Tyrick Mitchell",
+    "status": "active",
+    "current_team": "Crystal Palace",
+    "league": "Premier League",
+    "market_value_eur": 26000000,
+    "retired_year": null
+  },
+  {
+    "id": 80444,
+    "name": "Philippe Coutinho",
+    "status": "active",
+    "current_team": "Vasco da Gama",
+    "league": null,
+    "market_value_eur": 5000000,
+    "retired_year": null
+  },
+  {
+    "id": 717411,
+    "name": "Yegor Yarmolyuk",
+    "status": "active",
+    "current_team": "Brentford",
+    "league": "Premier League",
+    "market_value_eur": 28000000,
+    "retired_year": null
+  },
+  {
+    "id": 418543,
+    "name": "Perr Schuurs",
+    "status": "active",
+    "current_team": "Torino",
+    "league": "Serie A",
+    "market_value_eur": 4000000,
+    "retired_year": null
+  }
+]

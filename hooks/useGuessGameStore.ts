@@ -16,11 +16,17 @@ interface GuessGameState {
   guesses: GuessResult[];
   gameStatus: GameStatus;
   maxGuesses: number;
+  /** True while playing a past day from the archive — never persisted, and
+   *  suppresses stats/streak recording. */
+  isPractice: boolean;
 }
 
 interface GuessGameActions {
   initGame: () => void;
+  /** Load a past day's puzzle for practice (archive). Does not record stats. */
+  initPracticeGame: (dateStr: string) => void;
   makeGuess: (player: Player) => GuessResult | null;
+  giveUp: () => void;
   resetGame: () => void;
 }
 
@@ -34,12 +40,15 @@ export const useGuessGameStore = create<GuessGameStore>()(
       guesses: [],
       gameStatus: 'playing' as GameStatus,
       maxGuesses: MAX_GUESSES,
+      isPractice: false,
 
       initGame: () => {
         const today = getDailyNumber();
         const state = get();
 
-        if (state.dailyNumber === today && state.targetPlayer) {
+        // Re-init if not already on today's daily, OR if we're leaving a
+        // practice board (which had a different dailyNumber anyway).
+        if (state.dailyNumber === today && state.targetPlayer && !state.isPractice) {
           return;
         }
 
@@ -49,6 +58,18 @@ export const useGuessGameStore = create<GuessGameStore>()(
           targetPlayer: target,
           guesses: [],
           gameStatus: 'playing',
+          isPractice: false,
+        });
+      },
+
+      initPracticeGame: (dateStr: string) => {
+        const date = new Date(`${dateStr}T00:00:00`);
+        set({
+          dailyNumber: getDailyNumber(date),
+          targetPlayer: getDailyTarget(date),
+          guesses: [],
+          gameStatus: 'playing',
+          isPractice: true,
         });
       },
 
@@ -74,11 +95,21 @@ export const useGuessGameStore = create<GuessGameStore>()(
           gameStatus: newStatus,
         });
 
-        if (newStatus === 'won' || newStatus === 'lost') {
+        if ((newStatus === 'won' || newStatus === 'lost') && !state.isPractice) {
           recordGameCompletion(newStatus === 'won', newGuesses.length);
         }
 
         return result;
+      },
+
+      giveUp: () => {
+        const state = get();
+        if (state.gameStatus !== 'playing') return;
+
+        set({ gameStatus: 'lost' });
+        if (!state.isPractice) {
+          recordGameCompletion(false, state.guesses.length);
+        }
       },
 
       resetGame: () => {

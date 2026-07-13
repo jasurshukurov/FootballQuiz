@@ -2,9 +2,11 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
 import { colors, fonts, spacing, gradients } from '@/constants/theme';
+import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { getModeSeed } from '@/lib/dailySeed';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
 import {
   generateCareerTimelinePuzzle,
   getAllClubs,
@@ -14,14 +16,16 @@ import {
 } from '@/lib/careerTimelineGenerator';
 import CareerTimeline from '@/components/games/CareerTimeline';
 import ClubSearchAutocomplete from '@/components/ui/ClubSearchAutocomplete';
-import RetroButton from '@/components/ui/RetroButton';
+import GameOverActions from '@/components/ui/GameOverActions';
 import GiveUpButton from '@/components/career/GiveUpButton';
 import ShakeView from '@/components/ui/ShakeView';
 import ShareableCareerTimelineResult from '@/components/ShareableCareerTimelineResult';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
-import { captureAndShare } from '@/lib/sharing';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import { buildShareText } from '@/lib/sharing';
 import { playCheer, playCrossbar } from '@/lib/sounds';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 type GamePhase = 'playing' | 'won' | 'lost';
 const MAX_LIVES = 3;
@@ -36,11 +40,29 @@ export default function CareerTimelineScreen() {
   const [shakeWrong, setShakeWrong] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const shareRef = useRef<View>(null);
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
   const clubs = useMemo(() => getAllClubs(), []);
 
-  const initGame = useCallback((seed: number) => {
-    const p = generateCareerTimelinePuzzle(seed);
+  const shareText = useMemo(
+    () =>
+      puzzle
+        ? buildShareText({
+            mode: 'careertimeline',
+            dailyNumber: getDailyNumber(),
+            dailyStreak,
+            guessedCount,
+            totalHidden: puzzle.totalHidden,
+            livesRemaining: lives,
+            totalLives: MAX_LIVES,
+            playerName: puzzle.playerName,
+          })
+        : '',
+    [puzzle, dailyStreak, guessedCount, lives],
+  );
+
+  const initGame = useCallback((seed: number, dayIndex?: number) => {
+    const p = generateCareerTimelinePuzzle(seed, dayIndex);
     setPuzzle(p);
     setNodes(p.nodes.map((n) => ({ ...n })));
     setActiveIdx(null);
@@ -53,7 +75,7 @@ export default function CareerTimelineScreen() {
 
   useEffect(() => {
     const seed = getModeSeed('careertimeline');
-    initGame(seed);
+    initGame(seed, getDailyNumber());
   }, [initGame]);
 
   const handleNodePress = useCallback(
@@ -72,10 +94,8 @@ export default function CareerTimelineScreen() {
       const node = nodes[index];
       if (!node.isHidden || node.isGuessed || node.hintRevealed) return;
 
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      const newNodes = nodes.map((n, i) =>
-        i === index ? { ...n, hintRevealed: true } : n,
-      );
+      triggerImpact(ImpactFeedbackStyle.Light);
+      const newNodes = nodes.map((n, i) => (i === index ? { ...n, hintRevealed: true } : n));
       setNodes(newNodes);
       setHintsUsed((prev) => prev + 1);
     },
@@ -91,11 +111,9 @@ export default function CareerTimelineScreen() {
 
       if (clubNamesMatch(clubName, targetNode.club)) {
         // Correct guess
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        triggerNotification(NotificationFeedbackType.Success);
         playCheer();
-        const newNodes = nodes.map((n, i) =>
-          i === activeIdx ? { ...n, isGuessed: true } : n,
-        );
+        const newNodes = nodes.map((n, i) => (i === activeIdx ? { ...n, isGuessed: true } : n));
         setNodes(newNodes);
         const newGuessedCount = guessedCount + 1;
         setGuessedCount(newGuessedCount);
@@ -110,7 +128,7 @@ export default function CareerTimelineScreen() {
         }
       } else {
         // Wrong guess
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        triggerNotification(NotificationFeedbackType.Error);
         playCrossbar();
         setShakeWrong(true);
         setTimeout(() => setShakeWrong(false), 500);
@@ -119,9 +137,7 @@ export default function CareerTimelineScreen() {
 
         if (newLives <= 0) {
           // Reveal all hidden clubs
-          const revealedNodes = nodes.map((n) =>
-            n.isHidden ? { ...n, isGuessed: true } : n,
-          );
+          const revealedNodes = nodes.map((n) => (n.isHidden ? { ...n, isGuessed: true } : n));
           setNodes(revealedNodes);
           setPhase('lost');
           setActiveIdx(null);
@@ -136,11 +152,9 @@ export default function CareerTimelineScreen() {
 
   const handleGiveUp = useCallback(() => {
     if (phase !== 'playing' || !puzzle) return;
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    triggerNotification(NotificationFeedbackType.Warning);
     playCrossbar();
-    const revealedNodes = nodes.map((n) =>
-      n.isHidden ? { ...n, isGuessed: true } : n,
-    );
+    const revealedNodes = nodes.map((n) => (n.isHidden ? { ...n, isGuessed: true } : n));
     setNodes(revealedNodes);
     setPhase('lost');
     setActiveIdx(null);
@@ -167,8 +181,7 @@ export default function CareerTimelineScreen() {
     );
   }
 
-  const heartsDisplay =
-    '\u2764\uFE0F'.repeat(lives) + '\uD83D\uDDA4'.repeat(MAX_LIVES - lives);
+  const heartsDisplay = '\u2764\uFE0F'.repeat(lives) + '\uD83D\uDDA4'.repeat(MAX_LIVES - lives);
 
   if (phase === 'won' || phase === 'lost') {
     return (
@@ -179,7 +192,8 @@ export default function CareerTimelineScreen() {
         style={styles.gradient}>
         <SafeAreaView style={styles.container}>
           <View style={styles.resultContainer}>
-            <Text style={[styles.resultTitle, phase === 'won' ? styles.wonTitle : styles.lostTitle]}>
+            <Text
+              style={[styles.resultTitle, phase === 'won' ? styles.wonTitle : styles.lostTitle]}>
               {phase === 'won' ? 'COMPLETE!' : 'GAME OVER'}
             </Text>
             <Text style={styles.resultPlayer}>{puzzle.playerName}</Text>
@@ -190,12 +204,13 @@ export default function CareerTimelineScreen() {
 
             <CareerTimeline nodes={nodes} activeNodeIndex={null} onNodePress={() => {}} />
 
-            <View style={styles.buttonRow}>
-              <RetroButton title="Share Result" onPress={() => captureAndShare(shareRef)} />
-            </View>
-            <View style={styles.buttonRow}>
-              <RetroButton title="PLAY AGAIN" onPress={handlePlayAgain} variant="primary" />
-            </View>
+            <GameOverActions
+              shareRef={shareRef}
+              shareText={shareText}
+              win={phase === 'won'}
+              onPlayAgain={handlePlayAgain}
+              playAgainLabel="PLAY AGAIN"
+            />
           </View>
 
           {/* Offscreen shareable view */}
@@ -263,7 +278,11 @@ export default function CareerTimelineScreen() {
             />
           </View>
         )}
-
+        <TutorialOverlay
+          modeKey="careertimeline"
+          title="Career Timeline"
+          description="Complete the player's career history. Guess the hidden clubs using the search bar!"
+        />
       </SafeAreaView>
     </LinearGradient>
   );

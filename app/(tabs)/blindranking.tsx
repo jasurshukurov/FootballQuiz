@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle } from 'expo-haptics';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { triggerImpact } from '@/lib/haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Player } from '@/types/player';
 import { colors, fonts, spacing, gradients } from '@/constants/theme';
@@ -12,14 +13,17 @@ import {
   BlindRankingPuzzle,
 } from '@/lib/blindRankingGenerator';
 import { getModeSeed } from '@/lib/dailySeed';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import ChallengerCard from '@/components/games/ChallengerCard';
 import RankSlot from '@/components/games/RankSlot';
-import RetroButton from '@/components/ui/RetroButton';
+import GameOverActions from '@/components/ui/GameOverActions';
 import ShareableBlindRankingResult from '@/components/ShareableBlindRankingResult';
-import { captureAndShare } from '@/lib/sharing';
+import { buildShareText } from '@/lib/sharing';
 import { playCheer, playCrossbar } from '@/lib/sounds';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 type Phase = 'placing' | 'revealing' | 'complete';
 
@@ -29,7 +33,6 @@ export default function BlindRankingScreen() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [phase, setPhase] = useState<Phase>('placing');
   const [score, setScore] = useState(0);
-  const [revealedCount, setRevealedCount] = useState(0);
   const [correctSlots, setCorrectSlots] = useState<(boolean | undefined)[]>([
     undefined,
     undefined,
@@ -38,8 +41,24 @@ export default function BlindRankingScreen() {
     undefined,
   ]);
   const shareRef = useRef<View>(null);
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
   const isFirstGame = useRef(true);
+
+  const shareText = useMemo(
+    () =>
+      puzzle
+        ? buildShareText({
+            mode: 'blindranking',
+            dailyNumber: getDailyNumber(),
+            dailyStreak,
+            score,
+            total: 5,
+            categoryTitle: puzzle.category.title,
+          })
+        : '',
+    [puzzle, dailyStreak, score],
+  );
 
   const startGame = useCallback(() => {
     const seed = isFirstGame.current ? getModeSeed('blindranking') : Date.now();
@@ -50,7 +69,6 @@ export default function BlindRankingScreen() {
     setCurrentIdx(0);
     setPhase('placing');
     setScore(0);
-    setRevealedCount(0);
     setCorrectSlots([undefined, undefined, undefined, undefined, undefined]);
   }, []);
 
@@ -63,7 +81,7 @@ export default function BlindRankingScreen() {
       if (phase !== 'placing' || !puzzle || currentIdx >= puzzle.players.length) return;
       if (slots[slotIndex] !== null) return;
 
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      triggerImpact(ImpactFeedbackStyle.Medium);
 
       const player = puzzle.players[currentIdx];
       const newSlots = [...slots];
@@ -90,13 +108,12 @@ export default function BlindRankingScreen() {
                 next[i] = results[i];
                 return next;
               });
-              setRevealedCount((prev) => prev + 1);
 
               if (i === 4) {
                 // All revealed
                 setTimeout(() => {
                   setPhase('complete');
-                  if (finalScore >= 3) {
+                  if (finalScore >= 4) {
                     playCheer();
                   } else {
                     playCrossbar();
@@ -139,9 +156,7 @@ export default function BlindRankingScreen() {
             <Text style={styles.resultTitle}>
               {score >= 4 ? 'BRILLIANT!' : score >= 2 ? 'NICE TRY!' : 'TOUGH LUCK!'}
             </Text>
-            <Text style={styles.scoreText}>
-              {score}/5 Correct
-            </Text>
+            <Text style={styles.scoreText}>{score}/5 Correct</Text>
             <Text style={styles.categoryText}>{puzzle.category.title}</Text>
 
             {/* Show correct order */}
@@ -162,19 +177,18 @@ export default function BlindRankingScreen() {
               })}
             </View>
 
-            <View style={styles.buttonGroup}>
-              <RetroButton title="Share Result" onPress={() => captureAndShare(shareRef)} />
-              <RetroButton title="Play Again" onPress={startGame} variant="primary" />
-            </View>
+            <GameOverActions
+              shareRef={shareRef}
+              shareText={shareText}
+              win={score >= 4}
+              onPlayAgain={startGame}
+            />
           </ScrollView>
 
           {/* Offscreen shareable view */}
           <View style={styles.offscreen}>
             <View ref={shareRef} collapsable={false}>
-              <ShareableBlindRankingResult
-                score={score}
-                categoryTitle={puzzle.category.title}
-              />
+              <ShareableBlindRankingResult score={score} categoryTitle={puzzle.category.title} />
             </View>
           </View>
         </SafeAreaView>
@@ -200,9 +214,7 @@ export default function BlindRankingScreen() {
 
           {/* Progress */}
           <Text style={styles.progress}>
-            {phase === 'placing'
-              ? `Player ${Math.min(currentIdx + 1, 5)} of 5`
-              : `Revealing...`}
+            {phase === 'placing' ? `Player ${Math.min(currentIdx + 1, 5)} of 5` : `Revealing...`}
           </Text>
 
           {/* Current player card */}
@@ -232,6 +244,11 @@ export default function BlindRankingScreen() {
             ))}
           </View>
         </ScrollView>
+        <TutorialOverlay
+          modeKey="blindranking"
+          title="Blind Ranking"
+          description="Place 5 players in the correct order based on the category shown. Tap a slot to place!"
+        />
       </SafeAreaView>
     </LinearGradient>
   );

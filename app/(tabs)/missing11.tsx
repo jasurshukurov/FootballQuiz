@@ -11,24 +11,31 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Haptics from 'expo-haptics';
+import { NotificationFeedbackType } from 'expo-haptics';
 
 import { Player } from '@/types/player';
+import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import SoccerPitch from '@/components/games/SoccerPitch';
 import GlassCard from '@/components/ui/GlassCard';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
 import RetroButton from '@/components/ui/RetroButton';
 import TeamCrest from '@/components/ui/TeamCrest';
-import { getAllMatches } from '@/lib/matchData';
+import { getAllMatches, getPlayableMatches, getDailyMatch } from '@/lib/matchData';
 import { Match } from '@/types/match';
 import { colors, fonts, gradients } from '@/constants/theme';
+import { getModeSeed, createSeededRandom } from '@/lib/dailySeed';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { useProStore } from '@/hooks/useProStore';
 import { showRewardedAd, loadRewardedAd } from '@/lib/ads';
 import ShareableMissing11Result from '@/components/ShareableMissing11Result';
-import { captureAndShare } from '@/lib/sharing';
+import GameOverActions from '@/components/ui/GameOverActions';
+import GameOverExtras from '@/components/ui/GameOverExtras';
+import { buildShareText } from '@/lib/sharing';
 import { playWhistle, playCheer, playCrossbar } from '@/lib/sounds';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 type GameState = 'playing' | 'won' | 'lost';
 
@@ -46,12 +53,19 @@ export default function Missing11Screen() {
   const [revealedSlots, setRevealedSlots] = useState<Set<number>>(new Set());
   const [lives, setLives] = useState(3);
   const [gameState, setGameState] = useState<GameState>('playing');
+  // Guesses found by the player before a loss reveals the remaining slots
+  // (revealedSlots is overwritten with all 11 on loss, which misreported
+  // "11/11 players found" on the game-over card).
+  const [finalFound, setFinalFound] = useState<number | null>(null);
   const [searchVisible, setSearchVisible] = useState(false);
   const [activeSlot, setActiveSlot] = useState<number | null>(null);
   const [shakingSlot, setShakingSlot] = useState<number | null>(null);
   const shareRef = useRef<View>(null);
   const [hintUsed, setHintUsed] = useState(false);
   const [hintText, setHintText] = useState('');
+  // Seeded RNG for the current game: set to the daily mode seed on first play so
+  // everyone gets the same match, side and hint; reseeded randomly on "Play again".
+  const gameRng = useRef<() => number>(() => Math.random());
 
   const isPro = useProStore((s) => s.isPro);
 
@@ -60,11 +74,14 @@ export default function Missing11Screen() {
   }, []);
 
   useEffect(() => {
-    const matches = getAllMatches();
-    if (matches.length === 0) return;
-    const randomMatch = matches[Math.floor(Math.random() * matches.length)];
-    const side = Math.random() < 0.5 ? 'a' : 'b';
-    setMatch(randomMatch);
+    if (getAllMatches().length === 0) return;
+    // Deterministic no-repeat daily match (rotation walk), with a seeded RNG for
+    // the side pick and hints so everyone gets the same board.
+    const rng = createSeededRandom(getModeSeed('missing11'));
+    gameRng.current = rng;
+    const dailyMatch = getDailyMatch(getDailyNumber());
+    const side = rng() < 0.5 ? 'a' : 'b';
+    setMatch(dailyMatch);
     setTeamSide(side as 'a' | 'b');
     playWhistle();
   }, []);
@@ -75,6 +92,20 @@ export default function Missing11Screen() {
   }, [match, teamSide]);
 
   const teamName = match ? (teamSide === 'a' ? match.opponent_a : match.opponent_b) : '';
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
+
+  const shareText = useMemo(
+    () =>
+      buildShareText({
+        mode: 'missing11',
+        dailyNumber: getDailyNumber(),
+        dailyStreak,
+        found: finalFound ?? revealedSlots.size,
+        total: 11,
+        teamName,
+      }),
+    [dailyStreak, revealedSlots, teamName],
+  );
 
   // Convert lineup names to Player objects for the autocomplete
   const lineupPlayers = useMemo<Player[]>(() => {
@@ -91,14 +122,12 @@ export default function Missing11Screen() {
     }));
   }, [lineupNames, teamName]);
 
-  const revealedIds = useMemo(
-    () => new Set(Array.from(revealedSlots)),
-    [revealedSlots],
-  );
+  const revealedIds = useMemo(() => new Set(Array.from(revealedSlots)), [revealedSlots]);
 
   const handleSlotPress = useCallback(
     (index: number) => {
       if (gameState !== 'playing' || revealedSlots.has(index)) return;
+      triggerImpact();
       setActiveSlot(index);
       setSearchVisible(true);
     },
@@ -115,7 +144,7 @@ export default function Missing11Screen() {
       setSearchVisible(false);
 
       if (isCorrect) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        triggerNotification(NotificationFeedbackType.Success);
         const newRevealed = new Set(revealedSlots);
         newRevealed.add(activeSlot);
         setRevealedSlots(newRevealed);
@@ -127,7 +156,7 @@ export default function Missing11Screen() {
           useDailyProgressStore.getState().markCompleted('missing11', 11);
         }
       } else {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        triggerNotification(NotificationFeedbackType.Error);
         setShakingSlot(activeSlot);
         setTimeout(() => setShakingSlot(null), 500);
 
@@ -135,6 +164,7 @@ export default function Missing11Screen() {
         setLives(newLives);
         if (newLives <= 0) {
           useManagerStore.getState().addXp('missing-11', revealedSlots.size * 20);
+          setFinalFound(revealedSlots.size);
           setGameState('lost');
           playCrossbar();
           // Reveal all remaining slots
@@ -156,7 +186,8 @@ export default function Missing11Screen() {
     if (unrevealedIndices.length === 0) return;
 
     const giveHint = () => {
-      const randomIndex = unrevealedIndices[Math.floor(Math.random() * unrevealedIndices.length)];
+      const randomIndex =
+        unrevealedIndices[Math.floor(gameRng.current() * unrevealedIndices.length)];
       const playerName = lineupNames[randomIndex];
       const firstLetter = playerName.charAt(0).toUpperCase();
       setHintUsed(true);
@@ -185,14 +216,17 @@ export default function Missing11Screen() {
   );
 
   const handleNewGame = useCallback(() => {
-    const matches = getAllMatches();
+    const matches = getPlayableMatches();
     if (matches.length === 0) return;
-    const randomMatch = matches[Math.floor(Math.random() * matches.length)];
-    const side = Math.random() < 0.5 ? 'a' : 'b';
+    const rng = createSeededRandom(Date.now());
+    gameRng.current = rng;
+    const randomMatch = matches[Math.floor(rng() * matches.length)];
+    const side = rng() < 0.5 ? 'a' : 'b';
     setMatch(randomMatch);
     setTeamSide(side as 'a' | 'b');
     setRevealedSlots(new Set());
     setLives(3);
+    setFinalFound(null);
     setGameState('playing');
     setSearchVisible(false);
     setActiveSlot(null);
@@ -231,7 +265,7 @@ export default function Missing11Screen() {
 
           {/* Score and lives */}
           <View style={styles.statusRow}>
-            <Text style={styles.scoreText}>{revealedSlots.size}/11 FOUND</Text>
+            <Text style={styles.scoreText}>{finalFound ?? revealedSlots.size}/11 FOUND</Text>
             <View style={styles.livesRow}>
               {Array.from({ length: 3 }).map((_, i) => (
                 <Text key={i} style={[styles.lifeIcon, i >= lives && styles.lifeIconLost]}>
@@ -275,11 +309,20 @@ export default function Missing11Screen() {
                   <Text style={styles.gameOverTitle}>
                     {gameState === 'won' ? 'COMPLETE!' : 'GAME OVER'}
                   </Text>
-                  <Text style={styles.gameOverScore}>{revealedSlots.size}/11 players found</Text>
-                  <RetroButton title="Share Result" onPress={() => captureAndShare(shareRef)} />
-                  <RetroButton title="PLAY AGAIN" onPress={handleNewGame} variant="primary" />
+                  <Text style={styles.gameOverScore}>
+                    {finalFound ?? revealedSlots.size}/11 players found
+                  </Text>
+                  <GameOverActions
+                    shareRef={shareRef}
+                    shareText={shareText}
+                    win={gameState === 'won'}
+                    onPlayAgain={handleNewGame}
+                    playAgainLabel="PLAY AGAIN"
+                    includeExtras={false}
+                  />
                 </View>
               </GlassCard>
+              <GameOverExtras win={gameState === 'won'} />
             </View>
           )}
 
@@ -332,6 +375,11 @@ export default function Missing11Screen() {
               </GlassCard>
             </KeyboardAvoidingView>
           </Modal>
+          <TutorialOverlay
+            modeKey="missing11"
+            title="Missing XI"
+            description="Name all 11 players in a real match starting lineup. Tap a position to guess!"
+          />
         </View>
       </SafeAreaView>
     </LinearGradient>

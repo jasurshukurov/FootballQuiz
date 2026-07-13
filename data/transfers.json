@@ -9021,47 +9021,6 @@
     ]
   },
   {
-    "player_id": 192,
-    "player_name": "Joao Cancelo",
-    "transfers": [
-      {
-        "club_name": "Benfica",
-        "club_id": "benfica",
-        "date_joined": "2014-07-01",
-        "date_left": "2015-06-30",
-        "fee": null
-      },
-      {
-        "club_name": "Valencia",
-        "club_id": "valencia",
-        "date_joined": "2015-07-01",
-        "date_left": "2017-06-30",
-        "fee": "Free"
-      },
-      {
-        "club_name": "Inter Milan",
-        "club_id": "inter-milan",
-        "date_joined": "2017-07-01",
-        "date_left": "2018-06-30",
-        "fee": "Free"
-      },
-      {
-        "club_name": "Juventus",
-        "club_id": "juventus",
-        "date_joined": "2018-07-01",
-        "date_left": "2019-06-30",
-        "fee": "Free"
-      },
-      {
-        "club_name": "Manchester City",
-        "club_id": "manchester-city",
-        "date_joined": "2019-07-01",
-        "date_left": null,
-        "fee": "Free"
-      }
-    ]
-  },
-  {
     "player_id": 193,
     "player_name": "Kyle Walker",
     "transfers": [
@@ -18260,6 +18219,2473 @@
         "date_joined": "2015-07-01",
         "date_left": null,
         "fee": "€3m"
+      }
+    ]
+  },
+  {
+    "player_id": 511,
+    "player_name": "Luis Figo",
+    "transfers": [
+      {
+        "club_name": "Sporting CP",
+        "club_id": "sporting-cp",
+        "date_joined": "1990-07-01",
+        "date_left": "1995-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "1995-07-01",
+        "date_left": "2000-07-24",
+        "fee": "€2.25m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2000-07-24",
+        "date_left": "2005-08-04",
+        "fee": "€62m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2005-08-04",
+        "date_left": "2009-05-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 512,
+    "player_name": "Christian Vieri",
+    "transfers": [
+      {
+        "club_name": "Torino",
+        "club_id": "torino",
+        "date_joined": "1991-07-01",
+        "date_left": "1995-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "1996-07-01",
+        "date_left": "1997-06-30",
+        "fee": "€7m"
+      },
+      {
+        "club_name": "Atletico Madrid",
+        "club_id": "atletico-madrid",
+        "date_joined": "1997-07-01",
+        "date_left": "1998-06-30",
+        "fee": "€19m"
+      },
+      {
+        "club_name": "Lazio",
+        "club_id": "lazio",
+        "date_joined": "1998-07-01",
+        "date_left": "1999-06-30",
+        "fee": "€28m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "1999-06-24",
+        "date_left": "2005-07-01",
+        "fee": "€46.5m"
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2005-07-06",
+        "date_left": "2006-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 513,
+    "player_name": "Andriy Shevchenko",
+    "transfers": [
+      {
+        "club_name": "Dynamo Kyiv",
+        "club_id": "dynamo-kyiv",
+        "date_joined": "1994-07-01",
+        "date_left": "1999-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "1999-07-01",
+        "date_left": "2006-05-31",
+        "fee": "€25m"
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2006-05-31",
+        "date_left": "2009-08-28",
+        "fee": "€43.9m"
+      },
+      {
+        "club_name": "Dynamo Kyiv",
+        "club_id": "dynamo-kyiv",
+        "date_joined": "2009-08-28",
+        "date_left": "2012-07-28",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 514,
+    "player_name": "Ruud van Nistelrooy",
+    "transfers": [
+      {
+        "club_name": "Den Bosch",
+        "club_id": "den-bosch",
+        "date_joined": "1993-07-01",
+        "date_left": "1997-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Heerenveen",
+        "club_id": "heerenveen",
+        "date_joined": "1997-07-01",
+        "date_left": "1998-07-01",
+        "fee": "€0.4m"
+      },
+      {
+        "club_name": "PSV Eindhoven",
+        "club_id": "psv-eindhoven",
+        "date_joined": "1998-07-01",
+        "date_left": "2001-04-23",
+        "fee": "€4.2m"
+      },
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "2001-04-23",
+        "date_left": "2006-07-28",
+        "fee": "€28.5m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2006-07-28",
+        "date_left": "2010-01-30",
+        "fee": "€14m"
+      },
+      {
+        "club_name": "Hamburg",
+        "club_id": "hamburg",
+        "date_joined": "2010-01-30",
+        "date_left": "2011-07-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Malaga",
+        "club_id": "malaga",
+        "date_joined": "2011-07-01",
+        "date_left": "2012-05-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 515,
+    "player_name": "Pavel Nedved",
+    "transfers": [
+      {
+        "club_name": "Sparta Prague",
+        "club_id": "sparta-prague",
+        "date_joined": "1992-07-01",
+        "date_left": "1996-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Lazio",
+        "club_id": "lazio",
+        "date_joined": "1996-07-01",
+        "date_left": "2001-07-01",
+        "fee": "€8m"
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2001-07-01",
+        "date_left": "2009-08-27",
+        "fee": "€41m"
+      }
+    ]
+  },
+  {
+    "player_id": 516,
+    "player_name": "Rui Costa",
+    "transfers": [
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "1990-07-01",
+        "date_left": "1994-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Fiorentina",
+        "club_id": "fiorentina",
+        "date_joined": "1994-07-01",
+        "date_left": "2001-07-01",
+        "fee": "€1.2m"
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2001-07-01",
+        "date_left": "2006-07-01",
+        "fee": "€42m"
+      },
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "2006-07-01",
+        "date_left": "2008-05-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 517,
+    "player_name": "Filippo Inzaghi",
+    "transfers": [
+      {
+        "club_name": "Atalanta",
+        "club_id": "atalanta",
+        "date_joined": "1996-07-01",
+        "date_left": "1997-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "1997-07-01",
+        "date_left": "2001-07-01",
+        "fee": "€23m"
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2001-07-01",
+        "date_left": "2012-05-31",
+        "fee": "€36.5m"
+      }
+    ]
+  },
+  {
+    "player_id": 518,
+    "player_name": "Nicolas Anelka",
+    "transfers": [
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "1996-07-01",
+        "date_left": "1997-02-01",
+        "fee": null
+      },
+      {
+        "club_name": "Arsenal",
+        "club_id": "arsenal",
+        "date_joined": "1997-02-01",
+        "date_left": "1999-08-02",
+        "fee": "€0.7m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "1999-08-02",
+        "date_left": "2000-07-27",
+        "fee": "€35m"
+      },
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "2000-07-27",
+        "date_left": "2002-06-30",
+        "fee": "€34m"
+      },
+      {
+        "club_name": "Manchester City",
+        "club_id": "manchester-city",
+        "date_joined": "2002-06-30",
+        "date_left": "2005-01-11",
+        "fee": "€17m"
+      },
+      {
+        "club_name": "Fenerbahce",
+        "club_id": "fenerbahce",
+        "date_joined": "2005-01-11",
+        "date_left": "2006-08-24",
+        "fee": "€7m"
+      },
+      {
+        "club_name": "Bolton Wanderers",
+        "club_id": "bolton-wanderers",
+        "date_joined": "2006-08-24",
+        "date_left": "2008-01-11",
+        "fee": "€10m"
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2008-01-11",
+        "date_left": "2012-01-14",
+        "fee": "€15m"
+      },
+      {
+        "club_name": "Shanghai Shenhua",
+        "club_id": "shanghai-shenhua",
+        "date_joined": "2012-01-14",
+        "date_left": "2012-12-31",
+        "fee": "Free"
+      },
+      {
+        "club_name": "West Bromwich Albion",
+        "club_id": "west-bromwich-albion",
+        "date_joined": "2013-07-01",
+        "date_left": "2014-03-14",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 519,
+    "player_name": "Juan Sebastian Veron",
+    "transfers": [
+      {
+        "club_name": "Boca Juniors",
+        "club_id": "boca-juniors",
+        "date_joined": "1996-07-01",
+        "date_left": "1996-09-01",
+        "fee": null
+      },
+      {
+        "club_name": "Sampdoria",
+        "club_id": "sampdoria",
+        "date_joined": "1996-09-01",
+        "date_left": "1998-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Parma",
+        "club_id": "parma",
+        "date_joined": "1998-07-01",
+        "date_left": "1999-07-01",
+        "fee": "€18m"
+      },
+      {
+        "club_name": "Lazio",
+        "club_id": "lazio",
+        "date_joined": "1999-07-01",
+        "date_left": "2001-07-12",
+        "fee": "€35m"
+      },
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "2001-07-12",
+        "date_left": "2003-08-15",
+        "fee": "€42.6m"
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2003-08-15",
+        "date_left": "2004-08-31",
+        "fee": "€26m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2004-08-31",
+        "date_left": "2006-08-01",
+        "fee": "Loan"
+      },
+      {
+        "club_name": "Estudiantes",
+        "club_id": "estudiantes",
+        "date_joined": "2006-08-01",
+        "date_left": "2012-08-08",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 520,
+    "player_name": "Deco",
+    "transfers": [
+      {
+        "club_name": "Porto",
+        "club_id": "porto",
+        "date_joined": "1999-07-01",
+        "date_left": "2004-07-23",
+        "fee": null
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2004-07-23",
+        "date_left": "2008-06-30",
+        "fee": "€21m"
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2008-06-30",
+        "date_left": "2010-06-30",
+        "fee": "€10m"
+      },
+      {
+        "club_name": "Fluminense",
+        "club_id": "fluminense",
+        "date_joined": "2010-08-31",
+        "date_left": "2013-08-05",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 521,
+    "player_name": "Ricardo Carvalho",
+    "transfers": [
+      {
+        "club_name": "Porto",
+        "club_id": "porto",
+        "date_joined": "2001-07-01",
+        "date_left": "2004-07-27",
+        "fee": null
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2004-07-27",
+        "date_left": "2010-08-27",
+        "fee": "€30m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2010-08-27",
+        "date_left": "2013-06-30",
+        "fee": "€8m"
+      },
+      {
+        "club_name": "Monaco",
+        "club_id": "monaco",
+        "date_joined": "2013-08-19",
+        "date_left": "2016-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 522,
+    "player_name": "Fernando Morientes",
+    "transfers": [
+      {
+        "club_name": "Real Zaragoza",
+        "club_id": "real-zaragoza",
+        "date_joined": "1995-07-01",
+        "date_left": "1997-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "1997-07-01",
+        "date_left": "2005-01-01",
+        "fee": "€6m"
+      },
+      {
+        "club_name": "Liverpool",
+        "club_id": "liverpool",
+        "date_joined": "2005-01-11",
+        "date_left": "2006-08-11",
+        "fee": "€9m"
+      },
+      {
+        "club_name": "Valencia",
+        "club_id": "valencia",
+        "date_joined": "2006-08-11",
+        "date_left": "2009-07-01",
+        "fee": "€3m"
+      },
+      {
+        "club_name": "Marseille",
+        "club_id": "marseille",
+        "date_joined": "2009-07-01",
+        "date_left": "2010-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 523,
+    "player_name": "Georginio Wijnaldum",
+    "transfers": [
+      {
+        "club_name": "Feyenoord",
+        "club_id": "feyenoord",
+        "date_joined": "2007-07-01",
+        "date_left": "2011-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "PSV Eindhoven",
+        "club_id": "psv-eindhoven",
+        "date_joined": "2011-07-01",
+        "date_left": "2015-07-10",
+        "fee": "€5m"
+      },
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "2015-07-10",
+        "date_left": "2016-07-22",
+        "fee": "€18.5m"
+      },
+      {
+        "club_name": "Liverpool",
+        "club_id": "liverpool",
+        "date_joined": "2016-07-22",
+        "date_left": "2021-06-30",
+        "fee": "€27.5m"
+      },
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "2021-06-30",
+        "date_left": "2023-08-31",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Al-Ettifaq",
+        "club_id": "al-ettifaq",
+        "date_joined": "2023-08-31",
+        "date_left": null,
+        "fee": "€9m"
+      }
+    ]
+  },
+  {
+    "player_id": 524,
+    "player_name": "Cody Gakpo",
+    "transfers": [
+      {
+        "club_name": "PSV Eindhoven",
+        "club_id": "psv-eindhoven",
+        "date_joined": "2018-07-01",
+        "date_left": "2023-01-01",
+        "fee": null
+      },
+      {
+        "club_name": "Liverpool",
+        "club_id": "liverpool",
+        "date_joined": "2023-01-01",
+        "date_left": null,
+        "fee": "€42m"
+      }
+    ]
+  },
+  {
+    "player_id": 525,
+    "player_name": "Donny van de Beek",
+    "transfers": [
+      {
+        "club_name": "Ajax",
+        "club_id": "ajax",
+        "date_joined": "2015-07-01",
+        "date_left": "2020-09-02",
+        "fee": null
+      },
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "2020-09-02",
+        "date_left": "2024-01-10",
+        "fee": "€39m"
+      },
+      {
+        "club_name": "Everton",
+        "club_id": "everton",
+        "date_joined": "2022-01-31",
+        "date_left": "2022-06-30",
+        "fee": "Loan"
+      },
+      {
+        "club_name": "Eintracht Frankfurt",
+        "club_id": "eintracht-frankfurt",
+        "date_joined": "2024-01-10",
+        "date_left": null,
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 526,
+    "player_name": "Rafael van der Vaart",
+    "transfers": [
+      {
+        "club_name": "Ajax",
+        "club_id": "ajax",
+        "date_joined": "2000-07-01",
+        "date_left": "2005-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Hamburg",
+        "club_id": "hamburg",
+        "date_joined": "2005-08-01",
+        "date_left": "2008-08-01",
+        "fee": "€5.5m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2008-08-01",
+        "date_left": "2010-08-31",
+        "fee": "€13m"
+      },
+      {
+        "club_name": "Tottenham Hotspur",
+        "club_id": "tottenham-hotspur",
+        "date_joined": "2010-08-31",
+        "date_left": "2012-08-31",
+        "fee": "€9m"
+      },
+      {
+        "club_name": "Hamburg",
+        "club_id": "hamburg",
+        "date_joined": "2012-08-31",
+        "date_left": "2015-07-01",
+        "fee": "€13m"
+      },
+      {
+        "club_name": "Real Betis",
+        "club_id": "real-betis",
+        "date_joined": "2015-07-01",
+        "date_left": "2016-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 527,
+    "player_name": "Klaas-Jan Huntelaar",
+    "transfers": [
+      {
+        "club_name": "Heerenveen",
+        "club_id": "heerenveen",
+        "date_joined": "2004-07-01",
+        "date_left": "2006-01-01",
+        "fee": null
+      },
+      {
+        "club_name": "Ajax",
+        "club_id": "ajax",
+        "date_joined": "2006-01-01",
+        "date_left": "2009-01-01",
+        "fee": "€9m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2009-01-01",
+        "date_left": "2009-08-27",
+        "fee": "€27m"
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2009-08-27",
+        "date_left": "2010-08-25",
+        "fee": "€14.5m"
+      },
+      {
+        "club_name": "Schalke 04",
+        "club_id": "schalke-04",
+        "date_joined": "2010-08-25",
+        "date_left": "2017-06-30",
+        "fee": "€13m"
+      },
+      {
+        "club_name": "Ajax",
+        "club_id": "ajax",
+        "date_joined": "2017-07-01",
+        "date_left": "2021-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 528,
+    "player_name": "Gaizka Mendieta",
+    "transfers": [
+      {
+        "club_name": "Valencia",
+        "club_id": "valencia",
+        "date_joined": "1992-07-01",
+        "date_left": "2001-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Lazio",
+        "club_id": "lazio",
+        "date_joined": "2001-07-01",
+        "date_left": "2003-07-01",
+        "fee": "€48m"
+      },
+      {
+        "club_name": "Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2002-08-01",
+        "date_left": "2003-06-30",
+        "fee": "Loan"
+      },
+      {
+        "club_name": "Middlesbrough",
+        "club_id": "middlesbrough",
+        "date_joined": "2003-08-01",
+        "date_left": "2008-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 529,
+    "player_name": "Denilson",
+    "transfers": [
+      {
+        "club_name": "Sao Paulo",
+        "club_id": "sao-paulo",
+        "date_joined": "1994-07-01",
+        "date_left": "1998-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Real Betis",
+        "club_id": "real-betis",
+        "date_joined": "1998-08-01",
+        "date_left": "2005-06-30",
+        "fee": "€31.5m"
+      },
+      {
+        "club_name": "Bordeaux",
+        "club_id": "bordeaux",
+        "date_joined": "2005-07-01",
+        "date_left": "2006-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 530,
+    "player_name": "Pablo Aimar",
+    "transfers": [
+      {
+        "club_name": "River Plate",
+        "club_id": "river-plate",
+        "date_joined": "1996-07-01",
+        "date_left": "2001-01-01",
+        "fee": null
+      },
+      {
+        "club_name": "Valencia",
+        "club_id": "valencia",
+        "date_joined": "2001-01-01",
+        "date_left": "2006-08-01",
+        "fee": "€24m"
+      },
+      {
+        "club_name": "Real Zaragoza",
+        "club_id": "real-zaragoza",
+        "date_joined": "2006-08-01",
+        "date_left": "2008-07-01",
+        "fee": "€11m"
+      },
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "2008-07-01",
+        "date_left": "2013-06-30",
+        "fee": "€7m"
+      }
+    ]
+  },
+  {
+    "player_id": 531,
+    "player_name": "Javier Saviola",
+    "transfers": [
+      {
+        "club_name": "River Plate",
+        "club_id": "river-plate",
+        "date_joined": "1998-07-01",
+        "date_left": "2001-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2001-07-01",
+        "date_left": "2007-06-30",
+        "fee": "€35.9m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2007-07-01",
+        "date_left": "2009-06-30",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "2009-07-01",
+        "date_left": "2012-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 532,
+    "player_name": "Diego Milito",
+    "transfers": [
+      {
+        "club_name": "Genoa",
+        "club_id": "genoa",
+        "date_joined": "2008-07-01",
+        "date_left": "2009-06-30",
+        "fee": null
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2009-06-30",
+        "date_left": "2014-06-30",
+        "fee": "€28m"
+      },
+      {
+        "club_name": "Racing Club",
+        "club_id": "racing-club",
+        "date_joined": "2014-07-01",
+        "date_left": "2016-05-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 533,
+    "player_name": "Walter Samuel",
+    "transfers": [
+      {
+        "club_name": "Boca Juniors",
+        "club_id": "boca-juniors",
+        "date_joined": "1997-07-01",
+        "date_left": "2000-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2000-07-01",
+        "date_left": "2004-07-01",
+        "fee": "€18m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2004-07-01",
+        "date_left": "2005-08-01",
+        "fee": "€25m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2005-08-01",
+        "date_left": "2014-06-30",
+        "fee": "€16m"
+      }
+    ]
+  },
+  {
+    "player_id": 534,
+    "player_name": "Esteban Cambiasso",
+    "transfers": [
+      {
+        "club_name": "Independiente",
+        "club_id": "independiente",
+        "date_joined": "1998-07-01",
+        "date_left": "2002-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2002-07-01",
+        "date_left": "2004-07-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2004-07-01",
+        "date_left": "2014-07-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Leicester City",
+        "club_id": "leicester-city",
+        "date_joined": "2014-08-25",
+        "date_left": "2015-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 535,
+    "player_name": "Maicon",
+    "transfers": [
+      {
+        "club_name": "Cruzeiro",
+        "club_id": "cruzeiro",
+        "date_joined": "2001-07-01",
+        "date_left": "2004-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Monaco",
+        "club_id": "monaco",
+        "date_joined": "2004-08-01",
+        "date_left": "2006-07-01",
+        "fee": "€6m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2006-07-01",
+        "date_left": "2012-07-01",
+        "fee": "€6m"
+      },
+      {
+        "club_name": "Manchester City",
+        "club_id": "manchester-city",
+        "date_joined": "2012-07-01",
+        "date_left": "2013-08-01",
+        "fee": "€4m"
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2013-08-01",
+        "date_left": "2016-06-30",
+        "fee": "€2.5m"
+      }
+    ]
+  },
+  {
+    "player_id": 536,
+    "player_name": "Lucio",
+    "transfers": [
+      {
+        "club_name": "Internacional",
+        "club_id": "internacional",
+        "date_joined": "1997-07-01",
+        "date_left": "2001-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Bayer Leverkusen",
+        "club_id": "bayer-leverkusen",
+        "date_joined": "2001-07-01",
+        "date_left": "2004-07-01",
+        "fee": "€8m"
+      },
+      {
+        "club_name": "Bayern Munich",
+        "club_id": "bayern-munich",
+        "date_joined": "2004-07-01",
+        "date_left": "2009-07-01",
+        "fee": "€12m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2009-07-01",
+        "date_left": "2012-06-30",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2012-08-01",
+        "date_left": "2013-01-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 537,
+    "player_name": "Julio Cesar",
+    "transfers": [
+      {
+        "club_name": "Flamengo",
+        "club_id": "flamengo",
+        "date_joined": "1997-07-01",
+        "date_left": "2005-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2005-08-01",
+        "date_left": "2012-08-01",
+        "fee": "€0.25m"
+      },
+      {
+        "club_name": "Queens Park Rangers",
+        "club_id": "queens-park-rangers",
+        "date_joined": "2012-08-31",
+        "date_left": "2014-02-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "2014-09-01",
+        "date_left": "2018-05-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 538,
+    "player_name": "Christian Panucci",
+    "transfers": [
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "1993-07-01",
+        "date_left": "1996-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "1996-07-01",
+        "date_left": "1999-07-01",
+        "fee": "€10m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "1999-07-01",
+        "date_left": "2001-07-01",
+        "fee": "€24m"
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2001-07-01",
+        "date_left": "2009-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 539,
+    "player_name": "Dida",
+    "transfers": [
+      {
+        "club_name": "Corinthians",
+        "club_id": "corinthians",
+        "date_joined": "1999-07-01",
+        "date_left": "2000-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2000-07-01",
+        "date_left": "2010-06-30",
+        "fee": "€4m"
+      }
+    ]
+  },
+  {
+    "player_id": 540,
+    "player_name": "Michael Laudrup",
+    "transfers": [
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "1985-07-01",
+        "date_left": "1989-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "1989-07-01",
+        "date_left": "1994-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "1994-07-01",
+        "date_left": "1996-07-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Ajax",
+        "club_id": "ajax",
+        "date_joined": "1997-07-01",
+        "date_left": "1998-07-01",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 541,
+    "player_name": "Paul Gascoigne",
+    "transfers": [
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "1985-07-01",
+        "date_left": "1988-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Tottenham Hotspur",
+        "club_id": "tottenham-hotspur",
+        "date_joined": "1988-07-01",
+        "date_left": "1992-07-01",
+        "fee": "€2.5m"
+      },
+      {
+        "club_name": "Lazio",
+        "club_id": "lazio",
+        "date_joined": "1992-07-01",
+        "date_left": "1995-07-01",
+        "fee": "€5.5m"
+      },
+      {
+        "club_name": "Rangers",
+        "club_id": "rangers",
+        "date_joined": "1995-07-01",
+        "date_left": "1998-03-01",
+        "fee": "€4.7m"
+      },
+      {
+        "club_name": "Middlesbrough",
+        "club_id": "middlesbrough",
+        "date_joined": "1998-03-01",
+        "date_left": "2000-07-01",
+        "fee": "€4.3m"
+      },
+      {
+        "club_name": "Everton",
+        "club_id": "everton",
+        "date_joined": "2000-07-01",
+        "date_left": "2002-07-01",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 542,
+    "player_name": "Andy Cole",
+    "transfers": [
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "1993-03-01",
+        "date_left": "1995-01-01",
+        "fee": null
+      },
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "1995-01-01",
+        "date_left": "2001-12-29",
+        "fee": "€8m"
+      },
+      {
+        "club_name": "Blackburn Rovers",
+        "club_id": "blackburn-rovers",
+        "date_joined": "2001-12-29",
+        "date_left": "2004-07-01",
+        "fee": "€11.5m"
+      },
+      {
+        "club_name": "Fulham",
+        "club_id": "fulham",
+        "date_joined": "2004-07-01",
+        "date_left": "2005-07-01",
+        "fee": "€2.5m"
+      },
+      {
+        "club_name": "Manchester City",
+        "club_id": "manchester-city",
+        "date_joined": "2005-07-01",
+        "date_left": "2006-07-01",
+        "fee": "€0.75m"
+      }
+    ]
+  },
+  {
+    "player_id": 543,
+    "player_name": "Dwight Yorke",
+    "transfers": [
+      {
+        "club_name": "Aston Villa",
+        "club_id": "aston-villa",
+        "date_joined": "1989-12-01",
+        "date_left": "1998-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "1998-08-01",
+        "date_left": "2002-07-01",
+        "fee": "€18.6m"
+      },
+      {
+        "club_name": "Blackburn Rovers",
+        "club_id": "blackburn-rovers",
+        "date_joined": "2002-07-01",
+        "date_left": "2004-07-01",
+        "fee": "€3m"
+      },
+      {
+        "club_name": "Sydney FC",
+        "club_id": "sydney-fc",
+        "date_joined": "2005-08-01",
+        "date_left": "2006-07-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Sunderland",
+        "club_id": "sunderland",
+        "date_joined": "2006-08-01",
+        "date_left": "2009-06-30",
+        "fee": "€0.3m"
+      }
+    ]
+  },
+  {
+    "player_id": 544,
+    "player_name": "Gianluca Vialli",
+    "transfers": [
+      {
+        "club_name": "Sampdoria",
+        "club_id": "sampdoria",
+        "date_joined": "1984-07-01",
+        "date_left": "1992-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "1992-07-01",
+        "date_left": "1996-07-01",
+        "fee": "€16.5m"
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "1996-07-01",
+        "date_left": "1999-05-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 545,
+    "player_name": "Thiago Alcantara",
+    "transfers": [
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2009-07-01",
+        "date_left": "2013-07-14",
+        "fee": null
+      },
+      {
+        "club_name": "Bayern Munich",
+        "club_id": "bayern-munich",
+        "date_joined": "2013-07-14",
+        "date_left": "2020-09-18",
+        "fee": "€25m"
+      },
+      {
+        "club_name": "Liverpool",
+        "club_id": "liverpool",
+        "date_joined": "2020-09-18",
+        "date_left": "2024-06-30",
+        "fee": "€22m"
+      }
+    ]
+  },
+  {
+    "player_id": 546,
+    "player_name": "Javi Martinez",
+    "transfers": [
+      {
+        "club_name": "Athletic Bilbao",
+        "club_id": "athletic-bilbao",
+        "date_joined": "2006-07-01",
+        "date_left": "2012-08-29",
+        "fee": null
+      },
+      {
+        "club_name": "Bayern Munich",
+        "club_id": "bayern-munich",
+        "date_joined": "2012-08-29",
+        "date_left": "2021-07-01",
+        "fee": "€40m"
+      },
+      {
+        "club_name": "Qatar SC",
+        "club_id": "qatar-sc",
+        "date_joined": "2021-08-01",
+        "date_left": "2023-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 547,
+    "player_name": "Mario Gomez",
+    "transfers": [
+      {
+        "club_name": "VfB Stuttgart",
+        "club_id": "vfb-stuttgart",
+        "date_joined": "2003-07-01",
+        "date_left": "2009-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Bayern Munich",
+        "club_id": "bayern-munich",
+        "date_joined": "2009-07-01",
+        "date_left": "2013-07-01",
+        "fee": "€30m"
+      },
+      {
+        "club_name": "Fiorentina",
+        "club_id": "fiorentina",
+        "date_joined": "2013-07-01",
+        "date_left": "2015-08-01",
+        "fee": "€15.5m"
+      },
+      {
+        "club_name": "Besiktas",
+        "club_id": "besiktas",
+        "date_joined": "2015-08-01",
+        "date_left": "2016-07-01",
+        "fee": "€3m"
+      },
+      {
+        "club_name": "VfL Wolfsburg",
+        "club_id": "vfl-wolfsburg",
+        "date_joined": "2016-08-01",
+        "date_left": "2018-01-01",
+        "fee": "€3m"
+      },
+      {
+        "club_name": "VfB Stuttgart",
+        "club_id": "vfb-stuttgart",
+        "date_joined": "2018-01-01",
+        "date_left": "2020-06-30",
+        "fee": "€3m"
+      }
+    ]
+  },
+  {
+    "player_id": 548,
+    "player_name": "Mario Gotze",
+    "transfers": [
+      {
+        "club_name": "Borussia Dortmund",
+        "club_id": "borussia-dortmund",
+        "date_joined": "2009-07-01",
+        "date_left": "2013-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Bayern Munich",
+        "club_id": "bayern-munich",
+        "date_joined": "2013-07-01",
+        "date_left": "2016-07-01",
+        "fee": "€37m"
+      },
+      {
+        "club_name": "Borussia Dortmund",
+        "club_id": "borussia-dortmund",
+        "date_joined": "2016-07-01",
+        "date_left": "2020-06-30",
+        "fee": "€22m"
+      },
+      {
+        "club_name": "PSV Eindhoven",
+        "club_id": "psv-eindhoven",
+        "date_joined": "2020-10-05",
+        "date_left": "2022-06-30",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Eintracht Frankfurt",
+        "club_id": "eintracht-frankfurt",
+        "date_joined": "2022-07-01",
+        "date_left": null,
+        "fee": "€4m"
+      }
+    ]
+  },
+  {
+    "player_id": 549,
+    "player_name": "Sami Khedira",
+    "transfers": [
+      {
+        "club_name": "VfB Stuttgart",
+        "club_id": "vfb-stuttgart",
+        "date_joined": "2007-07-01",
+        "date_left": "2010-07-30",
+        "fee": null
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2010-07-30",
+        "date_left": "2015-07-01",
+        "fee": "€14m"
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2015-07-01",
+        "date_left": "2021-02-01",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Hertha Berlin",
+        "club_id": "hertha-berlin",
+        "date_joined": "2021-02-01",
+        "date_left": "2021-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 550,
+    "player_name": "Jordi Alba",
+    "transfers": [
+      {
+        "club_name": "Valencia",
+        "club_id": "valencia",
+        "date_joined": "2008-07-01",
+        "date_left": "2012-07-04",
+        "fee": null
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2012-07-04",
+        "date_left": "2023-06-30",
+        "fee": "€14m"
+      },
+      {
+        "club_name": "Inter Miami CF",
+        "club_id": "inter-miami",
+        "date_joined": "2023-07-01",
+        "date_left": null,
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 551,
+    "player_name": "Paulo Dybala",
+    "transfers": [
+      {
+        "club_name": "Palermo",
+        "club_id": "palermo",
+        "date_joined": "2012-07-01",
+        "date_left": "2015-06-05",
+        "fee": null
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2015-06-05",
+        "date_left": "2022-06-30",
+        "fee": "€32m"
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2022-07-20",
+        "date_left": null,
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 552,
+    "player_name": "Miralem Pjanic",
+    "transfers": [
+      {
+        "club_name": "Lyon",
+        "club_id": "lyon",
+        "date_joined": "2008-07-01",
+        "date_left": "2011-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2011-07-01",
+        "date_left": "2016-06-13",
+        "fee": "€11m"
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2016-06-13",
+        "date_left": "2020-06-30",
+        "fee": "€32m"
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2020-06-30",
+        "date_left": "2023-01-01",
+        "fee": "€60m"
+      }
+    ]
+  },
+  {
+    "player_id": 553,
+    "player_name": "Juan Cuadrado",
+    "transfers": [
+      {
+        "club_name": "Fiorentina",
+        "club_id": "fiorentina",
+        "date_joined": "2012-07-01",
+        "date_left": "2015-02-02",
+        "fee": null
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2015-02-02",
+        "date_left": "2017-07-01",
+        "fee": "€30m"
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2017-07-01",
+        "date_left": "2023-06-30",
+        "fee": "€20m"
+      },
+      {
+        "club_name": "Inter Milan",
+        "club_id": "inter-milan",
+        "date_joined": "2023-08-16",
+        "date_left": "2024-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 554,
+    "player_name": "Federico Bernardeschi",
+    "transfers": [
+      {
+        "club_name": "Fiorentina",
+        "club_id": "fiorentina",
+        "date_joined": "2013-07-01",
+        "date_left": "2017-07-24",
+        "fee": null
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2017-07-24",
+        "date_left": "2022-06-30",
+        "fee": "€40m"
+      },
+      {
+        "club_name": "Toronto FC",
+        "club_id": "toronto-fc",
+        "date_joined": "2022-07-01",
+        "date_left": null,
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 555,
+    "player_name": "Andrea Barzagli",
+    "transfers": [
+      {
+        "club_name": "Palermo",
+        "club_id": "palermo",
+        "date_joined": "2004-07-01",
+        "date_left": "2008-01-01",
+        "fee": null
+      },
+      {
+        "club_name": "VfL Wolfsburg",
+        "club_id": "vfl-wolfsburg",
+        "date_joined": "2008-01-01",
+        "date_left": "2011-01-26",
+        "fee": "€12m"
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2011-01-26",
+        "date_left": "2019-06-30",
+        "fee": "€0.3m"
+      }
+    ]
+  },
+  {
+    "player_id": 556,
+    "player_name": "Alex Sandro",
+    "transfers": [
+      {
+        "club_name": "Porto",
+        "club_id": "porto",
+        "date_joined": "2011-08-01",
+        "date_left": "2015-08-20",
+        "fee": null
+      },
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2015-08-20",
+        "date_left": "2024-06-30",
+        "fee": "€26m"
+      },
+      {
+        "club_name": "Flamengo",
+        "club_id": "flamengo",
+        "date_joined": "2024-08-01",
+        "date_left": null,
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 557,
+    "player_name": "Hulk",
+    "transfers": [
+      {
+        "club_name": "Porto",
+        "club_id": "porto",
+        "date_joined": "2008-07-01",
+        "date_left": "2012-09-03",
+        "fee": null
+      },
+      {
+        "club_name": "Zenit Saint Petersburg",
+        "club_id": "zenit-saint-petersburg",
+        "date_joined": "2012-09-03",
+        "date_left": "2016-07-01",
+        "fee": "€40m"
+      },
+      {
+        "club_name": "Shanghai Port",
+        "club_id": "shanghai-port",
+        "date_joined": "2016-07-01",
+        "date_left": "2020-12-31",
+        "fee": "€55.8m"
+      },
+      {
+        "club_name": "Atletico Mineiro",
+        "club_id": "atletico-mineiro",
+        "date_joined": "2021-01-01",
+        "date_left": null,
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 558,
+    "player_name": "Ramires",
+    "transfers": [
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "2009-07-01",
+        "date_left": "2010-08-13",
+        "fee": null
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2010-08-13",
+        "date_left": "2016-01-28",
+        "fee": "€22m"
+      },
+      {
+        "club_name": "Jiangsu Suning",
+        "club_id": "jiangsu-suning",
+        "date_joined": "2016-01-28",
+        "date_left": "2019-12-31",
+        "fee": "€28m"
+      }
+    ]
+  },
+  {
+    "player_id": 559,
+    "player_name": "Javier Pastore",
+    "transfers": [
+      {
+        "club_name": "Huracan",
+        "club_id": "huracan",
+        "date_joined": "2008-07-01",
+        "date_left": "2009-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Palermo",
+        "club_id": "palermo",
+        "date_joined": "2009-08-01",
+        "date_left": "2011-08-08",
+        "fee": "€4.7m"
+      },
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "2011-08-08",
+        "date_left": "2018-06-26",
+        "fee": "€42m"
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2018-06-26",
+        "date_left": "2021-06-30",
+        "fee": "€24.7m"
+      }
+    ]
+  },
+  {
+    "player_id": 560,
+    "player_name": "Ezequiel Lavezzi",
+    "transfers": [
+      {
+        "club_name": "San Lorenzo",
+        "club_id": "san-lorenzo",
+        "date_joined": "2004-07-01",
+        "date_left": "2007-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Napoli",
+        "club_id": "napoli",
+        "date_joined": "2007-07-01",
+        "date_left": "2012-06-27",
+        "fee": "€5.75m"
+      },
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "2012-06-27",
+        "date_left": "2016-02-01",
+        "fee": "€26m"
+      },
+      {
+        "club_name": "Hebei FC",
+        "club_id": "hebei-fc",
+        "date_joined": "2016-02-01",
+        "date_left": "2019-12-31",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 561,
+    "player_name": "Andriy Arshavin",
+    "transfers": [
+      {
+        "club_name": "Zenit Saint Petersburg",
+        "club_id": "zenit-saint-petersburg",
+        "date_joined": "2000-07-01",
+        "date_left": "2009-02-02",
+        "fee": null
+      },
+      {
+        "club_name": "Arsenal",
+        "club_id": "arsenal",
+        "date_joined": "2009-02-02",
+        "date_left": "2013-06-30",
+        "fee": "€18m"
+      },
+      {
+        "club_name": "Zenit Saint Petersburg",
+        "club_id": "zenit-saint-petersburg",
+        "date_joined": "2013-06-30",
+        "date_left": "2015-06-30",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 562,
+    "player_name": "Yuri Zhirkov",
+    "transfers": [
+      {
+        "club_name": "CSKA Moscow",
+        "club_id": "cska-moscow",
+        "date_joined": "2004-07-01",
+        "date_left": "2009-07-13",
+        "fee": null
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2009-07-13",
+        "date_left": "2011-08-01",
+        "fee": "€21m"
+      },
+      {
+        "club_name": "Anzhi Makhachkala",
+        "club_id": "anzhi-makhachkala",
+        "date_joined": "2011-08-01",
+        "date_left": "2013-08-01",
+        "fee": "€15m"
+      },
+      {
+        "club_name": "Zenit Saint Petersburg",
+        "club_id": "zenit-saint-petersburg",
+        "date_joined": "2013-08-01",
+        "date_left": "2020-08-01",
+        "fee": "Free"
+      }
+    ]
+  },
+  {
+    "player_id": 563,
+    "player_name": "Fernando Redondo",
+    "transfers": [
+      {
+        "club_name": "Argentinos Juniors",
+        "club_id": "argentinos-juniors",
+        "date_joined": "1985-07-01",
+        "date_left": "1990-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Tenerife",
+        "club_id": "tenerife",
+        "date_joined": "1990-07-01",
+        "date_left": "1994-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "1994-07-01",
+        "date_left": "2000-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2000-08-01",
+        "date_left": "2004-06-30",
+        "fee": "€17m"
+      }
+    ]
+  },
+  {
+    "player_id": 564,
+    "player_name": "Scott McTominay",
+    "transfers": [
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "2017-05-01",
+        "date_left": "2024-08-30",
+        "fee": null
+      },
+      {
+        "club_name": "Napoli",
+        "club_id": "napoli",
+        "date_joined": "2024-08-30",
+        "date_left": null,
+        "fee": "€30.5m"
+      }
+    ]
+  },
+  {
+    "player_id": 565,
+    "player_name": "Joshua Zirkzee",
+    "transfers": [
+      {
+        "club_name": "Bayern Munich",
+        "club_id": "bayern-munich",
+        "date_joined": "2018-07-01",
+        "date_left": "2022-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Bologna",
+        "club_id": "bologna",
+        "date_joined": "2022-08-05",
+        "date_left": "2024-07-12",
+        "fee": "€8.5m"
+      },
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "2024-07-12",
+        "date_left": null,
+        "fee": "€42.5m"
+      }
+    ]
+  },
+  {
+    "player_id": 566,
+    "player_name": "Serhou Guirassy",
+    "transfers": [
+      {
+        "club_name": "Rennes",
+        "club_id": "rennes",
+        "date_joined": "2019-08-01",
+        "date_left": "2022-01-31",
+        "fee": null
+      },
+      {
+        "club_name": "VfB Stuttgart",
+        "club_id": "vfb-stuttgart",
+        "date_joined": "2022-01-31",
+        "date_left": "2024-08-16",
+        "fee": "€9m"
+      },
+      {
+        "club_name": "Borussia Dortmund",
+        "club_id": "borussia-dortmund",
+        "date_joined": "2024-08-16",
+        "date_left": null,
+        "fee": "€18m"
+      }
+    ]
+  },
+  {
+    "player_id": 567,
+    "player_name": "Artem Dovbyk",
+    "transfers": [
+      {
+        "club_name": "Girona",
+        "club_id": "girona",
+        "date_joined": "2023-08-01",
+        "date_left": "2024-08-08",
+        "fee": null
+      },
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2024-08-08",
+        "date_left": null,
+        "fee": "€30.5m"
+      }
+    ]
+  },
+  {
+    "player_id": 568,
+    "player_name": "Riccardo Calafiori",
+    "transfers": [
+      {
+        "club_name": "Roma",
+        "club_id": "roma",
+        "date_joined": "2019-07-01",
+        "date_left": "2022-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Basel",
+        "club_id": "basel",
+        "date_joined": "2022-07-01",
+        "date_left": "2023-08-01",
+        "fee": "€4m"
+      },
+      {
+        "club_name": "Bologna",
+        "club_id": "bologna",
+        "date_joined": "2023-08-01",
+        "date_left": "2024-07-29",
+        "fee": "€4m"
+      },
+      {
+        "club_name": "Arsenal",
+        "club_id": "arsenal",
+        "date_joined": "2024-07-29",
+        "date_left": null,
+        "fee": "€45m"
+      }
+    ]
+  },
+  {
+    "player_id": 569,
+    "player_name": "Dominic Solanke",
+    "transfers": [
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2015-07-01",
+        "date_left": "2017-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Liverpool",
+        "club_id": "liverpool",
+        "date_joined": "2017-07-01",
+        "date_left": "2019-01-04",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Bournemouth",
+        "club_id": "bournemouth",
+        "date_joined": "2019-01-04",
+        "date_left": "2024-08-17",
+        "fee": "€22m"
+      },
+      {
+        "club_name": "Tottenham Hotspur",
+        "club_id": "tottenham-hotspur",
+        "date_joined": "2024-08-17",
+        "date_left": null,
+        "fee": "€64m"
+      }
+    ]
+  },
+  {
+    "player_id": 570,
+    "player_name": "Youssouf Fofana",
+    "transfers": [
+      {
+        "club_name": "Strasbourg",
+        "club_id": "strasbourg",
+        "date_joined": "2018-07-01",
+        "date_left": "2020-01-30",
+        "fee": null
+      },
+      {
+        "club_name": "Monaco",
+        "club_id": "monaco",
+        "date_joined": "2020-01-30",
+        "date_left": "2024-08-14",
+        "fee": "€15m"
+      },
+      {
+        "club_name": "AC Milan",
+        "club_id": "ac-milan",
+        "date_joined": "2024-08-14",
+        "date_left": null,
+        "fee": "€25m"
+      }
+    ]
+  },
+  {
+    "player_id": 571,
+    "player_name": "Hugo Ekitike",
+    "transfers": [
+      {
+        "club_name": "Reims",
+        "club_id": "reims",
+        "date_joined": "2021-07-01",
+        "date_left": "2022-01-01",
+        "fee": null
+      },
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "2022-01-01",
+        "date_left": "2024-08-30",
+        "fee": "€28.5m"
+      },
+      {
+        "club_name": "Eintracht Frankfurt",
+        "club_id": "eintracht-frankfurt",
+        "date_joined": "2024-08-30",
+        "date_left": "2025-07-23",
+        "fee": "€16.5m"
+      },
+      {
+        "club_name": "Liverpool",
+        "club_id": "liverpool",
+        "date_joined": "2025-07-23",
+        "date_left": null,
+        "fee": "€95m"
+      }
+    ]
+  },
+  {
+    "player_id": 572,
+    "player_name": "Nick Woltemade",
+    "transfers": [
+      {
+        "club_name": "Werder Bremen",
+        "club_id": "werder-bremen",
+        "date_joined": "2020-07-01",
+        "date_left": "2024-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "VfB Stuttgart",
+        "club_id": "vfb-stuttgart",
+        "date_joined": "2024-08-01",
+        "date_left": "2025-08-30",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "2025-08-30",
+        "date_left": null,
+        "fee": "€85m"
+      }
+    ]
+  },
+  {
+    "player_id": 573,
+    "player_name": "Martin Zubimendi",
+    "transfers": [
+      {
+        "club_name": "Real Sociedad",
+        "club_id": "real-sociedad",
+        "date_joined": "2019-07-01",
+        "date_left": "2025-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Arsenal",
+        "club_id": "arsenal",
+        "date_joined": "2025-07-01",
+        "date_left": null,
+        "fee": "€70m"
+      }
+    ]
+  },
+  {
+    "player_id": 574,
+    "player_name": "Viktor Gyokeres",
+    "transfers": [
+      {
+        "club_name": "Brighton",
+        "club_id": "brighton",
+        "date_joined": "2018-01-01",
+        "date_left": "2021-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Coventry City",
+        "club_id": "coventry-city",
+        "date_joined": "2021-08-01",
+        "date_left": "2023-07-24",
+        "fee": "€1.5m"
+      },
+      {
+        "club_name": "Sporting CP",
+        "club_id": "sporting-cp",
+        "date_joined": "2023-07-24",
+        "date_left": "2025-07-26",
+        "fee": "€20m"
+      },
+      {
+        "club_name": "Arsenal",
+        "club_id": "arsenal",
+        "date_joined": "2025-07-26",
+        "date_left": null,
+        "fee": "€65m"
+      }
+    ]
+  },
+  {
+    "player_id": 575,
+    "player_name": "Illia Zabarnyi",
+    "transfers": [
+      {
+        "club_name": "Dynamo Kyiv",
+        "club_id": "dynamo-kyiv",
+        "date_joined": "2020-07-01",
+        "date_left": "2023-01-24",
+        "fee": null
+      },
+      {
+        "club_name": "Bournemouth",
+        "club_id": "bournemouth",
+        "date_joined": "2023-01-24",
+        "date_left": "2025-08-13",
+        "fee": "€23.5m"
+      },
+      {
+        "club_name": "Paris Saint-Germain",
+        "club_id": "paris-saint-germain",
+        "date_joined": "2025-08-13",
+        "date_left": null,
+        "fee": "€63m"
+      }
+    ]
+  },
+  {
+    "player_id": 576,
+    "player_name": "Anthony Elanga",
+    "transfers": [
+      {
+        "club_name": "Manchester United",
+        "club_id": "manchester-united",
+        "date_joined": "2021-05-01",
+        "date_left": "2023-08-31",
+        "fee": null
+      },
+      {
+        "club_name": "Nottingham Forest",
+        "club_id": "nottingham-forest",
+        "date_joined": "2023-08-31",
+        "date_left": "2025-07-25",
+        "fee": "€17m"
+      },
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "2025-07-25",
+        "date_left": null,
+        "fee": "€60m"
+      }
+    ]
+  },
+  {
+    "player_id": 577,
+    "player_name": "Mateo Retegui",
+    "transfers": [
+      {
+        "club_name": "Tigre",
+        "club_id": "tigre",
+        "date_joined": "2022-07-01",
+        "date_left": "2023-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Genoa",
+        "club_id": "genoa",
+        "date_joined": "2023-08-01",
+        "date_left": "2024-08-01",
+        "fee": "€15m"
+      },
+      {
+        "club_name": "Atalanta",
+        "club_id": "atalanta",
+        "date_joined": "2024-08-01",
+        "date_left": "2025-07-20",
+        "fee": "€22m"
+      },
+      {
+        "club_name": "Al-Qadsiah",
+        "club_id": "al-qadsiah",
+        "date_joined": "2025-07-20",
+        "date_left": null,
+        "fee": "€65m"
+      }
+    ]
+  },
+  {
+    "player_id": 578,
+    "player_name": "Dean Huijsen",
+    "transfers": [
+      {
+        "club_name": "Juventus",
+        "club_id": "juventus",
+        "date_joined": "2021-07-01",
+        "date_left": "2024-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Bournemouth",
+        "club_id": "bournemouth",
+        "date_joined": "2024-08-01",
+        "date_left": "2025-06-01",
+        "fee": "€15m"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2025-06-01",
+        "date_left": null,
+        "fee": "€60m"
+      }
+    ]
+  },
+  {
+    "player_id": 579,
+    "player_name": "Elliot Anderson",
+    "transfers": [
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "2020-07-01",
+        "date_left": "2024-08-30",
+        "fee": null
+      },
+      {
+        "club_name": "Nottingham Forest",
+        "club_id": "nottingham-forest",
+        "date_joined": "2024-08-30",
+        "date_left": "2026-07-01",
+        "fee": "€38m"
+      },
+      {
+        "club_name": "Manchester City",
+        "club_id": "manchester-city",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€135m"
+      }
+    ]
+  },
+  {
+    "player_id": 580,
+    "player_name": "Anthony Gordon",
+    "transfers": [
+      {
+        "club_name": "Everton",
+        "club_id": "everton",
+        "date_joined": "2020-07-01",
+        "date_left": "2023-01-29",
+        "fee": null
+      },
+      {
+        "club_name": "Newcastle United",
+        "club_id": "newcastle-united",
+        "date_joined": "2023-01-29",
+        "date_left": "2026-07-01",
+        "fee": "€45m"
+      },
+      {
+        "club_name": "FC Barcelona",
+        "club_id": "fc-barcelona",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€80m"
+      }
+    ]
+  },
+  {
+    "player_id": 581,
+    "player_name": "Orkun Kokcu",
+    "transfers": [
+      {
+        "club_name": "Feyenoord",
+        "club_id": "feyenoord",
+        "date_joined": "2018-07-01",
+        "date_left": "2023-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Benfica",
+        "club_id": "benfica",
+        "date_joined": "2023-07-01",
+        "date_left": "2026-07-01",
+        "fee": "€25m"
+      },
+      {
+        "club_name": "Besiktas",
+        "club_id": "besiktas",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€30m"
+      }
+    ]
+  },
+  {
+    "player_id": 582,
+    "player_name": "Jan Paul van Hecke",
+    "transfers": [
+      {
+        "club_name": "Brighton",
+        "club_id": "brighton",
+        "date_joined": "2020-08-01",
+        "date_left": "2026-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Tottenham Hotspur",
+        "club_id": "tottenham-hotspur",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€60m"
+      }
+    ]
+  },
+  {
+    "player_id": 583,
+    "player_name": "Geovany Quenda",
+    "transfers": [
+      {
+        "club_name": "Sporting CP",
+        "club_id": "sporting-cp",
+        "date_joined": "2024-07-01",
+        "date_left": "2026-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Chelsea",
+        "club_id": "chelsea",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€51m"
+      }
+    ]
+  },
+  {
+    "player_id": 584,
+    "player_name": "Mateus Fernandes",
+    "transfers": [
+      {
+        "club_name": "Sporting CP",
+        "club_id": "sporting-cp",
+        "date_joined": "2022-07-01",
+        "date_left": "2024-08-01",
+        "fee": null
+      },
+      {
+        "club_name": "Southampton",
+        "club_id": "southampton",
+        "date_joined": "2024-08-01",
+        "date_left": "2025-08-01",
+        "fee": "€17m"
+      },
+      {
+        "club_name": "West Ham United",
+        "club_id": "west-ham-united",
+        "date_joined": "2025-08-01",
+        "date_left": "2026-07-01",
+        "fee": null
+      },
+      {
+        "club_name": "Tottenham Hotspur",
+        "club_id": "tottenham-hotspur",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€98m"
       }
     ]
   }

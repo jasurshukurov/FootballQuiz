@@ -1,0 +1,638 @@
+[
+  {
+    "id": "premier-league-all-time-scorers",
+    "title": "Premier League all-time top scorers",
+    "group": "leagues",
+    "as_of": "2026-07",
+    "entries": [
+      { "rank": 1, "name": "Alan Shearer", "value": 260, "unit": "goals", "aliases": ["Shearer"] },
+      { "rank": 2, "name": "Harry Kane", "value": 213, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 3, "name": "Wayne Rooney", "value": 208, "unit": "goals", "aliases": ["Rooney"] },
+      { "rank": 4, "name": "Mohamed Salah", "value": 191, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 5, "name": "Andy Cole", "value": 187, "unit": "goals", "aliases": ["Cole", "Andrew Cole"] },
+      { "rank": 6, "name": "Sergio Aguero", "value": 184, "unit": "goals", "aliases": ["Aguero", "Kun Aguero"] },
+      { "rank": 7, "name": "Frank Lampard", "value": 177, "unit": "goals", "aliases": ["Lampard"] },
+      { "rank": 8, "name": "Thierry Henry", "value": 175, "unit": "goals", "aliases": ["Henry"] },
+      { "rank": 9, "name": "Robbie Fowler", "value": 163, "unit": "goals", "aliases": ["Fowler"] },
+      { "rank": 10, "name": "Jermain Defoe", "value": 162, "unit": "goals", "aliases": ["Defoe"] }
+    ]
+  },
+  {
+    "id": "premier-league-all-time-assists",
+    "title": "Premier League all-time assist leaders",
+    "group": "leagues",
+    "as_of": "2026-07",
+    "entries": [
+      { "rank": 1, "name": "Ryan Giggs", "value": 162, "unit": "assists", "aliases": ["Giggs"] },
+      { "rank": 2, "name": "Kevin De Bruyne", "value": 119, "unit": "assists", "aliases": ["De Bruyne", "KDB"] },
+      { "rank": 3, "name": "Cesc Fabregas", "value": 111, "unit": "assists", "aliases": ["Fabregas"] },
+      { "rank": 4, "name": "Wayne Rooney", "value": 103, "unit": "assists", "aliases": ["Rooney"] },
+      { "rank": 5, "name": "Frank Lampard", "value": 102, "unit": "assists", "aliases": ["Lampard"] },
+      { "rank": 6, "name": "Dennis Bergkamp", "value": 94, "unit": "assists", "aliases": ["Bergkamp"] },
+      { "rank": 6, "name": "Mohamed Salah", "value": 94, "unit": "assists", "aliases": ["Salah"] },
+      { "rank": 8, "name": "David Silva", "value": 93, "unit": "assists", "aliases": ["Silva"] },
+      { "rank": 9, "name": "Steven Gerrard", "value": 92, "unit": "assists", "aliases": ["Gerrard"] },
+      { "rank": 10, "name": "James Milner", "value": 90, "unit": "assists", "aliases": ["Milner"] }
+    ]
+  },
+  {
+    "id": "premier-league-most-appearances",
+    "title": "Most Premier League appearances (all-time)",
+    "group": "leagues",
+    "as_of": "2026-07",
+    "entries": [
+      { "rank": 1, "name": "James Milner", "value": 658, "unit": "appearances", "aliases": ["Milner"] },
+      { "rank": 2, "name": "Gareth Barry", "value": 653, "unit": "appearances", "aliases": ["Barry"] },
+      { "rank": 3, "name": "Ryan Giggs", "value": 632, "unit": "appearances", "aliases": ["Giggs"] },
+      { "rank": 4, "name": "Frank Lampard", "value": 609, "unit": "appearances", "aliases": ["Lampard"] },
+      { "rank": 5, "name": "David James", "value": 572, "unit": "appearances", "aliases": ["James"] },
+      { "rank": 6, "name": "Mark Schwarzer", "value": 544, "unit": "appearances", "aliases": ["Schwarzer"] },
+      { "rank": 7, "name": "Gary Speed", "value": 535, "unit": "appearances", "aliases": ["Speed"] },
+      { "rank": 8, "name": "Emile Heskey", "value": 516, "unit": "appearances", "aliases": ["Heskey"] },
+      { "rank": 9, "name": "Jamie Carragher", "value": 508, "unit": "appearances", "aliases": ["Carragher"] },
+      { "rank": 10, "name": "Phil Neville", "value": 505, "unit": "appearances", "aliases": ["Neville"] }
+    ]
+  },
+  {
+    "id": "la-liga-all-time-scorers",
+    "title": "La Liga all-time top scorers",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Lionel Messi", "value": 474, "unit": "goals", "aliases": ["Messi"] },
+      { "rank": 2, "name": "Cristiano Ronaldo", "value": 311, "unit": "goals", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 3, "name": "Telmo Zarra", "value": 251, "unit": "goals", "aliases": ["Zarra"] },
+      { "rank": 4, "name": "Karim Benzema", "value": 238, "unit": "goals", "aliases": ["Benzema"] },
+      { "rank": 5, "name": "Hugo Sanchez", "value": 234, "unit": "goals", "aliases": ["Hugo Sanchez"] },
+      { "rank": 6, "name": "Raul", "value": 228, "unit": "goals", "aliases": ["Raul Gonzalez"] },
+      { "rank": 7, "name": "Alfredo Di Stefano", "value": 227, "unit": "goals", "aliases": ["Di Stefano"] },
+      { "rank": 8, "name": "Cesar", "value": 221, "unit": "goals", "aliases": ["Cesar Rodriguez"] },
+      { "rank": 9, "name": "Quini", "value": 219, "unit": "goals", "aliases": ["Enrique Castro"] },
+      { "rank": 10, "name": "Pahino", "value": 212, "unit": "goals", "aliases": ["Pahino"] }
+    ]
+  },
+  {
+    "id": "la-liga-most-appearances",
+    "title": "Most La Liga appearances (all-time)",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Andoni Zubizarreta", "value": 622, "unit": "appearances", "aliases": ["Zubizarreta"] },
+      { "rank": 1, "name": "Joaquin", "value": 622, "unit": "appearances", "aliases": ["Joaquin Sanchez"] },
+      { "rank": 3, "name": "Raul Garcia", "value": 609, "unit": "appearances", "aliases": ["Raul Garcia"] },
+      { "rank": 4, "name": "Raul", "value": 550, "unit": "appearances", "aliases": ["Raul Gonzalez"] },
+      { "rank": 5, "name": "Manolo Sanchis", "value": 523, "unit": "appearances", "aliases": ["Sanchis"] },
+      { "rank": 6, "name": "Lionel Messi", "value": 520, "unit": "appearances", "aliases": ["Messi"] }
+    ]
+  },
+  {
+    "id": "serie-a-all-time-scorers",
+    "title": "Serie A all-time top scorers",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Silvio Piola", "value": 274, "unit": "goals", "aliases": ["Piola"] },
+      { "rank": 2, "name": "Francesco Totti", "value": 250, "unit": "goals", "aliases": ["Totti"] },
+      { "rank": 3, "name": "Gunnar Nordahl", "value": 225, "unit": "goals", "aliases": ["Nordahl"] },
+      { "rank": 4, "name": "Giuseppe Meazza", "value": 216, "unit": "goals", "aliases": ["Meazza"] },
+      { "rank": 4, "name": "Jose Altafini", "value": 216, "unit": "goals", "aliases": ["Altafini"] },
+      { "rank": 6, "name": "Antonio Di Natale", "value": 209, "unit": "goals", "aliases": ["Di Natale"] },
+      { "rank": 7, "name": "Roberto Baggio", "value": 205, "unit": "goals", "aliases": ["Baggio"] },
+      { "rank": 8, "name": "Ciro Immobile", "value": 201, "unit": "goals", "aliases": ["Immobile"] },
+      { "rank": 9, "name": "Kurt Hamrin", "value": 190, "unit": "goals", "aliases": ["Hamrin"] },
+      { "rank": 10, "name": "Giuseppe Signori", "value": 188, "unit": "goals", "aliases": ["Signori"] }
+    ]
+  },
+  {
+    "id": "serie-a-most-appearances",
+    "title": "Most Serie A appearances (all-time)",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Gianluigi Buffon", "value": 657, "unit": "appearances", "aliases": ["Buffon"] },
+      { "rank": 2, "name": "Paolo Maldini", "value": 647, "unit": "appearances", "aliases": ["Maldini"] },
+      { "rank": 3, "name": "Francesco Totti", "value": 619, "unit": "appearances", "aliases": ["Totti"] },
+      { "rank": 4, "name": "Javier Zanetti", "value": 615, "unit": "appearances", "aliases": ["Zanetti"] },
+      { "rank": 5, "name": "Gianluca Pagliuca", "value": 592, "unit": "appearances", "aliases": ["Pagliuca"] },
+      { "rank": 6, "name": "Dino Zoff", "value": 570, "unit": "appearances", "aliases": ["Zoff"] }
+    ]
+  },
+  {
+    "id": "bundesliga-all-time-scorers",
+    "title": "Bundesliga all-time top scorers",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Gerd Muller", "value": 365, "unit": "goals", "aliases": ["Gerd Muller", "Muller"] },
+      { "rank": 2, "name": "Robert Lewandowski", "value": 312, "unit": "goals", "aliases": ["Lewandowski"] },
+      { "rank": 3, "name": "Klaus Fischer", "value": 268, "unit": "goals", "aliases": ["Fischer"] },
+      { "rank": 4, "name": "Jupp Heynckes", "value": 220, "unit": "goals", "aliases": ["Heynckes"] },
+      { "rank": 5, "name": "Manfred Burgsmuller", "value": 213, "unit": "goals", "aliases": ["Burgsmuller"] },
+      { "rank": 6, "name": "Claudio Pizarro", "value": 197, "unit": "goals", "aliases": ["Pizarro"] },
+      { "rank": 7, "name": "Ulf Kirsten", "value": 182, "unit": "goals", "aliases": ["Kirsten"] },
+      { "rank": 8, "name": "Stefan Kuntz", "value": 179, "unit": "goals", "aliases": ["Kuntz"] }
+    ]
+  },
+  {
+    "id": "bundesliga-most-appearances",
+    "title": "Most Bundesliga appearances (all-time)",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Karl-Heinz Korbel", "value": 602, "unit": "appearances", "aliases": ["Korbel", "Charly Korbel"] },
+      { "rank": 2, "name": "Manfred Kaltz", "value": 581, "unit": "appearances", "aliases": ["Kaltz"] },
+      { "rank": 3, "name": "Oliver Kahn", "value": 557, "unit": "appearances", "aliases": ["Kahn"] },
+      { "rank": 4, "name": "Klaus Fichtel", "value": 552, "unit": "appearances", "aliases": ["Fichtel"] },
+      { "rank": 5, "name": "Miroslav Votava", "value": 546, "unit": "appearances", "aliases": ["Votava"] },
+      { "rank": 6, "name": "Klaus Fischer", "value": 535, "unit": "appearances", "aliases": ["Fischer"] },
+      { "rank": 7, "name": "Eike Immel", "value": 534, "unit": "appearances", "aliases": ["Immel"] },
+      { "rank": 8, "name": "Willi Neuberger", "value": 520, "unit": "appearances", "aliases": ["Neuberger"] }
+    ]
+  },
+  {
+    "id": "ligue-1-all-time-scorers",
+    "title": "Ligue 1 all-time top scorers",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Delio Onnis", "value": 299, "unit": "goals", "aliases": ["Onnis"] },
+      { "rank": 2, "name": "Bernard Lacombe", "value": 255, "unit": "goals", "aliases": ["Lacombe"] },
+      { "rank": 3, "name": "Herve Revelli", "value": 216, "unit": "goals", "aliases": ["Revelli"] },
+      { "rank": 4, "name": "Roger Courtois", "value": 210, "unit": "goals", "aliases": ["Courtois"] },
+      { "rank": 5, "name": "Thadee Cisowski", "value": 206, "unit": "goals", "aliases": ["Cisowski"] },
+      { "rank": 6, "name": "Roger Piantoni", "value": 203, "unit": "goals", "aliases": ["Piantoni"] },
+      { "rank": 7, "name": "Kylian Mbappe", "value": 191, "unit": "goals", "aliases": ["Mbappe"] }
+    ]
+  },
+  {
+    "id": "eredivisie-all-time-scorers",
+    "title": "Eredivisie all-time top scorers",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Willy van der Kuijlen", "value": 311, "unit": "goals", "aliases": ["van der Kuijlen"] },
+      { "rank": 2, "name": "Ruud Geels", "value": 266, "unit": "goals", "aliases": ["Geels"] },
+      { "rank": 3, "name": "Johan Cruyff", "value": 216, "unit": "goals", "aliases": ["Cruyff"] },
+      { "rank": 4, "name": "Kees Kist", "value": 211, "unit": "goals", "aliases": ["Kist"] },
+      { "rank": 5, "name": "Tonny van der Linden", "value": 208, "unit": "goals", "aliases": ["van der Linden"] },
+      { "rank": 6, "name": "Henk Groot", "value": 195, "unit": "goals", "aliases": ["Groot"] }
+    ]
+  },
+  {
+    "id": "primeira-liga-all-time-scorers",
+    "title": "Primeira Liga (Portugal) all-time top scorers",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Fernando Peyroteo", "value": 332, "unit": "goals", "aliases": ["Peyroteo"] },
+      { "rank": 2, "name": "Eusebio", "value": 320, "unit": "goals", "aliases": ["Eusebio"] },
+      { "rank": 3, "name": "Fernando Gomes", "value": 319, "unit": "goals", "aliases": ["Fernando Gomes"] },
+      { "rank": 4, "name": "Jose Aguas", "value": 281, "unit": "goals", "aliases": ["Jose Aguas"] },
+      { "rank": 5, "name": "Nene", "value": 262, "unit": "goals", "aliases": ["Nene"] },
+      { "rank": 6, "name": "Manuel Fernandes", "value": 243, "unit": "goals", "aliases": ["Manuel Fernandes"] },
+      { "rank": 7, "name": "Matateu", "value": 219, "unit": "goals", "aliases": ["Matateu"] },
+      { "rank": 8, "name": "Jose Torres", "value": 218, "unit": "goals", "aliases": ["Jose Torres"] }
+    ]
+  },
+  {
+    "id": "mls-all-time-scorers",
+    "title": "MLS all-time regular-season top scorers",
+    "group": "leagues",
+    "as_of": "2026-07",
+    "entries": [
+      { "rank": 1, "name": "Chris Wondolowski", "value": 171, "unit": "goals", "aliases": ["Wondolowski", "Wondo"] },
+      { "rank": 2, "name": "Kei Kamara", "value": 147, "unit": "goals", "aliases": ["Kamara"] },
+      { "rank": 3, "name": "Landon Donovan", "value": 145, "unit": "goals", "aliases": ["Donovan"] },
+      { "rank": 4, "name": "Jeff Cunningham", "value": 134, "unit": "goals", "aliases": ["Cunningham"] },
+      { "rank": 5, "name": "Jaime Moreno", "value": 133, "unit": "goals", "aliases": ["Moreno"] },
+      { "rank": 6, "name": "Josef Martinez", "value": 130, "unit": "goals", "aliases": ["Josef Martinez"] },
+      { "rank": 7, "name": "Bradley Wright-Phillips", "value": 117, "unit": "goals", "aliases": ["Wright-Phillips", "BWP"] },
+      { "rank": 8, "name": "Ante Razov", "value": 114, "unit": "goals", "aliases": ["Razov"] }
+    ]
+  },
+  {
+    "id": "premier-league-golden-boot-most-wins",
+    "title": "Most Premier League Golden Boots won",
+    "group": "leagues",
+    "as_of": "2026-07",
+    "entries": [
+      { "rank": 1, "name": "Thierry Henry", "value": 4, "unit": "Golden Boots", "aliases": ["Henry"] },
+      { "rank": 1, "name": "Mohamed Salah", "value": 4, "unit": "Golden Boots", "aliases": ["Salah"] },
+      { "rank": 3, "name": "Alan Shearer", "value": 3, "unit": "Golden Boots", "aliases": ["Shearer"] },
+      { "rank": 3, "name": "Harry Kane", "value": 3, "unit": "Golden Boots", "aliases": ["Kane"] },
+      { "rank": 3, "name": "Erling Haaland", "value": 3, "unit": "Golden Boots", "aliases": ["Haaland"] },
+      { "rank": 6, "name": "Robin van Persie", "value": 2, "unit": "Golden Boots", "aliases": ["van Persie"] },
+      { "rank": 6, "name": "Michael Owen", "value": 2, "unit": "Golden Boots", "aliases": ["Owen"] },
+      { "rank": 6, "name": "Jimmy Floyd Hasselbaink", "value": 2, "unit": "Golden Boots", "aliases": ["Hasselbaink"] }
+    ]
+  },
+  {
+    "id": "la-liga-pichichi-most-wins",
+    "title": "Most La Liga Pichichi awards won",
+    "group": "leagues",
+    "as_of": "2026-07",
+    "entries": [
+      { "rank": 1, "name": "Lionel Messi", "value": 8, "unit": "Pichichis", "aliases": ["Messi"] },
+      { "rank": 2, "name": "Telmo Zarra", "value": 6, "unit": "Pichichis", "aliases": ["Zarra"] },
+      { "rank": 3, "name": "Hugo Sanchez", "value": 5, "unit": "Pichichis", "aliases": ["Hugo Sanchez"] },
+      { "rank": 3, "name": "Alfredo Di Stefano", "value": 5, "unit": "Pichichis", "aliases": ["Di Stefano"] },
+      { "rank": 3, "name": "Quini", "value": 5, "unit": "Pichichis", "aliases": ["Quini"] },
+      { "rank": 6, "name": "Cristiano Ronaldo", "value": 3, "unit": "Pichichis", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 7, "name": "Kylian Mbappe", "value": 2, "unit": "Pichichis", "aliases": ["Mbappe"] }
+    ]
+  },
+  {
+    "id": "premier-league-top-scorers-2025-26",
+    "title": "Premier League top scorers 2025-26",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Erling Haaland", "value": 27, "unit": "goals", "aliases": ["Haaland"] },
+      { "rank": 2, "name": "Igor Thiago", "value": 22, "unit": "goals", "aliases": ["Igor Thiago"] },
+      { "rank": 3, "name": "Antoine Semenyo", "value": 17, "unit": "goals", "aliases": ["Semenyo"] },
+      { "rank": 4, "name": "Ollie Watkins", "value": 16, "unit": "goals", "aliases": ["Watkins"] },
+      { "rank": 5, "name": "Joao Pedro", "value": 15, "unit": "goals", "aliases": ["Joao Pedro"] },
+      { "rank": 5, "name": "Morgan Gibbs-White", "value": 15, "unit": "goals", "aliases": ["Gibbs-White"] },
+      { "rank": 7, "name": "Dominic Calvert-Lewin", "value": 14, "unit": "goals", "aliases": ["Calvert-Lewin"] },
+      { "rank": 7, "name": "Viktor Gyokeres", "value": 14, "unit": "goals", "aliases": ["Gyokeres"] }
+    ]
+  },
+  {
+    "id": "premier-league-top-scorers-2023-24",
+    "title": "Premier League top scorers 2023-24",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Erling Haaland", "value": 27, "unit": "goals", "aliases": ["Haaland"] },
+      { "rank": 2, "name": "Cole Palmer", "value": 22, "unit": "goals", "aliases": ["Palmer"] },
+      { "rank": 3, "name": "Alexander Isak", "value": 21, "unit": "goals", "aliases": ["Isak"] },
+      { "rank": 4, "name": "Phil Foden", "value": 19, "unit": "goals", "aliases": ["Foden"] },
+      { "rank": 4, "name": "Ollie Watkins", "value": 19, "unit": "goals", "aliases": ["Watkins"] },
+      { "rank": 4, "name": "Dominic Solanke", "value": 19, "unit": "goals", "aliases": ["Solanke"] },
+      { "rank": 7, "name": "Mohamed Salah", "value": 18, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 8, "name": "Son Heung-min", "value": 17, "unit": "goals", "aliases": ["Son"] }
+    ]
+  },
+  {
+    "id": "premier-league-top-scorers-2022-23",
+    "title": "Premier League top scorers 2022-23",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Erling Haaland", "value": 36, "unit": "goals", "aliases": ["Haaland"] },
+      { "rank": 2, "name": "Harry Kane", "value": 30, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 3, "name": "Ivan Toney", "value": 20, "unit": "goals", "aliases": ["Toney"] },
+      { "rank": 4, "name": "Mohamed Salah", "value": 19, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 5, "name": "Callum Wilson", "value": 18, "unit": "goals", "aliases": ["Wilson"] },
+      { "rank": 6, "name": "Marcus Rashford", "value": 17, "unit": "goals", "aliases": ["Rashford"] },
+      { "rank": 7, "name": "Gabriel Martinelli", "value": 15, "unit": "goals", "aliases": ["Martinelli"] },
+      { "rank": 7, "name": "Martin Odegaard", "value": 15, "unit": "goals", "aliases": ["Odegaard"] }
+    ]
+  },
+  {
+    "id": "premier-league-top-scorers-2020-21",
+    "title": "Premier League top scorers 2020-21",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Harry Kane", "value": 23, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 2, "name": "Mohamed Salah", "value": 22, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 3, "name": "Bruno Fernandes", "value": 18, "unit": "goals", "aliases": ["Bruno Fernandes", "Bruno"] },
+      { "rank": 4, "name": "Son Heung-min", "value": 17, "unit": "goals", "aliases": ["Son"] },
+      { "rank": 4, "name": "Patrick Bamford", "value": 17, "unit": "goals", "aliases": ["Bamford"] },
+      { "rank": 6, "name": "Dominic Calvert-Lewin", "value": 16, "unit": "goals", "aliases": ["Calvert-Lewin"] },
+      { "rank": 7, "name": "Jamie Vardy", "value": 15, "unit": "goals", "aliases": ["Vardy"] },
+      { "rank": 8, "name": "Ollie Watkins", "value": 14, "unit": "goals", "aliases": ["Watkins"] }
+    ]
+  },
+  {
+    "id": "premier-league-top-scorers-2019-20",
+    "title": "Premier League top scorers 2019-20",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Jamie Vardy", "value": 23, "unit": "goals", "aliases": ["Vardy"] },
+      { "rank": 2, "name": "Pierre-Emerick Aubameyang", "value": 22, "unit": "goals", "aliases": ["Aubameyang"] },
+      { "rank": 2, "name": "Danny Ings", "value": 22, "unit": "goals", "aliases": ["Ings"] },
+      { "rank": 4, "name": "Raheem Sterling", "value": 20, "unit": "goals", "aliases": ["Sterling"] },
+      { "rank": 5, "name": "Mohamed Salah", "value": 19, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 6, "name": "Harry Kane", "value": 18, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 6, "name": "Sadio Mane", "value": 18, "unit": "goals", "aliases": ["Mane"] },
+      { "rank": 8, "name": "Marcus Rashford", "value": 17, "unit": "goals", "aliases": ["Rashford"] }
+    ]
+  },
+  {
+    "id": "premier-league-top-scorers-2017-18",
+    "title": "Premier League top scorers 2017-18",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Mohamed Salah", "value": 32, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 2, "name": "Harry Kane", "value": 30, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 3, "name": "Sergio Aguero", "value": 21, "unit": "goals", "aliases": ["Aguero"] },
+      { "rank": 4, "name": "Jamie Vardy", "value": 20, "unit": "goals", "aliases": ["Vardy"] },
+      { "rank": 5, "name": "Raheem Sterling", "value": 18, "unit": "goals", "aliases": ["Sterling"] },
+      { "rank": 6, "name": "Romelu Lukaku", "value": 16, "unit": "goals", "aliases": ["Lukaku"] },
+      { "rank": 7, "name": "Roberto Firmino", "value": 15, "unit": "goals", "aliases": ["Firmino"] },
+      { "rank": 8, "name": "Alexandre Lacazette", "value": 14, "unit": "goals", "aliases": ["Lacazette"] }
+    ]
+  },
+  {
+    "id": "la-liga-top-scorers-2025-26",
+    "title": "La Liga top scorers 2025-26",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Kylian Mbappe", "value": 25, "unit": "goals", "aliases": ["Mbappe"] },
+      { "rank": 2, "name": "Vedat Muriqi", "value": 23, "unit": "goals", "aliases": ["Muriqi"] },
+      { "rank": 3, "name": "Ante Budimir", "value": 17, "unit": "goals", "aliases": ["Budimir"] },
+      { "rank": 4, "name": "Lamine Yamal", "value": 16, "unit": "goals", "aliases": ["Yamal"] },
+      { "rank": 4, "name": "Ferran Torres", "value": 16, "unit": "goals", "aliases": ["Ferran Torres", "Ferran"] },
+      { "rank": 4, "name": "Vinicius Junior", "value": 16, "unit": "goals", "aliases": ["Vinicius"] },
+      { "rank": 7, "name": "Mikel Oyarzabal", "value": 15, "unit": "goals", "aliases": ["Oyarzabal"] },
+      { "rank": 8, "name": "Robert Lewandowski", "value": 14, "unit": "goals", "aliases": ["Lewandowski"] }
+    ]
+  },
+  {
+    "id": "la-liga-top-scorers-2023-24",
+    "title": "La Liga top scorers 2023-24",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Artem Dovbyk", "value": 24, "unit": "goals", "aliases": ["Dovbyk"] },
+      { "rank": 2, "name": "Alexander Sorloth", "value": 23, "unit": "goals", "aliases": ["Sorloth"] },
+      { "rank": 3, "name": "Jude Bellingham", "value": 19, "unit": "goals", "aliases": ["Bellingham"] },
+      { "rank": 3, "name": "Robert Lewandowski", "value": 19, "unit": "goals", "aliases": ["Lewandowski"] },
+      { "rank": 5, "name": "Ante Budimir", "value": 16, "unit": "goals", "aliases": ["Budimir"] },
+      { "rank": 5, "name": "Antoine Griezmann", "value": 16, "unit": "goals", "aliases": ["Griezmann"] },
+      { "rank": 5, "name": "Youssef En-Nesyri", "value": 16, "unit": "goals", "aliases": ["En-Nesyri"] },
+      { "rank": 8, "name": "Vinicius Junior", "value": 15, "unit": "goals", "aliases": ["Vinicius"] }
+    ]
+  },
+  {
+    "id": "la-liga-top-scorers-2018-19",
+    "title": "La Liga top scorers 2018-19",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Lionel Messi", "value": 36, "unit": "goals", "aliases": ["Messi"] },
+      { "rank": 2, "name": "Luis Suarez", "value": 21, "unit": "goals", "aliases": ["Suarez"] },
+      { "rank": 2, "name": "Karim Benzema", "value": 21, "unit": "goals", "aliases": ["Benzema"] },
+      { "rank": 4, "name": "Iago Aspas", "value": 20, "unit": "goals", "aliases": ["Aspas"] },
+      { "rank": 5, "name": "Cristhian Stuani", "value": 19, "unit": "goals", "aliases": ["Stuani"] },
+      { "rank": 6, "name": "Wissam Ben Yedder", "value": 18, "unit": "goals", "aliases": ["Ben Yedder"] },
+      { "rank": 7, "name": "Borja Iglesias", "value": 17, "unit": "goals", "aliases": ["Borja Iglesias"] },
+      { "rank": 8, "name": "Antoine Griezmann", "value": 15, "unit": "goals", "aliases": ["Griezmann"] }
+    ]
+  },
+  {
+    "id": "la-liga-top-scorers-2014-15",
+    "title": "La Liga top scorers 2014-15",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Cristiano Ronaldo", "value": 48, "unit": "goals", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 2, "name": "Lionel Messi", "value": 43, "unit": "goals", "aliases": ["Messi"] },
+      { "rank": 3, "name": "Neymar", "value": 22, "unit": "goals", "aliases": ["Neymar"] },
+      { "rank": 3, "name": "Antoine Griezmann", "value": 22, "unit": "goals", "aliases": ["Griezmann"] },
+      { "rank": 5, "name": "Carlos Bacca", "value": 20, "unit": "goals", "aliases": ["Bacca"] },
+      { "rank": 6, "name": "Aritz Aduriz", "value": 18, "unit": "goals", "aliases": ["Aduriz"] },
+      { "rank": 7, "name": "Alberto Bueno", "value": 17, "unit": "goals", "aliases": ["Bueno"] },
+      { "rank": 8, "name": "Luis Suarez", "value": 16, "unit": "goals", "aliases": ["Suarez"] }
+    ]
+  },
+  {
+    "id": "la-liga-top-scorers-2011-12",
+    "title": "La Liga top scorers 2011-12",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Lionel Messi", "value": 50, "unit": "goals", "aliases": ["Messi"] },
+      { "rank": 2, "name": "Cristiano Ronaldo", "value": 46, "unit": "goals", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 3, "name": "Radamel Falcao", "value": 24, "unit": "goals", "aliases": ["Falcao"] },
+      { "rank": 4, "name": "Gonzalo Higuain", "value": 22, "unit": "goals", "aliases": ["Higuain"] },
+      { "rank": 5, "name": "Karim Benzema", "value": 21, "unit": "goals", "aliases": ["Benzema"] },
+      { "rank": 6, "name": "Roberto Soldado", "value": 17, "unit": "goals", "aliases": ["Soldado"] },
+      { "rank": 7, "name": "Fernando Llorente", "value": 16, "unit": "goals", "aliases": ["Llorente"] },
+      { "rank": 7, "name": "Ruben Castro", "value": 16, "unit": "goals", "aliases": ["Ruben Castro"] }
+    ]
+  },
+  {
+    "id": "serie-a-top-scorers-2025-26",
+    "title": "Serie A top scorers 2025-26",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Lautaro Martinez", "value": 17, "unit": "goals", "aliases": ["Lautaro", "Lautaro Martinez"] },
+      { "rank": 2, "name": "Donyell Malen", "value": 14, "unit": "goals", "aliases": ["Malen"] },
+      { "rank": 2, "name": "Tasos Douvikas", "value": 14, "unit": "goals", "aliases": ["Douvikas"] },
+      { "rank": 4, "name": "Marcus Thuram", "value": 13, "unit": "goals", "aliases": ["Thuram"] },
+      { "rank": 5, "name": "Rasmus Hojlund", "value": 12, "unit": "goals", "aliases": ["Hojlund"] },
+      { "rank": 5, "name": "Nico Paz", "value": 12, "unit": "goals", "aliases": ["Nico Paz"] },
+      { "rank": 7, "name": "Giovanni Simeone", "value": 11, "unit": "goals", "aliases": ["Simeone"] },
+      { "rank": 8, "name": "Gianluca Scamacca", "value": 10, "unit": "goals", "aliases": ["Scamacca"] }
+    ]
+  },
+  {
+    "id": "serie-a-top-scorers-2022-23",
+    "title": "Serie A top scorers 2022-23",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Victor Osimhen", "value": 26, "unit": "goals", "aliases": ["Osimhen"] },
+      { "rank": 2, "name": "Lautaro Martinez", "value": 21, "unit": "goals", "aliases": ["Lautaro"] },
+      { "rank": 3, "name": "Boulaye Dia", "value": 16, "unit": "goals", "aliases": ["Dia"] },
+      { "rank": 4, "name": "Rafael Leao", "value": 15, "unit": "goals", "aliases": ["Leao"] },
+      { "rank": 5, "name": "Ademola Lookman", "value": 13, "unit": "goals", "aliases": ["Lookman"] },
+      { "rank": 5, "name": "M'Bala Nzola", "value": 13, "unit": "goals", "aliases": ["Nzola"] },
+      { "rank": 5, "name": "Olivier Giroud", "value": 13, "unit": "goals", "aliases": ["Giroud"] },
+      { "rank": 8, "name": "Paulo Dybala", "value": 12, "unit": "goals", "aliases": ["Dybala"] }
+    ]
+  },
+  {
+    "id": "serie-a-top-scorers-2020-21",
+    "title": "Serie A top scorers 2020-21",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Cristiano Ronaldo", "value": 29, "unit": "goals", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 2, "name": "Romelu Lukaku", "value": 24, "unit": "goals", "aliases": ["Lukaku"] },
+      { "rank": 3, "name": "Luis Muriel", "value": 22, "unit": "goals", "aliases": ["Muriel"] },
+      { "rank": 4, "name": "Dusan Vlahovic", "value": 21, "unit": "goals", "aliases": ["Vlahovic"] },
+      { "rank": 5, "name": "Ciro Immobile", "value": 20, "unit": "goals", "aliases": ["Immobile"] },
+      { "rank": 5, "name": "Simy", "value": 20, "unit": "goals", "aliases": ["Simy Nwankwo"] },
+      { "rank": 7, "name": "Lorenzo Insigne", "value": 19, "unit": "goals", "aliases": ["Insigne"] },
+      { "rank": 8, "name": "Domenico Berardi", "value": 17, "unit": "goals", "aliases": ["Berardi"] }
+    ]
+  },
+  {
+    "id": "serie-a-top-scorers-2019-20",
+    "title": "Serie A top scorers 2019-20",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Ciro Immobile", "value": 36, "unit": "goals", "aliases": ["Immobile"] },
+      { "rank": 2, "name": "Cristiano Ronaldo", "value": 31, "unit": "goals", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 3, "name": "Romelu Lukaku", "value": 23, "unit": "goals", "aliases": ["Lukaku"] },
+      { "rank": 4, "name": "Francesco Caputo", "value": 21, "unit": "goals", "aliases": ["Caputo"] },
+      { "rank": 5, "name": "Duvan Zapata", "value": 18, "unit": "goals", "aliases": ["Zapata"] },
+      { "rank": 5, "name": "Luis Muriel", "value": 18, "unit": "goals", "aliases": ["Muriel"] },
+      { "rank": 5, "name": "Joao Pedro", "value": 18, "unit": "goals", "aliases": ["Joao Pedro"] },
+      { "rank": 8, "name": "Edin Dzeko", "value": 16, "unit": "goals", "aliases": ["Dzeko"] }
+    ]
+  },
+  {
+    "id": "serie-a-top-scorers-2015-16",
+    "title": "Serie A top scorers 2015-16",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Gonzalo Higuain", "value": 36, "unit": "goals", "aliases": ["Higuain"] },
+      { "rank": 2, "name": "Paulo Dybala", "value": 19, "unit": "goals", "aliases": ["Dybala"] },
+      { "rank": 3, "name": "Carlos Bacca", "value": 18, "unit": "goals", "aliases": ["Bacca"] },
+      { "rank": 4, "name": "Mauro Icardi", "value": 16, "unit": "goals", "aliases": ["Icardi"] },
+      { "rank": 5, "name": "Leonardo Pavoletti", "value": 14, "unit": "goals", "aliases": ["Pavoletti"] },
+      { "rank": 5, "name": "Mohamed Salah", "value": 14, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 7, "name": "Josip Ilicic", "value": 13, "unit": "goals", "aliases": ["Ilicic"] },
+      { "rank": 7, "name": "Eder", "value": 13, "unit": "goals", "aliases": ["Eder"] }
+    ]
+  },
+  {
+    "id": "bundesliga-top-scorers-2025-26",
+    "title": "Bundesliga top scorers 2025-26",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Harry Kane", "value": 36, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 2, "name": "Deniz Undav", "value": 19, "unit": "goals", "aliases": ["Undav"] },
+      { "rank": 3, "name": "Serhou Guirassy", "value": 17, "unit": "goals", "aliases": ["Guirassy"] },
+      { "rank": 4, "name": "Patrik Schick", "value": 16, "unit": "goals", "aliases": ["Schick"] },
+      { "rank": 5, "name": "Luis Diaz", "value": 15, "unit": "goals", "aliases": ["Luis Diaz"] },
+      { "rank": 5, "name": "Michael Olise", "value": 15, "unit": "goals", "aliases": ["Olise"] }
+    ]
+  },
+  {
+    "id": "bundesliga-top-scorers-2023-24",
+    "title": "Bundesliga top scorers 2023-24",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Harry Kane", "value": 36, "unit": "goals", "aliases": ["Kane"] },
+      { "rank": 2, "name": "Serhou Guirassy", "value": 28, "unit": "goals", "aliases": ["Guirassy"] },
+      { "rank": 3, "name": "Lois Openda", "value": 24, "unit": "goals", "aliases": ["Openda"] },
+      { "rank": 4, "name": "Deniz Undav", "value": 18, "unit": "goals", "aliases": ["Undav"] },
+      { "rank": 5, "name": "Maximilian Beier", "value": 16, "unit": "goals", "aliases": ["Beier"] },
+      { "rank": 6, "name": "Andrej Kramaric", "value": 15, "unit": "goals", "aliases": ["Kramaric"] },
+      { "rank": 6, "name": "Ermedin Demirovic", "value": 15, "unit": "goals", "aliases": ["Demirovic"] },
+      { "rank": 8, "name": "Victor Boniface", "value": 14, "unit": "goals", "aliases": ["Boniface"] }
+    ]
+  },
+  {
+    "id": "bundesliga-top-scorers-2021-22",
+    "title": "Bundesliga top scorers 2021-22",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Robert Lewandowski", "value": 35, "unit": "goals", "aliases": ["Lewandowski"] },
+      { "rank": 2, "name": "Patrik Schick", "value": 24, "unit": "goals", "aliases": ["Schick"] },
+      { "rank": 3, "name": "Erling Haaland", "value": 22, "unit": "goals", "aliases": ["Haaland"] },
+      { "rank": 4, "name": "Anthony Modeste", "value": 20, "unit": "goals", "aliases": ["Modeste"] },
+      { "rank": 4, "name": "Christopher Nkunku", "value": 20, "unit": "goals", "aliases": ["Nkunku"] },
+      { "rank": 6, "name": "Taiwo Awoniyi", "value": 15, "unit": "goals", "aliases": ["Awoniyi"] },
+      { "rank": 7, "name": "Serge Gnabry", "value": 14, "unit": "goals", "aliases": ["Gnabry"] },
+      { "rank": 8, "name": "Moussa Diaby", "value": 13, "unit": "goals", "aliases": ["Diaby"] }
+    ]
+  },
+  {
+    "id": "bundesliga-top-scorers-2020-21",
+    "title": "Bundesliga top scorers 2020-21",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Robert Lewandowski", "value": 41, "unit": "goals", "aliases": ["Lewandowski"] },
+      { "rank": 2, "name": "Andre Silva", "value": 28, "unit": "goals", "aliases": ["Andre Silva"] },
+      { "rank": 3, "name": "Erling Haaland", "value": 27, "unit": "goals", "aliases": ["Haaland"] },
+      { "rank": 4, "name": "Andrej Kramaric", "value": 20, "unit": "goals", "aliases": ["Kramaric"] },
+      { "rank": 4, "name": "Wout Weghorst", "value": 20, "unit": "goals", "aliases": ["Weghorst"] },
+      { "rank": 6, "name": "Sasa Kalajdzic", "value": 16, "unit": "goals", "aliases": ["Kalajdzic"] },
+      { "rank": 7, "name": "Lars Stindl", "value": 14, "unit": "goals", "aliases": ["Stindl"] },
+      { "rank": 8, "name": "Max Kruse", "value": 11, "unit": "goals", "aliases": ["Kruse"] }
+    ]
+  },
+  {
+    "id": "bundesliga-top-scorers-2016-17",
+    "title": "Bundesliga top scorers 2016-17",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Pierre-Emerick Aubameyang", "value": 31, "unit": "goals", "aliases": ["Aubameyang"] },
+      { "rank": 2, "name": "Robert Lewandowski", "value": 30, "unit": "goals", "aliases": ["Lewandowski"] },
+      { "rank": 3, "name": "Anthony Modeste", "value": 25, "unit": "goals", "aliases": ["Modeste"] },
+      { "rank": 4, "name": "Timo Werner", "value": 21, "unit": "goals", "aliases": ["Werner"] },
+      { "rank": 5, "name": "Mario Gomez", "value": 16, "unit": "goals", "aliases": ["Gomez"] },
+      { "rank": 6, "name": "Max Kruse", "value": 15, "unit": "goals", "aliases": ["Kruse"] },
+      { "rank": 6, "name": "Andrej Kramaric", "value": 15, "unit": "goals", "aliases": ["Kramaric"] },
+      { "rank": 8, "name": "Arjen Robben", "value": 13, "unit": "goals", "aliases": ["Robben"] }
+    ]
+  },
+  {
+    "id": "ligue-1-top-scorers-2025-26",
+    "title": "Ligue 1 top scorers 2025-26",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Esteban Lepaul", "value": 21, "unit": "goals", "aliases": ["Lepaul"] },
+      { "rank": 2, "name": "Joaquin Panichelli", "value": 16, "unit": "goals", "aliases": ["Panichelli"] },
+      { "rank": 2, "name": "Mason Greenwood", "value": 16, "unit": "goals", "aliases": ["Greenwood"] },
+      { "rank": 4, "name": "Folarin Balogun", "value": 13, "unit": "goals", "aliases": ["Balogun"] },
+      { "rank": 5, "name": "Wesley Said", "value": 12, "unit": "goals", "aliases": ["Wesley Said"] },
+      { "rank": 5, "name": "Odsonne Edouard", "value": 12, "unit": "goals", "aliases": ["Edouard"] },
+      { "rank": 5, "name": "Lassine Sinayoko", "value": 12, "unit": "goals", "aliases": ["Sinayoko"] },
+      { "rank": 8, "name": "Ansu Fati", "value": 11, "unit": "goals", "aliases": ["Ansu Fati"] }
+    ]
+  },
+  {
+    "id": "ligue-1-top-scorers-2023-24",
+    "title": "Ligue 1 top scorers 2023-24",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Kylian Mbappe", "value": 27, "unit": "goals", "aliases": ["Mbappe"] },
+      { "rank": 2, "name": "Alexandre Lacazette", "value": 19, "unit": "goals", "aliases": ["Lacazette"] },
+      { "rank": 2, "name": "Jonathan David", "value": 19, "unit": "goals", "aliases": ["David"] },
+      { "rank": 4, "name": "Wissam Ben Yedder", "value": 16, "unit": "goals", "aliases": ["Ben Yedder"] },
+      { "rank": 4, "name": "Pierre-Emerick Aubameyang", "value": 16, "unit": "goals", "aliases": ["Aubameyang"] },
+      { "rank": 6, "name": "Thijs Dallinga", "value": 14, "unit": "goals", "aliases": ["Dallinga"] },
+      { "rank": 7, "name": "Georges Mikautadze", "value": 13, "unit": "goals", "aliases": ["Mikautadze"] },
+      { "rank": 8, "name": "Goncalo Ramos", "value": 11, "unit": "goals", "aliases": ["Goncalo Ramos"] }
+    ]
+  },
+  {
+    "id": "ligue-1-top-scorers-2018-19",
+    "title": "Ligue 1 top scorers 2018-19",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Kylian Mbappe", "value": 33, "unit": "goals", "aliases": ["Mbappe"] },
+      { "rank": 2, "name": "Nicolas Pepe", "value": 22, "unit": "goals", "aliases": ["Pepe"] },
+      { "rank": 3, "name": "Edinson Cavani", "value": 18, "unit": "goals", "aliases": ["Cavani"] },
+      { "rank": 4, "name": "Florian Thauvin", "value": 16, "unit": "goals", "aliases": ["Thauvin"] },
+      { "rank": 5, "name": "Neymar", "value": 15, "unit": "goals", "aliases": ["Neymar"] },
+      { "rank": 5, "name": "Moussa Dembele", "value": 15, "unit": "goals", "aliases": ["Dembele"] },
+      { "rank": 5, "name": "Radamel Falcao", "value": 15, "unit": "goals", "aliases": ["Falcao"] },
+      { "rank": 8, "name": "Andy Delort", "value": 14, "unit": "goals", "aliases": ["Delort"] }
+    ]
+  },
+  {
+    "id": "ligue-1-top-scorers-2016-17",
+    "title": "Ligue 1 top scorers 2016-17",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Edinson Cavani", "value": 35, "unit": "goals", "aliases": ["Cavani"] },
+      { "rank": 2, "name": "Alexandre Lacazette", "value": 28, "unit": "goals", "aliases": ["Lacazette"] },
+      { "rank": 3, "name": "Radamel Falcao", "value": 21, "unit": "goals", "aliases": ["Falcao"] },
+      { "rank": 4, "name": "Bafetimbi Gomis", "value": 20, "unit": "goals", "aliases": ["Gomis"] },
+      { "rank": 5, "name": "Mario Balotelli", "value": 15, "unit": "goals", "aliases": ["Balotelli"] },
+      { "rank": 5, "name": "Kylian Mbappe", "value": 15, "unit": "goals", "aliases": ["Mbappe"] },
+      { "rank": 5, "name": "Ivan Santini", "value": 15, "unit": "goals", "aliases": ["Santini"] },
+      { "rank": 5, "name": "Florian Thauvin", "value": 15, "unit": "goals", "aliases": ["Thauvin"] }
+    ]
+  },
+  {
+    "id": "ligue-1-top-scorers-2015-16",
+    "title": "Ligue 1 top scorers 2015-16",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Zlatan Ibrahimovic", "value": 38, "unit": "goals", "aliases": ["Ibrahimovic", "Zlatan"] },
+      { "rank": 2, "name": "Alexandre Lacazette", "value": 21, "unit": "goals", "aliases": ["Lacazette"] },
+      { "rank": 3, "name": "Edinson Cavani", "value": 19, "unit": "goals", "aliases": ["Cavani"] },
+      { "rank": 4, "name": "Hatem Ben Arfa", "value": 17, "unit": "goals", "aliases": ["Ben Arfa"] },
+      { "rank": 4, "name": "Wissam Ben Yedder", "value": 17, "unit": "goals", "aliases": ["Ben Yedder"] },
+      { "rank": 4, "name": "Michy Batshuayi", "value": 17, "unit": "goals", "aliases": ["Batshuayi"] },
+      { "rank": 7, "name": "Valere Germain", "value": 14, "unit": "goals", "aliases": ["Germain"] },
+      { "rank": 8, "name": "Benjamin Moukandjo", "value": 13, "unit": "goals", "aliases": ["Moukandjo"] }
+    ]
+  },
+  {
+    "id": "saudi-pro-league-top-scorers-2025-26",
+    "title": "Saudi Pro League top scorers 2025-26",
+    "group": "leagues",
+    "entries": [
+      { "rank": 1, "name": "Julian Quinones", "value": 33, "unit": "goals", "aliases": ["Quinones"] },
+      { "rank": 2, "name": "Ivan Toney", "value": 32, "unit": "goals", "aliases": ["Toney"] },
+      { "rank": 3, "name": "Cristiano Ronaldo", "value": 28, "unit": "goals", "aliases": ["Ronaldo", "CR7"] },
+      { "rank": 4, "name": "Roger Martinez", "value": 23, "unit": "goals", "aliases": ["Roger Martinez"] },
+      { "rank": 5, "name": "Joshua King", "value": 20, "unit": "goals", "aliases": ["King"] },
+      { "rank": 5, "name": "Joao Felix", "value": 20, "unit": "goals", "aliases": ["Joao Felix"] },
+      { "rank": 7, "name": "Yannick Carrasco", "value": 18, "unit": "goals", "aliases": ["Carrasco"] },
+      { "rank": 8, "name": "Karim Benzema", "value": 17, "unit": "goals", "aliases": ["Benzema"] }
+    ]
+  }
+]

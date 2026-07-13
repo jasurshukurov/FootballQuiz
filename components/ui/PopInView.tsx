@@ -19,7 +19,10 @@ export default function PopInView({ children, delay = 0 }: PopInViewProps) {
   useEffect(() => {
     const config = { duration: 250, easing: Easing.out(Easing.cubic) };
     scale.value = withDelay(delay, withTiming(1, config));
-    opacity.value = withDelay(delay, withTiming(1, { duration: 200, easing: Easing.out(Easing.quad) }));
+    opacity.value = withDelay(
+      delay,
+      withTiming(1, { duration: 200, easing: Easing.out(Easing.quad) }),
+    );
   }, [delay, scale, opacity]);
 
   const animatedStyle = useAnimatedStyle(() => ({

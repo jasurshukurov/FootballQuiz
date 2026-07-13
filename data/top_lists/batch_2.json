@@ -1,0 +1,3232 @@
+[
+  {
+    "id": "ucl-all-time-top-scorers",
+    "title": "Champions League all-time top scorers",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 140,
+        "unit": "goals",
+        "aliases": [
+          "CR7",
+          "Ronaldo"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Lionel Messi",
+        "value": 129,
+        "unit": "goals",
+        "aliases": [
+          "Leo Messi",
+          "Messi"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Robert Lewandowski",
+        "value": 109,
+        "unit": "goals",
+        "aliases": [
+          "Lewa",
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Karim Benzema",
+        "value": 90,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Raúl",
+        "value": 71,
+        "unit": "goals",
+        "aliases": [
+          "Raul",
+          "Raul Gonzalez"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Kylian Mbappé",
+        "value": 70,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe",
+          "Kylian Mbappe"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Erling Haaland",
+        "value": 57,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Thomas Müller",
+        "value": 57,
+        "unit": "goals",
+        "aliases": [
+          "Muller",
+          "Thomas Muller"
+        ]
+      },
+      {
+        "rank": 9,
+        "name": "Ruud van Nistelrooy",
+        "value": 56,
+        "unit": "goals",
+        "aliases": [
+          "Van Nistelrooy",
+          "Ruud"
+        ]
+      },
+      {
+        "rank": 10,
+        "name": "Harry Kane",
+        "value": 54,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-all-time-appearances",
+    "title": "Most Champions League appearances (all-time)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 183,
+        "unit": "apps",
+        "aliases": [
+          "CR7",
+          "Ronaldo"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Iker Casillas",
+        "value": 177,
+        "unit": "apps",
+        "aliases": [
+          "Casillas",
+          "San Iker"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Lionel Messi",
+        "value": 163,
+        "unit": "apps",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Thomas Müller",
+        "value": 162,
+        "unit": "apps",
+        "aliases": [
+          "Muller",
+          "Thomas Muller"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Manuel Neuer",
+        "value": 161,
+        "unit": "apps",
+        "aliases": [
+          "Neuer"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Karim Benzema",
+        "value": 152,
+        "unit": "apps",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Xavi",
+        "value": 151,
+        "unit": "apps",
+        "aliases": [
+          "Xavi Hernandez"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Toni Kroos",
+        "value": 151,
+        "unit": "apps",
+        "aliases": [
+          "Kroos"
+        ]
+      },
+      {
+        "rank": 9,
+        "name": "Robert Lewandowski",
+        "value": 144,
+        "unit": "apps",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 10,
+        "name": "Raúl",
+        "value": 142,
+        "unit": "apps",
+        "aliases": [
+          "Raul"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-all-time-assists",
+    "title": "Most Champions League assists (all-time)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 42,
+        "unit": "assists",
+        "aliases": [
+          "CR7",
+          "Ronaldo"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Ángel Di María",
+        "value": 41,
+        "unit": "assists",
+        "aliases": [
+          "Di Maria",
+          "Angel Di Maria",
+          "Fideo"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Lionel Messi",
+        "value": 40,
+        "unit": "assists",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Neymar",
+        "value": 33,
+        "unit": "assists",
+        "aliases": [
+          "Neymar Jr"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Ryan Giggs",
+        "value": 30,
+        "unit": "assists",
+        "aliases": [
+          "Giggs"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Xavi",
+        "value": 30,
+        "unit": "assists",
+        "aliases": [
+          "Xavi Hernandez"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Andrés Iniesta",
+        "value": 29,
+        "unit": "assists",
+        "aliases": [
+          "Iniesta"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Karim Benzema",
+        "value": 29,
+        "unit": "assists",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Thomas Müller",
+        "value": 29,
+        "unit": "assists",
+        "aliases": [
+          "Muller",
+          "Thomas Muller"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-most-hat-tricks",
+    "title": "Most Champions League hat-tricks",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 8,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 8,
+        "unit": "hat-tricks",
+        "aliases": [
+          "CR7",
+          "Ronaldo"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Robert Lewandowski",
+        "value": 6,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Kylian Mbappé",
+        "value": 5,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Mbappe"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Karim Benzema",
+        "value": 4,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Filippo Inzaghi",
+        "value": 3,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Pippo Inzaghi",
+          "Inzaghi"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Mario Gómez",
+        "value": 3,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Mario Gomez"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Luiz Adriano",
+        "value": 3,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Luiz Adriano"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Neymar",
+        "value": 3,
+        "unit": "hat-tricks",
+        "aliases": [
+          "Neymar Jr"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-single-season-most-goals",
+    "title": "Most goals in a single Champions League season (each player’s best)",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 17,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Robert Lewandowski",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Karim Benzema",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Kylian Mbappé",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Lionel Messi",
+        "value": 14,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Harry Kane",
+        "value": 14,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-final-top-scorers",
+    "title": "Most goals in European Cup / Champions League finals",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Alfredo Di Stéfano",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Di Stefano"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Ferenc Puskás",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Puskas"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Cristiano Ronaldo",
+        "value": 4,
+        "unit": "goals",
+        "aliases": [
+          "CR7",
+          "Ronaldo"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Gareth Bale",
+        "value": 3,
+        "unit": "goals",
+        "aliases": [
+          "Bale"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Eusébio",
+        "value": 3,
+        "unit": "goals",
+        "aliases": [
+          "Eusebio"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Sandro Mazzola",
+        "value": 3,
+        "unit": "goals",
+        "aliases": [
+          "Mazzola"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Gerd Müller",
+        "value": 3,
+        "unit": "goals",
+        "aliases": [
+          "Gerd Muller",
+          "Der Bomber"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-most-titles-club",
+    "title": "Most European Cup / Champions League titles (club)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Real Madrid",
+        "value": 15,
+        "unit": "titles",
+        "aliases": [
+          "Madrid",
+          "Los Blancos"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "AC Milan",
+        "value": 7,
+        "unit": "titles",
+        "aliases": [
+          "Milan",
+          "Rossoneri"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Bayern Munich",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Bayern",
+          "FC Bayern"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Liverpool",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "LFC",
+          "The Reds"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Barcelona",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Barca",
+          "FC Barcelona"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Ajax",
+        "value": 4,
+        "unit": "titles",
+        "aliases": [
+          "Ajax Amsterdam"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Inter Milan",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Inter",
+          "Internazionale"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Manchester United",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Man Utd",
+          "United"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-most-titles-player",
+    "title": "Most European Cup / Champions League titles (player)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Francisco Gento",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Paco Gento",
+          "Gento"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Luka Modrić",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Modric"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Toni Kroos",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Kroos"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Dani Carvajal",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Carvajal"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Nacho Fernández",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Nacho"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Alfredo Di Stéfano",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Di Stefano"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Karim Benzema",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Marcelo",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Marcelo Vieira"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "europa-uefacup-all-time-top-scorers",
+    "title": "UEFA Cup / Europa League all-time top scorers",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Pierre-Emerick Aubameyang",
+        "value": 34,
+        "unit": "goals",
+        "aliases": [
+          "Aubameyang",
+          "Auba"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Henrik Larsson",
+        "value": 31,
+        "unit": "goals",
+        "aliases": [
+          "Larsson"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Radamel Falcao",
+        "value": 30,
+        "unit": "goals",
+        "aliases": [
+          "Falcao",
+          "El Tigre"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Klaas-Jan Huntelaar",
+        "value": 30,
+        "unit": "goals",
+        "aliases": [
+          "Huntelaar",
+          "The Hunter"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Dieter Müller",
+        "value": 29,
+        "unit": "goals",
+        "aliases": [
+          "Dieter Muller"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Edin Džeko",
+        "value": 28,
+        "unit": "goals",
+        "aliases": [
+          "Dzeko"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Romelu Lukaku",
+        "value": 27,
+        "unit": "goals",
+        "aliases": [
+          "Lukaku"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Bruno Fernandes",
+        "value": 27,
+        "unit": "goals",
+        "aliases": [
+          "Bruno"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "europa-league-era-top-scorers",
+    "title": "Europa League all-time top scorers (2009-10 onward)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Pierre-Emerick Aubameyang",
+        "value": 34,
+        "unit": "goals",
+        "aliases": [
+          "Aubameyang",
+          "Auba"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Radamel Falcao",
+        "value": 30,
+        "unit": "goals",
+        "aliases": [
+          "Falcao",
+          "El Tigre"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Edin Džeko",
+        "value": 28,
+        "unit": "goals",
+        "aliases": [
+          "Dzeko"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Romelu Lukaku",
+        "value": 27,
+        "unit": "goals",
+        "aliases": [
+          "Lukaku"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Bruno Fernandes",
+        "value": 27,
+        "unit": "goals",
+        "aliases": [
+          "Bruno"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Aritz Aduriz",
+        "value": 26,
+        "unit": "goals",
+        "aliases": [
+          "Aduriz"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Alexandre Lacazette",
+        "value": 26,
+        "unit": "goals",
+        "aliases": [
+          "Lacazette",
+          "Laca"
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Munas Dabbur",
+        "value": 24,
+        "unit": "goals",
+        "aliases": [
+          "Dabbur"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "europa-league-most-titles-club",
+    "title": "Most UEFA Cup / Europa League titles (club)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Sevilla",
+        "value": 7,
+        "unit": "titles",
+        "aliases": [
+          "Sevilla FC"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Inter Milan",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Inter",
+          "Internazionale"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Juventus",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Juve"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Liverpool",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "LFC"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Atlético Madrid",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Atletico",
+          "Atleti"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Tottenham Hotspur",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Tottenham",
+          "Spurs"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Borussia Mönchengladbach",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "Gladbach",
+          "Monchengladbach"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Real Madrid",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "Madrid"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "uefa-super-cup-most-wins-club",
+    "title": "Most UEFA Super Cup wins (club)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Real Madrid",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Madrid"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "AC Milan",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Milan"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Barcelona",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Barca"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Liverpool",
+        "value": 4,
+        "unit": "titles",
+        "aliases": [
+          "LFC"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Atlético Madrid",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Atletico",
+          "Atleti"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Bayern Munich",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "Bayern"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Chelsea",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "CFC"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Juventus",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "Juve"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "copa-libertadores-all-time-top-scorers",
+    "title": "Copa Libertadores all-time top scorers",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Alberto Spencer",
+        "value": 54,
+        "unit": "goals",
+        "aliases": [
+          "Spencer",
+          "Cabeza Mágica"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Fernando Morena",
+        "value": 37,
+        "unit": "goals",
+        "aliases": [
+          "Morena"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Pedro Rocha",
+        "value": 36,
+        "unit": "goals",
+        "aliases": [
+          "Pedro Virgilio Rocha"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Daniel Onega",
+        "value": 31,
+        "unit": "goals",
+        "aliases": [
+          "Onega"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Gabriel Barbosa",
+        "value": 31,
+        "unit": "goals",
+        "aliases": [
+          "Gabigol",
+          "Gabriel"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Miguel Borja",
+        "value": 31,
+        "unit": "goals",
+        "aliases": [
+          "Borja"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Julio Morales",
+        "value": 30,
+        "unit": "goals",
+        "aliases": [
+          "Morales"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Lucas Pratto",
+        "value": 30,
+        "unit": "goals",
+        "aliases": [
+          "Pratto",
+          "El Oso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "copa-libertadores-most-titles-club",
+    "title": "Most Copa Libertadores titles (club)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Independiente",
+        "value": 7,
+        "unit": "titles",
+        "aliases": [
+          "CAI",
+          "El Rojo"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Boca Juniors",
+        "value": 6,
+        "unit": "titles",
+        "aliases": [
+          "Boca",
+          "Xeneize"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Peñarol",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Penarol",
+          "Manya"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "River Plate",
+        "value": 4,
+        "unit": "titles",
+        "aliases": [
+          "River",
+          "Millonarios"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Estudiantes",
+        "value": 4,
+        "unit": "titles",
+        "aliases": [
+          "Estudiantes de La Plata",
+          "Pincha"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Nacional",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Club Nacional",
+          "Bolso"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "São Paulo",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Sao Paulo",
+          "Tricolor"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Grêmio",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Gremio"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Olimpia",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Club Olimpia"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "club-world-cup-most-titles-club",
+    "title": "Most FIFA Club World Cup titles (club)",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Real Madrid",
+        "value": 5,
+        "unit": "titles",
+        "aliases": [
+          "Madrid"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Barcelona",
+        "value": 3,
+        "unit": "titles",
+        "aliases": [
+          "Barca"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Bayern Munich",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "Bayern"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Corinthians",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "Timao"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Chelsea",
+        "value": 2,
+        "unit": "titles",
+        "aliases": [
+          "CFC"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Manchester United",
+        "value": 1,
+        "unit": "titles",
+        "aliases": [
+          "Man Utd",
+          "United"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "AC Milan",
+        "value": 1,
+        "unit": "titles",
+        "aliases": [
+          "Milan"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Internazionale",
+        "value": 1,
+        "unit": "titles",
+        "aliases": [
+          "Inter Milan",
+          "Inter"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Liverpool",
+        "value": 1,
+        "unit": "titles",
+        "aliases": [
+          "LFC"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "club-world-cup-2025-top-scorers",
+    "title": "FIFA Club World Cup 2025 top scorers",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Gonzalo García",
+        "value": 4,
+        "unit": "goals",
+        "aliases": [
+          "Gonzalo Garcia"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Ángel Di María",
+        "value": 4,
+        "unit": "goals",
+        "aliases": [
+          "Di Maria",
+          "Fideo"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Serhou Guirassy",
+        "value": 4,
+        "unit": "goals",
+        "aliases": [
+          "Guirassy"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Marcos Leonardo",
+        "value": 4,
+        "unit": "goals",
+        "aliases": [
+          "Marcos Leonardo"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Cole Palmer",
+        "value": 3,
+        "unit": "goals",
+        "aliases": [
+          "Palmer",
+          "Cold Palmer"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Michael Olise",
+        "value": 3,
+        "unit": "goals",
+        "aliases": [
+          "Olise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2000-01",
+    "title": "Champions League top scorers 2000-01",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Raúl",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Raul"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Rivaldo",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Rivaldo"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Paul Scholes",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Scholes"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Mário Jardel",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Jardel"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Giovane Élber",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Elber"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Iván Helguera",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Helguera"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Lee Bowyer",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Bowyer"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2002-03",
+    "title": "Champions League top scorers 2002-03",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Ruud van Nistelrooy",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Van Nistelrooy",
+          "Ruud"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Filippo Inzaghi",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Pippo Inzaghi",
+          "Inzaghi"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Hernán Crespo",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Crespo"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Raúl",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Raul"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Roy Makaay",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Makaay"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Jan Koller",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Koller"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Thierry Henry",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Henry"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Javier Saviola",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Saviola"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2003-04",
+    "title": "Champions League top scorers 2003-04",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Fernando Morientes",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Morientes"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Miladin Pršo",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Prso"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Walter Pandiani",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Pandiani"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Roy Makaay",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Makaay"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Didier Drogba",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Drogba"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Hakan Şükür",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Sukur",
+          "Hakan Sukur"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Thierry Henry",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Henry"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Juninho Pernambucano",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Juninho"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2004-05",
+    "title": "Champions League top scorers 2004-05",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Ruud van Nistelrooy",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Van Nistelrooy",
+          "Ruud"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Roy Makaay",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Makaay"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Adriano",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Adriano",
+          "O Imperador"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Andriy Shevchenko",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Shevchenko",
+          "Sheva"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Hernán Crespo",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Crespo"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Sylvain Wiltord",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Wiltord"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Didier Drogba",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Drogba"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Luis García",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Luis Garcia"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2005-06",
+    "title": "Champions League top scorers 2005-06",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Andriy Shevchenko",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Shevchenko",
+          "Sheva"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Ronaldinho",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldinho",
+          "Dinho"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Samuel Eto'o",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Eto'o",
+          "Etoo"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "David Trezeguet",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Trezeguet"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Thierry Henry",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Henry"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Kaká",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Kaka"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Adriano",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Adriano"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2006-07",
+    "title": "Champions League top scorers 2006-07",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Kaká",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Kaka"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Didier Drogba",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Drogba"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Fernando Morientes",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Morientes"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Peter Crouch",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Crouch"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Ruud van Nistelrooy",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Van Nistelrooy"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Raúl",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Raul"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2007-08",
+    "title": "Champions League top scorers 2007-08",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Didier Drogba",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Drogba"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Fernando Torres",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Torres",
+          "El Niño"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Steven Gerrard",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Gerrard"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Lionel Messi",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Dirk Kuyt",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Kuyt"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Frédéric Kanouté",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Kanoute"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2008-09",
+    "title": "Champions League top scorers 2008-09",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Steven Gerrard",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Gerrard"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Miroslav Klose",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Klose"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Lisandro López",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Lisandro Lopez"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Didier Drogba",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Drogba"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Emmanuel Adebayor",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Adebayor"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Thierry Henry",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Henry"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Karim Benzema",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2009-10",
+    "title": "Champions League top scorers 2009-10",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Cristiano Ronaldo",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Ivica Olić",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Olic"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Diego Milito",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Milito",
+          "El Príncipe"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Marouane Chamakh",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Chamakh"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Nicklas Bendtner",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Bendtner"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Wayne Rooney",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Rooney"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2010-11",
+    "title": "Champions League top scorers 2010-11",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Samuel Eto'o",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Eto'o",
+          "Etoo"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Mario Gómez",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Mario Gomez"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Nicolas Anelka",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Anelka"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Cristiano Ronaldo",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Roberto Soldado",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Soldado"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Karim Benzema",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2011-12",
+    "title": "Champions League top scorers 2011-12",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 14,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Mario Gómez",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Mario Gomez"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Cristiano Ronaldo",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Karim Benzema",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Didier Drogba",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Drogba"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Edinson Cavani",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Cavani",
+          "El Matador"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Zlatan Ibrahimović",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Ibrahimovic",
+          "Zlatan",
+          "Ibra"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2012-13",
+    "title": "Champions League top scorers 2012-13",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Robert Lewandowski",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Lionel Messi",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Thomas Müller",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Muller"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Burak Yılmaz",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Burak Yilmaz"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Oscar",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Oscar"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Karim Benzema",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2013-14",
+    "title": "Champions League top scorers 2013-14",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 17,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Zlatan Ibrahimović",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Ibrahimovic",
+          "Zlatan",
+          "Ibra"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Diego Costa",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Costa"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Lionel Messi",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Gareth Bale",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Bale"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Sergio Agüero",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Aguero",
+          "Kun"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Robert Lewandowski",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2014-15",
+    "title": "Champions League top scorers 2014-15",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Neymar",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Neymar Jr"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Luiz Adriano",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Luiz Adriano"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Carlos Tévez",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Tevez",
+          "Carlitos"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Luis Suárez",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Suarez",
+          "Luis Suarez"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Jackson Martínez",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Jackson Martinez"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Thomas Müller",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Muller"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2015-16",
+    "title": "Champions League top scorers 2015-16",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 16,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Robert Lewandowski",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Luis Suárez",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Suarez",
+          "Luis Suarez"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Thomas Müller",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Muller"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Antoine Griezmann",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Griezmann",
+          "Grizi"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Lionel Messi",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Artem Dzyuba",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Dzyuba"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2016-17",
+    "title": "Champions League top scorers 2016-17",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Lionel Messi",
+        "value": 11,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Edinson Cavani",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Cavani",
+          "El Matador"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Robert Lewandowski",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Pierre-Emerick Aubameyang",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Aubameyang",
+          "Auba"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Antoine Griezmann",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Griezmann"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Kylian Mbappé",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2017-18",
+    "title": "Champions League top scorers 2017-18",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Cristiano Ronaldo",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Mohamed Salah",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Salah",
+          "Mo Salah"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Roberto Firmino",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Firmino"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Sadio Mané",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Mane",
+          "Sadio Mane"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Edin Džeko",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Dzeko"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Wissam Ben Yedder",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Ben Yedder"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Edinson Cavani",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Cavani"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Harry Kane",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2018-19",
+    "title": "Champions League top scorers 2018-19",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Lionel Messi",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Messi"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Robert Lewandowski",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Cristiano Ronaldo",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Dušan Tadić",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Tadic"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Sergio Agüero",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Aguero",
+          "Kun"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Moussa Marega",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Marega"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2019-20",
+    "title": "Champions League top scorers 2019-20",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Robert Lewandowski",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Erling Haaland",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Serge Gnabry",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Gnabry"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Gabriel Jesus",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Jesus",
+          "Gabriel Jesus"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Harry Kane",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Memphis Depay",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Memphis",
+          "Depay"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Raheem Sterling",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Sterling"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2020-21",
+    "title": "Champions League top scorers 2020-21",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Erling Haaland",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Kylian Mbappé",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Álvaro Morata",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Morata"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Marcus Rashford",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Rashford"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Mohamed Salah",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Salah",
+          "Mo Salah"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Olivier Giroud",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Giroud"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Karim Benzema",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Neymar",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Neymar Jr"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2021-22",
+    "title": "Champions League top scorers 2021-22",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Karim Benzema",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Benzema"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Robert Lewandowski",
+        "value": 13,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Sébastien Haller",
+        "value": 11,
+        "unit": "goals",
+        "aliases": [
+          "Haller"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Mohamed Salah",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Salah",
+          "Mo Salah"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Riyad Mahrez",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Mahrez"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Christopher Nkunku",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Nkunku"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Cristiano Ronaldo",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Ronaldo",
+          "CR7"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2022-23",
+    "title": "Champions League top scorers 2022-23",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Erling Haaland",
+        "value": 12,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Mohamed Salah",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Salah",
+          "Mo Salah"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Vinícius Júnior",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Vinicius",
+          "Vini Jr"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Kylian Mbappé",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "João Mário",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Joao Mario"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Olivier Giroud",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Giroud"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Robert Lewandowski",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2023-24",
+    "title": "Champions League top scorers 2023-24",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Harry Kane",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Kylian Mbappé",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Erling Haaland",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Antoine Griezmann",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Griezmann"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Vinícius Júnior",
+        "value": 6,
+        "unit": "goals",
+        "aliases": [
+          "Vinicius",
+          "Vini Jr"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Álvaro Morata",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Morata"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Joselu",
+        "value": 5,
+        "unit": "goals",
+        "aliases": [
+          "Joselu"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2024-25",
+    "title": "Champions League top scorers 2024-25",
+    "group": "club-competitions",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Raphinha",
+        "value": 13,
+        "unit": "goals",
+        "aliases": [
+          "Raphinha"
+        ]
+      },
+      {
+        "rank": 1,
+        "name": "Serhou Guirassy",
+        "value": 13,
+        "unit": "goals",
+        "aliases": [
+          "Guirassy"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Harry Kane",
+        "value": 11,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Robert Lewandowski",
+        "value": 11,
+        "unit": "goals",
+        "aliases": [
+          "Lewandowski"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Lautaro Martínez",
+        "value": 9,
+        "unit": "goals",
+        "aliases": [
+          "Lautaro",
+          "El Toro"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Erling Haaland",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Vinícius Júnior",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Vinicius",
+          "Vini Jr"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Ousmane Dembélé",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Dembele"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ucl-top-scorers-2025-26",
+    "title": "Champions League top scorers 2025-26",
+    "group": "club-competitions",
+    "as_of": "2026-07",
+    "entries": [
+      {
+        "rank": 1,
+        "name": "Kylian Mbappé",
+        "value": 15,
+        "unit": "goals",
+        "aliases": [
+          "Mbappe"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Harry Kane",
+        "value": 14,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Anthony Gordon",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Gordon"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Julián Álvarez",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Julian Alvarez",
+          "La Araña"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Khvicha Kvaratskhelia",
+        "value": 10,
+        "unit": "goals",
+        "aliases": [
+          "Kvaratskhelia",
+          "Kvara"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Erling Haaland",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Ousmane Dembélé",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Dembele"
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Luis Díaz",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Luis Diaz",
+          "Lucho"
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Victor Osimhen",
+        "value": 7,
+        "unit": "goals",
+        "aliases": [
+          "Osimhen"
+        ]
+      }
+    ]
+  }
+]

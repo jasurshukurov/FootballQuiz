@@ -2,21 +2,37 @@ import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Haptics from 'expo-haptics';
+import { useLocalSearchParams } from 'expo-router';
+import { NotificationFeedbackType } from 'expo-haptics';
 
 import { generateConnectionsPuzzle, ConnectionsPuzzle } from '@/lib/connectionsGenerator';
+import { getModeSeed, createSeededRandom } from '@/lib/dailySeed';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
+import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import ConnectionsBoard, { TileData, SolvedCategory } from '@/components/games/ConnectionsBoard';
 import RetroButton from '@/components/ui/RetroButton';
+import CopyResultButton from '@/components/ui/CopyResultButton';
+import GameOverExtras from '@/components/ui/GameOverExtras';
 import { colors, fonts, borderRadius } from '@/constants/theme';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import ShareableConnectionsResult from '@/components/ShareableConnectionsResult';
-import { captureAndShare } from '@/lib/sharing';
+import PracticePill from '@/components/ui/PracticePill';
+import { captureAndShare, buildShareText } from '@/lib/sharing';
 import { playCheer } from '@/lib/sounds';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 const MAX_MISTAKES = 4;
 
+/** Parse a YYYY-MM-DD practice date to a local Date for puzzle-number display. */
+function practiceDateToDate(dateStr?: string): Date | undefined {
+  return dateStr ? new Date(`${dateStr}T00:00:00`) : undefined;
+}
+
 export default function ConnectionsScreen() {
+  const { practiceDate } = useLocalSearchParams<{ practiceDate?: string }>();
+  const isPractice = !!practiceDate;
   const [puzzle, setPuzzle] = useState<ConnectionsPuzzle | null>(null);
   const [tileNames, setTileNames] = useState<string[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -28,9 +44,19 @@ export default function ConnectionsScreen() {
   const [gameOver, setGameOver] = useState(false);
   const [flashingDotIdx, setFlashingDotIdx] = useState<number | null>(null);
   const shareRef = useRef<View>(null);
+  const isFirstGame = useRef(true);
+  const shuffleRng = useRef<() => number>(() => Math.random());
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
   const initPuzzle = useCallback(() => {
-    const seed = Date.now();
+    // Practice/archive: seed deterministically from the chosen past date.
+    const seed = practiceDate
+      ? getModeSeed('connections', practiceDate)
+      : isFirstGame.current
+        ? getModeSeed('connections')
+        : Date.now();
+    isFirstGame.current = false;
+    shuffleRng.current = createSeededRandom(seed);
     const p = generateConnectionsPuzzle(seed);
     setPuzzle(p);
     setTileNames(p.shuffledNames);
@@ -42,7 +68,7 @@ export default function ConnectionsScreen() {
     setShowModal(false);
     setGameOver(false);
     setFlashingDotIdx(null);
-  }, []);
+  }, [practiceDate]);
 
   useEffect(() => {
     initPuzzle();
@@ -51,6 +77,7 @@ export default function ConnectionsScreen() {
   const handleTilePress = useCallback(
     (name: string) => {
       if (gameOver) return;
+      triggerImpact();
       setSelected((prev) => {
         const next = new Set(prev);
         if (next.has(name)) {
@@ -75,7 +102,7 @@ export default function ConnectionsScreen() {
     );
 
     if (matchedCategory) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      triggerNotification(NotificationFeedbackType.Success);
       const newSolved: SolvedCategory = {
         name: matchedCategory.name,
         color: matchedCategory.color,
@@ -91,14 +118,17 @@ export default function ConnectionsScreen() {
       setSelected(new Set());
 
       if (updatedSolved.length >= 4) {
-        useManagerStore.getState().addXp('connections', 4 * 25 + (mistakes === 0 ? 50 : 0));
         setGameOver(true);
         playCheer();
-        useDailyProgressStore.getState().markCompleted('connections', 4 - mistakes);
+        // Practice/archive runs never touch progress, XP or streak.
+        if (!isPractice) {
+          useManagerStore.getState().addXp('connections', 4 * 25 + (mistakes === 0 ? 50 : 0));
+          useDailyProgressStore.getState().markCompleted('connections', 4 - mistakes);
+        }
         setTimeout(() => setShowModal(true), 600);
       }
     } else {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      triggerNotification(NotificationFeedbackType.Error);
       setShaking(true);
       const newMistakes = mistakes + 1;
       setMistakes(newMistakes);
@@ -114,22 +144,25 @@ export default function ConnectionsScreen() {
       }, 400);
 
       if (newMistakes >= MAX_MISTAKES) {
-        useManagerStore.getState().addXp('connections', solvedCategories.length * 25);
         setGameOver(true);
-        useDailyProgressStore.getState().markCompleted('connections', solvedCategories.length);
+        if (!isPractice) {
+          useManagerStore.getState().addXp('connections', solvedCategories.length * 25);
+          useDailyProgressStore.getState().markCompleted('connections', solvedCategories.length);
+        }
         setTimeout(() => setShowModal(true), 600);
       }
     }
-  }, [puzzle, selected, solvedCategories, mistakes]);
+  }, [puzzle, selected, solvedCategories, mistakes, isPractice]);
 
   const handleDeselectAll = useCallback(() => {
     setSelected(new Set());
   }, []);
 
   const handleShuffle = useCallback(() => {
+    triggerImpact();
     setTileNames((prev) => {
       const remaining = prev.filter((n) => !solvedNames.has(n));
-      const shuffled = [...remaining].sort(() => Math.random() - 0.5);
+      const shuffled = [...remaining].sort(() => shuffleRng.current() - 0.5);
       const solved = prev.filter((n) => solvedNames.has(n));
       return [...solved, ...shuffled];
     });
@@ -144,6 +177,23 @@ export default function ConnectionsScreen() {
   }, [tileNames, selected, solvedNames]);
 
   const won = solvedCategories.length >= 4;
+
+  const shareText = useMemo(
+    () =>
+      puzzle
+        ? buildShareText({
+            mode: 'connections',
+            dailyNumber: getDailyNumber(practiceDateToDate(practiceDate)),
+            dailyStreak,
+            mistakes,
+            maxMistakes: MAX_MISTAKES,
+            solvedDifficulties: solvedCategories.map(
+              (s) => puzzle.categories.find((c) => c.name === s.name)?.difficulty ?? 0,
+            ),
+          })
+        : '',
+    [puzzle, dailyStreak, mistakes, solvedCategories, practiceDate],
+  );
 
   if (!puzzle) {
     return (
@@ -169,6 +219,7 @@ export default function ConnectionsScreen() {
         <View style={styles.container}>
           <Text style={styles.title}>CONNECTIONS</Text>
           <Text style={styles.subtitle}>Find 4 groups of 4 players</Text>
+          {isPractice && <PracticePill date={practiceDate} />}
 
           <ConnectionsBoard
             tiles={tiles}
@@ -249,9 +300,14 @@ export default function ConnectionsScreen() {
                 ))}
               </View>
 
-              <Pressable style={styles.shareBtn} onPress={() => captureAndShare(shareRef)}>
+              <Pressable
+                style={styles.shareBtn}
+                onPress={() => captureAndShare(shareRef, shareText)}>
                 <Text style={styles.shareBtnText}>Share Result</Text>
               </Pressable>
+              <View style={styles.copyBtnWrap}>
+                <CopyResultButton text={shareText} />
+              </View>
               <Pressable style={styles.playAgainBtn} onPress={initPuzzle}>
                 <Text style={styles.playAgainBtnText}>Play Again</Text>
               </Pressable>
@@ -259,6 +315,7 @@ export default function ConnectionsScreen() {
                 <Text style={styles.modalCloseText}>Close</Text>
               </Pressable>
             </View>
+            <GameOverExtras win={won} />
           </View>
         </Modal>
 
@@ -272,6 +329,11 @@ export default function ConnectionsScreen() {
             />
           </View>
         </View>
+        <TutorialOverlay
+          modeKey="connections"
+          title="Connections"
+          description="Find 4 groups of 4 players that share something in common. You have 4 mistakes allowed."
+        />
       </SafeAreaView>
     </LinearGradient>
   );
@@ -422,6 +484,9 @@ const styles = StyleSheet.create({
     color: colors.retroBlack,
     textTransform: 'uppercase',
     letterSpacing: 1,
+  },
+  copyBtnWrap: {
+    marginTop: 12,
   },
   playAgainBtn: {
     marginTop: 12,

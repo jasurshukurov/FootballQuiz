@@ -21,7 +21,13 @@ const difficultyColors: Record<string, { bg: string; text: string }> = {
   Expert: { bg: 'rgba(230,57,70,0.15)', text: '#E63946' },
 };
 
-export default function StatCard({ player, showValue, stat, formattedValue, difficulty }: StatCardProps) {
+export default function StatCard({
+  player,
+  showValue,
+  stat,
+  formattedValue,
+  difficulty,
+}: StatCardProps) {
   const diffColor = difficulty ? difficultyColors[difficulty] : undefined;
 
   return (
@@ -36,15 +42,8 @@ export default function StatCard({ player, showValue, stat, formattedValue, diff
         </Text>
       </View>
       {difficulty && diffColor && (
-        <View
-          style={[
-            styles.difficultyPill,
-            { backgroundColor: diffColor.bg },
-          ]}
-        >
-          <Text style={[styles.difficultyText, { color: diffColor.text }]}>
-            {difficulty}
-          </Text>
+        <View style={[styles.difficultyPill, { backgroundColor: diffColor.bg }]}>
+          <Text style={[styles.difficultyText, { color: diffColor.text }]}>{difficulty}</Text>
         </View>
       )}
       <Text style={styles.statLabel}>{stat}</Text>

@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
+import { triggerImpact } from '@/lib/haptics';
 
 import PopInView from '@/components/ui/PopInView';
 import ShakeView from '@/components/ui/ShakeView';
@@ -49,7 +49,7 @@ export default function JerseySlot({
   onPress,
 }: JerseySlotProps) {
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerImpact();
     onPress();
   };
 

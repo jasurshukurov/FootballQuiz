@@ -1,21 +1,27 @@
 import React, { useCallback, useMemo, useState, useRef } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { triggerImpact, triggerNotification } from '@/lib/haptics';
 
 import { colors, fonts, spacing } from '@/constants/theme';
 import { generateDailyAgentGame, AgentRound } from '@/lib/agentGameGenerator';
+import { getModeSeed } from '@/lib/dailySeed';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import TransferCard from '@/components/games/TransferCard';
 import GlassCard from '@/components/ui/GlassCard';
 import PopInView from '@/components/ui/PopInView';
-import RetroButton from '@/components/ui/RetroButton';
+import GameOverActions from '@/components/ui/GameOverActions';
+import GameOverExtras from '@/components/ui/GameOverExtras';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer } from '@/lib/sounds';
 import ShareableAgentResult from '@/components/ShareableAgentResult';
-import { captureAndShare } from '@/lib/sharing';
+import { buildShareText } from '@/lib/sharing';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 const MAX_HINTS = 3;
 
@@ -34,13 +40,27 @@ export default function AgentScreen() {
   const [results, setResults] = useState<RoundResult[]>([]);
   const [hintUsed, setHintUsed] = useState(false);
   const [hintsRemaining, setHintsRemaining] = useState(MAX_HINTS);
-  const [gameKey, setGameKey] = useState(Date.now());
+  const [gameKey, setGameKey] = useState(() => String(getModeSeed('agent')));
   const shareRef = useRef<View>(null);
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
-  const rounds = useMemo(() => generateDailyAgentGame(String(gameKey)), [gameKey]);
+  const rounds = useMemo(() => generateDailyAgentGame(gameKey), [gameKey]);
 
   const round = rounds[currentRound] ?? null;
   const totalRounds = rounds.length;
+
+  const shareText = useMemo(
+    () =>
+      buildShareText({
+        mode: 'agent',
+        dailyNumber: getDailyNumber(),
+        dailyStreak,
+        score,
+        totalRounds,
+        results: results.map((r) => r.correct),
+      }),
+    [dailyStreak, score, totalRounds, results],
+  );
 
   const handleSelect = useCallback(
     (playerId: number) => {
@@ -52,9 +72,9 @@ export default function AgentScreen() {
       const isCorrect = playerId === round.correctPlayerId;
       if (isCorrect) {
         setScore((s) => s + 1);
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        triggerNotification(NotificationFeedbackType.Success);
       } else {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        triggerNotification(NotificationFeedbackType.Error);
       }
 
       setResults((prev) => [...prev, { round, selectedId: playerId, correct: isCorrect }]);
@@ -84,11 +104,11 @@ export default function AgentScreen() {
     if (hintUsed || answered || hintsRemaining <= 0 || !round) return;
     setHintUsed(true);
     setHintsRemaining((h) => h - 1);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerImpact(ImpactFeedbackStyle.Light);
   }, [hintUsed, answered, hintsRemaining, round]);
 
   const handlePlayAgain = useCallback(() => {
-    setGameKey(Date.now());
+    setGameKey(String(Date.now()));
     setCurrentRound(0);
     setScore(0);
     setSelectedId(null);
@@ -123,7 +143,12 @@ export default function AgentScreen() {
         end={{ x: 1, y: 1 }}
         style={styles.gradient}>
         <SafeAreaView style={styles.safeArea} edges={['bottom']}>
-          <View style={styles.container}>
+          {/* All 10 result rows + actions overflow a fixed View on phone
+              heights, hiding PLAY AGAIN behind the tab bar — must scroll. */}
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.gameOverScroll}
+            showsVerticalScrollIndicator={false}>
             <PopInView>
               <View style={styles.gameOverContainer}>
                 <Text style={styles.gameOverTitle}>FULL TIME</Text>
@@ -157,19 +182,23 @@ export default function AgentScreen() {
                   ))}
                 </View>
 
-                <View style={styles.gameOverButtons}>
-                  <RetroButton title="Share Result" onPress={() => captureAndShare(shareRef)} />
-                  <RetroButton title="Play Again" onPress={handlePlayAgain} />
-                </View>
+                <GameOverActions
+                  shareRef={shareRef}
+                  shareText={shareText}
+                  win={score >= Math.ceil(totalRounds * 0.6)}
+                  onPlayAgain={handlePlayAgain}
+                  includeExtras={false}
+                />
               </View>
             </PopInView>
+            <GameOverExtras win={score >= Math.ceil(totalRounds * 0.6)} />
             {/* Offscreen shareable view */}
             <View style={styles.offscreen}>
               <View ref={shareRef} collapsable={false}>
                 <ShareableAgentResult score={score} totalRounds={totalRounds} results={results} />
               </View>
             </View>
-          </View>
+          </ScrollView>
         </SafeAreaView>
       </LinearGradient>
     );
@@ -252,8 +281,16 @@ export default function AgentScreen() {
                 pressed && styles.hintButtonPressed,
                 hintsRemaining <= 0 && styles.hintButtonDisabled,
               ]}>
-              <FontAwesome name="lightbulb-o" size={16} color={hintsRemaining > 0 ? colors.cardYellow : colors.steelGray} />
-              <Text style={[styles.hintButtonText, hintsRemaining <= 0 && styles.hintButtonTextDisabled]}>
+              <FontAwesome
+                name="lightbulb-o"
+                size={16}
+                color={hintsRemaining > 0 ? colors.cardYellow : colors.steelGray}
+              />
+              <Text
+                style={[
+                  styles.hintButtonText,
+                  hintsRemaining <= 0 && styles.hintButtonTextDisabled,
+                ]}>
                 Show Transfer ({hintsRemaining}/{MAX_HINTS})
               </Text>
             </Pressable>
@@ -271,6 +308,11 @@ export default function AgentScreen() {
               </GlassCard>
             </PopInView>
           )}
+          <TutorialOverlay
+            modeKey="agent"
+            title="Transfer Agent"
+            description="Match the transfer fee to the correct player. Test your transfer market knowledge!"
+          />
         </View>
       </SafeAreaView>
     </LinearGradient>
@@ -289,6 +331,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
     paddingBottom: 100,
+  },
+  gameOverScroll: {
+    paddingBottom: 120,
   },
   centerContainer: {
     flex: 1,

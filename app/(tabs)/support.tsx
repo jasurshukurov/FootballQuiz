@@ -7,12 +7,12 @@ import { useProStore } from '@/hooks/useProStore';
 import { purchasePro, restorePurchases } from '@/lib/purchases';
 import RetroButton from '@/components/ui/RetroButton';
 
+// Only what Pro actually grants today. No detailed-stats / exclusive-modes /
+// custom-themes / leaderboard claims — those don't exist.
 const PRO_FEATURES = [
-  { icon: 'ban' as const, label: 'Ad-free experience' },
-  { icon: 'bar-chart' as const, label: 'Detailed stats & insights' },
-  { icon: 'star' as const, label: 'Exclusive game modes' },
-  { icon: 'paint-brush' as const, label: 'Custom themes' },
-  { icon: 'trophy' as const, label: 'Leaderboard access' },
+  { icon: 'lightbulb-o' as const, label: 'Free unlimited hints — never watch an ad for a clue' },
+  { icon: 'ban' as const, label: 'No ads' },
+  { icon: 'heart' as const, label: 'Support ongoing development' },
 ];
 
 export default function SupportScreen() {
@@ -24,7 +24,10 @@ export default function SupportScreen() {
     try {
       const success = await purchasePro();
       if (success) {
-        Alert.alert('Welcome to Pro!', 'You now have access to all premium features.');
+        Alert.alert(
+          'Thank you!',
+          'Hints are on the house and ads are gone. Thanks for supporting Football Trivia!',
+        );
       }
     } catch {
       Alert.alert('Error', 'Something went wrong. Please try again.');
@@ -38,7 +41,7 @@ export default function SupportScreen() {
     try {
       const restored = await restorePurchases();
       if (restored) {
-        Alert.alert('Restored', 'Your Pro subscription has been restored.');
+        Alert.alert('Restored', 'Your support has been restored — hints and ad-free are back.');
       } else {
         Alert.alert('No Purchase Found', 'We could not find a previous purchase to restore.');
       }
@@ -52,12 +55,16 @@ export default function SupportScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['bottom']}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Go Pro Section */}
+        {/* Support / thank-you card */}
         <View style={styles.proCard}>
-          <FontAwesome name="star" size={36} color="#FFD700" style={styles.proIcon} />
-          <Text style={styles.proTitle}>{isPro ? "You're a Pro!" : 'Go Pro'}</Text>
+          <FontAwesome name="heart" size={36} color="#FFD700" style={styles.proIcon} />
+          <Text style={styles.proTitle}>
+            {isPro ? 'Thanks for your support!' : 'Support the Game'}
+          </Text>
           <Text style={styles.proSubtitle}>
-            {isPro ? 'Thanks for supporting Football Trivia!' : 'Unlock the full experience'}
+            {isPro
+              ? 'You have hints on the house and an ad-free experience.'
+              : 'Football Trivia is free. Chip in to unlock perks and keep it growing.'}
           </Text>
 
           <View style={styles.featureList}>
@@ -72,7 +79,7 @@ export default function SupportScreen() {
           {!isPro && (
             <View style={styles.buttonGroup}>
               <RetroButton
-                title={loading ? 'Processing...' : 'Upgrade to Pro'}
+                title={loading ? 'Processing...' : 'Support the Game'}
                 onPress={handlePurchase}
                 disabled={loading}
               />

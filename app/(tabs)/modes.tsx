@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, fonts, spacing, borderRadius } from '@/constants/theme';
+import { useDisabledModes } from '@/hooks/useRemoteConfigStore';
+
+// modes.tsx uses `career` as the Career Path card id; its canonical mode key
+// (matching disabled_modes / completion keys) is `careerpath`.
+function configKeyFor(id: string): string {
+  return id === 'career' ? 'careerpath' : id;
+}
 
 const GAME_MODES = [
   {
     id: 'who-are-ya',
-    title: 'Who Are Ya?',
+    title: 'My name is...',
     icon: 'futbol-o' as const,
     route: '/games/who-are-ya',
     color: '#05F26C',
@@ -42,10 +49,10 @@ const GAME_MODES = [
     color: '#F4A261',
   },
   {
-    id: 'badge',
-    title: 'Badge Quiz',
-    icon: 'shield' as const,
-    route: '/games/badge',
+    id: 'toplists',
+    title: 'Top Lists',
+    icon: 'list-ol' as const,
+    route: '/games/toplists',
     color: '#52B788',
   },
   {
@@ -76,35 +83,73 @@ const GAME_MODES = [
     route: '/games/careertimeline',
     color: '#00BFFF',
   },
+  {
+    id: 'marketmovers',
+    title: 'Market Movers',
+    icon: 'line-chart' as const,
+    route: '/games/marketmovers',
+    color: '#FFC300',
+  },
+  {
+    id: 'guessmatch',
+    title: 'Guess the Match',
+    icon: 'flag-checkered' as const,
+    route: '/games/guessmatch',
+    color: '#4ECDC4',
+  },
 ];
 
-function ModeCard({ mode }: { mode: (typeof GAME_MODES)[number] }) {
+function ModeCard({ mode, disabled }: { mode: (typeof GAME_MODES)[number]; disabled: boolean }) {
   const router = useRouter();
   const [pressed, setPressed] = useState(false);
 
   return (
     <Pressable
-      onPress={() => router.push(mode.route as never)}
+      onPress={() => {
+        if (disabled) return;
+        router.push(mode.route as never);
+      }}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      style={[styles.card, pressed && styles.cardPressed]}>
+      disabled={disabled}
+      style={[styles.card, pressed && styles.cardPressed, disabled && styles.cardDisabled]}>
       <View style={[styles.iconCircle, { backgroundColor: `${mode.color}22` }]}>
         <FontAwesome name={mode.icon} size={28} color={mode.color} />
       </View>
       <Text style={styles.cardTitle}>{mode.title}</Text>
+      {disabled && <Text style={styles.unavailableText}>Temporarily unavailable</Text>}
     </Pressable>
   );
 }
 
 export default function ModesScreen() {
+  const router = useRouter();
+  const disabledModes = useDisabledModes();
+
   return (
     <SafeAreaView style={styles.container} edges={['bottom']}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <Text style={styles.heading}>Game Modes</Text>
         <Text style={styles.subtitle}>Choose your challenge</Text>
+
+        <Pressable
+          style={styles.archiveCard}
+          onPress={() => router.push('/(tabs)/archive' as Href)}>
+          <FontAwesome name="calendar" size={20} color={colors.pitchGreen} />
+          <View style={styles.archiveTextWrap}>
+            <Text style={styles.archiveTitle}>Archive</Text>
+            <Text style={styles.archiveSubtitle}>Play past days — no effect on your streak</Text>
+          </View>
+          <FontAwesome name="chevron-right" size={14} color={colors.steelGray} />
+        </Pressable>
+
         <View style={styles.grid}>
           {GAME_MODES.map((mode) => (
-            <ModeCard key={mode.id} mode={mode} />
+            <ModeCard
+              key={mode.id}
+              mode={mode}
+              disabled={disabledModes.includes(configKeyFor(mode.id))}
+            />
           ))}
         </View>
       </ScrollView>
@@ -134,6 +179,32 @@ const styles = StyleSheet.create({
     color: colors.steelGray,
     marginBottom: spacing.xl,
   },
+  archiveCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    backgroundColor: 'rgba(5,242,108,0.08)',
+    borderRadius: borderRadius.xl,
+    borderWidth: 1,
+    borderColor: 'rgba(5,242,108,0.25)',
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  archiveTextWrap: {
+    flex: 1,
+  },
+  archiveTitle: {
+    fontFamily: fonts.heading,
+    fontSize: 18,
+    color: colors.chalkWhite,
+    letterSpacing: 0.5,
+  },
+  archiveSubtitle: {
+    fontFamily: fonts.subheading,
+    fontSize: 12,
+    color: colors.steelGray,
+    marginTop: 2,
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -154,6 +225,16 @@ const styles = StyleSheet.create({
   cardPressed: {
     opacity: 0.7,
     transform: [{ scale: 0.97 }],
+  },
+  cardDisabled: {
+    opacity: 0.4,
+  },
+  unavailableText: {
+    fontFamily: fonts.subheading,
+    fontSize: 11,
+    color: colors.steelGray,
+    fontStyle: 'italic',
+    textAlign: 'center',
   },
   iconCircle: {
     width: 56,

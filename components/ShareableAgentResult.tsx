@@ -1,5 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { colors, fonts, gradients } from '@/constants/theme';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 
 interface RoundResult {
   correct: boolean;
@@ -16,22 +20,27 @@ export default function ShareableAgentResult({
   totalRounds,
   results,
 }: ShareableAgentResultProps) {
+  const currentStreak = useDailyStateStore((s) => s.currentStreak);
+
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={gradients.screenBg} style={styles.container}>
+      <Text style={styles.branding}>FOOTBALL QUIZ</Text>
       <Text style={styles.title}>The Agent</Text>
-      <Text style={styles.score}>
+      <Text style={styles.scoreValue}>
         {score}/{totalRounds}
       </Text>
       <View style={styles.marks}>
         {results.map((r, i) => (
-          <Text key={i} style={[styles.mark, { color: r.correct ? '#52B788' : '#E63946' }]}>
+          <Text
+            key={i}
+            style={[styles.mark, { color: r.correct ? colors.matchGreen : colors.cardRed }]}>
             {r.correct ? '\u2713' : '\u2717'}
           </Text>
         ))}
       </View>
-      <Text style={styles.tagline}>Can you beat my score? #FootballQuiz2025</Text>
-      <Text style={styles.footer}>footballquiz.app</Text>
-    </View>
+      {currentStreak > 0 && <Text style={styles.streak}>{currentStreak} day streak</Text>}
+      <Text style={styles.cta}>Can you beat my score? Play at footballquiz.app</Text>
+    </LinearGradient>
   );
 }
 
@@ -39,40 +48,49 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     borderRadius: 16,
-    backgroundColor: '#1A1A2E',
-    padding: 24,
-    minWidth: 240,
+    paddingVertical: 32,
+    paddingHorizontal: 24,
+    minWidth: 320,
+  },
+  branding: {
+    fontSize: 28,
+    fontFamily: fonts.heading,
+    color: colors.pitchGreen,
+    marginBottom: 16,
+    letterSpacing: 2,
   },
   title: {
     marginBottom: 4,
     fontSize: 18,
-    fontFamily: 'BarlowCondensed-Bold',
-    color: '#F5F5F0',
+    fontFamily: fonts.heading,
+    color: colors.chalkWhite,
   },
-  score: {
-    fontSize: 48,
-    fontFamily: 'BarlowCondensed-Bold',
-    color: '#05F26C',
+  scoreValue: {
+    fontSize: 56,
+    fontFamily: fonts.heading,
+    color: colors.pitchGreen,
     marginBottom: 8,
   },
   marks: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
     marginBottom: 8,
   },
   mark: {
-    fontSize: 20,
-    fontFamily: 'BarlowCondensed-Bold',
+    fontSize: 24,
+    fontFamily: fonts.heading,
   },
-  tagline: {
-    marginTop: 16,
-    fontSize: 12,
-    fontFamily: 'BarlowCondensed-SemiBold',
-    color: 'rgba(245,245,240,0.6)',
-  },
-  footer: {
+  streak: {
     marginTop: 8,
-    fontSize: 12,
-    color: '#6C757D',
+    fontSize: 14,
+    fontFamily: fonts.subheading,
+    color: colors.pitchGreen,
+  },
+  cta: {
+    marginTop: 16,
+    fontSize: 11,
+    fontFamily: fonts.body,
+    color: colors.steelGray,
+    textAlign: 'center',
   },
 });

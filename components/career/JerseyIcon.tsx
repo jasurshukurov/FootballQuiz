@@ -13,7 +13,11 @@ interface JerseyIconProps {
 const JERSEY_PATH =
   'M 16 8 L 8 16 L 8 28 L 16 28 L 16 56 L 48 56 L 48 28 L 56 28 L 56 16 L 48 8 L 40 14 L 24 14 Z';
 
-function PatternFill({ primary, secondary, pattern }: Pick<JerseyIconProps, 'primary' | 'secondary' | 'pattern'>) {
+function PatternFill({
+  primary,
+  secondary,
+  pattern,
+}: Pick<JerseyIconProps, 'primary' | 'secondary' | 'pattern'>) {
   const sec = secondary ?? primary;
   switch (pattern) {
     case 'stripes':
@@ -53,7 +57,13 @@ function PatternFill({ primary, secondary, pattern }: Pick<JerseyIconProps, 'pri
   }
 }
 
-function JerseyIconInner({ primary, secondary, pattern = 'solid', width = 36, height = 36 }: JerseyIconProps) {
+function JerseyIconInner({
+  primary,
+  secondary,
+  pattern = 'solid',
+  width = 36,
+  height = 36,
+}: JerseyIconProps) {
   return (
     <View
       style={{
@@ -62,8 +72,7 @@ function JerseyIconInner({ primary, secondary, pattern = 'solid', width = 36, he
         shadowOpacity: 0.3,
         shadowRadius: 3,
         elevation: 4,
-      }}
-    >
+      }}>
       <Svg width={width} height={height} viewBox="0 0 64 64">
         <Defs>
           <ClipPath id="jerseyClip">

@@ -17,22 +17,29 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { triggerImpact, triggerNotification } from '@/lib/haptics';
 
+import { useLocalSearchParams } from 'expo-router';
 import { getAllPlayers } from '@/lib/playerData';
 import { generateValidGrid, hashDateSeed } from '@/lib/gridGenerator';
 import { Grid } from '@/types/grid';
 import { Player } from '@/types/player';
 import { colors } from '@/constants/theme';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
+import { getTodayDateString } from '@/lib/dailySeed';
 import GridCell from '@/components/ui/GridCell';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
-import RetroButton from '@/components/ui/RetroButton';
+import GameOverActions from '@/components/ui/GameOverActions';
 import ShareableGridResult from '@/components/ShareableGridResult';
-import { captureAndShare } from '@/lib/sharing';
+import PracticePill from '@/components/ui/PracticePill';
+import { buildShareText } from '@/lib/sharing';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer } from '@/lib/sounds';
+import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -92,7 +99,13 @@ function SkeletonGrid() {
   );
 }
 
+function practiceDateToDate(dateStr?: string): Date | undefined {
+  return dateStr ? new Date(`${dateStr}T00:00:00`) : undefined;
+}
+
 export default function ExploreScreen() {
+  const { practiceDate } = useLocalSearchParams<{ practiceDate?: string }>();
+  const isPractice = !!practiceDate;
   const [grid, setGrid] = useState<Grid | null>(null);
   const [cellStates, setCellStates] = useState<CellState[][]>([]);
   const [cellPlayers, setCellPlayers] = useState<(string | undefined)[][]>([]);
@@ -101,8 +114,23 @@ export default function ExploreScreen() {
   const [guessesLeft, setGuessesLeft] = useState(9);
   const [hintsRemaining, setHintsRemaining] = useState(3);
   const [hintPlayer, setHintPlayer] = useState<string | null>(null);
-  const [gridSeed, setGridSeed] = useState(() => hashDateSeed(new Date().toISOString().split('T')[0]));
+  const [gridSeed, setGridSeed] = useState(() =>
+    hashDateSeed(practiceDate ?? getTodayDateString()),
+  );
   const shareRef = useRef<View>(null);
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
+
+  const shareText = useMemo(
+    () =>
+      buildShareText({
+        mode: 'grid',
+        dailyNumber: getDailyNumber(practiceDateToDate(practiceDate)),
+        dailyStreak,
+        score,
+        correctCells: cellStates.map((row) => row.map((c) => c === 'correct')),
+      }),
+    [dailyStreak, score, cellStates, practiceDate],
+  );
 
   useEffect(() => {
     const players = getAllPlayers();
@@ -117,6 +145,7 @@ export default function ExploreScreen() {
   const allPlayers = useMemo(() => getAllPlayers(), []);
 
   const handleCellPress = useCallback((row: number, col: number) => {
+    triggerImpact();
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setSelectedCell({ row, col });
     setHintPlayer(null);
@@ -142,19 +171,22 @@ export default function ExploreScreen() {
       });
 
       if (isCorrect) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        triggerNotification(NotificationFeedbackType.Success);
         const newScore = score + 1;
         setScore(newScore);
-        useManagerStore.getState().addXp('grid', 15);
         if (newScore === 9) {
           playCheer();
         }
-        if (newScore === 9 || guessesLeft - 1 <= 0) {
-          useDailyProgressStore.getState().markCompleted('grid', newScore);
+        // Practice/archive runs never touch progress, XP or streak.
+        if (!isPractice) {
+          useManagerStore.getState().addXp('grid', 15);
+          if (newScore === 9 || guessesLeft - 1 <= 0) {
+            useDailyProgressStore.getState().markCompleted('grid', newScore);
+          }
         }
       } else {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        if (guessesLeft - 1 <= 0) {
+        triggerNotification(NotificationFeedbackType.Error);
+        if (!isPractice && guessesLeft - 1 <= 0) {
           useDailyProgressStore.getState().markCompleted('grid', score);
         }
       }
@@ -175,18 +207,19 @@ export default function ExploreScreen() {
     const sorted = [...validPlayers].sort((a, b) => a.name.length - b.name.length);
     setHintPlayer(sorted[0].name);
     setHintsRemaining((h) => h - 1);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerImpact(ImpactFeedbackStyle.Light);
   }, [selectedCell, grid, hintsRemaining]);
 
   const handleNewGame = useCallback(() => {
-    const newSeed = Date.now();
+    // In practice mode keep replaying the same past-day puzzle deterministically.
+    const newSeed = practiceDate ? hashDateSeed(practiceDate) : Date.now();
     setGridSeed(newSeed);
     setScore(0);
     setGuessesLeft(9);
     setSelectedCell(null);
     setHintsRemaining(3);
     setHintPlayer(null);
-  }, []);
+  }, [practiceDate]);
 
   if (!grid) {
     return <SkeletonGrid />;
@@ -200,6 +233,7 @@ export default function ExploreScreen() {
       style={styles.gradient}>
       <SafeAreaView style={styles.safeArea} edges={['bottom']}>
         <View style={styles.container}>
+          {isPractice && <PracticePill date={practiceDate} />}
           <View style={styles.scoreRow}>
             <Text style={styles.scoreText}>Score: {score}/9</Text>
             <Text style={styles.guessesLeftText}>Guesses left: {guessesLeft}</Text>
@@ -246,10 +280,12 @@ export default function ExploreScreen() {
 
           {/* Share and Play Again buttons when game is over */}
           {(guessesLeft <= 0 || score === 9) && (
-            <View style={styles.gameOverButtons}>
-              <RetroButton title="Share Result" onPress={() => captureAndShare(shareRef)} />
-              <RetroButton title="Play Again" onPress={handleNewGame} variant="primary" />
-            </View>
+            <GameOverActions
+              shareRef={shareRef}
+              shareText={shareText}
+              win={score === 9}
+              onPlayAgain={handleNewGame}
+            />
           )}
 
           {/* Search when cell selected */}
@@ -269,14 +305,17 @@ export default function ExploreScreen() {
                   onPress={handleHint}
                   disabled={hintsRemaining <= 0}
                   style={[styles.hintButton, hintsRemaining <= 0 && styles.hintButtonDisabled]}>
-                  <FontAwesome name="lightbulb-o" size={14} color={hintsRemaining > 0 ? '#F4A261' : '#6C757D'} />
-                  <Text style={[styles.hintButtonText, hintsRemaining <= 0 && { color: '#6C757D' }]}>
+                  <FontAwesome
+                    name="lightbulb-o"
+                    size={14}
+                    color={hintsRemaining > 0 ? '#F4A261' : '#6C757D'}
+                  />
+                  <Text
+                    style={[styles.hintButtonText, hintsRemaining <= 0 && { color: '#6C757D' }]}>
                     Hint ({hintsRemaining}/3)
                   </Text>
                 </Pressable>
-                {hintPlayer && (
-                  <Text style={styles.hintSuggestion}>Try: {hintPlayer}</Text>
-                )}
+                {hintPlayer && <Text style={styles.hintSuggestion}>Try: {hintPlayer}</Text>}
               </View>
             </View>
           )}
@@ -286,6 +325,11 @@ export default function ExploreScreen() {
               <ShareableGridResult cellStates={cellStates} score={score} />
             </View>
           </View>
+          <TutorialOverlay
+            modeKey="grid"
+            title="Football Grid"
+            description="Fill the 3x3 grid. Each cell needs a player matching both the row and column criteria."
+          />
         </View>
       </SafeAreaView>
     </LinearGradient>

@@ -14,6 +14,96 @@ export function getAllPlayers(): Player[] {
   return cachedPlayers;
 }
 
+// ---------------------------------------------------------------------------
+// Fame lookup — id-based (disambiguated), with a name fallback for datasets
+// that carry player NAMES only.
+// ---------------------------------------------------------------------------
+// data/fame_by_id.json is keyed by players_db id and was built with namesake
+// disambiguation, so an obscure player who shares a star's name no longer
+// inherits the star's fame. All players_db-based call sites should join fame by
+// id via getFameForPlayer(); the name helper below exists only for datasets
+// with names and no players_db id (transfers, match lineups, career_paths).
+
+export interface FameInfo {
+  fame_score: number;
+  difficulty_tier: string;
+  peak_valuation: number;
+}
+
+const fameByIdJson = require('@/data/fame_by_id.json') as Record<
+  string,
+  { name: string; fame_score: number; difficulty_tier: string; peak_valuation?: number }
+>;
+
+/** Disambiguated fame for a players_db id, or undefined if unknown. */
+export function getFameById(id: number): FameInfo | undefined {
+  const e = fameByIdJson[String(id)];
+  if (!e) return undefined;
+  return {
+    fame_score: e.fame_score,
+    difficulty_tier: e.difficulty_tier,
+    peak_valuation: e.peak_valuation ?? 0,
+  };
+}
+
+/** Disambiguated fame for a players_db player. */
+export function getFameForPlayer(p: { id: number }): FameInfo | undefined {
+  return getFameById(p.id);
+}
+
+function normalizeName(s: string): string {
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+}
+
+// fame_scores.json is the legacy name-keyed source; it still covers HISTORIC
+// players (retired legends in old match lineups) that aren't in players_db.
+const fameScoresJson = require('@/data/fame_scores.json') as {
+  name: string;
+  fame_score: number;
+  difficulty_tier: string;
+  metrics?: { peak_valuation_euros?: number };
+}[];
+
+let nameFameCache: Map<string, FameInfo> | null = null;
+/**
+ * Fame for a player NAME, for datasets without players_db ids. Prefers the
+ * disambiguated id-derived value (players_db id -> name, highest fame per name);
+ * falls back to fame_scores.json so historic players not in players_db keep a
+ * fame value. NOTE: a bare name can't distinguish two players_db namesakes, so
+ * this collapses to the more-famous one — full disambiguation only exists for
+ * id-based joins.
+ */
+export function getFameByName(name: string): FameInfo | undefined {
+  if (!nameFameCache) {
+    nameFameCache = new Map();
+    // Layer 1 (authoritative): disambiguated fame_by_id via players_db. Highest
+    // fame per name if a name maps to multiple ids.
+    const idKeys = new Set<string>();
+    for (const p of getAllPlayers()) {
+      const f = getFameById(p.id);
+      if (!f) continue;
+      const k = p.normalized_name || normalizeName(p.name);
+      const cur = nameFameCache.get(k);
+      if (!cur || f.fame_score > cur.fame_score) nameFameCache.set(k, f);
+      idKeys.add(k);
+    }
+    // Layer 2 (fallback): fame_scores.json fills only names absent from
+    // players_db (e.g. retired legends in historic match lineups).
+    for (const e of fameScoresJson) {
+      const k = normalizeName(e.name);
+      if (idKeys.has(k)) continue;
+      const info: FameInfo = {
+        fame_score: e.fame_score,
+        difficulty_tier: e.difficulty_tier,
+        peak_valuation: e.metrics?.peak_valuation_euros ?? 0,
+      };
+      const cur = nameFameCache.get(k);
+      if (!cur || info.fame_score > cur.fame_score) nameFameCache.set(k, info);
+    }
+  }
+  return nameFameCache.get(normalizeName(name));
+}
+
 /** Returns all players including retired career-path players not in the main DB */
 export function getAllPlayersWithCareer(): Player[] {
   if (!cachedWithCareer) {
@@ -45,8 +135,27 @@ export function getAllPlayersWithCareer(): Player[] {
   return cachedWithCareer;
 }
 
+// Lazy id → Player index so per-render lookups (age/difficulty tiers) are O(1)
+// instead of scanning the whole DB on every call.
+let playerByIdCache: Map<number, Player> | null = null;
+
 export function getPlayerById(id: number): Player | undefined {
-  return getAllPlayers().find((p) => p.id === id);
+  if (!playerByIdCache) {
+    playerByIdCache = new Map(getAllPlayers().map((p) => [p.id, p]));
+  }
+  return playerByIdCache.get(id);
+}
+
+/**
+ * A player counts as active unless explicitly retired, or their last known
+ * season is older than last year. Shared by all generators so the "active"
+ * threshold stays consistent instead of drifting per file.
+ */
+export function isActivePlayer(p: Player): boolean {
+  const currentYear = new Date().getFullYear();
+  return (
+    p.status !== 'retired' && (p.last_season === undefined || p.last_season >= currentYear - 1)
+  );
 }
 
 // Pre-computed index for O(1) grid lookups
@@ -60,29 +169,29 @@ let playerIndex: PlayerIndex | null = null;
  */
 const CAREER_TO_DB_TEAM: Record<string, string[]> = {
   // Premier League
-  'Arsenal': ['Arsenal Football Club'],
-  'Chelsea': ['Chelsea Football Club'],
-  'Liverpool': ['Liverpool Football Club'],
+  Arsenal: ['Arsenal Football Club'],
+  Chelsea: ['Chelsea Football Club'],
+  Liverpool: ['Liverpool Football Club'],
   'Manchester City': ['Manchester City Football Club'],
   'Manchester United': ['Manchester United Football Club'],
   'Tottenham Hotspur': ['Tottenham Hotspur Football Club'],
-  'Tottenham': ['Tottenham Hotspur Football Club'],
+  Tottenham: ['Tottenham Hotspur Football Club'],
   'Newcastle United': ['Newcastle United Football Club'],
   'Aston Villa': ['Aston Villa Football Club'],
   'West Ham United': ['West Ham United Football Club'],
   'West Ham': ['West Ham United Football Club'],
-  'Everton': ['Everton Football Club'],
+  Everton: ['Everton Football Club'],
   'Leeds United': ['Leeds United Football Club'],
   'Leicester City': ['Leicester City Football Club'],
   // La Liga
   'FC Barcelona': ['Futbol Club Barcelona'],
-  'Barcelona': ['Futbol Club Barcelona'],
+  Barcelona: ['Futbol Club Barcelona'],
   'Real Madrid': ['Real Madrid Club de Fútbol'],
   'Atletico Madrid': ['Club Atlético de Madrid S.A.D.'],
   'Atletico de Madrid': ['Club Atlético de Madrid S.A.D.'],
-  'Sevilla': ['Sevilla Fútbol Club'],
-  'Valencia': ['Valencia Club de Fútbol'],
-  'Villarreal': ['Villarreal Club de Fútbol, S. A. D.'],
+  Sevilla: ['Sevilla Fútbol Club'],
+  Valencia: ['Valencia Club de Fútbol'],
+  Villarreal: ['Villarreal Club de Fútbol, S. A. D.'],
   'Real Sociedad': ['Real Sociedad de Fútbol'],
   'Real Betis': ['Real Betis Balompié S.A.D.'],
   // Bundesliga
@@ -96,28 +205,28 @@ const CAREER_TO_DB_TEAM: Record<string, string[]> = {
   'VfL Wolfsburg': ['VfL Wolfsburg'],
   'Schalke 04': ['Fußballclub Gelsenkirchen-Schalke 04 e.V.'],
   // Serie A
-  'Juventus': ['Juventus Football Club'],
+  Juventus: ['Juventus Football Club'],
   'AC Milan': ['Associazione Calcio Milan'],
   'Inter Milan': ['Football Club Internazionale Milano S.p.A.'],
-  'Internazionale': ['Football Club Internazionale Milano S.p.A.'],
+  Internazionale: ['Football Club Internazionale Milano S.p.A.'],
   'AS Roma': ['Associazione Sportiva Roma'],
-  'Roma': ['Associazione Sportiva Roma'],
+  Roma: ['Associazione Sportiva Roma'],
   'SSC Napoli': ['Società Sportiva Calcio Napoli'],
-  'Napoli': ['Società Sportiva Calcio Napoli'],
+  Napoli: ['Società Sportiva Calcio Napoli'],
   'SS Lazio': ['Società Sportiva Lazio S.p.A.'],
-  'Lazio': ['Società Sportiva Lazio S.p.A.'],
-  'Fiorentina': ['ACF Fiorentina'],
-  'Atalanta': ['Atalanta Bergamasca Calcio S.p.a.'],
+  Lazio: ['Società Sportiva Lazio S.p.A.'],
+  Fiorentina: ['ACF Fiorentina'],
+  Atalanta: ['Atalanta Bergamasca Calcio S.p.a.'],
   // Ligue 1
   'Paris Saint-Germain': ['Paris Saint-Germain Football Club'],
-  'PSG': ['Paris Saint-Germain Football Club'],
+  PSG: ['Paris Saint-Germain Football Club'],
   'Olympique Marseille': ['Olympique de Marseille'],
-  'Marseille': ['Olympique de Marseille'],
+  Marseille: ['Olympique de Marseille'],
   'Olympique Lyon': ['Olympique Lyonnais'],
-  'Lyon': ['Olympique Lyonnais'],
+  Lyon: ['Olympique Lyonnais'],
   'AS Monaco': ['Association sportive de Monaco Football Club'],
-  'Monaco': ['Association sportive de Monaco Football Club'],
-  'Lille': ['LOSC Lille Association'],
+  Monaco: ['Association sportive de Monaco Football Club'],
+  Lille: ['LOSC Lille Association'],
 };
 
 /**

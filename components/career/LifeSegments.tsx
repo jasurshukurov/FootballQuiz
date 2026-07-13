@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { colors, spacing } from '@/constants/theme';
+import { colors } from '@/constants/theme';
 
 interface LifeSegmentsProps {
   total: number;
@@ -25,17 +25,12 @@ function LifeSegments({ total, remaining }: LifeSegmentsProps) {
 function Segment({ active }: { active: boolean }) {
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: withTiming(active ? 1 : 0.3, { duration: 300 }),
-    backgroundColor: withTiming(
-      active ? colors.pitchGreen : 'rgba(255,255,255,0.1)',
-      { duration: 300 },
-    ),
+    backgroundColor: withTiming(active ? colors.pitchGreen : 'rgba(255,255,255,0.1)', {
+      duration: 300,
+    }),
   }));
 
-  return (
-    <Animated.View
-      style={[styles.segment, animatedStyle, active && styles.segmentGlow]}
-    />
-  );
+  return <Animated.View style={[styles.segment, animatedStyle, active && styles.segmentGlow]} />;
 }
 
 export default React.memo(LifeSegments);
