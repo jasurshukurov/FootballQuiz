@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     minWidth: touch.min,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: borderRadius.md,
+    borderRadius: borderRadius.lg,
     paddingHorizontal: spacing.xl,
     paddingVertical: spacing.md,
   },

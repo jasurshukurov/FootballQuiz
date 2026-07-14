@@ -28,9 +28,10 @@ interface GameOverActionsProps {
   currentModeKey?: string;
 }
 
-/** The shared game-over action stack — image "Share Result", "Copy Result", an
- *  optional "Play Again", and the confetti/streak/countdown flourish — that was
- *  previously copy-pasted (with drift) across every mode's result screen. */
+/** The shared game-over action stack — "Share Result" + "Copy Result" side by
+ *  side (Claude Design game-over spec), an optional "Play Again" below, and
+ *  the confetti/streak/countdown flourish — that was previously copy-pasted
+ *  (with drift) across every mode's result screen. */
 export default function GameOverActions({
   shareRef,
   shareText,
@@ -45,18 +46,18 @@ export default function GameOverActions({
   return (
     <View style={styles.container}>
       {FEATURES.sharing && (
-        <>
-          <View style={styles.button}>
+        <View style={styles.shareRow}>
+          <View style={styles.rowButton}>
             <RetroButton
               title="Share Result"
               variant={shareVariant}
               onPress={() => captureAndShare(shareRef, shareText)}
             />
           </View>
-          <View style={styles.button}>
+          <View style={styles.rowButton}>
             <CopyResultButton text={shareText} />
           </View>
-        </>
+        </View>
       )}
       {onPlayAgain && (
         <View style={styles.button}>
@@ -70,12 +71,25 @@ export default function GameOverActions({
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'center',
+    alignSelf: 'stretch',
     alignItems: 'center',
     gap: spacing.md,
     marginTop: spacing.md,
   },
+  shareRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    width: '100%',
+    maxWidth: 440,
+    alignSelf: 'center',
+  },
+  rowButton: {
+    flex: 1,
+  },
   button: {
+    width: '100%',
+    maxWidth: 440,
     minWidth: 220,
+    alignSelf: 'center',
   },
 });
