@@ -71,23 +71,41 @@ border `colors.border`, active = green icon + dot, inactive = textMuted).
 
 Game-over must include, in order: verdict moment (win/partial/loss each designed —
 losses get a graceful "the answer was…" reveal, never shame), solve-summary
-visualization, streak/stats delta, share row (CopyResultButton emoji text + image
-share), NextPuzzleCountdown, "Next up: [unplayed mode]" CTA (use
-`getNextUnplayedMode()` helper — see below), practice link. Board stays visible where
-layout allows; game-over content scrolls (never occluded by tab bar).
-`components/ui/GameOverExtras.tsx` should render countdown + next-up CTA so every
+visualization, streak/stats delta (a new all-time best shows "New best!" via
+`useIsNewBestStreak`), share row (Share Result + CopyResultButton side by side —
+`GameOverActions` lays this out), "Next up: [unplayed mode]" CTA (use
+`getNextUnplayedMode()` helper — see below), NextPuzzleCountdown, practice link.
+Board stays visible where layout allows; game-over content scrolls (never occluded
+by tab bar). `components/ui/GameOverExtras.tsx` renders next-up + countdown so every
 screen gets this for free.
+
+Two sanctioned surfaces (v2.1, Claude Design "game-over" spec):
+
+- **`components/ui/GameOverSheet.tsx`** — bottom sheet sliding up over the finished
+  board (scrim keeps it visible): grab handle, condensed verdict (accentBright on
+  win), staggered glyph row (green hit / amber warm / red miss), StreakBadge, action
+  row, NEXT UP + countdown. Dismissing (scrim/handle) lets the player study the
+  board. Use it when the finished board is the payoff: Who Are Ya, Connections,
+  Missing XI.
+- **Inline full-screen result block** — for reveal-heavy endings that need their own
+  scroll real estate (Career Path, Grid, Top Lists, Higher/Lower, Transfer Agent,
+  Blind Ranking, Career Timeline, Guess the Match). Same checklist order applies.
+
+Rollback: each mode's sheet migration is a single commit; revert it to restore that
+mode's previous modal (baseline tag `v2.0-floodlit`).
 
 ## Component notes
 
-- `RetroButton` → restyle as the single button primitive: variants primary (green fill,
-  `textOnAccent` label), secondary (bgCard + border), danger, ghost. 56pt primary.
+- `RetroButton` → the single button primitive: variants primary (green fill,
+  `textOnAccent` label), secondary (bgCard + border), danger, ghost. 56pt primary,
+  16pt radius (`borderRadius.lg`, per the design system buttons spec).
 - `GlassCard` → `bgCard` + `border`, radius `borderRadius.lg`.
 - `StreakBadge` → amber flame + count, pops with `motion.springBouncy` on increment.
 - `Confetti` → scale particle count with result quality (perfect > win > partial).
-- Shareable* cards → re-skin with v2 palette; must include app name, "Football Daily
-  #N", mode icon, result glyphs; NEVER the answer. Dark card, green accent — must look
-  good in a WhatsApp feed.
+- Shareable* cards → all built on `components/ShareCardShell.tsx` (v2.1): card
+  gradient + `accentBorder`, "⚽ FOOTBALL DAILY #N" badge with 🔥 streak top-right,
+  condensed uppercase mode title, mode glyphs as children, footer verdict (scoreboard
+  mono) + footballquiz.app; NEVER the answer. Must look good in a WhatsApp feed.
 - Legacy Expo boilerplate (`Themed.tsx`, `StyledText.tsx`, `EditScreenInfo.tsx`,
   `PlayerSearch.tsx`) — do not restyle; leave untouched (candidates for later removal).
 
