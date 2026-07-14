@@ -22,6 +22,9 @@ interface DailyState {
   streakFrozenAvailable: boolean;
   /** Stored so repairStreak knows what to restore */
   previousStreak: number;
+  /** Date (YYYY-MM-DD) the all-time best streak was last beaten — lets
+   *  game-over surfaces show "New best!" for the rest of that day. */
+  newBestDate: string | null;
 }
 
 interface DailyActions {
@@ -48,6 +51,7 @@ export const useDailyStateStore = create<DailyStore>()(
       guessDistribution: [0, 0, 0, 0, 0, 0, 0, 0],
       streakFrozenAvailable: false,
       previousStreak: 0,
+      newBestDate: null,
 
       checkAndUpdateStreak: () => {
         const { lastCompletedDate, currentStreak } = get();
@@ -80,6 +84,8 @@ export const useDailyStateStore = create<DailyStore>()(
           lastCompletedDate: today,
           currentStreak: newStreak,
           maxStreak: Math.max(newStreak, state.maxStreak),
+          // Day 1 is not a record worth celebrating.
+          ...(newStreak > state.maxStreak && newStreak > 1 ? { newBestDate: today } : {}),
         });
       },
 
@@ -121,6 +127,7 @@ export const useDailyStateStore = create<DailyStore>()(
         guessDistribution: state.guessDistribution,
         streakFrozenAvailable: state.streakFrozenAvailable,
         previousStreak: state.previousStreak,
+        newBestDate: state.newBestDate,
       }),
     },
   ),
@@ -129,4 +136,11 @@ export const useDailyStateStore = create<DailyStore>()(
 /** Standalone function for use outside of React components (e.g. from useGuessGameStore) */
 export function recordGameCompletion(won: boolean, guessCount: number) {
   useDailyStateStore.getState().recordCompletion(won, guessCount);
+}
+
+/** True while today's completion holds the new all-time best streak. */
+export function useIsNewBestStreak(): boolean {
+  return useDailyStateStore(
+    (s) => s.newBestDate === getToday() && s.currentStreak === s.maxStreak && s.currentStreak > 1,
+  );
 }
