@@ -18,13 +18,23 @@ interface GameOverExtrasProps {
   win: boolean;
   /** The mode just finished — excluded from the "Next up" suggestion. */
   currentModeKey?: string;
+  /** Hide the streak badge when the host surface renders its own
+   *  (GameOverSheet places it above the action row per the design). */
+  showStreak?: boolean;
+  /** Hide the confetti when the host surface fires its own at overlay level. */
+  showConfetti?: boolean;
 }
 
 /** The shared game-over flourish: confetti on a win, the current streak badge,
- *  the live countdown to the next daily puzzle, and a "Next up" CTA routing to
- *  the next unplayed mode (or a perfect-day note when the day is complete).
+ *  a "Next up" CTA routing to the next unplayed mode (or a perfect-day note
+ *  when the day is complete), and the live countdown to the next daily puzzle.
  *  Drop one of these into each mode's completed/game-over state. */
-export default function GameOverExtras({ win, currentModeKey }: GameOverExtrasProps) {
+export default function GameOverExtras({
+  win,
+  currentModeKey,
+  showStreak = true,
+  showConfetti = true,
+}: GameOverExtrasProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const streak = useDailyStateStore((s) => s.currentStreak);
@@ -32,10 +42,9 @@ export default function GameOverExtras({ win, currentModeKey }: GameOverExtrasPr
 
   return (
     <>
-      {win && <Confetti intensity="high" />}
+      {win && showConfetti && <Confetti intensity="high" />}
       <View style={layout.stack}>
-        <StreakBadge streak={streak} />
-        <NextPuzzleCountdown />
+        {showStreak && <StreakBadge streak={streak} />}
         {nextMode ? (
           <Tappable
             onPress={() => router.push(nextMode.route as Href)}
@@ -59,6 +68,7 @@ export default function GameOverExtras({ win, currentModeKey }: GameOverExtrasPr
             <Text style={styles.perfectDayText}>All done for today</Text>
           </View>
         )}
+        <NextPuzzleCountdown />
       </View>
     </>
   );
