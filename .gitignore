@@ -45,3 +45,17 @@ yarn-error.*
 /android
 infrastructure/.terraform/
 __pycache__/
+
+# E2E test artifacts (failure screenshots)
+scripts/qa/e2e/artifacts/
+
+# ETL safety backups (timestamped, regenerable from git history)
+data/*_backup_*.json
+
+# Third-party dataset caches (large, regenerable via scripts/etl)
+data/cache/
+
+# Session playtest screenshot dumps (verification artifacts, not docs)
+scripts/qa/playtest/revamp_a/
+scripts/qa/playtest/revamp_b/
+scripts/qa/playtest/reverify/

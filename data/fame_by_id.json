@@ -154,12 +154,12 @@
   },
   "146660": {
     "name": "Ronaldo",
-    "fame_score": 86.77,
-    "difficulty_tier": "Beginner",
-    "peak_valuation": 50000000,
-    "peak_game_rating": 96,
-    "elite_exposure": 120,
-    "wikipedia_pageviews": 500000
+    "fame_score": 32.0,
+    "difficulty_tier": "Legendary",
+    "peak_valuation": 4000000,
+    "peak_game_rating": 0,
+    "elite_exposure": 0,
+    "wikipedia_pageviews": 0
   },
   "1600007": {
     "name": "Ronaldo Nazario",
@@ -253,15 +253,6 @@
   },
   "7607": {
     "name": "Xavi",
-    "fame_score": 85.73,
-    "difficulty_tier": "Beginner",
-    "peak_valuation": 60000000,
-    "peak_game_rating": 92,
-    "elite_exposure": 180,
-    "wikipedia_pageviews": 350000
-  },
-  "1600008": {
-    "name": "Xavi Hernandez",
     "fame_score": 85.73,
     "difficulty_tier": "Beginner",
     "peak_valuation": 60000000,
@@ -809,15 +800,6 @@
     "elite_exposure": 80,
     "wikipedia_pageviews": 250000
   },
-  "1600023": {
-    "name": "Alisson Becker",
-    "fame_score": 81.8,
-    "difficulty_tier": "Beginner",
-    "peak_valuation": 72500000,
-    "peak_game_rating": 89,
-    "elite_exposure": 80,
-    "wikipedia_pageviews": 250000
-  },
   "96341": {
     "name": "Romelu Lukaku",
     "fame_score": 81.75,
@@ -1126,12 +1108,12 @@
   },
   "203655": {
     "name": "Cafú",
-    "fame_score": 80.34,
-    "difficulty_tier": "Amateur",
-    "peak_valuation": 20000000,
-    "peak_game_rating": 90,
-    "elite_exposure": 140,
-    "wikipedia_pageviews": 200000
+    "fame_score": 37.0,
+    "difficulty_tier": "Legendary",
+    "peak_valuation": 600000,
+    "peak_game_rating": 0,
+    "elite_exposure": 0,
+    "wikipedia_pageviews": 0
   },
   "80": {
     "name": "Tom Starke",
@@ -7336,8 +7318,8 @@
   },
   "670681": {
     "name": "João Neves",
-    "fame_score": 60.7,
-    "difficulty_tier": "Semi-Pro",
+    "fame_score": 72.0,
+    "difficulty_tier": "Amateur",
     "peak_valuation": 90000000,
     "peak_game_rating": 70,
     "elite_exposure": 12,
@@ -16253,7 +16235,7 @@
     "elite_exposure": 11,
     "wikipedia_pageviews": 4050
   },
-  "72310": {
+  "568158": {
     "name": "Javi López",
     "fame_score": 49.38,
     "difficulty_tier": "Semi-Pro",
@@ -16379,7 +16361,7 @@
     "elite_exposure": 12,
     "wikipedia_pageviews": 2872
   },
-  "6107": {
+  "1182738": {
     "name": "Abdoulaye Faye",
     "fame_score": 49.32,
     "difficulty_tier": "Professional",
@@ -16514,7 +16496,7 @@
     "elite_exposure": 9,
     "wikipedia_pageviews": 4179
   },
-  "121756": {
+  "957874": {
     "name": "Rômulo",
     "fame_score": 49.27,
     "difficulty_tier": "Professional",
@@ -16649,7 +16631,7 @@
     "elite_exposure": 12,
     "wikipedia_pageviews": 4770
   },
-  "282900": {
+  "568835": {
     "name": "Pablo Martínez",
     "fame_score": 49.23,
     "difficulty_tier": "Professional",
@@ -18440,7 +18422,7 @@
     "elite_exposure": 6,
     "wikipedia_pageviews": 4928
   },
-  "160188": {
+  "439022": {
     "name": "Marcão",
     "fame_score": 48.19,
     "difficulty_tier": "Professional",
@@ -19547,7 +19529,7 @@
     "elite_exposure": 12,
     "wikipedia_pageviews": 4827
   },
-  "15983": {
+  "1228231": {
     "name": "Juan Rodríguez",
     "fame_score": 47.75,
     "difficulty_tier": "Professional",
@@ -19648,8 +19630,8 @@
   },
   "914562": {
     "name": "Désiré Doué",
-    "fame_score": 47.72,
-    "difficulty_tier": "Professional",
+    "fame_score": 76.0,
+    "difficulty_tier": "Amateur",
     "peak_valuation": 90000000,
     "peak_game_rating": 62,
     "elite_exposure": 2,
@@ -20789,7 +20771,7 @@
     "elite_exposure": 14,
     "wikipedia_pageviews": 1323
   },
-  "169497": {
+  "585700": {
     "name": "Juan Cruz",
     "fame_score": 47.22,
     "difficulty_tier": "Professional",
@@ -22112,7 +22094,7 @@
     "elite_exposure": 1,
     "wikipedia_pageviews": 4999
   },
-  "27683": {
+  "623024": {
     "name": "Jesús Vázquez",
     "fame_score": 46.59,
     "difficulty_tier": "Professional",
@@ -25064,7 +25046,7 @@
     "elite_exposure": 5,
     "wikipedia_pageviews": 3345
   },
-  "124172": {
+  "203026": {
     "name": "Danny Ward",
     "fame_score": 45.61,
     "difficulty_tier": "Professional",
@@ -27530,7 +27512,7 @@
     "elite_exposure": 13,
     "wikipedia_pageviews": 2473
   },
-  "472161": {
+  "745173": {
     "name": "Mamadou Coulibaly",
     "fame_score": 44.86,
     "difficulty_tier": "Professional",
@@ -28673,7 +28655,7 @@
     "elite_exposure": 8,
     "wikipedia_pageviews": 2113
   },
-  "126665": {
+  "1178488": {
     "name": "Idrissa Gueye",
     "fame_score": 44.56,
     "difficulty_tier": "Professional",
@@ -43703,7 +43685,7 @@
     "elite_exposure": 0,
     "wikipedia_pageviews": 3957
   },
-  "53293": {
+  "638124": {
     "name": "Manu Fernández",
     "fame_score": 41.94,
     "difficulty_tier": "Professional",
@@ -46702,8 +46684,8 @@
   },
   "845654": {
     "name": "Kenan Yıldız",
-    "fame_score": 41.56,
-    "difficulty_tier": "World Class",
+    "fame_score": 70.0,
+    "difficulty_tier": "Amateur",
     "peak_valuation": 75000000,
     "peak_game_rating": 57,
     "elite_exposure": 1,
@@ -51812,7 +51794,7 @@
     "elite_exposure": 4,
     "wikipedia_pageviews": 1088
   },
-  "287178": {
+  "705813": {
     "name": "Rubén Sánchez",
     "fame_score": 41.01,
     "difficulty_tier": "World Class",

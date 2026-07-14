@@ -8,7 +8,7 @@
       { "rank": 1, "name": "Alan Shearer", "value": 260, "unit": "goals", "aliases": ["Shearer"] },
       { "rank": 2, "name": "Harry Kane", "value": 213, "unit": "goals", "aliases": ["Kane"] },
       { "rank": 3, "name": "Wayne Rooney", "value": 208, "unit": "goals", "aliases": ["Rooney"] },
-      { "rank": 4, "name": "Mohamed Salah", "value": 191, "unit": "goals", "aliases": ["Salah"] },
+      { "rank": 4, "name": "Mohamed Salah", "value": 193, "unit": "goals", "aliases": ["Salah"] },
       { "rank": 5, "name": "Andy Cole", "value": 187, "unit": "goals", "aliases": ["Cole", "Andrew Cole"] },
       { "rank": 6, "name": "Sergio Aguero", "value": 184, "unit": "goals", "aliases": ["Aguero", "Kun Aguero"] },
       { "rank": 7, "name": "Frank Lampard", "value": 177, "unit": "goals", "aliases": ["Lampard"] },
@@ -46,9 +46,9 @@
       { "rank": 3, "name": "Ryan Giggs", "value": 632, "unit": "appearances", "aliases": ["Giggs"] },
       { "rank": 4, "name": "Frank Lampard", "value": 609, "unit": "appearances", "aliases": ["Lampard"] },
       { "rank": 5, "name": "David James", "value": 572, "unit": "appearances", "aliases": ["James"] },
-      { "rank": 6, "name": "Mark Schwarzer", "value": 544, "unit": "appearances", "aliases": ["Schwarzer"] },
-      { "rank": 7, "name": "Gary Speed", "value": 535, "unit": "appearances", "aliases": ["Speed"] },
-      { "rank": 8, "name": "Emile Heskey", "value": 516, "unit": "appearances", "aliases": ["Heskey"] },
+      { "rank": 6, "name": "Gary Speed", "value": 535, "unit": "appearances", "aliases": ["Speed"] },
+      { "rank": 7, "name": "Emile Heskey", "value": 516, "unit": "appearances", "aliases": ["Heskey"] },
+      { "rank": 8, "name": "Mark Schwarzer", "value": 514, "unit": "appearances", "aliases": ["Schwarzer"] },
       { "rank": 9, "name": "Jamie Carragher", "value": 508, "unit": "appearances", "aliases": ["Carragher"] },
       { "rank": 10, "name": "Phil Neville", "value": 505, "unit": "appearances", "aliases": ["Neville"] }
     ]
@@ -74,13 +74,14 @@
     "id": "la-liga-most-appearances",
     "title": "Most La Liga appearances (all-time)",
     "group": "leagues",
+    "as_of": "2026-07",
     "entries": [
       { "rank": 1, "name": "Andoni Zubizarreta", "value": 622, "unit": "appearances", "aliases": ["Zubizarreta"] },
       { "rank": 1, "name": "Joaquin", "value": 622, "unit": "appearances", "aliases": ["Joaquin Sanchez"] },
       { "rank": 3, "name": "Raul Garcia", "value": 609, "unit": "appearances", "aliases": ["Raul Garcia"] },
-      { "rank": 4, "name": "Raul", "value": 550, "unit": "appearances", "aliases": ["Raul Gonzalez"] },
-      { "rank": 5, "name": "Manolo Sanchis", "value": 523, "unit": "appearances", "aliases": ["Sanchis"] },
-      { "rank": 6, "name": "Lionel Messi", "value": 520, "unit": "appearances", "aliases": ["Messi"] }
+      { "rank": 4, "name": "Antoine Griezmann", "value": 564, "unit": "appearances", "aliases": ["Griezmann", "Grizi"] },
+      { "rank": 5, "name": "Dani Parejo", "value": 558, "unit": "appearances", "aliases": ["Parejo"] },
+      { "rank": 6, "name": "Raul", "value": 550, "unit": "appearances", "aliases": ["Raul Gonzalez"] }
     ]
   },
   {
@@ -117,6 +118,7 @@
     "id": "bundesliga-all-time-scorers",
     "title": "Bundesliga all-time top scorers",
     "group": "leagues",
+    "as_of": "2026-07",
     "entries": [
       { "rank": 1, "name": "Gerd Muller", "value": 365, "unit": "goals", "aliases": ["Gerd Muller", "Muller"] },
       { "rank": 2, "name": "Robert Lewandowski", "value": 312, "unit": "goals", "aliases": ["Lewandowski"] },
@@ -124,7 +126,7 @@
       { "rank": 4, "name": "Jupp Heynckes", "value": 220, "unit": "goals", "aliases": ["Heynckes"] },
       { "rank": 5, "name": "Manfred Burgsmuller", "value": 213, "unit": "goals", "aliases": ["Burgsmuller"] },
       { "rank": 6, "name": "Claudio Pizarro", "value": 197, "unit": "goals", "aliases": ["Pizarro"] },
-      { "rank": 7, "name": "Ulf Kirsten", "value": 182, "unit": "goals", "aliases": ["Kirsten"] },
+      { "rank": 7, "name": "Ulf Kirsten", "value": 181, "unit": "goals", "aliases": ["Kirsten"] },
       { "rank": 8, "name": "Stefan Kuntz", "value": 179, "unit": "goals", "aliases": ["Kuntz"] }
     ]
   },
@@ -132,15 +134,16 @@
     "id": "bundesliga-most-appearances",
     "title": "Most Bundesliga appearances (all-time)",
     "group": "leagues",
+    "as_of": "2026-07",
     "entries": [
       { "rank": 1, "name": "Karl-Heinz Korbel", "value": 602, "unit": "appearances", "aliases": ["Korbel", "Charly Korbel"] },
       { "rank": 2, "name": "Manfred Kaltz", "value": 581, "unit": "appearances", "aliases": ["Kaltz"] },
       { "rank": 3, "name": "Oliver Kahn", "value": 557, "unit": "appearances", "aliases": ["Kahn"] },
       { "rank": 4, "name": "Klaus Fichtel", "value": 552, "unit": "appearances", "aliases": ["Fichtel"] },
       { "rank": 5, "name": "Miroslav Votava", "value": 546, "unit": "appearances", "aliases": ["Votava"] },
-      { "rank": 6, "name": "Klaus Fischer", "value": 535, "unit": "appearances", "aliases": ["Fischer"] },
-      { "rank": 7, "name": "Eike Immel", "value": 534, "unit": "appearances", "aliases": ["Immel"] },
-      { "rank": 8, "name": "Willi Neuberger", "value": 520, "unit": "appearances", "aliases": ["Neuberger"] }
+      { "rank": 6, "name": "Manuel Neuer", "value": 545, "unit": "appearances", "aliases": ["Neuer"] },
+      { "rank": 7, "name": "Klaus Fischer", "value": 535, "unit": "appearances", "aliases": ["Fischer"] },
+      { "rank": 8, "name": "Eike Immel", "value": 534, "unit": "appearances", "aliases": ["Immel"] }
     ]
   },
   {
@@ -228,8 +231,8 @@
       { "rank": 3, "name": "Hugo Sanchez", "value": 5, "unit": "Pichichis", "aliases": ["Hugo Sanchez"] },
       { "rank": 3, "name": "Alfredo Di Stefano", "value": 5, "unit": "Pichichis", "aliases": ["Di Stefano"] },
       { "rank": 3, "name": "Quini", "value": 5, "unit": "Pichichis", "aliases": ["Quini"] },
-      { "rank": 6, "name": "Cristiano Ronaldo", "value": 3, "unit": "Pichichis", "aliases": ["Ronaldo", "CR7"] },
-      { "rank": 7, "name": "Kylian Mbappe", "value": 2, "unit": "Pichichis", "aliases": ["Mbappe"] }
+      { "rank": 6, "name": "Ferenc Puskas", "value": 4, "unit": "Pichichis", "aliases": ["Puskas"] },
+      { "rank": 7, "name": "Cristiano Ronaldo", "value": 3, "unit": "Pichichis", "aliases": ["Ronaldo", "CR7"] }
     ]
   },
   {

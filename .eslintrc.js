@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  ignorePatterns: ['scripts/qa/**'],
+  ignorePatterns: ['scripts/qa/**', 'scripts/etl/**'],
   extends: ['expo', 'plugin:@typescript-eslint/recommended', 'prettier'],
   plugins: ['@typescript-eslint', 'prettier'],
   parser: '@typescript-eslint/parser',

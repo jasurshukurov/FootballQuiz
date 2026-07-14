@@ -4,10 +4,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { scheduleNextDayReminder } from '@/lib/notifications';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
+import { useSkillStore } from '@/hooks/useSkillStore';
 import { getTodayDateString } from '@/lib/dailySeed';
 
 /** The daily mode keys (match DailyMenu keys / markCompleted keys). Kept here so
- *  progress/perfect-day math can exclude remotely-disabled modes. */
+ *  progress/perfect-day math can exclude remotely-disabled modes.
+ *
+ *  Deprecated keys (e.g. 'marketmovers') are simply removed from this list:
+ *  getCompletedCount filters completedModes through it, so a persisted
+ *  completion under a removed key is harmlessly ignored rather than making
+ *  the count exceed the total or blocking a perfect day. */
 const DAILY_MODE_KEYS = [
   'careerpath',
   'who-are-ya',
@@ -18,7 +24,6 @@ const DAILY_MODE_KEYS = [
   'agent',
   'blindranking',
   'careertimeline',
-  'marketmovers',
   'guessmatch',
   'toplists',
 ];
@@ -31,6 +36,56 @@ function activeModeKeys(): string[] {
 
 function getToday(): string {
   return getTodayDateString();
+}
+
+// ---------------------------------------------------------------------------
+// Skill recording (adaptive difficulty)
+// ---------------------------------------------------------------------------
+// Each mode's raw markCompleted score, normalized to a 0..1 share for the
+// per-mode EWMA skill rating (hooks/useSkillStore). Max scores mirror the
+// screens' own scoring semantics:
+//   careerpath     attemptsLeft on win, 0 on loss           -> /3 (MAX_ATTEMPTS)
+//   grid           correct squares                          -> /9
+//   missing11      lineup names found                       -> /11
+//   connections    4 - mistakes (win) / solved groups (loss)-> /4
+//   agent          correct rounds                           -> /10 (daily rounds)
+//   blindranking   scoreRanking points                      -> /10
+//   careertimeline hidden clubs guessed                     -> /3 (HIDDEN_COUNT)
+//   guessmatch     scoreFor(revealedCount)                  -> /12 (MAX_SCORE)
+//   higherlower / marketmovers: unbounded streaks have no clean max — a
+//     sustained streak of 10 is treated as a perfect result (soft cap; the
+//     recordResult normalization clamps anything above to 1).
+//   toplists: list length varies per day (typically a top 10) — normalized
+//     against 10 and clamped, so longer lists can't overweight a single day.
+const SKILL_MAX_BY_MODE: Record<string, number> = {
+  careerpath: 3,
+  grid: 9,
+  missing11: 11,
+  connections: 4,
+  higherlower: 10,
+  agent: 10,
+  blindranking: 10,
+  careertimeline: 3,
+  // marketmovers stays although deprecated: its screen is dormant but routable,
+  // and an unknown key here would silently skip skill recording if revived.
+  marketmovers: 10,
+  guessmatch: 12,
+  toplists: 10,
+};
+
+/**
+ * Feed a first-of-the-day daily score into the skill store. 'who-are-ya' is
+ * the one INVERTED mode (score = guesses used, fewer is better, 0 = loss), so
+ * it maps to unused-guess share: 1 guess -> 8/8, 8 guesses -> 1/8, loss -> 0.
+ */
+function recordSkillResult(mode: string, score: number) {
+  if (mode === 'who-are-ya') {
+    useSkillStore.getState().recordResult(mode, score <= 0 ? 0 : Math.max(0, 9 - score), 8);
+    return;
+  }
+  const maxScore = SKILL_MAX_BY_MODE[mode];
+  if (maxScore === undefined) return; // unknown mode: never guess a scale
+  useSkillStore.getState().recordResult(mode, score, maxScore);
 }
 
 interface DailyProgressState {
@@ -85,6 +140,9 @@ export const useDailyProgressStore = create<DailyProgressStore>()(
             completedModes: { [mode]: true },
             scoresByMode: score !== undefined ? { [mode]: score } : {},
           });
+          // First completion of the day: this is the real daily result, so it
+          // (and only it) feeds the adaptive-difficulty skill rating.
+          if (score !== undefined) recordSkillResult(mode, score);
         } else {
           // Screens call markCompleted on every game end, including post-completion
           // "Play Again" practice runs. Keep the FIRST score recorded today so a
@@ -99,6 +157,9 @@ export const useDailyProgressStore = create<DailyProgressStore>()(
               ? { ...state.scoresByMode, [mode]: score }
               : state.scoresByMode,
           });
+          // Same first-score-of-the-day guard as scoresByMode: daily results
+          // train the skill rating; practice replays never do.
+          if (shouldRecordScore) recordSkillResult(mode, score);
         }
 
         // Completing ANY daily mode keeps the overall daily streak alive.

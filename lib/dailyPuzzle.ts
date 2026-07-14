@@ -1,7 +1,12 @@
 import { Player } from '@/types/player';
 import { DifficultyTier } from '@/types/career';
 import { getAllPlayers, getPlayerById, getFameForPlayer, FameInfo } from './playerData';
-import { bandForDate, filterByFameBand } from './difficultyCurve';
+import {
+  bandForDate,
+  filterByFameBand,
+  resolveSkillTier,
+  skillAdjustedBand,
+} from './difficultyCurve';
 import { rotatingPick, ROTATION_SALT } from './dailyRotation';
 
 const playerAgesJson = require('@/data/player_ages.json') as Record<string, string>;
@@ -86,7 +91,11 @@ function whoAreYaPool(band: ReturnType<typeof bandForDate>): Player[] {
 
 /** Deterministic un-deduplicated pick for a date (rotation walk, +bump index). */
 function rawDailyTarget(date: Date, bump: number): Player {
-  const band = bandForDate(toDateStr(date));
+  // Skill tier (neutral 0 without play history) shifts the fame window by at
+  // most one step. Prior-day picks in getDailyTarget's dedup window are
+  // reconstructed with the same (current) tier, so the no-recent-repeat check
+  // stays exact whenever the tier is stable across the window.
+  const band = skillAdjustedBand(bandForDate(toDateStr(date)), resolveSkillTier('who-are-ya'));
   const source = whoAreYaPool(band);
   // Salt the shuffle per band so adjacent bands (which overlap in fame) don't
   // line up their permutations and re-serve the same player on consecutive days.

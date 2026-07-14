@@ -1,17 +1,20 @@
-import React from 'react';
-import { Pressable, Text, View, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withRepeat,
   withTiming,
   Easing,
+  useReducedMotion,
 } from 'react-native-reanimated';
-import { triggerImpact } from '@/lib/haptics';
 
 import PopInView from '@/components/ui/PopInView';
 import ShakeView from '@/components/ui/ShakeView';
-import { colors, fonts } from '@/constants/theme';
+import Tappable from '@/components/ui/Tappable';
+import { type, spacing, borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface JerseySlotProps {
   playerName?: string;
@@ -23,15 +26,22 @@ interface JerseySlotProps {
 }
 
 function PulsingQuestion() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const opacity = useSharedValue(1);
+  const reducedMotion = useReducedMotion();
 
   React.useEffect(() => {
+    if (reducedMotion) {
+      opacity.value = 0.7;
+      return;
+    }
     opacity.value = withRepeat(
       withTiming(0.3, { duration: 900, easing: Easing.inOut(Easing.ease) }),
       -1,
       true,
     );
-  }, [opacity]);
+  }, [opacity, reducedMotion]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -48,16 +58,15 @@ export default function JerseySlot({
   jerseyColor,
   onPress,
 }: JerseySlotProps) {
-  const handlePress = () => {
-    triggerImpact();
-    onPress();
-  };
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <ShakeView shake={shaking}>
-      <Pressable onPress={handlePress} disabled={revealed} style={styles.slotWrapper}>
+      <Tappable onPress={onPress} disabled={revealed} style={layoutStyles.slotWrapper}>
         {revealed && playerName ? (
           <PopInView>
+            {/* jerseyColor is real-world club color DATA, not theme. */}
             <View style={[styles.revealedCircle, { backgroundColor: jerseyColor }]} />
             <Text style={styles.playerName} numberOfLines={2} adjustsFontSizeToFit>
               {playerName}
@@ -69,59 +78,56 @@ export default function JerseySlot({
           </View>
         )}
         <Text style={styles.positionLabel}>{position}</Text>
-      </Pressable>
+      </Tappable>
     </ShakeView>
   );
 }
 
-const styles = StyleSheet.create({
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   slotWrapper: {
     alignItems: 'center',
     width: 64,
   },
-  unrevealedCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255,255,255,0.12)',
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,255,255,0.25)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: 'rgba(255,255,255,0.3)',
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
-    elevation: 4,
-  },
-  revealedCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.4)',
-    alignSelf: 'center',
-  },
-  questionMark: {
-    fontSize: 20,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    textAlign: 'center',
-  },
-  playerName: {
-    fontSize: 9,
-    fontFamily: fonts.subheading,
-    color: colors.chalkWhite,
-    textAlign: 'center',
-    marginTop: 2,
-    paddingHorizontal: 2,
-  },
-  positionLabel: {
-    marginTop: 2,
-    fontSize: 8,
-    fontFamily: fonts.subheading,
-    color: colors.chalkWhite,
-    textTransform: 'uppercase',
-    opacity: 0.7,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    unrevealedCircle: {
+      width: 48,
+      height: 48,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.bgCard,
+      borderWidth: 1.5,
+      borderColor: c.borderStrong,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    revealedCircle: {
+      width: 48,
+      height: 48,
+      borderRadius: borderRadius.full,
+      borderWidth: 2,
+      borderColor: c.borderStrong,
+      alignSelf: 'center',
+    },
+    questionMark: {
+      ...type.h3,
+      color: c.textPrimary,
+      textAlign: 'center',
+    },
+    playerName: {
+      ...type.micro,
+      color: c.textPrimary,
+      textAlign: 'center',
+      marginTop: spacing.xs / 2,
+      paddingHorizontal: spacing.xs / 2,
+    },
+    positionLabel: {
+      ...type.micro,
+      color: c.textSecondary,
+      textAlign: 'center',
+      marginTop: spacing.xs / 2,
+      textTransform: 'uppercase',
+    },
+  });

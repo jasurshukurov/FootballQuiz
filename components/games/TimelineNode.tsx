@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   withRepeat,
   interpolate,
+  useReducedMotion,
 } from 'react-native-reanimated';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import TeamCrest from '@/components/ui/TeamCrest';
-import { colors, fonts, spacing, borderRadius } from '@/constants/theme';
+import Tappable from '@/components/ui/Tappable';
+import { type, spacing, borderRadius, motion } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { TimelineNode as TimelineNodeType, getClubHint } from '@/lib/careerTimelineGenerator';
 
 interface TimelineNodeProps {
@@ -30,23 +34,28 @@ export default function TimelineNode({
   onPress,
   onHintPress,
 }: TimelineNodeProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const pulseScale = useSharedValue(1);
   const flipProgress = useSharedValue(node.isGuessed ? 1 : 0);
+  const reducedMotion = useReducedMotion();
 
   const isRevealed = !node.isHidden || node.isGuessed;
-  const lineColor = isRevealed ? colors.pitchGreen : colors.steelGray;
+  const lineColor = isRevealed ? colors.accent : colors.textMuted;
 
   // Pulse animation for hidden nodes
   useEffect(() => {
-    if (node.isHidden && !node.isGuessed) {
-      pulseScale.value = withRepeat(withTiming(1.15, { duration: 800 }), -1, true);
+    if (node.isHidden && !node.isGuessed && !reducedMotion) {
+      pulseScale.value = withRepeat(withTiming(1.15, { duration: motion.slow }), -1, true);
+    } else {
+      pulseScale.value = 1;
     }
-  }, [node.isHidden, node.isGuessed, pulseScale]);
+  }, [node.isHidden, node.isGuessed, pulseScale, reducedMotion]);
 
   // Flip animation when guessed
   useEffect(() => {
     if (node.isGuessed) {
-      flipProgress.value = withTiming(1, { duration: 400 });
+      flipProgress.value = withTiming(1, { duration: motion.base });
     }
   }, [node.isGuessed, flipProgress]);
 
@@ -73,34 +82,35 @@ export default function TimelineNode({
   const canPress = node.isHidden && !node.isGuessed;
 
   return (
-    <View style={styles.container}>
+    <View style={layoutStyles.container}>
       {/* Vertical line + dot */}
-      <View style={styles.lineContainer}>
-        {!isFirst && <View style={[styles.lineTop, { backgroundColor: lineColor }]} />}
+      <View style={layoutStyles.lineContainer}>
+        {!isFirst && <View style={[layoutStyles.lineTop, { backgroundColor: lineColor }]} />}
         <View style={[styles.dot, { backgroundColor: lineColor }]} />
-        {!isLast && <View style={[styles.lineBottom, { backgroundColor: lineColor }]} />}
+        {!isLast && <View style={[layoutStyles.lineBottom, { backgroundColor: lineColor }]} />}
       </View>
 
       {/* Content card */}
-      <View style={styles.cardContainer}>
+      <View style={layoutStyles.cardContainer}>
         <Text style={[styles.years, isRevealed && styles.yearsRevealed]}>
           {node.from} - {node.to}
         </Text>
 
         {!node.isHidden ? (
           // Always revealed node (first/last)
-          <View style={[styles.card, styles.cardRevealed, isActive && styles.cardActive]}>
+          <View style={[layoutStyles.card, styles.cardRevealed, isActive && styles.cardActive]}>
             <TeamCrest teamName={node.club} size={24} />
             <Text style={styles.clubName}>{node.club}</Text>
           </View>
         ) : node.isGuessed ? (
           // Was hidden, now guessed - show with flip
-          <View style={styles.flipContainer}>
-            <Animated.View style={[styles.card, styles.cardHidden, flipStyle]}>
+          <View style={layoutStyles.flipContainer}>
+            <Animated.View style={[layoutStyles.card, styles.cardHidden, flipStyle]}>
               <Text style={styles.questionMark}>?</Text>
               <Text style={styles.hiddenText}>???</Text>
             </Animated.View>
-            <Animated.View style={[styles.card, styles.cardRevealed, styles.flipBack, revealStyle]}>
+            <Animated.View
+              style={[layoutStyles.card, styles.cardRevealed, layoutStyles.flipBack, revealStyle]}>
               <TeamCrest teamName={node.club} size={24} />
               <Text style={styles.clubName}>{node.club}</Text>
             </Animated.View>
@@ -108,9 +118,17 @@ export default function TimelineNode({
         ) : (
           // Hidden node
           <View>
-            <Pressable onPress={canPress ? onPress : undefined}>
+            <Tappable
+              onPress={onPress}
+              disabled={!canPress}
+              hoverStyle={{ backgroundColor: colors.bgCardPressed, borderRadius: borderRadius.md }}>
               <Animated.View
-                style={[styles.card, styles.cardHidden, isActive && styles.cardActive, pulseStyle]}>
+                style={[
+                  layoutStyles.card,
+                  styles.cardHidden,
+                  isActive && styles.cardActive,
+                  pulseStyle,
+                ]}>
                 <Text style={styles.questionMark}>?</Text>
                 {node.hintRevealed ? (
                   <Text style={styles.hintText}>{getClubHint(node.club)}</Text>
@@ -118,12 +136,17 @@ export default function TimelineNode({
                   <Text style={styles.hiddenText}>???</Text>
                 )}
               </Animated.View>
-            </Pressable>
+            </Tappable>
             {!node.hintRevealed && onHintPress && (
-              <Pressable style={styles.hintButton} onPress={onHintPress} hitSlop={8}>
-                <FontAwesome name="lightbulb-o" size={14} color={colors.cardYellow} />
-                <Text style={styles.hintButtonText}>Hint (−5 XP)</Text>
-              </Pressable>
+              <Tappable
+                style={styles.hintButton}
+                hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+                onPress={onHintPress}>
+                <View style={layoutStyles.hintButtonInner}>
+                  <FontAwesome name="lightbulb-o" size={14} color={colors.streak} />
+                  <Text style={styles.hintButtonText}>Hint (−5 XP)</Text>
+                </View>
+              </Tappable>
             )}
           </View>
         )}
@@ -132,7 +155,8 @@ export default function TimelineNode({
   );
 }
 
-const styles = StyleSheet.create({
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     minHeight: 72,
@@ -145,13 +169,6 @@ const styles = StyleSheet.create({
     width: 2,
     flex: 1,
   },
-  dot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    borderWidth: 2,
-    borderColor: colors.retroBlack,
-  },
   lineBottom: {
     width: 2,
     flex: 1,
@@ -160,15 +177,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: spacing.sm,
     paddingVertical: spacing.sm,
-  },
-  years: {
-    fontFamily: fonts.body,
-    fontSize: 11,
-    color: colors.steelGray,
-    marginBottom: 4,
-  },
-  yearsRevealed: {
-    color: colors.pitchGreen,
   },
   card: {
     flexDirection: 'row',
@@ -179,54 +187,10 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.md,
     borderWidth: 1,
   },
-  cardRevealed: {
-    backgroundColor: 'rgba(5,242,108,0.08)',
-    borderColor: 'rgba(5,242,108,0.25)',
-  },
-  cardHidden: {
-    backgroundColor: 'rgba(108,117,125,0.15)',
-    borderColor: 'rgba(108,117,125,0.3)',
-  },
-  cardActive: {
-    borderColor: colors.pitchGreen,
-    borderWidth: 2,
-  },
-  clubName: {
-    fontFamily: fonts.subheading,
-    fontSize: 15,
-    color: colors.chalkWhite,
-  },
-  questionMark: {
-    fontFamily: fonts.heading,
-    fontSize: 22,
-    color: colors.cardYellow,
-  },
-  hiddenText: {
-    fontFamily: fonts.body,
-    fontSize: 14,
-    color: colors.steelGray,
-  },
-  hintText: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 13,
-    color: colors.cardYellow,
-    letterSpacing: 1,
-  },
-  hintButton: {
+  hintButtonInner: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-start',
-    gap: 4,
-    marginTop: 4,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-    backgroundColor: 'rgba(244,162,97,0.12)',
-  },
-  hintButtonText: {
-    fontFamily: fonts.subheading,
-    fontSize: 12,
-    color: colors.cardYellow,
+    gap: spacing.xs,
   },
   flipContainer: {
     position: 'relative',
@@ -238,3 +202,63 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    dot: {
+      width: 12,
+      height: 12,
+      borderRadius: borderRadius.full,
+      borderWidth: 2,
+      borderColor: c.bgBase,
+    },
+    years: {
+      ...type.micro,
+      color: c.textSecondary,
+      marginBottom: spacing.xs,
+    },
+    yearsRevealed: {
+      color: c.accent,
+    },
+    cardRevealed: {
+      backgroundColor: c.accentSoft,
+      borderColor: c.accentBorder,
+    },
+    cardHidden: {
+      backgroundColor: c.bgCard,
+      borderColor: c.border,
+    },
+    cardActive: {
+      borderColor: c.accent,
+      borderWidth: 2,
+    },
+    clubName: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+    },
+    questionMark: {
+      ...type.h2,
+      color: c.streak,
+    },
+    hiddenText: {
+      ...type.caption,
+      color: c.textSecondary,
+    },
+    hintText: {
+      ...type.captionBold,
+      color: c.streak,
+      letterSpacing: 1,
+    },
+    hintButton: {
+      alignSelf: 'flex-start',
+      marginTop: spacing.xs,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs / 2,
+      borderRadius: borderRadius.sm,
+      backgroundColor: c.streakSoft,
+    },
+    hintButtonText: {
+      ...type.captionBold,
+      color: c.streak,
+    },
+  });

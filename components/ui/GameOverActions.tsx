@@ -2,6 +2,7 @@ import React, { RefObject } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { spacing } from '@/constants/theme';
+import { FEATURES } from '@/lib/featureFlags';
 import { captureAndShare } from '@/lib/sharing';
 import RetroButton from '@/components/ui/RetroButton';
 import CopyResultButton from '@/components/ui/CopyResultButton';
@@ -23,6 +24,8 @@ interface GameOverActionsProps {
    *  places GameOverExtras itself (e.g. outside a modal card for full-screen
    *  confetti). Defaults to true. */
   includeExtras?: boolean;
+  /** Mode just finished — forwarded to GameOverExtras to exclude from "Next up". */
+  currentModeKey?: string;
 }
 
 /** The shared game-over action stack — image "Share Result", "Copy Result", an
@@ -37,25 +40,30 @@ export default function GameOverActions({
   playAgainVariant = 'primary',
   shareVariant = 'primary',
   includeExtras = true,
+  currentModeKey,
 }: GameOverActionsProps) {
   return (
     <View style={styles.container}>
-      <View style={styles.button}>
-        <RetroButton
-          title="Share Result"
-          variant={shareVariant}
-          onPress={() => captureAndShare(shareRef, shareText)}
-        />
-      </View>
-      <View style={styles.button}>
-        <CopyResultButton text={shareText} />
-      </View>
+      {FEATURES.sharing && (
+        <>
+          <View style={styles.button}>
+            <RetroButton
+              title="Share Result"
+              variant={shareVariant}
+              onPress={() => captureAndShare(shareRef, shareText)}
+            />
+          </View>
+          <View style={styles.button}>
+            <CopyResultButton text={shareText} />
+          </View>
+        </>
+      )}
       {onPlayAgain && (
         <View style={styles.button}>
           <RetroButton title={playAgainLabel} variant={playAgainVariant} onPress={onPlayAgain} />
         </View>
       )}
-      {includeExtras && <GameOverExtras win={win} />}
+      {includeExtras && <GameOverExtras win={win} currentModeKey={currentModeKey} />}
     </View>
   );
 }

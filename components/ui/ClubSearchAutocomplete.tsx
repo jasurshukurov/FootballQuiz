@@ -1,21 +1,16 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  Keyboard,
-  Platform,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, View, Text, TextInput, Keyboard, Platform, FlatList } from 'react-native';
 import { BlurView } from 'expo-blur';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Fuse from 'fuse.js';
 
 import TeamCrest from '@/components/ui/TeamCrest';
+import Tappable from '@/components/ui/Tappable';
+import { shortenClubName } from '@/lib/clubNames';
 import { useDebounce } from '@/hooks/useDebounce';
-import { colors, fonts, spacing, borderRadius } from '@/constants/theme';
+import { spacing, borderRadius, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface ClubItem {
   name: string;
@@ -37,7 +32,12 @@ function ClubSearchAutocomplete({
   autoFocus = false,
   dropDirection = 'down',
 }: ClubSearchAutocompleteProps) {
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const [query, setQuery] = useState('');
+  const [focused, setFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
   const debouncedQuery = useDebounce(query, 250);
 
@@ -81,14 +81,18 @@ function ClubSearchAutocomplete({
 
   const renderItem = useCallback(
     ({ item }: { item: ClubItem }) => (
-      <Pressable
-        style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
-        onPress={() => handleSelect(item)}>
+      <Tappable
+        onPress={() => handleSelect(item)}
+        haptic="none"
+        hitSlop={0}
+        hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+        style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}>
         <TeamCrest teamName={item.name} size={20} />
-        <Text style={styles.clubName}>{item.name}</Text>
-      </Pressable>
+        {/* Display-only shortening — selection still passes the stored name. */}
+        <Text style={styles.clubName}>{shortenClubName(item.name)}</Text>
+      </Tappable>
     ),
-    [handleSelect],
+    [handleSelect, styles, colors],
   );
 
   const keyExtractor = useCallback((item: ClubItem) => item.name, []);
@@ -96,16 +100,18 @@ function ClubSearchAutocomplete({
   const isUp = dropDirection === 'up';
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.inputContainer}>
-        <FontAwesome name="search" size={16} color={colors.steelGray} style={styles.searchIcon} />
+    <View style={layout.wrapper}>
+      <View style={[styles.inputContainer, focused && styles.inputContainerFocused]}>
+        <FontAwesome name="search" size={16} color={colors.textMuted} style={layout.searchIcon} />
         <TextInput
           ref={inputRef}
           style={styles.input}
           value={query}
           onChangeText={setQuery}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder={placeholder}
-          placeholderTextColor={colors.steelGray}
+          placeholderTextColor={colors.textMuted}
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={autoFocus}
@@ -114,20 +120,24 @@ function ClubSearchAutocomplete({
           returnKeyType="none"
         />
         {query.length > 0 && (
-          <Pressable onPress={handleClear} hitSlop={8}>
-            <FontAwesome name="times-circle" size={18} color={colors.steelGray} />
-          </Pressable>
+          <Tappable onPress={handleClear} haptic="none" accessibilityLabel="Clear search">
+            <FontAwesome name="times-circle" size={18} color={colors.textMuted} />
+          </Tappable>
         )}
       </View>
 
       {showDropdown && (
-        <View style={[styles.dropdown, isUp ? styles.dropdownUp : styles.dropdownDown]}>
+        <View style={[styles.dropdown, isUp ? layout.dropdownUp : layout.dropdownDown]}>
           <View style={styles.dropdownBg} />
           {Platform.OS !== 'web' ? (
-            <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView
+              intensity={40}
+              tint={theme.dark ? 'dark' : 'light'}
+              style={StyleSheet.absoluteFill}
+            />
           ) : null}
           {showNoResults ? (
-            <View style={styles.noResults}>
+            <View style={layout.noResults}>
               <Text style={styles.noResultsText}>No results found</Text>
             </View>
           ) : (
@@ -136,7 +146,7 @@ function ClubSearchAutocomplete({
               renderItem={renderItem}
               keyExtractor={keyExtractor}
               keyboardShouldPersistTaps="handled"
-              style={styles.list}
+              style={layout.list}
               nestedScrollEnabled
             />
           )}
@@ -148,41 +158,13 @@ function ClubSearchAutocomplete({
 
 export default React.memo(ClubSearchAutocomplete);
 
-const styles = StyleSheet.create({
+const layout = StyleSheet.create({
   wrapper: {
     position: 'relative',
     zIndex: 100,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    borderWidth: 2,
-    borderColor: colors.neonGlow,
-    borderRadius: borderRadius.xl,
-    backgroundColor: colors.retroBlack,
-    zIndex: 101,
-  },
   searchIcon: {
     marginRight: spacing.sm,
-  },
-  input: {
-    flex: 1,
-    minHeight: 44,
-    fontSize: 16,
-    color: colors.chalkWhite,
-    fontFamily: fonts.body,
-  },
-  dropdown: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    zIndex: 100,
-    maxHeight: 300,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
-    borderRadius: borderRadius.lg,
-    overflow: 'hidden',
   },
   dropdownDown: {
     top: '100%',
@@ -192,38 +174,70 @@ const styles = StyleSheet.create({
     bottom: '100%',
     marginBottom: spacing.xs,
   },
-  dropdownBg: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(10,10,26,0.95)',
-  },
   list: {
     maxHeight: 296,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    gap: spacing.sm,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.glassBorder,
-  },
-  rowPressed: {
-    backgroundColor: colors.glassHighlight,
-  },
-  clubName: {
-    fontSize: 15,
-    color: colors.chalkWhite,
-    fontFamily: fonts.body,
   },
   noResults: {
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.xl,
     alignItems: 'center',
   },
-  noResultsText: {
-    fontSize: 14,
-    color: colors.steelGray,
-    fontFamily: fonts.body,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    inputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: borderRadius.xl,
+      backgroundColor: c.bgElevated,
+      zIndex: 101,
+    },
+    inputContainerFocused: {
+      borderColor: c.accentBorder,
+    },
+    input: {
+      ...type.body,
+      flex: 1,
+      minHeight: 44,
+      color: c.textPrimary,
+    },
+    dropdown: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      zIndex: 100,
+      maxHeight: 300,
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: borderRadius.lg,
+      overflow: 'hidden',
+    },
+    dropdownBg: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: c.bgElevated,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      gap: spacing.sm,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: c.border,
+    },
+    rowPressed: {
+      backgroundColor: c.accentSoft,
+    },
+    clubName: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+    },
+    noResultsText: {
+      ...type.body,
+      color: c.textMuted,
+    },
+  });

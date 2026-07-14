@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Svg, { Path, Defs, ClipPath, Rect, G } from 'react-native-svg';
+import { useTheme } from '@/hooks/useTheme';
 
 interface JerseyIconProps {
   primary: string;
@@ -64,15 +65,9 @@ function JerseyIconInner({
   width = 36,
   height = 36,
 }: JerseyIconProps) {
+  const { colors, shadows } = useTheme();
   return (
-    <View
-      style={{
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 4,
-      }}>
+    <View style={shadows.cardShadow}>
       <Svg width={width} height={height} viewBox="0 0 64 64">
         <Defs>
           <ClipPath id="jerseyClip">
@@ -85,7 +80,7 @@ function JerseyIconInner({
         <Path
           d={JERSEY_PATH}
           fill="none"
-          stroke="#FFFFFF"
+          stroke={colors.textPrimary}
           strokeWidth={1.5}
           strokeLinejoin="round"
         />

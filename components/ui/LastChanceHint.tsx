@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
   withRepeat,
   withSequence,
@@ -10,7 +11,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ImpactFeedbackStyle } from 'expo-haptics';
 
-import { colors, fonts } from '@/constants/theme';
+import { borderRadius, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { triggerImpact } from '@/lib/haptics';
 
 interface LastChanceHintProps {
@@ -20,10 +23,14 @@ interface LastChanceHintProps {
 /** A red, pulsing "Last chance!" pill for the final guess/attempt. Fires a
  *  heavy haptic on mount (i.e. when the player enters the last chance). */
 export default function LastChanceHint({ label = 'LAST CHANCE!' }: LastChanceHintProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const pulse = useSharedValue(1);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     triggerImpact(ImpactFeedbackStyle.Heavy);
+    if (reducedMotion) return;
     pulse.value = withRepeat(
       withSequence(
         withTiming(1.06, { duration: 500, easing: Easing.inOut(Easing.quad) }),
@@ -32,7 +39,7 @@ export default function LastChanceHint({ label = 'LAST CHANCE!' }: LastChanceHin
       -1,
       true,
     );
-  }, [pulse]);
+  }, [pulse, reducedMotion]);
 
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
 
@@ -43,22 +50,22 @@ export default function LastChanceHint({ label = 'LAST CHANCE!' }: LastChanceHin
   );
 }
 
-const styles = StyleSheet.create({
-  pill: {
-    alignSelf: 'center',
-    borderRadius: 9999,
-    borderWidth: 1.5,
-    borderColor: colors.cardRed,
-    backgroundColor: 'rgba(230,57,70,0.15)',
-    paddingHorizontal: 16,
-    paddingVertical: 5,
-    marginBottom: 8,
-  },
-  text: {
-    fontSize: 13,
-    fontFamily: fonts.heading,
-    color: colors.cardRed,
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    pill: {
+      alignSelf: 'center',
+      borderRadius: borderRadius.full,
+      borderWidth: 1.5,
+      borderColor: c.danger,
+      backgroundColor: c.dangerSoft,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.xs,
+      marginBottom: spacing.sm,
+    },
+    text: {
+      ...type.captionBold,
+      color: c.dangerBright,
+      letterSpacing: 2,
+      textTransform: 'uppercase',
+    },
+  });

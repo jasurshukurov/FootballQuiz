@@ -1,9 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-import { Text, View } from 'react-native';
-import { colors, borderRadius, spacing } from '@/constants/theme';
+import { borderRadius, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+import Tappable from '@/components/ui/Tappable';
 
 interface HintButtonProps {
   hintId: string;
@@ -25,55 +27,40 @@ function HintButtonInner({
   onPress,
   disabled,
 }: HintButtonProps) {
-  const [pressed, setPressed] = useState(false);
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const isDisabled = disabled || isLocked || isUnlocked;
 
-  const handlePressIn = useCallback(() => setPressed(true), []);
-  const handlePressOut = useCallback(() => setPressed(false), []);
-
-  const buttonStyle = [
-    styles.button,
-    isUnlocked && styles.buttonUnlocked,
-    isLocked && styles.buttonLocked,
-    !isUnlocked && !isLocked && styles.buttonAvailable,
-    pressed && !isDisabled && styles.buttonPressed,
-  ];
-
-  const textColor = isUnlocked
-    ? colors.chalkWhite
-    : isLocked
-      ? 'rgba(108,117,125,0.4)'
-      : colors.pitchGreen;
+  const textColor = isUnlocked ? colors.textOnAccent : isLocked ? colors.textMuted : colors.accent;
 
   return (
-    <Pressable
-      style={buttonStyle}
+    <Tappable
       onPress={onPress}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      disabled={isDisabled}>
-      {isLocked && (
-        <>
-          <View style={styles.innerShadow} />
-          <View style={styles.frostOverlay} />
-        </>
-      )}
-
+      disabled={isDisabled}
+      style={({ pressed }) => [
+        styles.button,
+        isUnlocked && styles.buttonUnlocked,
+        isLocked && styles.buttonLocked,
+        !isUnlocked && !isLocked && styles.buttonAvailable,
+        pressed && !isDisabled && styles.buttonPressed,
+      ]}
+      hoverStyle={!isDisabled ? { backgroundColor: colors.accentSoft } : undefined}
+      accessibilityLabel={label}>
       {isLocked ? (
         <View style={styles.iconContainer}>
-          <FontAwesome name="lock" size={20} color={colors.steelGray} />
+          <FontAwesome name="lock" size={20} color={colors.textMuted} />
         </View>
       ) : isUnlocked ? (
         <View style={styles.iconContainer}>
-          <FontAwesome name="check" size={16} color={colors.chalkWhite} />
+          <FontAwesome name="check" size={16} color={colors.textOnAccent} />
         </View>
       ) : (
         <View style={styles.iconContainer}>
           <FontAwesome
             name={icon as React.ComponentProps<typeof FontAwesome>['name']}
             size={16}
-            color={colors.pitchGreen}
+            color={colors.accent}
           />
         </View>
       )}
@@ -84,75 +71,65 @@ function HintButtonInner({
 
       {isPremium && !isUnlocked && !isLocked && (
         <View style={styles.badge}>
-          <FontAwesome name="play-circle" size={14} color={colors.cardYellow} />
+          <FontAwesome name="play-circle" size={14} color={colors.streak} />
         </View>
       )}
 
       {!isPremium && !isUnlocked && !isLocked && <View style={styles.badgePlaceholder} />}
-    </Pressable>
+    </Tappable>
   );
 }
 
 export const HintButton = React.memo(HintButtonInner);
 
-const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    minHeight: 48,
-    borderRadius: borderRadius.lg,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  buttonAvailable: {
-    backgroundColor: colors.retroBlack,
-    borderWidth: 1.5,
-    borderColor: colors.pitchGreen,
-  },
-  buttonUnlocked: {
-    backgroundColor: colors.pitchGreen,
-    borderWidth: 1.5,
-    borderColor: colors.pitchGreen,
-  },
-  buttonLocked: {
-    backgroundColor: 'rgba(13,27,42,0.6)',
-    borderWidth: 1.5,
-    borderColor: 'rgba(108,117,125,0.2)',
-    transform: [{ scale: 0.97 }],
-    overflow: 'hidden',
-  },
-  buttonPressed: {
-    opacity: 0.7,
-  },
-  innerShadow: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    borderRadius: borderRadius.lg,
-  },
-  frostOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(200,220,255,0.04)',
-    borderRadius: borderRadius.lg,
-  },
-  iconContainer: {
-    width: 24,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  label: {
-    flex: 1,
-    fontSize: 13,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  badge: {
-    width: 24,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  badgePlaceholder: {
-    width: 24,
-    backgroundColor: 'transparent',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    button: {
+      flex: 1,
+      minHeight: 48,
+      borderRadius: borderRadius.lg,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+    },
+    buttonAvailable: {
+      backgroundColor: c.bgElevated,
+      borderWidth: 1.5,
+      borderColor: c.accent,
+    },
+    buttonUnlocked: {
+      backgroundColor: c.accent,
+      borderWidth: 1.5,
+      borderColor: c.accent,
+    },
+    buttonLocked: {
+      backgroundColor: c.bgCard,
+      borderWidth: 1.5,
+      borderColor: c.border,
+      transform: [{ scale: 0.97 }],
+      overflow: 'hidden',
+    },
+    buttonPressed: {
+      opacity: 0.7,
+    },
+    iconContainer: {
+      width: 24,
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+    },
+    label: {
+      flex: 1,
+      ...type.captionBold,
+      textAlign: 'center',
+    },
+    badge: {
+      width: 24,
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+    },
+    badgePlaceholder: {
+      width: 24,
+      backgroundColor: 'transparent',
+    },
+  });

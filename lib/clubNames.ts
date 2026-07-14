@@ -11,6 +11,10 @@
 
 // Cases where generic stripping isn't enough / would read oddly.
 const HARD_SHORT_NAMES: Record<string, string> = {
+  // Keep the household "FC" form rather than the bare city generic stripping
+  // would leave ("Futbol Club Barcelona" -> "Barcelona").
+  'Futbol Club Barcelona': 'FC Barcelona',
+  'Fútbol Club Barcelona': 'FC Barcelona',
   'Football Club Internazionale Milano S.p.A.': 'Inter Milan',
   'Società Sportiva Lazio S.p.A.': 'Lazio',
   'Reial Club Deportiu Espanyol de Barcelona S.A.D.': 'Espanyol',

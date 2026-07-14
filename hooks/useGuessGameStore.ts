@@ -113,12 +113,23 @@ export const useGuessGameStore = create<GuessGameStore>()(
       },
 
       resetGame: () => {
+        // "Play Again" is a PRACTICE replay, never a second run at the real daily.
+        // Two invariants keep stats honest:
+        //  1) isPractice=true so makeGuess/giveUp skip recordGameCompletion — the
+        //     official daily's win-rate and guess distribution are recorded exactly
+        //     once (on the first completion).
+        //  2) dailyNumber is NOT stamped to today. isPractice is not persisted
+        //     (see partialize), so on the next app open it resets to false; if we
+        //     left today's number stamped, initGame's guard would then mistake this
+        //     random practice player for the official daily. A sentinel that is
+        //     never a real day forces initGame to restore the true daily instead.
         const target = getRandomTarget();
         set({
-          dailyNumber: getDailyNumber(),
+          dailyNumber: -1,
           targetPlayer: target,
           guesses: [],
           gameStatus: 'playing',
+          isPractice: true,
         });
       },
     }),

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import Animated, {
   Easing,
@@ -8,7 +8,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
 import RetroButton from '@/components/ui/RetroButton';
-import { colors, fonts, spacing } from '@/constants/theme';
+import { type, spacing, borderRadius, motion } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface GameOverCardProps {
   playerName: string;
@@ -18,11 +20,13 @@ interface GameOverCardProps {
 }
 
 function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOverCardProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const translateY = useSharedValue(50);
   const opacity = useSharedValue(0);
 
   useEffect(() => {
-    const timingConfig = { duration: 400, easing: Easing.out(Easing.cubic) };
+    const timingConfig = { duration: motion.slow, easing: Easing.out(Easing.cubic) };
     translateY.value = withTiming(0, timingConfig);
     opacity.value = withTiming(1, timingConfig);
   }, [translateY, opacity]);
@@ -35,7 +39,7 @@ function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOver
   return (
     <Animated.View style={animatedStyle}>
       <GlassCard style={styles.card}>
-        <Text style={[styles.result, { color: isWin ? colors.pitchGreen : colors.cardRed }]}>
+        <Text style={[styles.result, { color: isWin ? colors.accent : colors.danger }]}>
           {isWin ? 'Correct!' : 'Game Over'}
         </Text>
 
@@ -51,30 +55,29 @@ function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOver
 
 export default React.memo(GameOverCard);
 
-const styles = StyleSheet.create({
-  card: {
-    paddingVertical: spacing.xl,
-    paddingHorizontal: spacing.lg,
-    gap: spacing.md,
-    alignItems: 'center',
-  },
-  result: {
-    fontSize: 28,
-    fontFamily: fonts.heading,
-    textTransform: 'uppercase',
-    letterSpacing: 2,
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: colors.chalkWhite,
-  },
-  playerName: {
-    fontSize: 22,
-    fontFamily: fonts.subheading,
-    color: colors.chalkWhite,
-    textAlign: 'center',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    card: {
+      paddingVertical: spacing.xl,
+      paddingHorizontal: spacing.lg,
+      gap: spacing.md,
+      alignItems: 'center',
+    },
+    result: {
+      ...type.h1,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
+    },
+    image: {
+      width: 80,
+      height: 80,
+      borderRadius: borderRadius.full,
+      borderWidth: 2,
+      borderColor: c.borderStrong,
+    },
+    playerName: {
+      ...type.h2,
+      color: c.textPrimary,
+      textAlign: 'center',
+    },
+  });

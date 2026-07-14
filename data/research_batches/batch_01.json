@@ -1,10 +1,10 @@
 {
   "batch": 1,
-  "generated_utc": "2026-07-12T17:48:47.576691+00:00",
+  "generated_utc": "2026-07-13T23:57:58.843992+00:00",
   "reference_date": "2026-07-12",
   "fame_min": 70,
   "fame_range_in_batch": [
-    83.7,
+    84.89,
     98.74
   ],
   "count": 40,
@@ -42,7 +42,7 @@
       "nationality": "Portugal",
       "position": "Attack",
       "current_team": "Al-Nassr",
-      "market_value": 15000000,
+      "market_value": 12000000,
       "fame_score": 98.74,
       "birth_year": 1985
     },
@@ -52,9 +52,49 @@
       "nationality": "Argentina",
       "position": "Attack",
       "current_team": "Inter Miami",
-      "market_value": 35000000,
+      "market_value": 20000000,
       "fame_score": 97.94,
       "birth_year": 1987
+    },
+    {
+      "id": 1600000,
+      "name": "Ronaldo de Assis Moreira",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Fluminense",
+      "market_value": 0,
+      "fame_score": 96.42,
+      "birth_year": 1980
+    },
+    {
+      "id": 1600002,
+      "name": "Pele",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Santos",
+      "market_value": 0,
+      "fame_score": 95,
+      "birth_year": 1940
+    },
+    {
+      "id": 1600003,
+      "name": "Diego Maradona",
+      "nationality": "Argentina",
+      "position": "Attack",
+      "current_team": "Boca Juniors",
+      "market_value": 0,
+      "fame_score": 95,
+      "birth_year": 1960
+    },
+    {
+      "id": 1600004,
+      "name": "Gheorghe Hagi",
+      "nationality": "Romania",
+      "position": "Midfield",
+      "current_team": "Galatasaray",
+      "market_value": 0,
+      "fame_score": 92.95,
+      "birth_year": 1965
     },
     {
       "id": 68290,
@@ -62,9 +102,19 @@
       "nationality": "Brazil",
       "position": "Attack",
       "current_team": "Santos",
-      "market_value": 50000000,
+      "market_value": 25000000,
       "fame_score": 92.36,
       "birth_year": 1992
+    },
+    {
+      "id": 1600005,
+      "name": "Hristo Stoichkov",
+      "nationality": "Bulgaria",
+      "position": "Attack",
+      "current_team": "D.C. United",
+      "market_value": 0,
+      "fame_score": 92.29,
+      "birth_year": 1966
     },
     {
       "id": 342229,
@@ -72,9 +122,19 @@
       "nationality": "France",
       "position": "Attack",
       "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 200000000,
+      "market_value": 180000000,
       "fame_score": 90.37,
       "birth_year": 1998
+    },
+    {
+      "id": 1600006,
+      "name": "Zinedine Zidane",
+      "nationality": "France",
+      "position": "Midfield",
+      "current_team": "Real Madrid Club de Fútbol",
+      "market_value": 0,
+      "fame_score": 88.8,
+      "birth_year": 1972
     },
     {
       "id": 38253,
@@ -82,7 +142,7 @@
       "nationality": "Poland",
       "position": "Attack",
       "current_team": "Futbol Club Barcelona",
-      "market_value": 9000000,
+      "market_value": 7000000,
       "fame_score": 88.25,
       "birth_year": 1988
     },
@@ -92,7 +152,7 @@
       "nationality": "Belgium",
       "position": "Midfield",
       "current_team": "Società Sportiva Calcio Napoli",
-      "market_value": 45000000,
+      "market_value": 30000000,
       "fame_score": 87.5,
       "birth_year": 1991
     },
@@ -102,7 +162,7 @@
       "nationality": "Norway",
       "position": "Attack",
       "current_team": "Manchester City Football Club",
-      "market_value": 200000000,
+      "market_value": 180000000,
       "fame_score": 87.48,
       "birth_year": 2000
     },
@@ -112,7 +172,7 @@
       "nationality": "Egypt",
       "position": "Attack",
       "current_team": "Liverpool Football Club",
-      "market_value": 30000000,
+      "market_value": 28000000,
       "fame_score": 87.36,
       "birth_year": 1992
     },
@@ -122,7 +182,7 @@
       "nationality": "Uruguay",
       "position": "Attack",
       "current_team": "Boca Juniors",
-      "market_value": 2500000,
+      "market_value": 1000000,
       "fame_score": 87.25,
       "birth_year": 1987
     },
@@ -132,7 +192,7 @@
       "nationality": "Croatia",
       "position": "Midfield",
       "current_team": "Associazione Calcio Milan",
-      "market_value": 4000000,
+      "market_value": 3000000,
       "fame_score": 87.24,
       "birth_year": 1985
     },
@@ -141,8 +201,8 @@
       "name": "Karim Benzema",
       "nationality": "France",
       "position": "Attack",
-      "current_team": "Al-Ittihad",
-      "market_value": 15000000,
+      "current_team": "Al-Hilal",
+      "market_value": 10000000,
       "fame_score": 87.08,
       "birth_year": 1987
     },
@@ -152,7 +212,7 @@
       "nationality": "Spain",
       "position": "Defender",
       "current_team": "Cf Monterrey",
-      "market_value": 2500000,
+      "market_value": 2000000,
       "fame_score": 87.08,
       "birth_year": 1986
     },
@@ -162,7 +222,7 @@
       "nationality": "Sweden",
       "position": "Attack",
       "current_team": "Associazione Calcio Milan",
-      "market_value": 2000000,
+      "market_value": 0,
       "fame_score": 86.86,
       "birth_year": 1981
     },
@@ -177,14 +237,34 @@
       "birth_year": 2000
     },
     {
+      "id": 1600007,
+      "name": "Ronaldo Nazario",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Corinthians",
+      "market_value": 0,
+      "fame_score": 86.77,
+      "birth_year": 1976
+    },
+    {
       "id": 3332,
       "name": "Wayne Rooney",
       "nationality": "England",
       "position": "Attack",
-      "current_team": "Manchester United Football Club",
-      "market_value": 2000000,
+      "current_team": "Derby County",
+      "market_value": 0,
       "fame_score": 86.68,
       "birth_year": 1985
+    },
+    {
+      "id": 1600001,
+      "name": "Ronaldinho",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Fluminense",
+      "market_value": 0,
+      "fame_score": 86.52,
+      "birth_year": 1980
     },
     {
       "id": 7600,
@@ -192,7 +272,7 @@
       "nationality": "Spain",
       "position": "Midfield",
       "current_team": "Futbol Club Barcelona",
-      "market_value": 800000,
+      "market_value": 0,
       "fame_score": 86.51,
       "birth_year": 1984
     },
@@ -201,8 +281,8 @@
       "name": "Luis Suárez",
       "nationality": "Uruguay",
       "position": "Attack",
-      "current_team": "Sporting CP",
-      "market_value": 4000000,
+      "current_team": "Inter Miami",
+      "market_value": 3000000,
       "fame_score": 86.25,
       "birth_year": 1997
     },
@@ -211,8 +291,8 @@
       "name": "Gianluigi Buffon",
       "nationality": "Italy",
       "position": "Goalkeeper",
-      "current_team": "Juventus Football Club",
-      "market_value": 1000000,
+      "current_team": "Parma Calcio 1913",
+      "market_value": 0,
       "fame_score": 86.19,
       "birth_year": 1978
     },
@@ -222,7 +302,7 @@
       "nationality": "Germany",
       "position": "Midfield",
       "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 10000000,
+      "market_value": 0,
       "fame_score": 86.18,
       "birth_year": 1990
     },
@@ -232,7 +312,7 @@
       "nationality": "Brazil",
       "position": "Attack",
       "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 150000000,
+      "market_value": 180000000,
       "fame_score": 86.08,
       "birth_year": 1978
     },
@@ -242,7 +322,7 @@
       "nationality": "Germany",
       "position": "Goalkeeper",
       "current_team": "FC Bayern München",
-      "market_value": 4000000,
+      "market_value": 2000000,
       "fame_score": 85.94,
       "birth_year": 1986
     },
@@ -251,8 +331,8 @@
       "name": "Xavi",
       "nationality": "Spain",
       "position": "Midfield",
-      "current_team": "Uci Anteaters (University Of California, Irvine)",
-      "market_value": 2000000,
+      "current_team": "Al-Sadd Sc",
+      "market_value": 0,
       "fame_score": 85.73,
       "birth_year": 1980
     },
@@ -262,7 +342,7 @@
       "nationality": "England",
       "position": "Attack",
       "current_team": "FC Bayern München",
-      "market_value": 75000000,
+      "market_value": 80000000,
       "fame_score": 85.68,
       "birth_year": 1993
     },
@@ -272,7 +352,7 @@
       "nationality": "England",
       "position": "Midfield",
       "current_team": "Paris Saint-Germain Football Club",
-      "market_value": 1000000,
+      "market_value": 0,
       "fame_score": 85.67,
       "birth_year": 1978
     },
@@ -282,9 +362,19 @@
       "nationality": "Argentina",
       "position": "Attack",
       "current_team": "Futbol Club Barcelona",
-      "market_value": 15000000,
+      "market_value": 0,
       "fame_score": 85.55,
       "birth_year": 1988
+    },
+    {
+      "id": 1600009,
+      "name": "Thierry Henry",
+      "nationality": "France",
+      "position": "Attack",
+      "current_team": "New York Red Bulls",
+      "market_value": 0,
+      "fame_score": 85.49,
+      "birth_year": 1977
     },
     {
       "id": 50202,
@@ -292,7 +382,7 @@
       "nationality": "Belgium",
       "position": "Attack",
       "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 5000000,
+      "market_value": 0,
       "fame_score": 85.3,
       "birth_year": 1991
     },
@@ -302,7 +392,7 @@
       "nationality": "Germany",
       "position": "Goalkeeper",
       "current_team": "Borussia Dortmund",
-      "market_value": 750000,
+      "market_value": 0,
       "fame_score": 85.08,
       "birth_year": 1980
     },
@@ -311,130 +401,40 @@
       "name": "Kaká",
       "nationality": "Brazil",
       "position": "Midfield",
-      "current_team": "Académica Coimbra",
-      "market_value": 1000000,
+      "current_team": "Orlando City Sc",
+      "market_value": 0,
       "fame_score": 85.03,
       "birth_year": 1991
+    },
+    {
+      "id": 1600010,
+      "name": "Iker Casillas",
+      "nationality": "Spain",
+      "position": "Goalkeeper",
+      "current_team": "FC Porto",
+      "market_value": 0,
+      "fame_score": 85.03,
+      "birth_year": 1981
     },
     {
       "id": 39381,
       "name": "Gareth Bale",
       "nationality": "Wales",
       "position": "Attack",
-      "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 2000000,
+      "current_team": "Los Angeles Fc",
+      "market_value": 0,
       "fame_score": 84.89,
       "birth_year": 1989
     },
     {
-      "id": 123,
-      "name": "Christoph Metzelder",
-      "nationality": "Germany",
+      "id": 1600011,
+      "name": "Paolo Maldini",
+      "nationality": "Italy",
       "position": "Defender",
-      "current_team": "FC Schalke 04",
-      "market_value": 1500000,
-      "fame_score": 84.66,
-      "birth_year": 1980
-    },
-    {
-      "id": 122153,
-      "name": "Paul Pogba",
-      "nationality": "France",
-      "position": "Midfield",
-      "current_team": "Association sportive de Monaco Football Club",
-      "market_value": 5000000,
-      "fame_score": 84.64,
-      "birth_year": 1993
-    },
-    {
-      "id": 125781,
-      "name": "Antoine Griezmann",
-      "nationality": "France",
-      "position": "Attack",
-      "current_team": "Club Atlético de Madrid S.A.D.",
-      "market_value": 11000000,
-      "fame_score": 84.53,
-      "birth_year": 1991
-    },
-    {
-      "id": 581678,
-      "name": "Jude Bellingham",
-      "nationality": "England",
-      "position": "Midfield",
-      "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 160000000,
-      "fame_score": 84.34,
-      "birth_year": 2003
-    },
-    {
-      "id": 58358,
-      "name": "Thomas Müller",
-      "nationality": "Germany",
-      "position": "Attack",
-      "current_team": "FC Bayern München",
-      "market_value": 8000000,
-      "fame_score": 84.28,
-      "birth_year": 1989
-    },
-    {
-      "id": 200512,
-      "name": "Sadio Mané",
-      "nationality": "Senegal",
-      "position": "Attack",
-      "current_team": "Al-Nassr",
-      "market_value": 25000000,
-      "fame_score": 84.14,
-      "birth_year": 1992
-    },
-    {
-      "id": 139208,
-      "name": "Virgil van Dijk",
-      "nationality": "Netherlands",
-      "position": "Defender",
-      "current_team": "Liverpool Football Club",
-      "market_value": 18000000,
-      "fame_score": 84.09,
-      "birth_year": 1991
-    },
-    {
-      "id": 3109,
-      "name": "Steven Gerrard",
-      "nationality": "England",
-      "position": "Midfield",
-      "current_team": "Liverpool Football Club",
-      "market_value": 1750000,
-      "fame_score": 84.08,
-      "birth_year": 1980
-    },
-    {
-      "id": 7767,
-      "name": "Fernando Torres",
-      "nationality": "Spain",
-      "position": "Attack",
-      "current_team": "Gimnàstic De Tarragona",
-      "market_value": 2500000,
-      "fame_score": 83.97,
-      "birth_year": 1984
-    },
-    {
-      "id": 18944,
-      "name": "Gerard Piqué",
-      "nationality": "Spain",
-      "position": "Defender",
-      "current_team": "Futbol Club Barcelona",
-      "market_value": 3000000,
-      "fame_score": 83.8,
-      "birth_year": 1987
-    },
-    {
-      "id": 91845,
-      "name": "Heung-min Son",
-      "nationality": "Korea, South",
-      "position": "Attack",
-      "current_team": "Tottenham Hotspur Football Club",
-      "market_value": 45000000,
-      "fame_score": 83.7,
-      "birth_year": 1992
+      "current_team": "Associazione Calcio Milan",
+      "market_value": 0,
+      "fame_score": 84.89,
+      "birth_year": 1968
     }
   ]
 }

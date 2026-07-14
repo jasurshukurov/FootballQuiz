@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { borderRadius, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface MaintenanceScreenProps {
   message?: string;
 }
 
 export default function MaintenanceScreen({ message }: MaintenanceScreenProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.emoji}>🏟️</Text>
@@ -20,42 +26,42 @@ export default function MaintenanceScreen({ message }: MaintenanceScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#1A1A2E',
-    paddingHorizontal: 32,
-  },
-  emoji: {
-    marginBottom: 16,
-    fontSize: 48,
-  },
-  title: {
-    marginBottom: 8,
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#52B788',
-  },
-  subtitle: {
-    marginBottom: 24,
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'rgba(245,245,240,0.8)',
-  },
-  infoBox: {
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: '#2D5A27',
-    backgroundColor: 'rgba(45,90,39,0.3)',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-  },
-  infoText: {
-    textAlign: 'center',
-    fontSize: 14,
-    color: 'rgba(245,245,240,0.6)',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.bgBase,
+      paddingHorizontal: spacing.xxl,
+    },
+    emoji: {
+      marginBottom: spacing.lg,
+      fontSize: type.display.fontSize,
+    },
+    title: {
+      ...type.h2,
+      marginBottom: spacing.sm,
+      textAlign: 'center',
+      color: c.accent,
+    },
+    subtitle: {
+      ...type.body,
+      marginBottom: spacing.xl,
+      textAlign: 'center',
+      color: c.textSecondary,
+    },
+    infoBox: {
+      borderRadius: borderRadius.md,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.accentSoft,
+      paddingHorizontal: spacing.xl,
+      paddingVertical: spacing.md,
+    },
+    infoText: {
+      ...type.caption,
+      textAlign: 'center',
+      color: c.textMuted,
+    },
+  });

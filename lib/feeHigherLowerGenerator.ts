@@ -1,7 +1,22 @@
+// ⚠️ DEPRECATED MODE — Market Movers (2026-07). The mode was removed from the
+// product surface (lib/modeRegistry.ts) because it duplicated Higher/Lower's
+// binary loop; fee knowledge is covered by Transfer Agent. This generator and
+// its unit tests are kept compiling for possible revival — see the header of
+// app/(tabs)/marketmovers.tsx for the full revival checklist.
+//
 // Generator for "Market Movers" — a transfer-fee Higher/Lower game.
 // Reads data/transfers.json (records with numeric €m/€k fees) and builds a
 // deterministic queue of transfer "moves" where consecutive fees differ enough
 // that every Higher/Lower guess is decisive.
+
+import {
+  bandForDate,
+  bandFameOffset,
+  progressionForRound,
+  resolveSkillTier,
+} from './difficultyCurve';
+import { getTodayDateString } from './dailySeed';
+import { getFameByName } from './playerData';
 
 interface RawTransferStint {
   club_name: string;
@@ -16,9 +31,6 @@ interface RawTransferPlayer {
   player_name: string;
   transfers: RawTransferStint[];
 }
-
-import { progressionForRound } from './difficultyCurve';
-import { getFameByName } from './playerData';
 
 const transfersData = require('@/data/transfers.json') as RawTransferPlayer[];
 
@@ -142,11 +154,27 @@ export function feesAreDecisive(a: number, b: number): boolean {
  *
  * `startRound` continues the ramp when the screen extends the queue mid-run
  * (pass the current queue length), so difficulty keeps rising instead of
- * resetting to "easy".
+ * resetting to "easy". `prevTailFee` is the fee of the previous queue's last
+ * move, threaded in so the seam pair (old tail vs new head) is gap-checked like
+ * any other consecutive pair rather than risking a coin-flip at the join.
+ *
+ * `fameOffset` defaults to the current day's band offset (easy days skew more
+ * famous, expert days more obscure); pass an explicit value for deterministic
+ * tests.
  */
-export function generateFeeQueue(seed: number, size = 100, startRound = 0): FeeTransfer[] {
+export function generateFeeQueue(
+  seed: number,
+  size = 100,
+  startRound = 0,
+  fameOffset?: number,
+  prevTailFee?: number | null,
+): FeeTransfer[] {
   const rand = mulberry32(seed);
   const shuffled = seededShuffle(getAllFeeMoves(), rand);
+  const offset = fameOffset ?? bandFameOffset(bandForDate(getTodayDateString()));
+  // Per-user skill tier (neutral 0 without play history) steepens/softens the
+  // in-session ramp by at most one step.
+  const skillTier = resolveSkillTier('marketmovers');
 
   const queue: FeeTransfer[] = [];
   const usedMoves = new Set<string>();
@@ -154,21 +182,21 @@ export function generateFeeQueue(seed: number, size = 100, startRound = 0): FeeT
 
   for (let k = 0; k < size; k++) {
     const round = startRound + k;
-    const prog = progressionForRound(round);
+    const prog = progressionForRound(round, skillTier);
     const cap = prog.maxFame ?? Infinity;
     const gap = Math.max(prog.gapRatio, MIN_FEE_GAP);
-    const prev = queue[queue.length - 1];
+    const prevFee = queue.length > 0 ? queue[queue.length - 1].fee : (prevTailFee ?? null);
 
     // Widen the fame FLOOR downward if the slice is thin, but keep the cap fixed
     // so deep rounds never resurface household names.
     let pick: FeeTransfer | null = null;
-    for (let floor = prog.minFame; floor > -1 && !pick; floor -= 5) {
+    for (let floor = prog.minFame + offset; floor > -1 && !pick; floor -= 5) {
       for (const m of shuffled) {
         if (usedMoves.has(moveKey(m))) continue;
         if (round < 20 && usedPlayers.has(m.playerName)) continue;
         const fame = moveFame(m);
         if (fame < floor || fame > cap) continue;
-        if (prev && !decisiveWith(prev.fee, m.fee, gap)) continue;
+        if (prevFee !== null && !decisiveWith(prevFee, m.fee, gap)) continue;
         pick = m;
         break;
       }
@@ -178,7 +206,7 @@ export function generateFeeQueue(seed: number, size = 100, startRound = 0): FeeT
       for (const m of shuffled) {
         if (usedMoves.has(moveKey(m))) continue;
         if (moveFame(m) > cap) continue;
-        if (prev && m.fee === prev.fee) continue;
+        if (prevFee !== null && m.fee === prevFee) continue;
         pick = m;
         break;
       }
@@ -187,7 +215,7 @@ export function generateFeeQueue(seed: number, size = 100, startRound = 0): FeeT
     if (!pick) {
       for (const m of shuffled) {
         if (usedMoves.has(moveKey(m))) continue;
-        if (prev && m.fee === prev.fee) continue;
+        if (prevFee !== null && m.fee === prevFee) continue;
         pick = m;
         break;
       }

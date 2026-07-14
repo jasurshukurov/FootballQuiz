@@ -1162,7 +1162,17 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 4,
+        "name": "Flamengo",
+        "value": 4,
+        "unit": "titles",
+        "aliases": [
+          "CR Flamengo",
+          "Mengao"
+        ]
+      },
+      {
+        "rank": 7,
         "name": "Nacional",
         "value": 3,
         "unit": "titles",
@@ -1172,7 +1182,7 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 7,
         "name": "São Paulo",
         "value": 3,
         "unit": "titles",
@@ -1182,21 +1192,12 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 7,
         "name": "Grêmio",
         "value": 3,
         "unit": "titles",
         "aliases": [
           "Gremio"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Olimpia",
-        "value": 3,
-        "unit": "titles",
-        "aliases": [
-          "Club Olimpia"
         ]
       }
     ]

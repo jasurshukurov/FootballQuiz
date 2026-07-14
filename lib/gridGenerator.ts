@@ -220,3 +220,85 @@ export function generateValidGrid(
 
   return null;
 }
+
+/** The fewest valid players any single cell has (a grid's weakest link). */
+function worstCell(grid: Grid): number {
+  let worst = Infinity;
+  for (const row of grid.cells) {
+    for (const cell of row) {
+      if (cell.validPlayers.length < worst) worst = cell.validPlayers.length;
+    }
+  }
+  return worst;
+}
+
+/**
+ * Deterministically generate a solvable grid that is NEVER null.
+ *
+ * generateValidGrid can return null when no shuffle of the criteria pools yields
+ * a grid whose every cell clears minPlayersPerCell — which left the screen stuck
+ * on the loading skeleton forever. This wrapper progressively relaxes the
+ * constraint (5 → 4 → 3 → 2 → 1 players/cell) and, if even a single-player floor
+ * can't be met, returns the best grid it saw (the one whose weakest cell is
+ * strongest). Same seed always yields the same grid, so dailies stay stable.
+ */
+export function generateGridWithFallback(players: Player[], seed?: number): Grid {
+  const baseSeed = seed ?? Date.now();
+
+  for (const minPerCell of [5, 4, 3, 2, 1]) {
+    const grid = generateValidGrid(players, baseSeed, 200, minPerCell);
+    if (grid) return grid;
+  }
+
+  // Last resort: no relaxation produced an all-cells-fillable grid, so pick the
+  // least-bad grid across a wide seed sweep instead of leaving the user stuck.
+  let best: Grid | null = null;
+  let bestWorst = -1;
+  for (let attempt = 0; attempt < 200; attempt++) {
+    const grid = generateGrid(players, baseSeed + attempt);
+    const w = worstCell(grid);
+    if (w > bestWorst) {
+      bestWorst = w;
+      best = { ...grid, id: `grid-${baseSeed}` };
+      if (w >= 1) break; // any fully-fillable grid is good enough
+    }
+  }
+  return best ?? generateGrid(players, baseSeed);
+}
+
+// ---------------------------------------------------------------------------
+// Client-side rarity scoring
+// ---------------------------------------------------------------------------
+// True percentile rarity (how few players globally picked this answer) needs a
+// backend tally. As a local proxy we reward *obscurity*: a correct pick of a
+// low-fame player is a "deep cut" worth bonus points on top of the base square.
+// Fame is 0-100 (data/fame_by_id.json); a missing fame value is treated as very
+// obscure (deep cut) since only well-known players carry a fame score.
+
+export interface PickScore {
+  /** Points for filling the square at all. */
+  base: number;
+  /** Extra points for picking an obscure player (0 for household names). */
+  rarityBonus: number;
+  /** base + rarityBonus. */
+  total: number;
+  /** True when the pick is obscure enough to earn a "DEEP CUT" chip. */
+  deepCut: boolean;
+}
+
+/** Every correct square is worth this before rarity bonuses. */
+export const GRID_BASE_POINTS = 10;
+
+/**
+ * Score a single correct pick from the answer's fame (0-100), undefined = obscure.
+ * Deep cut below fame 60; the bonus escalates the more obscure the pick is.
+ */
+export function scoreCorrectPick(fame: number | undefined): PickScore {
+  const f = fame ?? 0;
+  let rarityBonus = 0;
+  if (f < 30) rarityBonus = 30;
+  else if (f < 45) rarityBonus = 20;
+  else if (f < 60) rarityBonus = 10;
+  const deepCut = f < 60;
+  return { base: GRID_BASE_POINTS, rarityBonus, total: GRID_BASE_POINTS + rarityBonus, deepCut };
+}

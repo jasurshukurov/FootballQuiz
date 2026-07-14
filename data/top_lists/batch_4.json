@@ -486,6 +486,7 @@
     "id": "man-city-top-scorers",
     "title": "Manchester City all-time top scorers",
     "group": "clubs-records",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -517,6 +518,15 @@
       },
       {
         "rank": 4,
+        "name": "Erling Haaland",
+        "value": 162,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 5,
         "name": "Colin Bell",
         "value": 153,
         "unit": "goals",
@@ -525,7 +535,7 @@
         ]
       },
       {
-        "rank": 5,
+        "rank": 6,
         "name": "Joe Hayes",
         "value": 152,
         "unit": "goals",
@@ -534,7 +544,7 @@
         ]
       },
       {
-        "rank": 5,
+        "rank": 6,
         "name": "Billy Meredith",
         "value": 152,
         "unit": "goals",
@@ -543,21 +553,12 @@
         ]
       },
       {
-        "rank": 7,
+        "rank": 8,
         "name": "Francis Lee",
         "value": 148,
         "unit": "goals",
         "aliases": [
           "Lee"
-        ]
-      },
-      {
-        "rank": 8,
-        "name": "Tommy Browell",
-        "value": 139,
-        "unit": "goals",
-        "aliases": [
-          "Browell"
         ]
       }
     ]
@@ -646,11 +647,12 @@
     "id": "bayern-munich-top-scorers",
     "title": "Bayern Munich all-time top scorers",
     "group": "clubs-records",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
         "name": "Gerd Müller",
-        "value": 566,
+        "value": 565,
         "unit": "goals",
         "aliases": [
           "Gerd Muller",
@@ -678,20 +680,20 @@
       },
       {
         "rank": 4,
+        "name": "Rainer Ohlhauser",
+        "value": 229,
+        "unit": "goals",
+        "aliases": [
+          "Ohlhauser"
+        ]
+      },
+      {
+        "rank": 5,
         "name": "Karl-Heinz Rummenigge",
         "value": 217,
         "unit": "goals",
         "aliases": [
           "Rummenigge"
-        ]
-      },
-      {
-        "rank": 5,
-        "name": "Rainer Ohlhauser",
-        "value": 167,
-        "unit": "goals",
-        "aliases": [
-          "Ohlhauser"
         ]
       },
       {
@@ -2078,6 +2080,7 @@
     "id": "manchester-derby-top-scorers",
     "title": "Most goals in the Manchester derby",
     "group": "clubs-records",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -2126,6 +2129,15 @@
       },
       {
         "rank": 6,
+        "name": "Erling Haaland",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 6,
         "name": "Colin Bell",
         "value": 8,
         "unit": "goals",
@@ -2140,15 +2152,6 @@
         "unit": "goals",
         "aliases": [
           "Cantona"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Brian Kidd",
-        "value": 8,
-        "unit": "goals",
-        "aliases": [
-          "Kidd"
         ]
       }
     ]
@@ -2180,7 +2183,7 @@
       {
         "rank": 3,
         "name": "Alexander Isak",
-        "value": 150,
+        "value": 144.5,
         "unit": "€M",
         "aliases": [
           "Isak"
@@ -2188,47 +2191,48 @@
       },
       {
         "rank": 4,
-        "name": "Philippe Coutinho",
-        "value": 145,
+        "name": "Elliot Anderson",
+        "value": 135.5,
         "unit": "€M",
         "aliases": [
-          "Coutinho"
+          "Anderson"
         ]
       },
       {
         "rank": 5,
-        "name": "Ousmane Dembélé",
-        "value": 135,
-        "unit": "€M",
-        "aliases": [
-          "Dembele"
-        ]
-      },
-      {
-        "rank": 6,
         "name": "João Félix",
-        "value": 127,
+        "value": 126,
         "unit": "€M",
         "aliases": [
           "Joao Felix"
         ]
       },
       {
-        "rank": 7,
-        "name": "Florian Wirtz",
-        "value": 125,
-        "unit": "€M",
-        "aliases": [
-          "Wirtz"
-        ]
-      },
-      {
-        "rank": 8,
+        "rank": 6,
         "name": "Enzo Fernández",
         "value": 121,
         "unit": "€M",
         "aliases": [
           "Enzo Fernandez"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Antoine Griezmann",
+        "value": 120,
+        "unit": "€M",
+        "aliases": [
+          "Griezmann",
+          "Grizi"
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Philippe Coutinho",
+        "value": 118.4,
+        "unit": "€M",
+        "aliases": [
+          "Coutinho"
         ]
       }
     ]

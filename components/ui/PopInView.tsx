@@ -4,8 +4,11 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   withDelay,
+  withSpring,
   Easing,
 } from 'react-native-reanimated';
+
+import { motion } from '@/constants/theme';
 
 interface PopInViewProps {
   children: React.ReactNode;
@@ -13,15 +16,16 @@ interface PopInViewProps {
 }
 
 export default function PopInView({ children, delay = 0 }: PopInViewProps) {
-  const scale = useSharedValue(0);
+  // Gentle settle: start near full size and fade in. A 0→1 bouncy spring
+  // reads as "jumping" — deliberately avoided app-wide.
+  const scale = useSharedValue(0.96);
   const opacity = useSharedValue(0);
 
   useEffect(() => {
-    const config = { duration: 250, easing: Easing.out(Easing.cubic) };
-    scale.value = withDelay(delay, withTiming(1, config));
+    scale.value = withDelay(delay, withSpring(1, motion.spring));
     opacity.value = withDelay(
       delay,
-      withTiming(1, { duration: 200, easing: Easing.out(Easing.quad) }),
+      withTiming(1, { duration: motion.base, easing: Easing.out(Easing.quad) }),
     );
   }, [delay, scale, opacity]);
 

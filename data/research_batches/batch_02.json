@@ -1,11 +1,11 @@
 {
   "batch": 2,
-  "generated_utc": "2026-07-12T17:48:47.576691+00:00",
+  "generated_utc": "2026-07-13T23:57:58.843992+00:00",
   "reference_date": "2026-07-12",
   "fame_min": 70,
   "fame_range_in_batch": [
-    81.26,
-    83.64
+    82.39,
+    84.66
   ],
   "count": 40,
   "schema": {
@@ -37,34 +37,164 @@
   },
   "players": [
     {
+      "id": 123,
+      "name": "Christoph Metzelder",
+      "nationality": "Germany",
+      "position": "Defender",
+      "current_team": "FC Schalke 04",
+      "market_value": 0,
+      "fame_score": 84.66,
+      "birth_year": 1980
+    },
+    {
+      "id": 122153,
+      "name": "Paul Pogba",
+      "nationality": "France",
+      "position": "Midfield",
+      "current_team": "Association sportive de Monaco Football Club",
+      "market_value": 5000000,
+      "fame_score": 84.64,
+      "birth_year": 1993
+    },
+    {
+      "id": 125781,
+      "name": "Antoine Griezmann",
+      "nationality": "France",
+      "position": "Attack",
+      "current_team": "Orlando City Sc",
+      "market_value": 12000000,
+      "fame_score": 84.53,
+      "birth_year": 1991
+    },
+    {
+      "id": 581678,
+      "name": "Jude Bellingham",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "Real Madrid Club de Fútbol",
+      "market_value": 180000000,
+      "fame_score": 84.34,
+      "birth_year": 2003
+    },
+    {
+      "id": 58358,
+      "name": "Thomas Müller",
+      "nationality": "Germany",
+      "position": "Attack",
+      "current_team": "Vancouver Whitecaps Fc",
+      "market_value": 4000000,
+      "fame_score": 84.28,
+      "birth_year": 1989
+    },
+    {
+      "id": 200512,
+      "name": "Sadio Mané",
+      "nationality": "Senegal",
+      "position": "Attack",
+      "current_team": "Al-Nassr",
+      "market_value": 14000000,
+      "fame_score": 84.14,
+      "birth_year": 1992
+    },
+    {
+      "id": 139208,
+      "name": "Virgil van Dijk",
+      "nationality": "Netherlands",
+      "position": "Defender",
+      "current_team": "Liverpool Football Club",
+      "market_value": 18000000,
+      "fame_score": 84.09,
+      "birth_year": 1991
+    },
+    {
+      "id": 3109,
+      "name": "Steven Gerrard",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "LA Galaxy",
+      "market_value": 0,
+      "fame_score": 84.08,
+      "birth_year": 1980
+    },
+    {
+      "id": 7767,
+      "name": "Fernando Torres",
+      "nationality": "Spain",
+      "position": "Attack",
+      "current_team": "Gimnàstic De Tarragona",
+      "market_value": 0,
+      "fame_score": 83.97,
+      "birth_year": 1984
+    },
+    {
+      "id": 18944,
+      "name": "Gerard Piqué",
+      "nationality": "Spain",
+      "position": "Defender",
+      "current_team": "Futbol Club Barcelona",
+      "market_value": 0,
+      "fame_score": 83.8,
+      "birth_year": 1987
+    },
+    {
+      "id": 91845,
+      "name": "Heung-min Son",
+      "nationality": "Korea, South",
+      "position": "Attack",
+      "current_team": "Los Angeles Fc",
+      "market_value": 25000000,
+      "fame_score": 83.7,
+      "birth_year": 1992
+    },
+    {
+      "id": 1600013,
+      "name": "Raul Gonzalez",
+      "nationality": "Spain",
+      "position": "Attack",
+      "current_team": "New York Cosmos",
+      "market_value": 0,
+      "fame_score": 83.65,
+      "birth_year": 1977
+    },
+    {
       "id": 29260,
       "name": "Giorgio Chiellini",
       "nationality": "Italy",
       "position": "Defender",
-      "current_team": "Juventus Football Club",
-      "market_value": 1000000,
+      "current_team": "Los Angeles Fc",
+      "market_value": 0,
       "fame_score": 83.64,
       "birth_year": 1984
+    },
+    {
+      "id": 1600014,
+      "name": "Mesut Ozil",
+      "nationality": "Germany",
+      "position": "Midfield",
+      "current_team": "Fenerbahce",
+      "market_value": 0,
+      "fame_score": 83.63,
+      "birth_year": 1988
     },
     {
       "id": 52920,
       "name": "Marcelo",
       "nationality": "Brazil",
       "position": "Defender",
-      "current_team": "Moreirense Fc",
-      "market_value": 800000,
+      "current_team": "Fluminense",
+      "market_value": 0,
       "fame_score": 83.62,
       "birth_year": 1989
     },
     {
-      "id": 8163,
-      "name": "Rodri",
-      "nationality": "Spain",
-      "position": "Defender",
-      "current_team": "Manchester City",
-      "market_value": 75000000,
-      "fame_score": 83.57,
-      "birth_year": 1996
+      "id": 1600015,
+      "name": "Alessandro Del Piero",
+      "nationality": "Italy",
+      "position": "Attack",
+      "current_team": "Sydney Fc",
+      "market_value": 0,
+      "fame_score": 83.58,
+      "birth_year": 1974
     },
     {
       "id": 357565,
@@ -72,9 +202,19 @@
       "nationality": "Spain",
       "position": "Midfield",
       "current_team": "Manchester City Football Club",
-      "market_value": 75000000,
+      "market_value": 100000000,
       "fame_score": 83.57,
       "birth_year": 1996
+    },
+    {
+      "id": 1600016,
+      "name": "N'Golo Kante",
+      "nationality": "France",
+      "position": "Midfield",
+      "current_team": "Al-Ittihad",
+      "market_value": 8000000,
+      "fame_score": 83.56,
+      "birth_year": 1991
     },
     {
       "id": 65230,
@@ -82,7 +222,7 @@
       "nationality": "Spain",
       "position": "Midfield",
       "current_team": "Inter Miami",
-      "market_value": 3500000,
+      "market_value": 0,
       "fame_score": 83.47,
       "birth_year": 1988
     },
@@ -91,10 +231,20 @@
       "name": "Andrea Pirlo",
       "nationality": "Italy",
       "position": "Midfield",
-      "current_team": "Juventus Football Club",
-      "market_value": 1000000,
+      "current_team": "New York City Fc",
+      "market_value": 0,
       "fame_score": 83.4,
       "birth_year": 1979
+    },
+    {
+      "id": 1600017,
+      "name": "Roberto Carlos",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Delhi Dynamos",
+      "market_value": 0,
+      "fame_score": 83.39,
+      "birth_year": 1973
     },
     {
       "id": 77,
@@ -102,7 +252,7 @@
       "nationality": "Brazil",
       "position": "Defender",
       "current_team": "Juventus Football Club",
-      "market_value": 200000,
+      "market_value": 0,
       "fame_score": 83.38,
       "birth_year": 1990
     },
@@ -112,7 +262,7 @@
       "nationality": "Brazil",
       "position": "Defender",
       "current_team": "Futbol Club Barcelona",
-      "market_value": 1000000,
+      "market_value": 0,
       "fame_score": 83.35,
       "birth_year": 1983
     },
@@ -122,7 +272,7 @@
       "nationality": "Belgium",
       "position": "Goalkeeper",
       "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 18000000,
+      "market_value": 25000000,
       "fame_score": 83.31,
       "birth_year": 1992
     },
@@ -131,10 +281,20 @@
       "name": "Casemiro",
       "nationality": "Brazil",
       "position": "Midfield",
-      "current_team": "Manchester United Football Club",
+      "current_team": "Inter Miami",
       "market_value": 8000000,
       "fame_score": 83.24,
       "birth_year": 1992
+    },
+    {
+      "id": 1600018,
+      "name": "Angel Di Maria",
+      "nationality": "Argentina",
+      "position": "Attack",
+      "current_team": "Ca Rosario Central",
+      "market_value": 1500000,
+      "fame_score": 83.23,
+      "birth_year": 1988
     },
     {
       "id": 240306,
@@ -142,7 +302,7 @@
       "nationality": "Portugal",
       "position": "Midfield",
       "current_team": "Manchester United Football Club",
-      "market_value": 40000000,
+      "market_value": 45000000,
       "fame_score": 83.14,
       "birth_year": 1994
     },
@@ -152,7 +312,7 @@
       "nationality": "Spain",
       "position": "Attack",
       "current_team": "Club Atlético de Madrid S.A.D.",
-      "market_value": 55000000,
+      "market_value": 50000000,
       "fame_score": 83.14,
       "birth_year": 2001
     },
@@ -162,7 +322,7 @@
       "nationality": "Germany",
       "position": "Midfield",
       "current_team": "FC Bayern München",
-      "market_value": 45000000,
+      "market_value": 50000000,
       "fame_score": 83.03,
       "birth_year": 1995
     },
@@ -171,8 +331,8 @@
       "name": "Frank Lampard",
       "nationality": "England",
       "position": "Midfield",
-      "current_team": "Manchester City Football Club",
-      "market_value": 1000000,
+      "current_team": "New York City Fc",
+      "market_value": 0,
       "fame_score": 82.89,
       "birth_year": 1978
     },
@@ -181,8 +341,8 @@
       "name": "Bernardo Silva",
       "nationality": "Portugal",
       "position": "Midfield",
-      "current_team": "Manchester City Football Club",
-      "market_value": 27000000,
+      "current_team": "Real Madrid Club de Fútbol",
+      "market_value": 25000000,
       "fame_score": 82.81,
       "birth_year": 1994
     },
@@ -192,7 +352,7 @@
       "nationality": "Netherlands",
       "position": "Attack",
       "current_team": "Liverpool Football Club",
-      "market_value": 70000000,
+      "market_value": 65000000,
       "fame_score": 82.76,
       "birth_year": 1999
     },
@@ -201,10 +361,30 @@
       "name": "Didier Drogba",
       "nationality": "Cote d'Ivoire",
       "position": "Attack",
-      "current_team": "Chelsea Football Club",
-      "market_value": 500000,
+      "current_team": "Phoenix Rising Fc",
+      "market_value": 0,
       "fame_score": 82.73,
       "birth_year": 1978
+    },
+    {
+      "id": 1600019,
+      "name": "Samuel Eto'o",
+      "nationality": "Cameroon",
+      "position": "Attack",
+      "current_team": "Qatar Sc",
+      "market_value": 0,
+      "fame_score": 82.61,
+      "birth_year": 1981
+    },
+    {
+      "id": 1600020,
+      "name": "Thiago Silva",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Fluminense",
+      "market_value": 1000000,
+      "fame_score": 82.5,
+      "birth_year": 1984
     },
     {
       "id": 2219,
@@ -212,7 +392,7 @@
       "nationality": "Germany",
       "position": "Defender",
       "current_team": "FC Bayern München",
-      "market_value": 11000000,
+      "market_value": 0,
       "fame_score": 82.49,
       "birth_year": 1983
     },
@@ -222,7 +402,7 @@
       "nationality": "France",
       "position": "Attack",
       "current_team": "US Salernitana 1919",
-      "market_value": 1000000,
+      "market_value": 0,
       "fame_score": 82.49,
       "birth_year": 1983
     },
@@ -232,9 +412,19 @@
       "nationality": "Spain",
       "position": "Midfield",
       "current_team": "Real Sociedad de Fútbol S.A.D.",
-      "market_value": 4000000,
+      "market_value": 0,
       "fame_score": 82.48,
       "birth_year": 1986
+    },
+    {
+      "id": 1600021,
+      "name": "James Rodriguez",
+      "nationality": "Colombia",
+      "position": "Midfield",
+      "current_team": "Minnesota United Fc",
+      "market_value": 3000000,
+      "fame_score": 82.47,
+      "birth_year": 1991
     },
     {
       "id": 709726,
@@ -245,196 +435,6 @@
       "market_value": 85000000,
       "fame_score": 82.39,
       "birth_year": 2002
-    },
-    {
-      "id": 406635,
-      "name": "Phil Foden",
-      "nationality": "England",
-      "position": "Midfield",
-      "current_team": "Manchester City Football Club",
-      "market_value": 80000000,
-      "fame_score": 82.32,
-      "birth_year": 2000
-    },
-    {
-      "id": 164770,
-      "name": "Raphaël Varane",
-      "nationality": "France",
-      "position": "Defender",
-      "current_team": "Manchester United Football Club",
-      "market_value": 20000000,
-      "fame_score": 82.29,
-      "birth_year": 1975
-    },
-    {
-      "id": 74857,
-      "name": "Marc-André ter Stegen",
-      "nationality": "Germany",
-      "position": "Goalkeeper",
-      "current_team": "Girona Fútbol Club S. A. D.",
-      "market_value": 7000000,
-      "fame_score": 82.17,
-      "birth_year": 1992
-    },
-    {
-      "id": 433177,
-      "name": "Bukayo Saka",
-      "nationality": "England",
-      "position": "Attack",
-      "current_team": "Arsenal Football Club",
-      "market_value": 130000000,
-      "fame_score": 81.97,
-      "birth_year": 2001
-    },
-    {
-      "id": 288230,
-      "name": "Ousmane Dembélé",
-      "nationality": "France",
-      "position": "Attack",
-      "current_team": "Paris Saint-Germain Football Club",
-      "market_value": 100000000,
-      "fame_score": 81.96,
-      "birth_year": 1997
-    },
-    {
-      "id": 503733,
-      "name": "Anthony Gordon",
-      "nationality": "England",
-      "position": "Attack",
-      "current_team": "Newcastle United Football Club",
-      "market_value": 60000000,
-      "fame_score": 81.85,
-      "birth_year": 2001
-    },
-    {
-      "id": 59377,
-      "name": "David de Gea",
-      "nationality": "Spain",
-      "position": "Goalkeeper",
-      "current_team": "Associazione Calcio Fiorentina",
-      "market_value": 15000000,
-      "fame_score": 81.84,
-      "birth_year": 1990
-    },
-    {
-      "id": 105470,
-      "name": "Alisson",
-      "nationality": "Brazil",
-      "position": "Goalkeeper",
-      "current_team": "Liverpool Football Club",
-      "market_value": 17000000,
-      "fame_score": 81.8,
-      "birth_year": 2005
-    },
-    {
-      "id": 96341,
-      "name": "Romelu Lukaku",
-      "nationality": "Belgium",
-      "position": "Attack",
-      "current_team": "Società Sportiva Calcio Napoli",
-      "market_value": 15000000,
-      "fame_score": 81.75,
-      "birth_year": 1993
-    },
-    {
-      "id": 7594,
-      "name": "Carles Puyol",
-      "nationality": "Spain",
-      "position": "Defender",
-      "current_team": "Futbol Club Barcelona",
-      "market_value": 1000000,
-      "fame_score": 81.71,
-      "birth_year": 1978
-    },
-    {
-      "id": 5958,
-      "name": "Francesco Totti",
-      "nationality": "Italy",
-      "position": "Attack",
-      "current_team": "Associazione Sportiva Roma",
-      "market_value": 1000000,
-      "fame_score": 81.68,
-      "birth_year": 1976
-    },
-    {
-      "id": 121483,
-      "name": "Jan Oblak",
-      "nationality": "Slovenia",
-      "position": "Goalkeeper",
-      "current_team": "Club Atlético de Madrid S.A.D.",
-      "market_value": 17000000,
-      "fame_score": 81.62,
-      "birth_year": 1993
-    },
-    {
-      "id": 7980,
-      "name": "David Villa",
-      "nationality": "Spain",
-      "position": "Attack",
-      "current_team": "Club Atlético de Madrid S.A.D.",
-      "market_value": 1000000,
-      "fame_score": 81.52,
-      "birth_year": 1981
-    },
-    {
-      "id": 314353,
-      "name": "Trent Alexander-Arnold",
-      "nationality": "England",
-      "position": "Defender",
-      "current_team": "Real Madrid Club de Fútbol",
-      "market_value": 70000000,
-      "fame_score": 81.49,
-      "birth_year": 1998
-    },
-    {
-      "id": 3235,
-      "name": "Rio Ferdinand",
-      "nationality": "England",
-      "position": "Defender",
-      "current_team": "Queens Park Rangers",
-      "market_value": 1000000,
-      "fame_score": 81.44,
-      "birth_year": 1980
-    },
-    {
-      "id": 258923,
-      "name": "Marcus Rashford",
-      "nationality": "England",
-      "position": "Attack",
-      "current_team": "Futbol Club Barcelona",
-      "market_value": 40000000,
-      "fame_score": 81.34,
-      "birth_year": 1978
-    },
-    {
-      "id": 39153,
-      "name": "Gonzalo Higuaín",
-      "nationality": "Argentina",
-      "position": "Attack",
-      "current_team": "Juventus Football Club",
-      "market_value": 1000000,
-      "fame_score": 81.28,
-      "birth_year": 1987
-    },
-    {
-      "id": 948294,
-      "name": "Nico Paz",
-      "nationality": "Argentina",
-      "position": "Midfield",
-      "current_team": "Calcio Como",
-      "market_value": 55000000,
-      "fame_score": 81.28,
-      "birth_year": 2004
-    },
-    {
-      "id": 406625,
-      "name": "Lautaro Martínez",
-      "nationality": "Argentina",
-      "position": "Attack",
-      "current_team": "Football Club Internazionale Milano S.p.A.",
-      "market_value": 85000000,
-      "fame_score": 81.26,
-      "birth_year": 1982
     }
   ]
 }

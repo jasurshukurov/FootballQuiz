@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { fonts } from '@/constants/theme';
+import { type, spacing, borderRadius, touch } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { triggerImpact } from '@/lib/haptics';
 import { ImpactFeedbackStyle } from 'expo-haptics';
 
@@ -8,7 +10,12 @@ interface GiveUpButtonProps {
   onGiveUp: () => void;
 }
 
+// Deliberately NOT a Tappable: the hold-to-confirm long-press is the whole
+// point of this control (prevents accidental reveals), which Tappable's
+// tap-only API can't express.
 function GiveUpButton({ onGiveUp }: GiveUpButtonProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [pressing, setPressing] = useState(false);
 
   const handleLongPress = () => {
@@ -33,34 +40,34 @@ function GiveUpButton({ onGiveUp }: GiveUpButtonProps) {
 
 export default React.memo(GiveUpButton);
 
-const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: 'rgba(255,255,255,0.06)',
-    borderWidth: 1,
-    borderColor: 'rgba(227,57,70,0.5)',
-    borderRadius: 9999,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    minHeight: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonPressed: {
-    borderColor: 'rgba(227,57,70,0.9)',
-    backgroundColor: 'rgba(255,255,255,0.1)',
-  },
-  label: {
-    color: '#A0A0B0',
-    fontSize: 13,
-    fontFamily: fonts.subheading,
-  },
-  hint: {
-    color: '#A0A0B0',
-    fontSize: 10,
-    textAlign: 'center',
-    marginTop: 6,
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    wrapper: {
+      alignItems: 'center',
+    },
+    button: {
+      backgroundColor: c.bgCard,
+      borderWidth: 1,
+      borderColor: c.dangerSoft,
+      borderRadius: borderRadius.full,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.sm,
+      minHeight: touch.min,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonPressed: {
+      borderColor: c.danger,
+      backgroundColor: c.bgCardPressed,
+    },
+    label: {
+      ...type.captionBold,
+      color: c.textSecondary,
+    },
+    hint: {
+      ...type.micro,
+      color: c.textMuted,
+      textAlign: 'center',
+      marginTop: spacing.xs + 2,
+    },
+  });

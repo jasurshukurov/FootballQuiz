@@ -1,10 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { NotificationFeedbackType } from 'expo-haptics';
 
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { triggerNotification } from '@/lib/haptics';
-import { colors, fonts, borderRadius } from '@/constants/theme';
+import { borderRadius, motion, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import RetroButton from '@/components/ui/RetroButton';
 import Confetti from '@/components/ui/Confetti';
 
@@ -12,6 +15,9 @@ import Confetti from '@/components/ui/Confetti';
  *  Wires the existing streakFrozenAvailable + repairStreak() store logic to UI
  *  and celebrates a successful repair. Mount on the home / daily menu screen. */
 export default function StreakRepairPrompt() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const streakFrozenAvailable = useDailyStateStore((s) => s.streakFrozenAvailable);
   const previousStreak = useDailyStateStore((s) => s.previousStreak);
   const repairStreak = useDailyStateStore((s) => s.repairStreak);
@@ -42,8 +48,8 @@ export default function StreakRepairPrompt() {
     <Modal visible transparent animationType="fade" onRequestClose={handleClose}>
       <View style={styles.overlay}>
         {celebrating && <Confetti />}
-        <View style={styles.card}>
-          <Text style={styles.emoji}>{celebrating ? '🔥' : '💔'}</Text>
+        <Animated.View entering={FadeInDown.duration(motion.base)} style={styles.card}>
+          <Text style={layout.emoji}>{celebrating ? '🔥' : '💔'}</Text>
           <Text style={styles.title}>{celebrating ? 'Streak Restored!' : 'Streak Broke!'}</Text>
           <Text style={styles.subtitle}>
             {celebrating ? (
@@ -60,7 +66,7 @@ export default function StreakRepairPrompt() {
             )}
           </Text>
 
-          <View style={styles.buttons}>
+          <View style={layout.buttons}>
             {celebrating ? (
               <RetroButton title="Let's go!" onPress={handleClose} />
             ) : (
@@ -70,56 +76,56 @@ export default function StreakRepairPrompt() {
               </>
             )}
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
 }
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    paddingHorizontal: 24,
-  },
-  card: {
-    width: '100%',
-    maxWidth: 384,
-    alignItems: 'center',
-    borderRadius: borderRadius.xl,
-    borderWidth: 2,
-    borderColor: colors.cardYellow,
-    backgroundColor: colors.broadcasterDark,
-    padding: 32,
-  },
+const layout = StyleSheet.create({
   emoji: {
-    marginBottom: 8,
-    fontSize: 36,
-  },
-  title: {
-    marginBottom: 8,
-    textAlign: 'center',
-    fontSize: 24,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    letterSpacing: 1,
-  },
-  subtitle: {
-    marginBottom: 24,
-    textAlign: 'center',
-    fontSize: 14,
-    fontFamily: fonts.body,
-    color: 'rgba(245,245,240,0.7)',
-    lineHeight: 20,
-  },
-  streakCount: {
-    fontFamily: fonts.heading,
-    color: colors.cardYellow,
+    marginBottom: spacing.sm,
+    fontSize: type.display.fontSize,
   },
   buttons: {
     width: '100%',
-    gap: 12,
+    gap: spacing.md,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    overlay: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.scrim,
+      paddingHorizontal: spacing.xl,
+    },
+    card: {
+      width: '100%',
+      maxWidth: 384,
+      alignItems: 'center',
+      borderRadius: borderRadius.xl,
+      borderWidth: 1,
+      borderColor: c.streak,
+      backgroundColor: c.bgElevated,
+      padding: spacing.xxl,
+    },
+    title: {
+      ...type.h2,
+      marginBottom: spacing.sm,
+      textAlign: 'center',
+      color: c.textPrimary,
+    },
+    subtitle: {
+      ...type.body,
+      marginBottom: spacing.xl,
+      textAlign: 'center',
+      color: c.textSecondary,
+    },
+    streakCount: {
+      ...type.bodyBold,
+      color: c.streakBright,
+    },
+  });

@@ -1,21 +1,28 @@
 import { getAllTransferHistories } from '@/lib/transferData';
 import { Transfer } from '@/types/transfer';
+import { getFameByName } from '@/lib/playerData';
+import { getTodayDateString } from '@/lib/dailySeed';
+import {
+  bandForDate,
+  bandFameOffset,
+  progressionForRound,
+  filterByFameBand,
+  resolveSkillTier,
+  FameBand,
+} from '@/lib/difficultyCurve';
 
-// fame_score join by normalized player name for the in-session difficulty ramp.
-const fameScoresData = require('@/data/fame_scores.json') as {
-  name: string;
-  fame_score: number;
-}[];
-const normName = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-const fameByName = new Map<string, number>();
-for (const e of fameScoresData) fameByName.set(normName(e.name), e.fame_score);
-function playerFame(name: string): number {
-  return fameByName.get(normName(name)) ?? 0;
-}
+// Disambiguated fame join by name (getFameByName) gates the answer player's
+// difficulty. Raw fame_scores.json (name-keyed, no namesake disambiguation) is
+// intentionally NOT used — an obscure namesake of a star must not inherit the
+// star's fame and slip into an "easy" round.
 
 export interface AgentRoundOption {
   playerId: number;
   playerName: string;
+  /** The option's own highest verified transfer fee (for teach-on-miss). */
+  fee: string;
+  clubFrom: string;
+  clubTo: string;
 }
 
 export interface AgentRound {
@@ -97,11 +104,40 @@ function shuffleArray<T>(arr: T[], rand: () => number): T[] {
   return result;
 }
 
+type TransferHistory = ReturnType<typeof getAllTransferHistories>[number];
+
+/** Build an option (with its own headline transfer) for teach-on-miss. */
+function buildOption(
+  p: TransferHistory,
+  best: { transfer: Transfer; index: number },
+): AgentRoundOption {
+  const clubTo = best.transfer.club_name;
+  const clubFrom = best.index > 0 ? p.transfers[best.index - 1].club_name : 'Unknown';
+  return {
+    playerId: p.player_id,
+    playerName: p.player_name,
+    fee: best.transfer.fee!,
+    clubFrom,
+    clubTo,
+  };
+}
+
+/**
+ * Generate one round.
+ *
+ * Difficulty comes from the ANSWER player's fame (the shared weekly curve),
+ * NOT from distractor-fee "spacing" — fees are hidden from the player, so
+ * spacing them is invisible difficulty. `gapRatio` only guarantees the
+ * distractors' own headline fees are far enough from the target that a lucky
+ * "they look similar" guess isn't rewarded, and the 1% exact-fee guard rejects
+ * a distractor that shares the target fee (a second valid answer).
+ */
 export function generateAgentRound(
   seed: number,
   round: number,
   minFame = 0,
-  spacing = 0.05,
+  maxFame?: number,
+  gapRatio = 0.05,
 ): AgentRound | null {
   const rand = seededRandom(seed * 1000 + round * 137);
   const allPlayers = getAllTransferHistories();
@@ -111,23 +147,24 @@ export function generateAgentRound(
 
   if (playersWithFees.length < 3) return null;
 
-  // The CORRECT (answer) player is fame-gated by the round's difficulty; widen
-  // if the tier is too thin. Distractors are drawn from the full pool.
+  // The CORRECT (answer) player is fame-gated by the round's difficulty band;
+  // filterByFameBand widens symmetrically if the tier is too thin so a narrow
+  // band never empties the pool. Distractors are drawn from the full pool.
   let correctPool = playersWithFees;
-  if (minFame > 0) {
-    for (let floor = minFame; floor > 0; floor -= 10) {
-      const pool = playersWithFees.filter((p) => playerFame(p.player_name) >= floor);
-      if (pool.length >= 5) {
-        correctPool = pool;
-        break;
-      }
-    }
+  if (minFame > 0 || maxFame !== undefined) {
+    const band: FameBand = { min: minFame, max: maxFame ?? 101, label: 'medium' };
+    correctPool = filterByFameBand(
+      playersWithFees,
+      band,
+      (p) => getFameByName(p.player_name)?.fame_score,
+      5,
+    );
   }
 
   // Feature a transfer with a KNOWN origin club (index > 0) so the hint never
   // reads "Unknown -> club".
   const shuffledCorrect = shuffleArray(correctPool, rand);
-  let correct: (typeof shuffledCorrect)[number] | null = null;
+  let correct: TransferHistory | null = null;
   let best: { transfer: Transfer; index: number } | null = null;
   for (const c of shuffledCorrect) {
     const b = getHighestFeeTransfer(c.transfers, 1);
@@ -141,9 +178,10 @@ export function generateAgentRound(
 
   const correctFeeVal = parseFeeToNumber(best.transfer.fee!);
 
-  // Pick 2 wrong options whose fees can't be confused with the target. Fee
-  // spacing tightens on later rounds (via `spacing`); the exact-fee ambiguity
-  // rejection is always enforced.
+  // Pick 2 wrong options whose headline fees are far from the target and which
+  // were never transferred for the exact target fee (that would be a second
+  // valid answer). Distractor fame is unconstrained — difficulty lives in the
+  // answer, not the distractors.
   const shuffled = shuffleArray(playersWithFees, rand);
   const wrongOptions: AgentRoundOption[] = [];
   for (let i = 0; i < shuffled.length && wrongOptions.length < 2; i++) {
@@ -152,15 +190,12 @@ export function generateAgentRound(
     const candidateBest = getHighestFeeTransfer(candidate.transfers);
     if (!candidateBest) continue;
     const candidateFeeVal = parseFeeToNumber(candidateBest.transfer.fee!);
-    // Highest fees must be spaced apart...
-    if (Math.abs(candidateFeeVal - correctFeeVal) < correctFeeVal * spacing) continue;
+    // Headline fees must be spaced apart...
+    if (Math.abs(candidateFeeVal - correctFeeVal) < correctFeeVal * gapRatio) continue;
     // ...AND the distractor must not have been transferred for the exact target
     // fee in ANY of its moves (that would be a second valid answer).
     if (hasTransferNearFee(candidate.transfers, correctFeeVal)) continue;
-    wrongOptions.push({
-      playerId: candidate.player_id,
-      playerName: candidate.player_name,
-    });
+    wrongOptions.push(buildOption(candidate, candidateBest));
   }
 
   if (wrongOptions.length < 2) return null;
@@ -171,13 +206,7 @@ export function generateAgentRound(
   const clubFrom = transferIdx > 0 ? correct.transfers[transferIdx - 1].club_name : 'Unknown';
 
   const options: AgentRoundOption[] = shuffleArray(
-    [
-      {
-        playerId: correct.player_id,
-        playerName: correct.player_name,
-      },
-      ...wrongOptions,
-    ],
+    [buildOption(correct, best), ...wrongOptions],
     rand,
   );
 
@@ -191,22 +220,41 @@ export function generateAgentRound(
   };
 }
 
-export function generateDailyAgentGame(dateString: string): AgentRound[] {
-  // Create a seed from the date string
+/**
+ * Build the 10-round daily game.
+ *
+ * @param seedInput numeric string used purely as the RNG seed (mode seed on the
+ *   daily run, Date.now() on Play Again).
+ * @param dateStr   local YYYY-MM-DD, drives the weekly difficulty band. Defaults
+ *   to today so Play Again keeps the same day's band.
+ */
+export function generateDailyAgentGame(
+  seedInput: string,
+  dateStr: string = getTodayDateString(),
+): AgentRound[] {
+  // Create a seed from the seed-input string
   let seed = 0;
-  for (let i = 0; i < dateString.length; i++) {
-    seed = (seed * 31 + dateString.charCodeAt(i)) % 2147483647;
+  for (let i = 0; i < seedInput.length; i++) {
+    seed = (seed * 31 + seedInput.charCodeAt(i)) % 2147483647;
   }
+
+  const band = bandForDate(dateStr);
+  const offset = bandFameOffset(band);
+  // Per-user skill tier (neutral 0 without play history) steepens/softens the
+  // round ramp by at most one step.
+  const skillTier = resolveSkillTier('agent');
 
   const rounds: AgentRound[] = [];
   let attempt = 0;
-  while (rounds.length < 10 && attempt < 80) {
-    // Difficulty ramp by round position: famous answers first, obscure last;
-    // distractor fee spacing tightens as the game goes on.
+  while (rounds.length < 10 && attempt < 120) {
+    // Difficulty ramps by round via the shared progression curve: famous
+    // answers early, obscure late. The daily band nudges the whole curve
+    // (easier Monday, harder Saturday).
     const pos = rounds.length;
-    const minFame = pos < 3 ? 75 : pos < 7 ? 60 : 0;
-    const spacing = pos < 3 ? 0.15 : pos < 7 ? 0.08 : 0.05;
-    const round = generateAgentRound(seed + attempt * 7, pos, minFame, spacing);
+    const prog = progressionForRound(pos, skillTier);
+    const minFame = Math.max(0, prog.minFame + offset);
+    const maxFame = prog.maxFame;
+    const round = generateAgentRound(seed + attempt * 7, pos, minFame, maxFame, prog.gapRatio);
     if (round) {
       // Avoid duplicate correct players
       const alreadyUsed = rounds.some((r) => r.correctPlayerId === round.correctPlayerId);

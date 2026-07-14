@@ -1,0 +1,31 @@
+SKIP 1999 UEFA Cup final: no header paired with exactly 2 XI blocks
+SKIP 1989 European Cup Winners' Cup final: headers=2 xi-blocks=0
+SKIP 1993 European Cup Winners' Cup final: no header paired with exactly 2 XI blocks
+SKIP 1955 FA Cup final: headers=2 xi-blocks=0
+SKIP 1956 FA Cup final: headers=2 xi-blocks=0
+SKIP 1968 FA Cup final: no header paired with exactly 2 XI blocks
+SKIP 1973 FA Cup final: no header paired with exactly 2 XI blocks
+SKIP 1961 Football League Cup final: headers=3 xi-blocks=0
+SKIP 1962 Football League Cup final: headers=3 xi-blocks=0
+SKIP 1963 Football League Cup final: headers=3 xi-blocks=0
+SKIP 1964 Football League Cup final: headers=3 xi-blocks=0
+SKIP 1965 Football League Cup final: no header paired with exactly 2 XI blocks
+SKIP 1966 Football League Cup final: headers=1 xi-blocks=0
+SKIP 1968 Football League Cup final: headers=1 xi-blocks=0
+SKIP 1969 Football League Cup final: no header paired with exactly 2 XI blocks
+SKIP 1970 Football League Cup final: headers=2 xi-blocks=0
+SKIP 1971 Football League Cup final: headers=2 xi-blocks=0
+SKIP 1973 Football League Cup final: headers=2 xi-blocks=0
+SKIP 1978 Football League Cup final: headers=1 xi-blocks=0
+SKIP 1979 Football League Cup final: headers=1 xi-blocks=0
+SKIP 1987 UEFA Super Cup: no header paired with exactly 2 XI blocks
+SKIP 1988 UEFA Super Cup: headers=3 xi-blocks=0
+SKIP 1997 UEFA Super Cup: no header paired with exactly 2 XI blocks
+SKIP 2011 FIFA Club World Cup final: no header paired with exactly 2 XI blocks
+SKIP 1966 Copa Libertadores finals: duplicate names in an XI
+SKIP 1997 Copa Libertadores finals: no header paired with exactly 2 XI blocks
+SKIP 2004 Copa Libertadores finals: header without date
+SKIP 1972 AFC Asian Cup final: headers=2 xi-blocks=0
+SKIP 1992 Copa del Rey final: no header paired with exactly 2 XI blocks
+SKIP 2010 Copa del Rey final: no header paired with exactly 2 XI blocks
+SKIP 2003 Coppa Italia final: headers=3 xi-blocks=0

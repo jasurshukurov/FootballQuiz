@@ -1,27 +1,47 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View, Modal } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { NotificationFeedbackType } from 'expo-haptics';
+import RankBadge from '@/components/ui/RankBadge';
 
-import { generateConnectionsPuzzle, ConnectionsPuzzle } from '@/lib/connectionsGenerator';
-import { getModeSeed, createSeededRandom } from '@/lib/dailySeed';
+import {
+  generateConnectionsPuzzle,
+  ConnectionsPuzzle,
+  isOneAway,
+  connectionsRank,
+} from '@/lib/connectionsGenerator';
+import {
+  getModeSeed,
+  createSeededRandom,
+  seededShuffle,
+  getTodayDateString,
+} from '@/lib/dailySeed';
 import { getDailyNumber } from '@/lib/dailyPuzzle';
-import { triggerImpact, triggerNotification } from '@/lib/haptics';
+import { triggerNotification } from '@/lib/haptics';
+import { FEATURES } from '@/lib/featureFlags';
+import { getRank } from '@/lib/rankLadder';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyResultsStore } from '@/hooks/useDailyResultsStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
+import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import ConnectionsBoard, { TileData, SolvedCategory } from '@/components/games/ConnectionsBoard';
+import { connectionsGroupColor } from '@/components/games/ConnectionsTile';
 import RetroButton from '@/components/ui/RetroButton';
 import CopyResultButton from '@/components/ui/CopyResultButton';
 import GameOverExtras from '@/components/ui/GameOverExtras';
-import { colors, fonts, borderRadius } from '@/constants/theme';
+import PopInView from '@/components/ui/PopInView';
+import Screen from '@/components/ui/Screen';
+import ScreenHeader from '@/components/ui/ScreenHeader';
+import Tappable from '@/components/ui/Tappable';
+import { spacing, borderRadius, type, touch } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import ShareableConnectionsResult from '@/components/ShareableConnectionsResult';
 import PracticePill from '@/components/ui/PracticePill';
 import { captureAndShare, buildShareText } from '@/lib/sharing';
 import { playCheer } from '@/lib/sounds';
-import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
 const MAX_MISTAKES = 4;
 
@@ -33,6 +53,9 @@ function practiceDateToDate(dateStr?: string): Date | undefined {
 export default function ConnectionsScreen() {
   const { practiceDate } = useLocalSearchParams<{ practiceDate?: string }>();
   const isPractice = !!practiceDate;
+  const theme = useTheme();
+  const { colors, shadows } = theme;
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [puzzle, setPuzzle] = useState<ConnectionsPuzzle | null>(null);
   const [tileNames, setTileNames] = useState<string[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -42,11 +65,23 @@ export default function ConnectionsScreen() {
   const [shaking, setShaking] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [oneAway, setOneAway] = useState(false);
   const [flashingDotIdx, setFlashingDotIdx] = useState<number | null>(null);
   const shareRef = useRef<View>(null);
   const isFirstGame = useRef(true);
+  /** True while the current run IS the official daily (blob writes gate on it). */
+  const isDailyRun = useRef(false);
   const shuffleRng = useRef<() => number>(() => Math.random());
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
+  // Daily re-entry restoration: recorded result at MOUNT time re-opens the
+  // result modal over the finished board instead of dealing the daily again.
+  // Archive/practice entries are exempt (they play a different day's board).
+  const [restoredDaily] = useState(
+    () => !practiceDate && useDailyProgressStore.getState().isCompleted('connections'),
+  );
+  // True when restoring a completion recorded before the daily-result blob
+  // existed — the end state is unknown, so the modal shows a neutral panel.
+  const [restoredUnknown, setRestoredUnknown] = useState(false);
 
   const initPuzzle = useCallback(() => {
     // Practice/archive: seed deterministically from the chosen past date.
@@ -55,9 +90,10 @@ export default function ConnectionsScreen() {
       : isFirstGame.current
         ? getModeSeed('connections')
         : Date.now();
+    isDailyRun.current = !practiceDate && isFirstGame.current;
     isFirstGame.current = false;
     shuffleRng.current = createSeededRandom(seed);
-    const p = generateConnectionsPuzzle(seed);
+    const p = generateConnectionsPuzzle(seed, practiceDate ?? getTodayDateString());
     setPuzzle(p);
     setTileNames(p.shuffledNames);
     setSelected(new Set());
@@ -67,17 +103,50 @@ export default function ConnectionsScreen() {
     setShaking(false);
     setShowModal(false);
     setGameOver(false);
+    setOneAway(false);
     setFlashingDotIdx(null);
   }, [practiceDate]);
 
   useEffect(() => {
+    if (restoredDaily) {
+      // Completed daily re-entry: rebuild the deterministic daily board in its
+      // finished state and re-open the result modal. "Play Again" still deals
+      // a practice board via initPuzzle.
+      const seed = getModeSeed('connections');
+      isFirstGame.current = false;
+      isDailyRun.current = false;
+      shuffleRng.current = createSeededRandom(seed);
+      const p = generateConnectionsPuzzle(seed, getTodayDateString());
+      setPuzzle(p);
+      setTileNames(p.shuffledNames);
+      const blob = useDailyResultsStore
+        .getState()
+        .getResult<{ mistakes: number; solvedOrder: string[] }>('connections');
+      if (blob) {
+        const solved: SolvedCategory[] = blob.solvedOrder
+          .map((name) => p.categories.find((c) => c.name === name))
+          .filter((c): c is NonNullable<typeof c> => !!c)
+          .map((c) => ({ name: c.name, difficulty: c.difficulty, playerNames: c.playerNames }));
+        setSolvedCategories(solved);
+        setSolvedNames(new Set(solved.flatMap((s) => s.playerNames)));
+        setMistakes(blob.mistakes);
+      } else {
+        setRestoredUnknown(true);
+      }
+      setGameOver(true);
+      setShowModal(true);
+      return;
+    }
     initPuzzle();
-  }, [initPuzzle]);
+  }, [initPuzzle, restoredDaily]);
 
+  // Tap haptic fires inside ConnectionsTile — no extra impact here.
   const handleTilePress = useCallback(
     (name: string) => {
       if (gameOver) return;
-      triggerImpact();
+      // Solve-time stopwatch starts on the first tile select (no-ops after).
+      // Practice/archive runs never touch the daily stopwatch.
+      if (!isPractice) useSolveTimeStore.getState().markStarted('connections');
       setSelected((prev) => {
         const next = new Set(prev);
         if (next.has(name)) {
@@ -88,7 +157,7 @@ export default function ConnectionsScreen() {
         return next;
       });
     },
-    [gameOver],
+    [gameOver, isPractice],
   );
 
   const handleSubmit = useCallback(() => {
@@ -105,7 +174,7 @@ export default function ConnectionsScreen() {
       triggerNotification(NotificationFeedbackType.Success);
       const newSolved: SolvedCategory = {
         name: matchedCategory.name,
-        color: matchedCategory.color,
+        difficulty: matchedCategory.difficulty,
         playerNames: matchedCategory.playerNames,
       };
       const updatedSolved = [...solvedCategories, newSolved];
@@ -122,13 +191,36 @@ export default function ConnectionsScreen() {
         playCheer();
         // Practice/archive runs never touch progress, XP or streak.
         if (!isPractice) {
-          useManagerStore.getState().addXp('connections', 4 * 25 + (mistakes === 0 ? 50 : 0));
+          useManagerStore
+            .getState()
+            .awardDailyXp('connections', 4 * 25 + (mistakes === 0 ? 50 : 0));
           useDailyProgressStore.getState().markCompleted('connections', 4 - mistakes);
+          // Wins can set a time PB.
+          useSolveTimeStore.getState().markCompleted('connections', { countsForBest: true });
+          // Persist the end state (DAILY run only) for re-entry restoration.
+          if (isDailyRun.current) {
+            useDailyResultsStore.getState().setResult('connections', {
+              mistakes,
+              solvedOrder: updatedSolved.map((s) => s.name),
+            });
+          }
         }
         setTimeout(() => setShowModal(true), 600);
       }
     } else {
-      triggerNotification(NotificationFeedbackType.Error);
+      // "One away!" — exactly 3 of the 4 selected belong to one unsolved group.
+      // Distinct near-miss feedback (Warning haptic + non-spoiler banner) is the
+      // single highest feel-per-effort mechanic in NYT Connections.
+      const near = isOneAway(
+        selectedArr,
+        puzzle.categories,
+        solvedCategories.map((s) => s.name),
+      );
+      triggerNotification(near ? NotificationFeedbackType.Warning : NotificationFeedbackType.Error);
+      if (near) {
+        setOneAway(true);
+        setTimeout(() => setOneAway(false), 1800);
+      }
       setShaking(true);
       const newMistakes = mistakes + 1;
       setMistakes(newMistakes);
@@ -146,8 +238,16 @@ export default function ConnectionsScreen() {
       if (newMistakes >= MAX_MISTAKES) {
         setGameOver(true);
         if (!isPractice) {
-          useManagerStore.getState().addXp('connections', solvedCategories.length * 25);
+          useManagerStore.getState().awardDailyXp('connections', solvedCategories.length * 25);
           useDailyProgressStore.getState().markCompleted('connections', solvedCategories.length);
+          // Losses never set a time PB.
+          useSolveTimeStore.getState().markCompleted('connections', { countsForBest: false });
+          if (isDailyRun.current) {
+            useDailyResultsStore.getState().setResult('connections', {
+              mistakes: newMistakes,
+              solvedOrder: solvedCategories.map((s) => s.name),
+            });
+          }
         }
         setTimeout(() => setShowModal(true), 600);
       }
@@ -158,11 +258,12 @@ export default function ConnectionsScreen() {
     setSelected(new Set());
   }, []);
 
+  // Tap haptic fires inside RetroButton — no extra impact here.
   const handleShuffle = useCallback(() => {
-    triggerImpact();
     setTileNames((prev) => {
       const remaining = prev.filter((n) => !solvedNames.has(n));
-      const shuffled = [...remaining].sort(() => shuffleRng.current() - 0.5);
+      // Unbiased Fisher-Yates (a random comparator is biased and engine-dependent).
+      const shuffled = seededShuffle(remaining, shuffleRng.current);
       const solved = prev.filter((n) => solvedNames.has(n));
       return [...solved, ...shuffled];
     });
@@ -178,6 +279,8 @@ export default function ConnectionsScreen() {
 
   const won = solvedCategories.length >= 4;
 
+  const solveTimeMs = useTodaySolveTime('connections');
+
   const shareText = useMemo(
     () =>
       puzzle
@@ -190,337 +293,366 @@ export default function ConnectionsScreen() {
             solvedDifficulties: solvedCategories.map(
               (s) => puzzle.categories.find((c) => c.name === s.name)?.difficulty ?? 0,
             ),
+            // Practice shares never carry the daily's solve time.
+            solveTimeMs: isPractice ? null : solveTimeMs,
           })
         : '',
-    [puzzle, dailyStreak, mistakes, solvedCategories, practiceDate],
+    [puzzle, dailyStreak, mistakes, solvedCategories, practiceDate, isPractice, solveTimeMs],
   );
 
   if (!puzzle) {
     return (
-      <LinearGradient
-        colors={['#0D1B2A', '#1B0A2E']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}>
-        <SafeAreaView style={styles.loadingContainer} edges={['bottom']}>
+      <Screen scroll={false}>
+        <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>Loading puzzle...</Text>
-        </SafeAreaView>
-      </LinearGradient>
+        </View>
+      </Screen>
     );
   }
 
   return (
-    <LinearGradient
-      colors={['#0D1B2A', '#1B0A2E']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}>
-      <SafeAreaView style={styles.safeArea} edges={['bottom']}>
-        <View style={styles.container}>
-          <Text style={styles.title}>CONNECTIONS</Text>
-          <Text style={styles.subtitle}>Find 4 groups of 4 players</Text>
-          {isPractice && <PracticePill date={practiceDate} />}
+    <Screen scroll={false}>
+      <ScreenHeader
+        eyebrow={
+          isPractice ? 'Practice' : `Daily #${getDailyNumber(practiceDateToDate(practiceDate))}`
+        }
+        title="Connections"
+        modeKey="connections"
+        subtitle="Find 4 groups of 4 players"
+      />
+      {isPractice && <PracticePill date={practiceDate} />}
 
-          <ConnectionsBoard
-            tiles={tiles}
-            solvedCategories={solvedCategories}
-            onTilePress={handleTilePress}
-            shaking={shaking}
-            disabled={gameOver}
-          />
+      <ConnectionsBoard
+        tiles={tiles}
+        solvedCategories={solvedCategories}
+        onTilePress={handleTilePress}
+        shaking={shaking}
+        disabled={gameOver}
+      />
 
-          {/* Mistake dots */}
-          <View style={styles.mistakesRow}>
-            <Text style={styles.mistakesLabel}>Mistakes remaining:</Text>
-            <View style={styles.dots}>
-              {Array.from({ length: MAX_MISTAKES }).map((_, i) => {
-                const isActive = i < MAX_MISTAKES - mistakes;
-                const isFlashing = i === flashingDotIdx;
-                return (
-                  <View
-                    key={i}
-                    style={[
-                      styles.dot,
-                      isFlashing
-                        ? styles.dotFlashing
-                        : isActive
-                          ? styles.dotActive
-                          : styles.dotUsed,
-                    ]}
-                  />
-                );
-              })}
-            </View>
-          </View>
-
-          {/* Action buttons */}
-          {!gameOver && (
-            <View style={styles.buttonRow}>
-              <View style={styles.buttonWrapper}>
-                <RetroButton title="Shuffle" onPress={handleShuffle} variant="secondary" />
-              </View>
-              <View style={styles.buttonWrapper}>
-                <RetroButton
-                  title="Deselect All"
-                  onPress={handleDeselectAll}
-                  variant="secondary"
-                  disabled={selected.size === 0}
-                />
-              </View>
-              <View style={styles.buttonWrapper}>
-                <RetroButton
-                  title="Submit"
-                  onPress={handleSubmit}
-                  variant="primary"
-                  disabled={selected.size !== 4}
-                />
-              </View>
-            </View>
-          )}
+      {/* One-away near-miss banner (non-spoiler) */}
+      {oneAway && !gameOver && (
+        <View style={styles.oneAwayBanner}>
+          <Text style={styles.oneAwayText}>One away…</Text>
         </View>
+      )}
 
-        {/* Result Modal */}
-        <Modal visible={showModal} transparent animationType="fade">
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>{won ? 'WELL PLAYED!' : 'FULL TIME'}</Text>
-              <Text style={styles.modalSubtitle}>
-                {won
-                  ? `You solved it with ${mistakes} mistake${mistakes !== 1 ? 's' : ''}!`
-                  : 'Better luck next time'}
-              </Text>
+      {/* Mistake dots */}
+      <View style={styles.mistakesRow}>
+        <Text style={styles.mistakesLabel}>Mistakes remaining:</Text>
+        <View style={styles.dots}>
+          {Array.from({ length: MAX_MISTAKES }).map((_, i) => {
+            const isActive = i < MAX_MISTAKES - mistakes;
+            const isFlashing = i === flashingDotIdx;
+            return (
+              <View
+                key={i}
+                style={[
+                  styles.dot,
+                  isFlashing
+                    ? styles.dotFlashing
+                    : isActive
+                      ? [styles.dotActive, shadows.neonGlow]
+                      : styles.dotUsed,
+                ]}
+              />
+            );
+          })}
+        </View>
+      </View>
 
-              {/* Show all categories */}
-              <View style={styles.modalCategories}>
-                {puzzle.categories.map((cat) => (
-                  <View key={cat.name} style={[styles.modalCatRow, { backgroundColor: cat.color }]}>
-                    <Text style={styles.modalCatName}>{cat.name}</Text>
-                    <Text style={styles.modalCatPlayers}>{cat.playerNames.join(', ')}</Text>
-                  </View>
-                ))}
-              </View>
+      {/* Push controls to the bottom of the screen */}
+      <View style={styles.spacer} />
 
-              <Pressable
-                style={styles.shareBtn}
-                onPress={() => captureAndShare(shareRef, shareText)}>
-                <Text style={styles.shareBtnText}>Share Result</Text>
-              </Pressable>
-              <View style={styles.copyBtnWrap}>
-                <CopyResultButton text={shareText} />
-              </View>
-              <Pressable style={styles.playAgainBtn} onPress={initPuzzle}>
-                <Text style={styles.playAgainBtnText}>Play Again</Text>
-              </Pressable>
-              <Pressable style={styles.modalCloseBtn} onPress={() => setShowModal(false)}>
-                <Text style={styles.modalCloseText}>Close</Text>
-              </Pressable>
-            </View>
-            <GameOverExtras win={won} />
+      {/* Action buttons */}
+      {!gameOver && (
+        <View style={styles.buttonRow}>
+          <View style={styles.buttonWrapper}>
+            <RetroButton title="Shuffle" onPress={handleShuffle} variant="secondary" />
           </View>
-        </Modal>
-
-        {/* Offscreen shareable view */}
-        <View style={styles.offscreen}>
-          <View ref={shareRef} collapsable={false}>
-            <ShareableConnectionsResult
-              categories={puzzle.categories}
-              solvedOrder={solvedCategories.map((s) => s.name)}
-              mistakes={mistakes}
+          <View style={styles.buttonWrapper}>
+            <RetroButton
+              title="Deselect All"
+              onPress={handleDeselectAll}
+              variant="secondary"
+              disabled={selected.size === 0}
+            />
+          </View>
+          <View style={styles.buttonWrapper}>
+            <RetroButton
+              title="Submit"
+              onPress={handleSubmit}
+              variant="primary"
+              disabled={selected.size !== 4}
             />
           </View>
         </View>
-        <TutorialOverlay
-          modeKey="connections"
-          title="Connections"
-          description="Find 4 groups of 4 players that share something in common. You have 4 mistakes allowed."
-        />
-      </SafeAreaView>
-    </LinearGradient>
+      )}
+
+      {/* Result Modal */}
+      <Modal visible={showModal} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={[styles.modalTitle, won ? styles.modalTitleWon : styles.modalTitleLost]}>
+              {restoredUnknown ? 'ALREADY PLAYED' : won ? 'WELL PLAYED!' : 'FULL TIME'}
+            </Text>
+            <Text style={styles.modalSubtitle}>
+              {restoredUnknown
+                ? 'Come back tomorrow for a new board'
+                : won
+                  ? `You solved it with ${mistakes} mistake${mistakes !== 1 ? 's' : ''}!`
+                  : 'Better luck next time'}
+            </Text>
+
+            <PopInView delay={150}>
+              {restoredUnknown ? (
+                // End state unknown (pre-blob completion): rank the recorded score.
+                <RankBadge
+                  rank={getRank(
+                    useDailyProgressStore.getState().scoresByMode['connections'] ?? 0,
+                    4,
+                  )}
+                  unit="groups"
+                />
+              ) : (
+                <RankBadge
+                  rank={connectionsRank(solvedCategories.length, mistakes)}
+                  unit="groups"
+                />
+              )}
+            </PopInView>
+            {!isPractice && <SolveTimeResult mode="connections" />}
+
+            {/* Show all categories */}
+            <View style={styles.modalCategories}>
+              {puzzle.categories.map((cat) => {
+                const group = connectionsGroupColor(cat.difficulty, theme.dark);
+                return (
+                  <View key={cat.name} style={[styles.modalCatRow, { backgroundColor: group.bg }]}>
+                    <Text style={[styles.modalCatName, { color: group.text }]}>{cat.name}</Text>
+                    <Text style={[styles.modalCatPlayers, { color: group.text }]}>
+                      {cat.playerNames.join(', ')}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+
+            {/* Share/copy hidden behind the sharing flag (plumbing stays wired). */}
+            {FEATURES.sharing && (
+              <Tappable
+                style={styles.shareBtn}
+                hoverStyle={{ backgroundColor: colors.accentDim }}
+                haptic="success"
+                onPress={() => captureAndShare(shareRef, shareText)}>
+                <Text style={styles.shareBtnText}>Share Result</Text>
+              </Tappable>
+            )}
+            {FEATURES.sharing && (
+              <View style={styles.copyBtnWrap}>
+                <CopyResultButton text={shareText} />
+              </View>
+            )}
+            <Tappable
+              style={styles.playAgainBtn}
+              hoverStyle={{ backgroundColor: colors.accentDim }}
+              onPress={initPuzzle}>
+              <Text style={styles.playAgainBtnText}>Play Again</Text>
+            </Tappable>
+            <Tappable
+              style={styles.modalCloseBtn}
+              hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+              onPress={() => setShowModal(false)}>
+              <Text style={styles.modalCloseText}>Close</Text>
+            </Tappable>
+          </View>
+          <GameOverExtras win={won} />
+        </View>
+      </Modal>
+
+      {/* Offscreen shareable view */}
+      <View style={styles.offscreen}>
+        <View ref={shareRef} collapsable={false}>
+          <ShareableConnectionsResult
+            categories={puzzle.categories}
+            solvedOrder={solvedCategories.map((s) => s.name)}
+            mistakes={mistakes}
+          />
+        </View>
+      </View>
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  safeArea: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 100,
-  },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  loadingText: {
-    color: colors.chalkWhite,
-  },
-  title: {
-    fontSize: 28,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    textAlign: 'center',
-    letterSpacing: 3,
-  },
-  subtitle: {
-    fontSize: 14,
-    fontFamily: fonts.subheading,
-    color: colors.steelGray,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  mistakesRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    gap: 8,
-  },
-  mistakesLabel: {
-    fontSize: 12,
-    color: colors.steelGray,
-    fontFamily: fonts.scoreboard,
-  },
-  dots: {
-    flexDirection: 'row',
-    gap: 6,
-  },
-  dot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-  },
-  dotActive: {
-    backgroundColor: colors.pitchGreen,
-    shadowColor: '#05F26C',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  dotFlashing: {
-    backgroundColor: '#E63946',
-  },
-  dotUsed: {
-    backgroundColor: 'rgba(108,117,125,0.2)',
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 20,
-    justifyContent: 'center',
-  },
-  buttonWrapper: {
-    flex: 1,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContent: {
-    width: '85%',
-    backgroundColor: colors.retroBlack,
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: colors.pitchGreen,
-    padding: 24,
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 28,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    letterSpacing: 3,
-  },
-  modalSubtitle: {
-    fontSize: 14,
-    fontFamily: fonts.scoreboard,
-    color: colors.chalkWhite,
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  modalCategories: {
-    width: '100%',
-    gap: 8,
-  },
-  modalCatRow: {
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-  },
-  modalCatName: {
-    fontSize: 13,
-    fontFamily: fonts.heading,
-    color: colors.retroBlack,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  modalCatPlayers: {
-    fontSize: 11,
-    fontFamily: fonts.subheading,
-    color: colors.retroBlack,
-    marginTop: 2,
-  },
-  shareBtn: {
-    marginTop: 20,
-    paddingHorizontal: 32,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: colors.pitchGreen,
-    backgroundColor: colors.pitchGreen,
-  },
-  shareBtnText: {
-    fontSize: 16,
-    fontFamily: fonts.subheading,
-    color: colors.retroBlack,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  copyBtnWrap: {
-    marginTop: 12,
-  },
-  playAgainBtn: {
-    marginTop: 12,
-    paddingHorizontal: 32,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: colors.pitchGreen,
-    backgroundColor: colors.pitchGreen,
-  },
-  playAgainBtnText: {
-    fontSize: 16,
-    fontFamily: fonts.subheading,
-    color: colors.retroBlack,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  modalCloseBtn: {
-    marginTop: 12,
-    paddingHorizontal: 32,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: colors.pitchGreen,
-  },
-  modalCloseText: {
-    fontSize: 16,
-    fontFamily: fonts.subheading,
-    color: colors.pitchGreen,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  offscreen: {
-    position: 'absolute',
-    left: -9999,
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    loadingContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    loadingText: {
+      ...type.h3,
+      color: c.textPrimary,
+    },
+    oneAwayBanner: {
+      alignSelf: 'center',
+      marginTop: spacing.lg,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.sm,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.streakSoft,
+      borderWidth: 1,
+      borderColor: c.streak,
+    },
+    oneAwayText: {
+      ...type.captionBold,
+      color: c.streakBright,
+      letterSpacing: 1,
+      textTransform: 'uppercase',
+    },
+    mistakesRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: spacing.xl,
+      gap: spacing.sm,
+    },
+    mistakesLabel: {
+      ...type.caption,
+      color: c.textSecondary,
+    },
+    dots: {
+      flexDirection: 'row',
+      gap: spacing.xs,
+    },
+    dot: {
+      width: 12,
+      height: 12,
+      borderRadius: borderRadius.full,
+    },
+    dotActive: {
+      backgroundColor: c.accent,
+    },
+    dotFlashing: {
+      backgroundColor: c.danger,
+    },
+    dotUsed: {
+      backgroundColor: c.borderStrong,
+    },
+    spacer: {
+      flex: 1,
+      minHeight: spacing.lg,
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      justifyContent: 'center',
+    },
+    buttonWrapper: {
+      flex: 1,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: c.scrim,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.lg,
+    },
+    modalContent: {
+      width: '85%',
+      backgroundColor: c.bgElevated,
+      borderRadius: borderRadius.xl,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      padding: spacing.xl,
+      alignItems: 'center',
+    },
+    modalTitle: {
+      ...type.h1,
+    },
+    modalTitleWon: {
+      color: c.accent,
+    },
+    modalTitleLost: {
+      color: c.danger,
+    },
+    modalSubtitle: {
+      ...type.captionBold,
+      color: c.textPrimary,
+      marginTop: spacing.sm,
+      marginBottom: spacing.lg,
+    },
+    modalCategories: {
+      width: '100%',
+      gap: spacing.sm,
+    },
+    modalCatRow: {
+      borderRadius: borderRadius.sm,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+      alignItems: 'center',
+    },
+    modalCatName: {
+      ...type.captionBold,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      // Longer archetype titles wrap — keep them centered.
+      textAlign: 'center',
+    },
+    modalCatPlayers: {
+      ...type.micro,
+      marginTop: 2,
+      textAlign: 'center',
+    },
+    shareBtn: {
+      marginTop: spacing.lg,
+      minHeight: touch.cta,
+      paddingHorizontal: spacing.xxl,
+      justifyContent: 'center',
+      borderRadius: borderRadius.sm,
+      backgroundColor: c.accent,
+    },
+    shareBtnText: {
+      ...type.h3,
+      color: c.textOnAccent,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+    },
+    copyBtnWrap: {
+      marginTop: spacing.md,
+    },
+    playAgainBtn: {
+      marginTop: spacing.md,
+      minHeight: touch.cta,
+      paddingHorizontal: spacing.xxl,
+      justifyContent: 'center',
+      borderRadius: borderRadius.sm,
+      backgroundColor: c.accent,
+    },
+    playAgainBtnText: {
+      ...type.h3,
+      color: c.textOnAccent,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+    },
+    modalCloseBtn: {
+      marginTop: spacing.md,
+      minHeight: touch.min,
+      paddingHorizontal: spacing.xxl,
+      justifyContent: 'center',
+      borderRadius: borderRadius.sm,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+    },
+    modalCloseText: {
+      ...type.h3,
+      color: c.accent,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+    },
+    offscreen: {
+      position: 'absolute',
+      left: -9999,
+    },
+  });

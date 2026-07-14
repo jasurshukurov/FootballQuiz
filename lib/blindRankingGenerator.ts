@@ -1,6 +1,13 @@
 import { Player } from '@/types/player';
 import { getAllPlayers, isActivePlayer, getFameForPlayer } from './playerData';
 import { formatMarketValue } from './higherLowerGenerator';
+import { getTodayDateString, seededShuffle } from './dailySeed';
+import {
+  bandForDate,
+  filterByFameBand,
+  resolveSkillTier,
+  skillAdjustedBand,
+} from './difficultyCurve';
 
 // fame_scores.json is kept ONLY for the ranking metrics not present in
 // fame_by_id.json (peak_game_rating, elite_exposure, wikipedia_pageviews).
@@ -134,33 +141,59 @@ export interface BlindRankingPuzzle {
   correctOrder: number[];
 }
 
-export function generateBlindRankingPuzzle(seed: number): BlindRankingPuzzle {
+// Relative adjacent-value gaps tried in order. A ranking is only knowledge (not
+// a coin flip) when neighbouring values are meaningfully apart, so we prefer a
+// 5% separation and relax toward distinct-only if the pool can't fill 5 slots.
+const GAP_LEVELS = [0.05, 0.03, 0.02, 0.01, 0] as const;
+
+/**
+ * Pick 5 players whose sort-field values are distinct AND spaced apart by at
+ * least `gap` (relative). Returns fewer than 5 only when the pool is too thin.
+ */
+function collectSpaced(shuffled: Player[], field: SortField, gap: number): Player[] {
+  const picked: Player[] = [];
+  const vals: number[] = [];
+  for (const p of shuffled) {
+    if (picked.length >= 5) break;
+    const val = getFieldValue(p, field);
+    if (val <= 0) continue;
+    if (vals.includes(val)) continue; // distinct-value rule
+    if (gap > 0 && vals.some((v) => Math.abs(val - v) / Math.max(val, v) < gap)) continue;
+    picked.push(p);
+    vals.push(val);
+  }
+  return picked;
+}
+
+export function generateBlindRankingPuzzle(
+  seed: number,
+  dateStr: string = getTodayDateString(),
+): BlindRankingPuzzle {
   const rng = seededRandom(seed);
 
   const category = CATEGORIES[Math.floor(rng() * CATEGORIES.length)];
 
-  const allPlayers = getAllPlayers().filter((p) => {
-    const fame = getFameForPlayer(p)?.fame_score;
-    return fame !== undefined && fame >= 65 && p.market_value >= 5_000_000 && isActivePlayer(p);
-  });
+  // Weekly difficulty band: household names early week, deep cuts on the
+  // weekend. A market-value floor keeps the "expensive/cheapest" categories
+  // meaningful; filterByFameBand widens the fame window if a band is too thin.
+  const base = getAllPlayers().filter((p) => p.market_value >= 5_000_000 && isActivePlayer(p));
+  // Skill tier (neutral 0 without play history) shifts the fame window by at
+  // most one step; filterByFameBand still widens so the pool never starves.
+  const band = skillAdjustedBand(bandForDate(dateStr), resolveSkillTier('blindranking'));
+  const pool = filterByFameBand(base, band, (p) => getFameForPlayer(p)?.fame_score);
 
-  // Shuffle
-  const shuffled = [...allPlayers];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+  const shuffled = seededShuffle(pool, rng);
 
-  // Pick 5 players with distinct sort-field values
-  const seen = new Set<number>();
-  const picked: Player[] = [];
-  for (const p of shuffled) {
-    if (picked.length >= 5) break;
-    const val = getFieldValue(p, category.sortField);
-    if (val > 0 && !seen.has(val)) {
-      seen.add(val);
-      picked.push(p);
+  // Pick 5 with distinct, well-separated values (relaxing the gap only if the
+  // pool can't otherwise fill 5).
+  let picked: Player[] = [];
+  for (const gap of GAP_LEVELS) {
+    const attempt = collectSpaced(shuffled, category.sortField, gap);
+    if (attempt.length === 5) {
+      picked = attempt;
+      break;
     }
+    if (attempt.length > picked.length) picked = attempt;
   }
 
   // Compute correct ranking
@@ -172,25 +205,53 @@ export function generateBlindRankingPuzzle(seed: number): BlindRankingPuzzle {
   const correctOrder = sorted.map((p) => p.id);
 
   // Shuffle presentation order
-  for (let i = picked.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [picked[i], picked[j]] = [picked[j], picked[i]];
-  }
+  const presented = seededShuffle(picked, rng);
 
-  return { category, players: picked, correctOrder };
+  return { category, players: presented, correctOrder };
 }
 
-export function calculateScore(userRanking: number[], correctOrder: number[]): number {
-  let score = 0;
-  for (let i = 0; i < correctOrder.length; i++) {
-    if (userRanking[i] === correctOrder[i]) score++;
-  }
-  return score;
+export interface RankingScore {
+  /** 2 per exact-position player + 1 per off-by-one player (max 10). */
+  points: number;
+  exact: number;
+  adjacent: number;
 }
+
+/** Partial-credit scoring: exact position = 2, adjacent (off by one) = 1. */
+export function scoreRanking(userRanking: number[], correctOrder: number[]): RankingScore {
+  let exact = 0;
+  let adjacent = 0;
+  for (let i = 0; i < userRanking.length; i++) {
+    const correctIdx = correctOrder.indexOf(userRanking[i]);
+    if (correctIdx === i) exact++;
+    else if (Math.abs(correctIdx - i) === 1) adjacent++;
+  }
+  return { points: exact * 2 + adjacent, exact, adjacent };
+}
+
+export type SlotStatus = 'exact' | 'adjacent' | 'wrong';
+
+/** Per-slot reveal status matching {@link scoreRanking}. */
+export function rankingSlotStatuses(userRanking: number[], correctOrder: number[]): SlotStatus[] {
+  return userRanking.map((id, i) => {
+    const correctIdx = correctOrder.indexOf(id);
+    if (correctIdx === i) return 'exact';
+    if (Math.abs(correctIdx - i) === 1) return 'adjacent';
+    return 'wrong';
+  });
+}
+
+/** Max attainable points (5 players × 2 for an all-exact ranking). */
+export const MAX_RANKING_POINTS = 10;
 
 export function getRevealValue(player: Player, category: RankingCategory): string {
   const val = getFieldValue(player, category.sortField);
   return category.formatValue(val);
+}
+
+/** Raw numeric value a player is ranked by for a category (for tests/tooling). */
+export function rawRankingValue(player: Player, category: RankingCategory): number {
+  return getFieldValue(player, category.sortField);
 }
 
 export { formatMarketValue };

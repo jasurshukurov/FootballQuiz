@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -10,7 +10,9 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { AttributeStatus } from '@/types/game';
-import { colors, fonts, borderRadius as br } from '@/constants/theme';
+import { fonts, borderRadius as br, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface AttributeCellProps {
   label: string;
@@ -19,21 +21,27 @@ interface AttributeCellProps {
   delay?: number;
 }
 
-const statusColors: Record<AttributeStatus, string> = {
-  CORRECT: '#52B788',
-  WRONG: 'rgba(108,117,125,0.5)',
-  HIGHER: '#F4A261',
-  LOWER: '#F4A261',
-};
-
 const statusIcons: Record<AttributeStatus, string> = {
   CORRECT: '',
   WRONG: '',
-  HIGHER: ' \u2191',
-  LOWER: ' \u2193',
+  HIGHER: ' ↑',
+  LOWER: ' ↓',
 };
 
 function AttributeCell({ value, status, delay = 0 }: AttributeCellProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
+  const statusColors: Record<AttributeStatus, string> = useMemo(
+    () => ({
+      CORRECT: colors.accent,
+      WRONG: colors.bgCardPressed,
+      HIGHER: colors.streak,
+      LOWER: colors.streak,
+    }),
+    [colors],
+  );
+
   const rotation = useSharedValue(0);
 
   useEffect(() => {
@@ -57,14 +65,14 @@ function AttributeCell({ value, status, delay = 0 }: AttributeCellProps) {
   });
 
   return (
-    <View style={styles.wrapper}>
+    <View style={layout.wrapper}>
       {/* Front face (neutral dark) */}
-      <Animated.View style={[styles.pill, styles.front, frontStyle]}>
+      <Animated.View style={[layout.pill, styles.front, frontStyle]}>
         <Text style={styles.hiddenText}>?</Text>
       </Animated.View>
 
       {/* Back face (colored result) */}
-      <Animated.View style={[styles.pill, { backgroundColor: statusColors[status] }, backStyle]}>
+      <Animated.View style={[layout.pill, { backgroundColor: statusColors[status] }, backStyle]}>
         <Text
           style={styles.valueText}
           adjustsFontSizeToFit
@@ -80,7 +88,7 @@ function AttributeCell({ value, status, delay = 0 }: AttributeCellProps) {
 
 export default React.memo(AttributeCell);
 
-const styles = StyleSheet.create({
+const layout = StyleSheet.create({
   wrapper: {
     height: 64,
     justifyContent: 'center',
@@ -91,30 +99,33 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 64,
-    paddingHorizontal: 6,
-    paddingVertical: 6,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: spacing.xs,
     borderRadius: br.md,
     alignItems: 'center',
     justifyContent: 'center',
     backfaceVisibility: 'hidden',
   },
-  front: {
-    backgroundColor: 'rgba(17,17,40,0.85)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.12)',
-  },
-  hiddenText: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 11,
-    color: 'rgba(255,255,255,0.3)',
-    textAlign: 'center',
-  },
-  valueText: {
-    fontFamily: fonts.heading,
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.chalkWhite,
-    textAlign: 'center',
-    letterSpacing: 0.5,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    front: {
+      backgroundColor: c.bgElevated,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    hiddenText: {
+      ...type.micro,
+      fontFamily: fonts.mono,
+      color: c.textMuted,
+      textAlign: 'center',
+    },
+    valueText: {
+      ...type.captionBold,
+      fontFamily: fonts.subheading,
+      color: c.textPrimary,
+      textAlign: 'center',
+      letterSpacing: 0.5,
+    },
+  });

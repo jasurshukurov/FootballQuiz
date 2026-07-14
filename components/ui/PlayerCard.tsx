@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import { GuessResult } from '@/types/game';
-import { colors, borderRadius } from '@/constants/theme';
+import { borderRadius, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { formatPosition, formatNationality } from '@/lib/footballMappers';
 import AttributeCell from './AttributeCell';
 import PopInView from './PopInView';
@@ -68,6 +70,8 @@ interface PlayerCardProps {
 }
 
 function PlayerCard({ guess }: PlayerCardProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { player, comparisons } = guess;
 
   return (
@@ -136,45 +140,43 @@ function PlayerCard({ guess }: PlayerCardProps) {
 
 export default React.memo(PlayerCard);
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 8,
-    padding: 12,
-    backgroundColor: 'rgba(17,17,40,0.7)',
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
-  },
-  nameRow: {
-    marginBottom: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  name: {
-    fontSize: 14,
-    fontFamily: 'BarlowCondensed-Bold',
-    color: colors.chalkWhite,
-  },
-  retiredBadge: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: borderRadius.sm,
-    backgroundColor: 'rgba(244,162,97,0.18)',
-    borderWidth: 1,
-    borderColor: 'rgba(244,162,97,0.5)',
-  },
-  retiredBadgeText: {
-    fontSize: 9,
-    fontFamily: 'BarlowCondensed-Bold',
-    letterSpacing: 0.5,
-    color: '#F4A261',
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 4,
-  },
-  cell: {
-    flex: 1,
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      marginBottom: spacing.sm,
+      padding: spacing.md,
+      backgroundColor: c.bgCard,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    nameRow: {
+      marginBottom: spacing.sm,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    name: {
+      ...type.h3,
+      color: c.textPrimary,
+    },
+    retiredBadge: {
+      paddingHorizontal: spacing.xs,
+      paddingVertical: 2,
+      borderRadius: borderRadius.sm,
+      backgroundColor: c.streakSoft,
+      borderWidth: 1,
+      borderColor: c.streak,
+    },
+    retiredBadgeText: {
+      ...type.micro,
+      color: c.streakBright,
+    },
+    row: {
+      flexDirection: 'row',
+      gap: spacing.xs,
+    },
+    cell: {
+      flex: 1,
+    },
+  });

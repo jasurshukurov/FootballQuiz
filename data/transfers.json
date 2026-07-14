@@ -1103,6 +1103,27 @@
         "date_joined": "2020-09-25",
         "date_left": "2022-06-30",
         "fee": "€6m"
+      },
+      {
+        "club_name": "Nacional",
+        "club_id": "nacional",
+        "date_joined": "2022-07-01",
+        "date_left": "2022-12-31",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Gremio",
+        "club_id": "gremio",
+        "date_joined": "2023-01-01",
+        "date_left": "2023-12-31",
+        "fee": "Free"
+      },
+      {
+        "club_name": "Inter Miami CF",
+        "club_id": "inter-miami",
+        "date_joined": "2024-01-01",
+        "date_left": null,
+        "fee": "Free"
       }
     ]
   },
@@ -3475,8 +3496,15 @@
         "club_name": "Newcastle United",
         "club_id": "newcastle-united",
         "date_joined": "2023-07-05",
-        "date_left": null,
+        "date_left": "2026-07-01",
         "fee": "€64m"
+      },
+      {
+        "club_name": "Tottenham Hotspur",
+        "club_id": "tottenham-hotspur",
+        "date_joined": "2026-07-01",
+        "date_left": null,
+        "fee": "€116m"
       }
     ]
   },
@@ -13766,8 +13794,15 @@
         "club_name": "Chelsea",
         "club_id": "chelsea",
         "date_joined": "2022-07-01",
-        "date_left": null,
+        "date_left": "2026-06-15",
         "fee": "Free"
+      },
+      {
+        "club_name": "Real Madrid",
+        "club_id": "real-madrid",
+        "date_joined": "2026-06-15",
+        "date_left": null,
+        "fee": "€60m"
       }
     ]
   },

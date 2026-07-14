@@ -49,6 +49,16 @@ function compareAge(guessAge: number | null, targetAge: number | null): Comparis
   return compareNumeric('age', guessAge, targetAge, (v) => String(v));
 }
 
+/**
+ * True when the TARGET has a known DOB, so the age column carries a real signal.
+ * When false, every guess's age cell is a dead '?' (compareAge can't produce an
+ * honest HIGHER/LOWER without the target's age), so screens should grey or hide
+ * the age column instead of presenting it as a live clue.
+ */
+export function targetHasAgeSignal(target: Player): boolean {
+  return getPlayerAge(target.id) !== null;
+}
+
 export function comparePlayers(guess: Player, target: Player): GuessResult {
   const guessAge = getPlayerAge(guess.id);
   const targetAge = getPlayerAge(target.id);

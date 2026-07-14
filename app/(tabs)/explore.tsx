@@ -1,490 +1,643 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react';
-import {
-  LayoutAnimation,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  UIManager,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import Animated, {
-  useAnimatedStyle,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
-import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
+import { KeyboardAvoidingView, Modal, Platform, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
+import { NotificationFeedbackType } from 'expo-haptics';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { triggerImpact, triggerNotification } from '@/lib/haptics';
-
 import { useLocalSearchParams } from 'expo-router';
-import { getAllPlayers } from '@/lib/playerData';
-import { generateValidGrid, hashDateSeed } from '@/lib/gridGenerator';
-import { Grid } from '@/types/grid';
+
+import { triggerNotification } from '@/lib/haptics';
+import { getAllPlayers, getFameForPlayer } from '@/lib/playerData';
+import {
+  DailyGrid,
+  generateDailyGrid,
+  generateGridFromSeed,
+  hintForCell,
+  scoreCorrectPick,
+} from '@/lib/gridEngine';
+import { getRank } from '@/lib/rankLadder';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
+import { getModeSeed, getTodayDateString } from '@/lib/dailySeed';
+import { resolveSkillTier } from '@/lib/difficultyCurve';
 import { Player } from '@/types/player';
-import { colors } from '@/constants/theme';
+import { spacing, borderRadius, type, motion, touch } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
-import { getDailyNumber } from '@/lib/dailyPuzzle';
-import { getTodayDateString } from '@/lib/dailySeed';
+import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
+import { useGridGameStore, GridPlacement } from '@/hooks/useGridGameStore';
+import { useManagerStore } from '@/hooks/useManagerStore';
+import SolveTimeChip, { SolveTimeResult } from '@/components/ui/SolveTimeChip';
+import Screen from '@/components/ui/Screen';
+import ScreenHeader from '@/components/ui/ScreenHeader';
 import GridCell from '@/components/ui/GridCell';
+import GridHeaderCell, { ROW_HEADER_WIDTH } from '@/components/ui/GridHeaderCell';
+import RankBadge from '@/components/ui/RankBadge';
+import Tappable from '@/components/ui/Tappable';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
 import GameOverActions from '@/components/ui/GameOverActions';
 import ShareableGridResult from '@/components/ShareableGridResult';
-import PracticePill from '@/components/ui/PracticePill';
 import { buildShareText } from '@/lib/sharing';
-import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer } from '@/lib/sounds';
-import TutorialOverlay from '@/components/ui/TutorialOverlay';
 
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
-
-type CellState = 'empty' | 'selected' | 'correct' | 'wrong';
-
-function SkeletonPulse({ style }: { style: ViewStyle }) {
-  const animStyle = useAnimatedStyle(() => ({
-    opacity: withRepeat(
-      withSequence(withTiming(0.3, { duration: 800 }), withTiming(0.7, { duration: 800 })),
-      -1,
-      true,
-    ),
-  }));
-  return <Animated.View style={[style, animStyle]} />;
-}
-
-function SkeletonGrid() {
-  return (
-    <LinearGradient
-      colors={['#0D1B2A', '#1B0A2E']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}>
-      <SafeAreaView style={styles.loadingContainer} edges={['bottom']}>
-        <View style={styles.container}>
-          {/* Score bar placeholder */}
-          <View style={styles.scoreRow}>
-            <SkeletonPulse style={styles.skeletonScoreBar} />
-            <SkeletonPulse style={styles.skeletonGuessesBar} />
-          </View>
-
-          {/* Column header placeholders */}
-          <View style={styles.columnHeaders}>
-            {[0, 1, 2].map((i) => (
-              <View key={i} style={styles.columnHeaderCell}>
-                <SkeletonPulse style={styles.skeletonColumnHeader} />
-              </View>
-            ))}
-          </View>
-
-          {/* 3 rows x 3 cells */}
-          {[0, 1, 2].map((rowIdx) => (
-            <View key={rowIdx} style={styles.gridRow}>
-              <View style={styles.rowLabel}>
-                <SkeletonPulse style={styles.skeletonRowLabel} />
-              </View>
-              {[0, 1, 2].map((colIdx) => (
-                <SkeletonPulse key={colIdx} style={styles.skeletonCell} />
-              ))}
-            </View>
-          ))}
-        </View>
-      </SafeAreaView>
-    </LinearGradient>
-  );
-}
+const TOTAL_GUESSES = 9;
+const TOTAL_HINTS = 3;
 
 function practiceDateToDate(dateStr?: string): Date | undefined {
   return dateStr ? new Date(`${dateStr}T00:00:00`) : undefined;
 }
 
+const cellKey = (row: number, col: number) => `${row}-${col}`;
+
 export default function ExploreScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { practiceDate } = useLocalSearchParams<{ practiceDate?: string }>();
   const isPractice = !!practiceDate;
-  const [grid, setGrid] = useState<Grid | null>(null);
-  const [cellStates, setCellStates] = useState<CellState[][]>([]);
-  const [cellPlayers, setCellPlayers] = useState<(string | undefined)[][]>([]);
-  const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
-  const [score, setScore] = useState(0);
-  const [guessesLeft, setGuessesLeft] = useState(9);
-  const [hintsRemaining, setHintsRemaining] = useState(3);
-  const [hintPlayer, setHintPlayer] = useState<string | null>(null);
-  const [gridSeed, setGridSeed] = useState(() =>
-    hashDateSeed(practiceDate ?? getTodayDateString()),
-  );
-  const shareRef = useRef<View>(null);
-  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
 
-  const shareText = useMemo(
-    () =>
-      buildShareText({
-        mode: 'grid',
-        dailyNumber: getDailyNumber(practiceDateToDate(practiceDate)),
-        dailyStreak,
-        score,
-        correctCells: cellStates.map((row) => row.map((c) => c === 'correct')),
-      }),
-    [dailyStreak, score, cellStates, practiceDate],
-  );
-
+  // Daily persistence hydration gate — the board must not render (or bind a
+  // fresh day) until yesterday's/today's stored placements are loaded.
+  const [hydrated, setHydrated] = useState(() => useGridGameStore.persist.hasHydrated());
   useEffect(() => {
-    const players = getAllPlayers();
-    const dailyGrid = generateValidGrid(players, gridSeed);
-    if (dailyGrid) {
-      setGrid(dailyGrid);
-      setCellStates(Array.from({ length: 3 }, () => Array<CellState>(3).fill('empty')));
-      setCellPlayers(Array.from({ length: 3 }, () => Array<string | undefined>(3).fill(undefined)));
-    }
-  }, [gridSeed]);
+    if (hydrated) return;
+    const unsub = useGridGameStore.persist.onFinishHydration(() => setHydrated(true));
+    return unsub;
+  }, [hydrated]);
 
+  // Replay seed: null = the real daily/practice grid; a number = a fresh
+  // post-completion "Play Again" board (never persisted).
+  const [replaySeed, setReplaySeed] = useState<number | null>(null);
+
+  const [grid, setGrid] = useState<DailyGrid | null>(null);
+
+  // Board state (mirrors useGridGameStore for the daily run; purely local for
+  // practice and replays).
+  const [placements, setPlacements] = useState<Record<string, GridPlacement>>({});
+  const [usedIds, setUsedIds] = useState<Set<number>>(new Set());
+  const [guessesUsed, setGuessesUsed] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [wrongFlashKey, setWrongFlashKey] = useState<string | null>(null);
+  const [activeCell, setActiveCell] = useState<{ row: number; col: number } | null>(null);
+  const [hintName, setHintName] = useState<string | null>(null);
+
+  const shareRef = useRef<View>(null);
+  const wrongFlashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
+  const todaySolveMs = useTodaySolveTime('grid');
   const allPlayers = useMemo(() => getAllPlayers(), []);
 
-  const handleCellPress = useCallback((row: number, col: number) => {
-    triggerImpact();
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setSelectedCell({ row, col });
-    setHintPlayer(null);
+  // The daily board persists; replays/practice start clean.
+  const isDailyRun = !isPractice && replaySeed === null;
+
+  // Build the grid + bind/restore board state.
+  useEffect(() => {
+    if (!hydrated && !isPractice && replaySeed === null) return;
+
+    let nextGrid: DailyGrid;
+    if (replaySeed !== null) {
+      nextGrid = generateGridFromSeed(replaySeed, getTodayDateString(), 0);
+    } else if (isPractice) {
+      // Practice/archive: deterministic from the practice date, neutral tier,
+      // so every player sees the same past puzzle.
+      nextGrid = generateDailyGrid(practiceDate!, 0);
+    } else {
+      const today = getTodayDateString();
+      // Lock the tier for the day: completing the daily trains the skill
+      // rating, and a re-entry must restore THIS grid, not a re-tiered one.
+      const tier = useGridGameStore.getState().lockTier(today, resolveSkillTier('grid'));
+      nextGrid = generateDailyGrid(today, tier);
+      useGridGameStore.getState().bindDaily(today, nextGrid.id, tier);
+    }
+
+    setGrid(nextGrid);
+    if (replaySeed === null && !isPractice) {
+      // Restore today's placed answers (empty object on a fresh day).
+      const s = useGridGameStore.getState();
+      setPlacements({ ...s.placements });
+      setUsedIds(new Set(s.usedPlayerIds));
+      setGuessesUsed(s.guessesUsed);
+      setPoints(s.points);
+      setHintsUsed(s.hintsUsed);
+    } else {
+      setPlacements({});
+      setUsedIds(new Set());
+      setGuessesUsed(0);
+      setPoints(0);
+      setHintsUsed(0);
+    }
+    setActiveCell(null);
+    setHintName(null);
+    setWrongFlashKey(null);
+  }, [hydrated, isPractice, practiceDate, replaySeed]);
+
+  useEffect(
+    () => () => {
+      if (wrongFlashTimer.current) clearTimeout(wrongFlashTimer.current);
+    },
+    [],
+  );
+
+  const score = Object.keys(placements).length;
+  const guessesLeft = TOTAL_GUESSES - guessesUsed;
+  const gameOver = guessesLeft <= 0 || score === 9;
+  const deepCutCount = Object.values(placements).filter((p) => p.deepCut).length;
+
+  const shareText = useMemo(() => {
+    const correctCells = Array.from({ length: 3 }, (_, r) =>
+      Array.from({ length: 3 }, (_, c) => !!placements[cellKey(r, c)]),
+    );
+    return buildShareText({
+      mode: 'grid',
+      dailyNumber: getDailyNumber(practiceDateToDate(practiceDate)),
+      dailyStreak,
+      score,
+      correctCells,
+      // Practice shares must not carry today's daily time.
+      solveTimeMs: isPractice ? null : todaySolveMs,
+    });
+  }, [placements, score, dailyStreak, practiceDate, isPractice, todaySolveMs]);
+
+  // Daily XP is awarded once, at game over (awardDailyXp is itself guarded to
+  // once per mode per local day, so replays and re-entries add nothing).
+  useEffect(() => {
+    if (gameOver && isDailyRun && grid) {
+      useManagerStore.getState().awardDailyXp('grid', Math.max(points, score));
+    }
+  }, [gameOver, isDailyRun, grid, points, score]);
+
+  const handleCellPress = useCallback(
+    (row: number, col: number) => {
+      if (gameOver) return;
+      // Solve-time stopwatch starts on the first cell open (daily runs only).
+      if (isDailyRun) useSolveTimeStore.getState().markStarted('grid');
+      setHintName(null);
+      setActiveCell({ row, col });
+    },
+    [gameOver, isDailyRun],
+  );
+
+  const closeSheet = useCallback(() => {
+    setActiveCell(null);
+    setHintName(null);
   }, []);
 
   const handleSelectPlayer = useCallback(
     (player: Player) => {
-      if (!selectedCell || !grid) return;
-
-      const { row, col } = selectedCell;
+      if (!activeCell || !grid || gameOver) return;
+      const { row, col } = activeCell;
+      const key = cellKey(row, col);
       const cell = grid.cells[row][col];
-      const isCorrect = cell.validPlayers.some((p) => p.id === player.id);
+      const isCorrect = cell.matches(player);
+      const nextGuessesUsed = guessesUsed + 1;
 
-      setCellStates((prev) => {
-        const next = prev.map((r) => [...r]);
-        next[row][col] = isCorrect ? 'correct' : 'wrong';
-        return next;
-      });
-      setCellPlayers((prev) => {
-        const next = prev.map((r) => [...r]);
-        next[row][col] = player.name;
-        return next;
-      });
+      setUsedIds((prev) => new Set(prev).add(player.id));
+      setGuessesUsed(nextGuessesUsed);
 
+      let nextScore = score;
       if (isCorrect) {
         triggerNotification(NotificationFeedbackType.Success);
-        const newScore = score + 1;
-        setScore(newScore);
-        if (newScore === 9) {
-          playCheer();
-        }
-        // Practice/archive runs never touch progress, XP or streak.
-        if (!isPractice) {
-          useManagerStore.getState().addXp('grid', 15);
-          if (newScore === 9 || guessesLeft - 1 <= 0) {
-            useDailyProgressStore.getState().markCompleted('grid', newScore);
-          }
-        }
+        // Rarity proxy: an obscure correct pick is a "deep cut" worth bonus
+        // points on top of the base square. XP is awarded once at game over.
+        const pick = scoreCorrectPick(getFameForPlayer(player)?.fame_score);
+        const placement: GridPlacement = {
+          playerId: player.id,
+          playerName: player.name,
+          deepCut: pick.deepCut,
+        };
+        setPlacements((prev) => ({ ...prev, [key]: placement }));
+        setPoints((p) => p + pick.total);
+        nextScore = score + 1;
+        if (nextScore === 9) playCheer();
+        if (isDailyRun) useGridGameStore.getState().recordCorrect(key, placement, pick.total);
       } else {
         triggerNotification(NotificationFeedbackType.Error);
-        if (!isPractice && guessesLeft - 1 <= 0) {
-          useDailyProgressStore.getState().markCompleted('grid', score);
-        }
+        // The square stays open — the guess is what's spent.
+        setWrongFlashKey(key);
+        if (wrongFlashTimer.current) clearTimeout(wrongFlashTimer.current);
+        wrongFlashTimer.current = setTimeout(() => setWrongFlashKey(null), 700);
+        if (isDailyRun) useGridGameStore.getState().recordWrong(player.id);
       }
-      setGuessesLeft((g) => g - 1);
-      setHintPlayer(null);
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setSelectedCell(null);
+
+      // Practice/replay runs never touch progress, XP or streak.
+      if (isDailyRun && (nextScore === 9 || nextGuessesUsed >= TOTAL_GUESSES)) {
+        useDailyProgressStore.getState().markCompleted('grid', nextScore);
+        // Time PB only counts on a perfect grid (a fast partial isn't a best).
+        useSolveTimeStore.getState().markCompleted('grid', { countsForBest: nextScore === 9 });
+      }
+
+      closeSheet();
     },
-    [selectedCell, grid],
+    [activeCell, grid, gameOver, guessesUsed, score, isDailyRun, closeSheet],
   );
 
   const handleHint = useCallback(() => {
-    if (!selectedCell || !grid || hintsRemaining <= 0) return;
-    const { row, col } = selectedCell;
-    const validPlayers = grid.cells[row][col].validPlayers;
-    if (validPlayers.length === 0) return;
-    // Pick the first valid player (shortest name tends to be most recognizable)
-    const sorted = [...validPlayers].sort((a, b) => a.name.length - b.name.length);
-    setHintPlayer(sorted[0].name);
-    setHintsRemaining((h) => h - 1);
-    triggerImpact(ImpactFeedbackStyle.Light);
-  }, [selectedCell, grid, hintsRemaining]);
+    if (!activeCell || !grid || hintsUsed >= TOTAL_HINTS) return;
+    const hint = hintForCell(grid.cells[activeCell.row][activeCell.col], usedIds);
+    if (!hint) return;
+    setHintName(hint.name);
+    setHintsUsed((h) => h + 1);
+    if (isDailyRun) useGridGameStore.getState().recordHint();
+  }, [activeCell, grid, hintsUsed, usedIds, isDailyRun]);
 
   const handleNewGame = useCallback(() => {
-    // In practice mode keep replaying the same past-day puzzle deterministically.
-    const newSeed = practiceDate ? hashDateSeed(practiceDate) : Date.now();
-    setGridSeed(newSeed);
-    setScore(0);
-    setGuessesLeft(9);
-    setSelectedCell(null);
-    setHintsRemaining(3);
-    setHintPlayer(null);
-  }, [practiceDate]);
+    // Practice keeps replaying the same past-day puzzle deterministically (the
+    // grid stays; only the board resets); daily "Play Again" deals a fresh
+    // random board (never persisted).
+    if (isPractice) {
+      setPlacements({});
+      setUsedIds(new Set());
+      setGuessesUsed(0);
+      setPoints(0);
+      setHintsUsed(0);
+      setActiveCell(null);
+      setHintName(null);
+    } else {
+      setReplaySeed(Date.now() ^ getModeSeed('grid'));
+    }
+  }, [isPractice]);
 
   if (!grid) {
-    return <SkeletonGrid />;
+    return (
+      <Screen scroll={false}>
+        <ScreenHeader eyebrow={isPractice ? 'Practice' : 'Daily'} title="The Grid" modeKey="grid" />
+        <View style={layoutStyles.loadingWrap}>
+          <Text style={styles.loadingText}>Setting up the board…</Text>
+        </View>
+      </Screen>
+    );
   }
 
-  return (
-    <LinearGradient
-      colors={['#0D1B2A', '#1B0A2E']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}>
-      <SafeAreaView style={styles.safeArea} edges={['bottom']}>
-        <View style={styles.container}>
-          {isPractice && <PracticePill date={practiceDate} />}
-          <View style={styles.scoreRow}>
-            <Text style={styles.scoreText}>Score: {score}/9</Text>
-            <Text style={styles.guessesLeftText}>Guesses left: {guessesLeft}</Text>
-          </View>
+  const activeRowCat = activeCell ? grid.rows[activeCell.row] : null;
+  const activeColCat = activeCell ? grid.cols[activeCell.col] : null;
+  const hintsLeft = TOTAL_HINTS - hintsUsed;
 
-          {/* Column headers */}
-          <View style={styles.columnHeaders}>
-            {grid.xCriteria.map((c, i) => (
-              <View key={i} style={styles.columnHeaderCell}>
-                <Text style={styles.criteriaText} numberOfLines={2}>
-                  {c.label}
-                </Text>
-              </View>
+  return (
+    <Screen>
+      <ScreenHeader
+        eyebrow={
+          isPractice ? 'Practice' : `Daily #${getDailyNumber(practiceDateToDate(practiceDate))}`
+        }
+        title="The Grid"
+        modeKey="grid"
+        right={
+          <View style={layoutStyles.headerStats}>
+            <Text style={styles.scoreValue}>{score}/9</Text>
+            <Text style={styles.guessesValue}>
+              {guessesLeft} {guessesLeft === 1 ? 'guess' : 'guesses'} left
+            </Text>
+            {!isPractice && <SolveTimeChip mode="grid" />}
+          </View>
+        }
+      />
+
+      {/* Board — column headers */}
+      <Animated.View entering={FadeIn.duration(motion.base)}>
+        <View style={layoutStyles.headerRow}>
+          <View style={layoutStyles.cornerSpacer} />
+          {grid.cols.map((cat) => (
+            <GridHeaderCell key={cat.key} category={cat} axis="col" />
+          ))}
+        </View>
+
+        {/* Rows */}
+        {grid.cells.map((row, rowIdx) => (
+          <View key={grid.rows[rowIdx].key} style={layoutStyles.gridRow}>
+            <GridHeaderCell category={grid.rows[rowIdx]} axis="row" />
+            {row.map((_, colIdx) => {
+              const key = cellKey(rowIdx, colIdx);
+              const placed = placements[key];
+              return (
+                <GridCell
+                  key={key}
+                  state={
+                    placed
+                      ? 'correct'
+                      : wrongFlashKey === key
+                        ? 'wrong'
+                        : activeCell?.row === rowIdx && activeCell?.col === colIdx
+                          ? 'selected'
+                          : 'empty'
+                  }
+                  playerName={placed?.playerName}
+                  deepCut={placed?.deepCut}
+                  onPress={() => handleCellPress(rowIdx, colIdx)}
+                  disabled={gameOver || !!placed}
+                />
+              );
+            })}
+          </View>
+        ))}
+
+        {/* Guess pips + rarity meter — always visible under the board */}
+        <View style={styles.statusStrip}>
+          <View style={layoutStyles.pipRow}>
+            {Array.from({ length: TOTAL_GUESSES }, (_, i) => (
+              <View
+                key={i}
+                style={[styles.pip, i < guessesUsed ? styles.pipUsed : styles.pipFree]}
+              />
             ))}
           </View>
+          <Text style={styles.rarityText}>
+            {points} pts
+            {deepCutCount > 0 ? ` · ${deepCutCount} deep cut${deepCutCount === 1 ? '' : 's'}` : ''}
+          </Text>
+        </View>
+      </Animated.View>
 
-          {/* Grid rows */}
-          {grid.cells.map((row, rowIdx) => (
-            <View key={rowIdx} style={styles.gridRow}>
-              <View style={styles.rowLabel}>
-                <Text style={styles.criteriaText} numberOfLines={2}>
-                  {grid.yCriteria[rowIdx].label}
-                </Text>
-              </View>
-              {row.map((_, colIdx) => (
-                <GridCell
-                  key={colIdx}
-                  state={
-                    selectedCell?.row === rowIdx && selectedCell?.col === colIdx
-                      ? 'selected'
-                      : (cellStates[rowIdx]?.[colIdx] ?? 'empty')
-                  }
-                  playerName={cellPlayers[rowIdx]?.[colIdx]}
-                  onPress={() => handleCellPress(rowIdx, colIdx)}
-                  disabled={
-                    guessesLeft <= 0 ||
-                    cellStates[rowIdx]?.[colIdx] === 'correct' ||
-                    cellStates[rowIdx]?.[colIdx] === 'wrong'
-                  }
-                />
-              ))}
-            </View>
-          ))}
+      {/* One-guess-left tension: a nudge, never guilt. */}
+      {!gameOver && guessesLeft === 1 && (
+        <Text style={styles.tensionLine}>Last guess — make it count.</Text>
+      )}
 
-          {/* Share and Play Again buttons when game is over */}
-          {(guessesLeft <= 0 || score === 9) && (
-            <GameOverActions
-              shareRef={shareRef}
-              shareText={shareText}
-              win={score === 9}
-              onPlayAgain={handleNewGame}
+      {/* Game over */}
+      {gameOver && (
+        <Animated.View entering={FadeIn.duration(motion.base)} style={layoutStyles.gameOverSection}>
+          <View style={styles.verdictBanner}>
+            <Text style={styles.verdictTitle}>{score === 9 ? 'PERFECT GRID!' : 'FULL TIME'}</Text>
+            <Text style={styles.verdictScore}>{score}/9</Text>
+            <Text style={styles.verdictSubtitle}>
+              {score === 9 ? 'All nine — flawless.' : `You filled ${score} of 9 squares.`}
+            </Text>
+            <RankBadge
+              rank={getRank(score, 9)}
+              unit={getRank(score, 9).toNext === 1 ? 'square' : 'squares'}
             />
-          )}
+            {isDailyRun && <SolveTimeResult mode="grid" />}
+            <Text style={styles.pointsLine}>{points} pts (deep cuts count double)</Text>
+          </View>
+          <GameOverActions
+            shareRef={shareRef}
+            shareText={shareText}
+            win={score === 9}
+            onPlayAgain={handleNewGame}
+            currentModeKey="grid"
+          />
+        </Animated.View>
+      )}
 
-          {/* Search when cell selected */}
-          {selectedCell && guessesLeft > 0 && (
-            <View style={styles.searchSection}>
-              <Text style={styles.findLabel}>
-                Find: {grid.yCriteria[selectedCell.row].label} +{' '}
-                {grid.xCriteria[selectedCell.col].label}
-              </Text>
+      {/* Cell search sheet */}
+      <Modal
+        visible={!!activeCell && !gameOver}
+        transparent
+        animationType="fade"
+        onRequestClose={closeSheet}>
+        <View style={styles.sheetScrim}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            style={layoutStyles.sheetAvoider}>
+            <View style={styles.sheetPanel}>
+              <Text style={styles.sheetKicker}>FIND A PLAYER WHO…</Text>
+              {activeRowCat && activeColCat && (
+                <Text style={styles.sheetTitle}>
+                  {activeRowCat.clause}
+                  {'  ·  '}
+                  {activeColCat.clause}
+                </Text>
+              )}
               <PlayerSearchAutocomplete
                 players={allPlayers}
                 onSelectPlayer={handleSelectPlayer}
-                placeholder="Search player..."
+                filter={(p) => !usedIds.has(p.id)}
+                placeholder="Search any player…"
+                autoFocus
               />
-              <View style={styles.hintRow}>
-                <Pressable
+              <View style={layoutStyles.sheetFooter}>
+                <Tappable
                   onPress={handleHint}
-                  disabled={hintsRemaining <= 0}
-                  style={[styles.hintButton, hintsRemaining <= 0 && styles.hintButtonDisabled]}>
+                  disabled={hintsLeft <= 0}
+                  haptic="none"
+                  hoverStyle={{ backgroundColor: colors.streakSoft }}
+                  style={[styles.hintButton, hintsLeft <= 0 && layoutStyles.hintButtonDisabled]}>
                   <FontAwesome
                     name="lightbulb-o"
                     size={14}
-                    color={hintsRemaining > 0 ? '#F4A261' : '#6C757D'}
+                    color={hintsLeft > 0 ? colors.streak : colors.textMuted}
                   />
                   <Text
-                    style={[styles.hintButtonText, hintsRemaining <= 0 && { color: '#6C757D' }]}>
-                    Hint ({hintsRemaining}/3)
+                    style={[styles.hintButtonText, hintsLeft <= 0 && styles.hintButtonTextMuted]}>
+                    Hint ({hintsLeft}/{TOTAL_HINTS})
                   </Text>
-                </Pressable>
-                {hintPlayer && <Text style={styles.hintSuggestion}>Try: {hintPlayer}</Text>}
+                </Tappable>
+                {hintName ? <Text style={styles.hintSuggestion}>Try: {hintName}</Text> : null}
+                <View style={layoutStyles.footerSpacer} />
+                <Tappable
+                  onPress={closeSheet}
+                  haptic="none"
+                  hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+                  style={styles.cancelButton}>
+                  <Text style={styles.cancelText}>Cancel</Text>
+                </Tappable>
               </View>
             </View>
-          )}
-          {/* Offscreen shareable view */}
-          <View style={styles.offscreen}>
-            <View ref={shareRef} collapsable={false}>
-              <ShareableGridResult cellStates={cellStates} score={score} />
-            </View>
-          </View>
-          <TutorialOverlay
-            modeKey="grid"
-            title="Football Grid"
-            description="Fill the 3x3 grid. Each cell needs a player matching both the row and column criteria."
+          </KeyboardAvoidingView>
+        </View>
+      </Modal>
+
+      {/* Offscreen shareable view */}
+      <View style={layoutStyles.offscreen}>
+        <View ref={shareRef} collapsable={false}>
+          <ShareableGridResult
+            cellStates={Array.from({ length: 3 }, (_, r) =>
+              Array.from({ length: 3 }, (_, c) =>
+                placements[cellKey(r, c)] ? 'correct' : 'empty',
+              ),
+            )}
+            score={score}
           />
         </View>
-      </SafeAreaView>
-    </LinearGradient>
+      </View>
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
+  headerStats: {
+    alignItems: 'flex-end',
   },
-  safeArea: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 100,
-  },
-  loadingContainer: {
+  loadingWrap: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  skeletonScoreBar: {
-    width: 80,
-    height: 14,
-    borderRadius: 4,
-    backgroundColor: colors.pitchGreen,
-  },
-  skeletonGuessesBar: {
-    width: 100,
-    height: 12,
-    borderRadius: 4,
-    backgroundColor: colors.steelGray,
-  },
-  skeletonColumnHeader: {
-    width: '60%',
-    height: 10,
-    borderRadius: 4,
-    backgroundColor: colors.pitchGreen,
-  },
-  skeletonRowLabel: {
-    width: '70%',
-    height: 10,
-    borderRadius: 4,
-    backgroundColor: colors.pitchGreen,
-  },
-  skeletonCell: {
-    flex: 1,
-    height: 60,
-    borderRadius: 6,
-    backgroundColor: 'rgba(5, 242, 108, 0.15)',
-  },
-  scoreRow: {
-    marginBottom: 16,
+  headerRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: spacing.xs,
+    marginBottom: spacing.xs,
   },
-  scoreText: {
-    fontSize: 14,
-    fontFamily: 'SpaceMono-Bold',
-    textTransform: 'uppercase',
-    letterSpacing: 2,
-    color: '#05F26C',
-  },
-  guessesLeftText: {
-    fontSize: 12,
-    fontFamily: 'SpaceMono-Bold',
-    color: '#6C757D',
-  },
-  columnHeaders: {
-    marginBottom: 4,
-    flexDirection: 'row',
-    gap: 4,
-    paddingLeft: 80,
-  },
-  columnHeaderCell: {
-    flex: 1,
-    alignItems: 'center',
-    borderRadius: 6,
-    backgroundColor: 'rgba(17,17,40,0.85)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.12)',
-    paddingVertical: 4,
-  },
-  criteriaText: {
-    fontSize: 9,
-    fontWeight: 'bold',
-    color: colors.pitchGreen,
+  cornerSpacer: {
+    width: ROW_HEADER_WIDTH,
   },
   gridRow: {
-    marginBottom: 4,
     flexDirection: 'row',
-    gap: 4,
+    gap: spacing.xs,
+    marginBottom: spacing.xs,
   },
-  rowLabel: {
-    width: 80,
+  pipRow: {
+    flexDirection: 'row',
+    gap: spacing.xs,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 6,
-    backgroundColor: 'rgba(17,17,40,0.85)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.12)',
-    paddingHorizontal: 4,
-    paddingVertical: 4,
   },
-  searchSection: {
-    marginTop: 16,
+  gameOverSection: {
+    marginTop: spacing.lg,
   },
-  findLabel: {
-    marginBottom: 8,
-    fontSize: 12,
-    color: '#6C757D',
+  sheetAvoider: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
-  shareButton: {
-    marginTop: 16,
-  },
-  gameOverButtons: {
-    marginTop: 16,
-    gap: 8,
-  },
-  hintRow: {
+  sheetFooter: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
-    gap: 12,
+    gap: spacing.md,
+    marginTop: spacing.md,
   },
-  hintButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(244,162,97,0.3)',
-    backgroundColor: 'rgba(244,162,97,0.08)',
+  footerSpacer: {
+    flex: 1,
   },
   hintButtonDisabled: {
-    opacity: 0.3,
-  },
-  hintButtonText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#F4A261',
-  },
-  hintSuggestion: {
-    fontSize: 13,
-    fontStyle: 'italic',
-    color: '#F4A261',
+    opacity: 0.35,
   },
   offscreen: {
     position: 'absolute',
     left: -9999,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    loadingText: {
+      ...type.body,
+      color: c.textSecondary,
+    },
+    scoreValue: {
+      ...type.score,
+      color: c.accent,
+    },
+    guessesValue: {
+      ...type.micro,
+      color: c.textSecondary,
+      marginTop: 2,
+    },
+    statusStrip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginTop: spacing.sm,
+      paddingHorizontal: spacing.xs,
+    },
+    pip: {
+      width: 8,
+      height: 8,
+      borderRadius: borderRadius.full,
+    },
+    pipFree: {
+      backgroundColor: c.accentSoft,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+    },
+    pipUsed: {
+      backgroundColor: c.textMuted,
+    },
+    rarityText: {
+      ...type.micro,
+      color: c.textSecondary,
+    },
+    tensionLine: {
+      ...type.captionBold,
+      color: c.streak,
+      textAlign: 'center',
+      marginTop: spacing.md,
+    },
+    pointsLine: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: spacing.xs,
+    },
+    verdictBanner: {
+      alignItems: 'center',
+      paddingVertical: spacing.lg,
+      paddingHorizontal: spacing.lg,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.accentSoft,
+    },
+    verdictTitle: {
+      ...type.h2,
+      color: c.accent,
+      textTransform: 'uppercase',
+    },
+    verdictScore: {
+      ...type.scoreLarge,
+      color: c.textPrimary,
+      marginTop: spacing.xs,
+    },
+    verdictSubtitle: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: spacing.xs,
+      textAlign: 'center',
+    },
+    sheetScrim: {
+      flex: 1,
+      backgroundColor: c.scrim,
+    },
+    sheetPanel: {
+      marginTop: spacing.xxl * 2,
+      marginHorizontal: spacing.lg,
+      padding: spacing.lg,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.border,
+      backgroundColor: c.bgElevated,
+    },
+    sheetKicker: {
+      ...type.micro,
+      color: c.accent,
+      letterSpacing: 1.5,
+    },
+    sheetTitle: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+      marginTop: spacing.xs,
+      marginBottom: spacing.md,
+    },
+    hintButton: {
+      minHeight: touch.min,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.streak,
+      backgroundColor: c.streakSoft,
+    },
+    hintButtonText: {
+      ...type.captionBold,
+      color: c.streak,
+    },
+    hintButtonTextMuted: {
+      color: c.textMuted,
+    },
+    hintSuggestion: {
+      ...type.caption,
+      fontStyle: 'italic',
+      color: c.streak,
+      flexShrink: 1,
+    },
+    cancelButton: {
+      minHeight: touch.min,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+    },
+    cancelText: {
+      ...type.captionBold,
+      color: c.textSecondary,
+    },
+  });

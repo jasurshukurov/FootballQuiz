@@ -1,0 +1,89 @@
+{
+  "players": [
+    {
+      "id": 146660,
+      "name": "Ronaldo",
+      "status": "active",
+      "market_value_eur": 4000000,
+      "current_team": "FK Rostov",
+      "league": null,
+      "note": "leftover unresolved club from patch_01.json; club string vetted 2026-07-14",
+      "new_club": true
+    },
+    {
+      "id": 7767,
+      "name": "Fernando Torres",
+      "status": "retired",
+      "market_value_eur": 0,
+      "current_team": "Sagan Tosu",
+      "league": null,
+      "note": "leftover unresolved club from patch_02.json; club string vetted 2026-07-14",
+      "retired_year": 2019,
+      "new_club": true
+    },
+    {
+      "id": 1600014,
+      "name": "Mesut Ozil",
+      "status": "retired",
+      "market_value_eur": 0,
+      "current_team": "Istanbul Basaksehir",
+      "league": null,
+      "note": "leftover unresolved club from patch_02.json; club string vetted 2026-07-14",
+      "retired_year": 2023,
+      "new_club": true
+    },
+    {
+      "id": 77,
+      "name": "Lúcio",
+      "status": "retired",
+      "market_value_eur": 0,
+      "current_team": "Brasiliense",
+      "league": null,
+      "note": "leftover unresolved club from patch_02.json; club string vetted 2026-07-14",
+      "retired_year": 2020,
+      "new_club": true
+    },
+    {
+      "id": 15951,
+      "name": "Dani Alves",
+      "status": "retired",
+      "market_value_eur": 0,
+      "current_team": "Unam Pumas",
+      "league": null,
+      "note": "leftover unresolved club from patch_02.json; club string vetted 2026-07-14",
+      "retired_year": 2023
+    },
+    {
+      "id": 1600077,
+      "name": "George Best",
+      "status": "retired",
+      "market_value_eur": 0,
+      "current_team": "Brisbane Lions",
+      "league": null,
+      "note": "leftover unresolved club from patch_09.json; club string vetted 2026-07-14",
+      "retired_year": 1983,
+      "new_club": true
+    },
+    {
+      "id": 418543,
+      "name": "Perr Schuurs",
+      "status": "active",
+      "market_value_eur": 5000000,
+      "current_team": "NEC Nijmegen",
+      "league": null,
+      "note": "leftover unresolved club from patch_11.json; club string vetted 2026-07-14",
+      "new_club": true
+    },
+    {
+      "id": 47713,
+      "name": "Mamadou Sakho",
+      "status": "retired",
+      "market_value_eur": 0,
+      "current_team": "Torpedo Kutaisi",
+      "league": null,
+      "note": "leftover unresolved club from patch_12_retirees.json; club string vetted 2026-07-14",
+      "retired_year": 2026,
+      "new_club": true
+    }
+  ]
+}

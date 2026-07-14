@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { GuessResult, AttributeStatus } from '@/types/game';
-import { colors, fonts, gradients } from '@/constants/theme';
+import { type, spacing, borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { whoAreYaStatusRows } from '@/lib/shareText';
 
@@ -14,26 +17,33 @@ interface ShareableResultProps {
   won: boolean;
 }
 
-const STATUS_COLORS: Record<AttributeStatus, string> = {
-  CORRECT: colors.matchGreen,
-  HIGHER: colors.cardYellow,
-  LOWER: colors.cardYellow,
-  WRONG: colors.steelGray,
-};
-
 export default function ShareableResult({
   dailyNumber,
   guesses,
   maxGuesses,
   won,
 }: ShareableResultProps) {
+  const { colors, gradients } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+  const statusColors: Record<AttributeStatus, string> = useMemo(
+    () => ({
+      CORRECT: colors.accent,
+      HIGHER: colors.streak,
+      LOWER: colors.streak,
+      WRONG: colors.textMuted,
+    }),
+    [colors],
+  );
   const currentStreak = useDailyStateStore((s) => s.currentStreak);
   const statusRows = useMemo(() => whoAreYaStatusRows(guesses), [guesses]);
 
   return (
-    <LinearGradient colors={gradients.screenBg} style={styles.container}>
-      <Text style={styles.branding}>FOOTBALL QUIZ</Text>
-      <Text style={styles.title}>My name is... #{dailyNumber}</Text>
+    <LinearGradient colors={gradients.cardBg} style={styles.container}>
+      <View style={styles.header}>
+        <FontAwesome name="futbol-o" size={18} color={colors.accent} />
+        <Text style={styles.branding}>FOOTBALL DAILY</Text>
+      </View>
+      <Text style={styles.title}>My Name Is… #{dailyNumber}</Text>
       <Text style={styles.score}>
         {won ? `${guesses.length}/${maxGuesses}` : `X/${maxGuesses}`}
       </Text>
@@ -43,68 +53,74 @@ export default function ShareableResult({
             {statuses.map((status, colIndex) => (
               <View
                 key={colIndex}
-                style={[styles.dot, { backgroundColor: STATUS_COLORS[status] }]}
+                style={[styles.dot, { backgroundColor: statusColors[status] }]}
               />
             ))}
           </View>
         ))}
       </View>
-      {currentStreak > 0 && <Text style={styles.streak}>{currentStreak} day streak</Text>}
-      <Text style={styles.cta}>Can you beat my score? Play at footballquiz.app</Text>
+      {currentStreak > 0 && <Text style={styles.streak}>🔥 {currentStreak} day streak</Text>}
+      <Text style={styles.cta}>Play at footballquiz.app</Text>
     </LinearGradient>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    borderRadius: 16,
-    paddingVertical: 32,
-    paddingHorizontal: 24,
-    minWidth: 320,
-  },
-  branding: {
-    fontSize: 28,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    marginBottom: 16,
-    letterSpacing: 2,
-  },
-  title: {
-    marginBottom: 4,
-    fontSize: 18,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-  },
-  score: {
-    marginBottom: 16,
-    fontSize: 14,
-    fontFamily: fonts.body,
-    color: 'rgba(245,245,240,0.8)',
-  },
-  grid: {
-    gap: 6,
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 6,
-  },
-  dot: {
-    height: 36,
-    width: 36,
-    borderRadius: 6,
-  },
-  streak: {
-    marginTop: 16,
-    fontSize: 14,
-    fontFamily: fonts.subheading,
-    color: colors.pitchGreen,
-  },
-  cta: {
-    marginTop: 16,
-    fontSize: 11,
-    fontFamily: fonts.body,
-    color: colors.steelGray,
-    textAlign: 'center',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      borderRadius: borderRadius.xl,
+      borderWidth: 1,
+      borderColor: c.border,
+      // Solid canvas under the translucent cardBg gradient — react-native-view-shot
+      // captures must never end up with a transparent background.
+      backgroundColor: c.bgBase,
+      paddingVertical: spacing.xxl,
+      paddingHorizontal: spacing.xl,
+      minWidth: 320,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginBottom: spacing.lg,
+    },
+    branding: {
+      ...type.h3,
+      color: c.accent,
+      letterSpacing: 2,
+    },
+    title: {
+      ...type.h3,
+      color: c.textPrimary,
+      marginBottom: spacing.xs,
+    },
+    score: {
+      ...type.scoreLarge,
+      color: c.accentBright,
+      marginBottom: spacing.lg,
+    },
+    grid: {
+      gap: spacing.xs + 2,
+    },
+    row: {
+      flexDirection: 'row',
+      gap: spacing.xs + 2,
+    },
+    dot: {
+      height: 36,
+      width: 36,
+      borderRadius: borderRadius.sm,
+    },
+    streak: {
+      ...type.captionBold,
+      color: c.streak,
+      marginTop: spacing.lg,
+    },
+    cta: {
+      ...type.caption,
+      color: c.textMuted,
+      marginTop: spacing.md,
+      textAlign: 'center',
+    },
+  });

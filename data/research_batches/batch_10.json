@@ -1,13 +1,13 @@
 {
   "batch": 10,
-  "generated_utc": "2026-07-12T17:48:47.576691+00:00",
+  "generated_utc": "2026-07-13T23:57:58.843992+00:00",
   "reference_date": "2026-07-12",
   "fame_min": 70,
   "fame_range_in_batch": [
-    70.01,
-    70.12
+    70.71,
+    71.38
   ],
-  "count": 7,
+  "count": 40,
   "schema": {
     "description": "Research each player's status as of 2026-07-12 and fill these fields. Do NOT change id or name. Save the completed file(s) as data/research_patches/patch_NN.json with the same {id, ...} objects.",
     "fields": {
@@ -37,74 +37,404 @@
   },
   "players": [
     {
-      "id": 601883,
-      "name": "Matheus Nunes",
-      "nationality": "Portugal",
-      "position": "Defender",
-      "current_team": "Manchester City Football Club",
-      "market_value": 38000000,
-      "fame_score": 70.12,
+      "id": 333014,
+      "name": "Sander Berge",
+      "nationality": "Norway",
+      "position": "Midfield",
+      "current_team": "Fulham Football Club",
+      "market_value": 25000000,
+      "fame_score": 71.38,
       "birth_year": 1998
     },
     {
-      "id": 388198,
-      "name": "Nico Schlotterbeck",
-      "nationality": "Germany",
+      "id": 475959,
+      "name": "Josko Gvardiol",
+      "nationality": "Croatia",
       "position": "Defender",
-      "current_team": "Borussia Dortmund",
-      "market_value": 40000000,
-      "fame_score": 70.09,
-      "birth_year": 1999
+      "current_team": "Manchester City Football Club",
+      "market_value": 70000000,
+      "fame_score": 71.38,
+      "birth_year": 2002
     },
     {
-      "id": 648195,
-      "name": "Enzo Fernández",
-      "nationality": "Argentina",
-      "position": "Midfield",
-      "current_team": "Chelsea Football Club",
-      "market_value": 85000000,
-      "fame_score": 70.07,
-      "birth_year": 2001
-    },
-    {
-      "id": 730893,
-      "name": "Tyrick Mitchell",
-      "nationality": "England",
-      "position": "Defender",
-      "current_team": "Crystal Palace Football Club",
-      "market_value": 25000000,
-      "fame_score": 70.07,
-      "birth_year": 1999
-    },
-    {
-      "id": 80444,
-      "name": "Philippe Coutinho",
+      "id": 943837,
+      "name": "Vitor Roque",
       "nationality": "Brazil",
-      "position": "Midfield",
-      "current_team": "Clube De Regatas Vasco Da Gama",
-      "market_value": 7500000,
-      "fame_score": 70.04,
-      "birth_year": 1992
+      "position": "Attack",
+      "current_team": "Palmeiras",
+      "market_value": 35000000,
+      "fame_score": 71.38,
+      "birth_year": 2005
     },
     {
-      "id": 717411,
-      "name": "Yegor Yarmolyuk",
-      "nationality": "Ukraine",
-      "position": "Midfield",
-      "current_team": "Brentford Football Club",
+      "id": 260827,
+      "name": "Joachim Andersen",
+      "nationality": "Denmark",
+      "position": "Defender",
+      "current_team": "Fulham Football Club",
       "market_value": 25000000,
-      "fame_score": 70.04,
+      "fame_score": 71.36,
+      "birth_year": 1996
+    },
+    {
+      "id": 667287,
+      "name": "Yasin Ayari",
+      "nationality": "Sweden",
+      "position": "Midfield",
+      "current_team": "Brighton",
+      "market_value": 30000000,
+      "fame_score": 71.34,
+      "birth_year": 2003
+    },
+    {
+      "id": 111873,
+      "name": "Emiliano Martínez",
+      "nationality": "Argentina",
+      "position": "Goalkeeper",
+      "current_team": "Aston Villa Football Club",
+      "market_value": 15000000,
+      "fame_score": 71.29,
+      "birth_year": 1999
+    },
+    {
+      "id": 654982,
+      "name": "Bilal El Khannouss",
+      "nationality": "Morocco",
+      "position": "Midfield",
+      "current_team": "VfB Stuttgart",
+      "market_value": 30000000,
+      "fame_score": 71.29,
       "birth_year": 2004
     },
     {
-      "id": 418543,
-      "name": "Perr Schuurs",
-      "nationality": "Netherlands",
+      "id": 46741,
+      "name": "David Luiz",
+      "nationality": "Brazil",
       "position": "Defender",
-      "current_team": "Torino Calcio",
-      "market_value": 25000000,
-      "fame_score": 70.01,
+      "current_team": "Pafos Fc",
+      "market_value": 500000,
+      "fame_score": 71.28,
+      "birth_year": 1987
+    },
+    {
+      "id": 270541,
+      "name": "Serhou Guirassy",
+      "nationality": "Guinea",
+      "position": "Attack",
+      "current_team": "Borussia Dortmund",
+      "market_value": 45000000,
+      "fame_score": 71.27,
+      "birth_year": 1996
+    },
+    {
+      "id": 711337,
+      "name": "Evanilson",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Association Football Club Bournemouth",
+      "market_value": 40000000,
+      "fame_score": 71.25,
       "birth_year": 1999
+    },
+    {
+      "id": 447661,
+      "name": "Douglas Luiz",
+      "nationality": "Brazil",
+      "position": "Midfield",
+      "current_team": "Juventus Football Club",
+      "market_value": 22000000,
+      "fame_score": 71.24,
+      "birth_year": 1998
+    },
+    {
+      "id": 93128,
+      "name": "Kalidou Koulibaly",
+      "nationality": "Senegal",
+      "position": "Defender",
+      "current_team": "Al-Hilal",
+      "market_value": 10000000,
+      "fame_score": 71.23,
+      "birth_year": 1991
+    },
+    {
+      "id": 343537,
+      "name": "Artem Dovbyk",
+      "nationality": "Ukraine",
+      "position": "Attack",
+      "current_team": "Associazione Sportiva Roma",
+      "market_value": 25000000,
+      "fame_score": 71.22,
+      "birth_year": 1997
+    },
+    {
+      "id": 466794,
+      "name": "Eric García",
+      "nationality": "Spain",
+      "position": "Defender",
+      "current_team": "Futbol Club Barcelona",
+      "market_value": 30000000,
+      "fame_score": 71.22,
+      "birth_year": 2001
+    },
+    {
+      "id": 583189,
+      "name": "Anthony Elanga",
+      "nationality": "Sweden",
+      "position": "Attack",
+      "current_team": "Newcastle United Football Club",
+      "market_value": 50000000,
+      "fame_score": 71.2,
+      "birth_year": 2002
+    },
+    {
+      "id": 964580,
+      "name": "Wesley",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Associazione Sportiva Roma",
+      "market_value": 25000000,
+      "fame_score": 71.18,
+      "birth_year": 2005
+    },
+    {
+      "id": 474701,
+      "name": "Crysencio Summerville",
+      "nationality": "Netherlands",
+      "position": "Attack",
+      "current_team": "West Ham United Football Club",
+      "market_value": 22000000,
+      "fame_score": 71.17,
+      "birth_year": 2001
+    },
+    {
+      "id": 561613,
+      "name": "Joan García",
+      "nationality": "Spain",
+      "position": "Goalkeeper",
+      "current_team": "Futbol Club Barcelona",
+      "market_value": 35000000,
+      "fame_score": 71.16,
+      "birth_year": 2001
+    },
+    {
+      "id": 872171,
+      "name": "Lucas Beraldo",
+      "nationality": "Brazil",
+      "position": "Defender",
+      "current_team": "Paris Saint-Germain Football Club",
+      "market_value": 25000000,
+      "fame_score": 71.14,
+      "birth_year": 2003
+    },
+    {
+      "id": 15799,
+      "name": "Santi Cazorla",
+      "nationality": "Spain",
+      "position": "Midfield",
+      "current_team": "Real Oviedo S.A.D.",
+      "market_value": 0,
+      "fame_score": 71.13,
+      "birth_year": 1984
+    },
+    {
+      "id": 192735,
+      "name": "Stanislav Lobotka",
+      "nationality": "Slovakia",
+      "position": "Midfield",
+      "current_team": "Società Sportiva Calcio Napoli",
+      "market_value": 30000000,
+      "fame_score": 71.12,
+      "birth_year": 1994
+    },
+    {
+      "id": 418659,
+      "name": "Amine Gouiri",
+      "nationality": "Algeria",
+      "position": "Attack",
+      "current_team": "Olympique de Marseille",
+      "market_value": 30000000,
+      "fame_score": 71.05,
+      "birth_year": 2000
+    },
+    {
+      "id": 257814,
+      "name": "Gregor Kobel",
+      "nationality": "Switzerland",
+      "position": "Goalkeeper",
+      "current_team": "Borussia Dortmund",
+      "market_value": 40000000,
+      "fame_score": 71.01,
+      "birth_year": 1997
+    },
+    {
+      "id": 413565,
+      "name": "Jhon Lucumí",
+      "nationality": "Colombia",
+      "position": "Defender",
+      "current_team": "Bologna Football Club 1909",
+      "market_value": 25000000,
+      "fame_score": 71.01,
+      "birth_year": 1998
+    },
+    {
+      "id": 947411,
+      "name": "Chris Rigg",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "Sunderland Association Football Club",
+      "market_value": 25000000,
+      "fame_score": 71.01,
+      "birth_year": 2007
+    },
+    {
+      "id": 1600079,
+      "name": "Clarence Seedorf",
+      "nationality": "Netherlands",
+      "position": "Midfield",
+      "current_team": "Botafogo",
+      "market_value": 0,
+      "fame_score": 71,
+      "birth_year": 1976
+    },
+    {
+      "id": 691316,
+      "name": "Luis Henrique",
+      "nationality": "Brazil",
+      "position": "Midfield",
+      "current_team": "Football Club Internazionale Milano S.p.A.",
+      "market_value": 25000000,
+      "fame_score": 70.99,
+      "birth_year": 2001
+    },
+    {
+      "id": 128223,
+      "name": "Álvaro Morata",
+      "nationality": "Spain",
+      "position": "Attack",
+      "current_team": "Calcio Como",
+      "market_value": 12000000,
+      "fame_score": 70.97,
+      "birth_year": 1992
+    },
+    {
+      "id": 568559,
+      "name": "Radu Drăgușin",
+      "nationality": "Romania",
+      "position": "Defender",
+      "current_team": "Tottenham Hotspur Football Club",
+      "market_value": 22000000,
+      "fame_score": 70.94,
+      "birth_year": 2002
+    },
+    {
+      "id": 1012564,
+      "name": "Rayan",
+      "nationality": "Brazil",
+      "position": "Attack",
+      "current_team": "Association Football Club Bournemouth",
+      "market_value": 30000000,
+      "fame_score": 70.94,
+      "birth_year": 2006
+    },
+    {
+      "id": 855256,
+      "name": "Alex Scott",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "Association Football Club Bournemouth",
+      "market_value": 30000000,
+      "fame_score": 70.89,
+      "birth_year": 2003
+    },
+    {
+      "id": 242086,
+      "name": "Patrik Schick",
+      "nationality": "Czech Republic",
+      "position": "Attack",
+      "current_team": "Bayer Leverkusen",
+      "market_value": 30000000,
+      "fame_score": 70.88,
+      "birth_year": 1996
+    },
+    {
+      "id": 730581,
+      "name": "Loïc Badé",
+      "nationality": "France",
+      "position": "Defender",
+      "current_team": "Bayer Leverkusen",
+      "market_value": 30000000,
+      "fame_score": 70.87,
+      "birth_year": 2000
+    },
+    {
+      "id": 257455,
+      "name": "João Palhinha",
+      "nationality": "Portugal",
+      "position": "Midfield",
+      "current_team": "FC Bayern München",
+      "market_value": 26000000,
+      "fame_score": 70.86,
+      "birth_year": 1995
+    },
+    {
+      "id": 842341,
+      "name": "Maxime Estève",
+      "nationality": "France",
+      "position": "Defender",
+      "current_team": "Burnley Football Club",
+      "market_value": 25000000,
+      "fame_score": 70.86,
+      "birth_year": 2002
+    },
+    {
+      "id": 263236,
+      "name": "Kevin Danso",
+      "nationality": "Austria",
+      "position": "Defender",
+      "current_team": "Tottenham Hotspur Football Club",
+      "market_value": 20000000,
+      "fame_score": 70.77,
+      "birth_year": 1981
+    },
+    {
+      "id": 51152,
+      "name": "Aleksandar Mitrović",
+      "nationality": "Serbia",
+      "position": "Attack",
+      "current_team": "Al-Rayyan",
+      "market_value": 18000000,
+      "fame_score": 70.76,
+      "birth_year": 1994
+    },
+    {
+      "id": 741238,
+      "name": "Omari Hutchinson",
+      "nationality": "England",
+      "position": "Midfield",
+      "current_team": "Nottingham Forest Football Club",
+      "market_value": 30000000,
+      "fame_score": 70.74,
+      "birth_year": 2003
+    },
+    {
+      "id": 215,
+      "name": "Roque Santa Cruz",
+      "nationality": "Paraguay",
+      "position": "Attack",
+      "current_team": "Club Nacional",
+      "market_value": 100000,
+      "fame_score": 70.71,
+      "birth_year": 1981
+    },
+    {
+      "id": 401173,
+      "name": "Jadon Sancho",
+      "nationality": "England",
+      "position": "Attack",
+      "current_team": "Aston Villa Football Club",
+      "market_value": 13000000,
+      "fame_score": 70.71,
+      "birth_year": 1975
     }
   ]
 }

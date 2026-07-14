@@ -3,16 +3,25 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ManagerLevel, getLevelForXp, getProgressToNextLevel } from '@/lib/managerLevels';
 import { syncManagerProfile } from '@/lib/dynamoSync';
+import { getTodayDateString } from '@/lib/dailySeed';
 
 interface ManagerState {
   totalXp: number;
   xpByMode: Record<string, number>;
   gamesCompletedByMode: Record<string, number>;
+  /** mode → last local date XP was awarded; guards Play-Again inflation. */
+  xpAwardedDate: Record<string, string>;
   lastSyncedAt: string | null;
 }
 
 interface ManagerActions {
   addXp: (mode: string, amount: number) => void;
+  /**
+   * Award XP at most once per mode per local day. Screens should call this
+   * (not addXp) on daily completion; replays/practice runs the same day
+   * return false and award nothing.
+   */
+  awardDailyXp: (mode: string, amount: number) => boolean;
   getLevel: () => ManagerLevel;
   getProgress: () => { current: number; next: number; progress: number };
   syncToCloud: () => Promise<void>;
@@ -26,7 +35,17 @@ export const useManagerStore = create<ManagerStore>()(
       totalXp: 0,
       xpByMode: {},
       gamesCompletedByMode: {},
+      xpAwardedDate: {},
       lastSyncedAt: null,
+
+      awardDailyXp: (mode: string, amount: number) => {
+        const today = getTodayDateString();
+        const state = get();
+        if (state.xpAwardedDate[mode] === today) return false;
+        set({ xpAwardedDate: { ...state.xpAwardedDate, [mode]: today } });
+        state.addXp(mode, amount);
+        return true;
+      },
 
       addXp: (mode: string, amount: number) => {
         if (amount <= 0) return;
@@ -66,6 +85,7 @@ export const useManagerStore = create<ManagerStore>()(
         totalXp: state.totalXp,
         xpByMode: state.xpByMode,
         gamesCompletedByMode: state.gamesCompletedByMode,
+        xpAwardedDate: state.xpAwardedDate,
         lastSyncedAt: state.lastSyncedAt,
       }),
     },

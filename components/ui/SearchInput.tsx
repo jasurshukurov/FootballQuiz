@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { colors } from '@/constants/theme';
+import { spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import GlassCard from './GlassCard';
 
 interface SearchInputProps {
@@ -17,16 +19,22 @@ export default function SearchInput({
   placeholder = 'Search player...',
   editable = true,
 }: SearchInputProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+  const [focused, setFocused] = useState(false);
+
   return (
-    <GlassCard style={styles.container} intensity={30}>
-      <View style={styles.inner}>
-        <FontAwesome name="search" size={16} color={colors.steelGray} />
+    <GlassCard style={focused ? styles.containerFocused : styles.container} intensity={30}>
+      <View style={layout.inner}>
+        <FontAwesome name="search" size={16} color={colors.textMuted} />
         <TextInput
           style={styles.input}
           value={value}
           onChangeText={onChangeText}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder={placeholder}
-          placeholderTextColor={colors.steelGray}
+          placeholderTextColor={colors.textMuted}
           editable={editable}
           autoCapitalize="none"
           autoCorrect={false}
@@ -36,21 +44,29 @@ export default function SearchInput({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 2,
-    borderColor: `rgba(5,242,108,0.4)`,
-  },
+const layout = StyleSheet.create({
   inner: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
-  },
-  input: {
-    minHeight: 44,
-    flex: 1,
-    paddingHorizontal: 8,
-    fontSize: 16,
-    color: colors.chalkWhite,
+    paddingHorizontal: spacing.md,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    containerFocused: {
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+    },
+    input: {
+      ...type.body,
+      minHeight: 44,
+      flex: 1,
+      paddingHorizontal: spacing.sm,
+      color: c.textPrimary,
+    },
+  });

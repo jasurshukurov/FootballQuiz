@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
 import TeamCrest from '@/components/ui/TeamCrest';
 import { Player } from '@/types/player';
-import { colors, fonts, spacing } from '@/constants/theme';
+import { type, spacing, motion } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface ChallengerCardProps {
   player: Player;
@@ -13,13 +15,15 @@ interface ChallengerCardProps {
 }
 
 export default function ChallengerCard({ player, visible, categoryTitle }: ChallengerCardProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const translateX = useSharedValue(visible ? 0 : 80);
   const opacity = useSharedValue(visible ? 1 : 0);
 
   useEffect(() => {
     if (visible) {
-      translateX.value = withSpring(0, { damping: 15, stiffness: 100 });
-      opacity.value = withSpring(1, { damping: 15, stiffness: 100 });
+      translateX.value = withSpring(0, motion.spring);
+      opacity.value = withSpring(1, motion.spring);
     } else {
       translateX.value = 80;
       opacity.value = 0;
@@ -33,13 +37,13 @@ export default function ChallengerCard({ player, visible, categoryTitle }: Chall
 
   return (
     <Animated.View style={animatedStyle}>
-      <GlassCard style={styles.card}>
-        <View style={styles.content}>
+      <GlassCard style={layoutStyles.card}>
+        <View style={layoutStyles.content}>
           <Text style={styles.categoryLabel}>{categoryTitle}</Text>
           <Text style={styles.playerName} numberOfLines={1}>
             {player.name}
           </Text>
-          <View style={styles.teamRow}>
+          <View style={layoutStyles.teamRow}>
             <TeamCrest teamName={player.current_team} size={20} />
             <Text style={styles.teamName} numberOfLines={1}>
               {player.current_team}
@@ -52,7 +56,8 @@ export default function ChallengerCard({ player, visible, categoryTitle }: Chall
   );
 }
 
-const styles = StyleSheet.create({
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   card: {
     marginBottom: spacing.md,
   },
@@ -61,32 +66,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.sm,
   },
-  categoryLabel: {
-    fontFamily: fonts.subheading,
-    fontSize: 11,
-    color: colors.pitchGreen,
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-  },
-  playerName: {
-    fontFamily: fonts.heading,
-    fontSize: 22,
-    color: colors.chalkWhite,
-    textAlign: 'center',
-  },
   teamRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
   },
-  teamName: {
-    fontFamily: fonts.subheading,
-    fontSize: 14,
-    color: colors.steelGray,
-  },
-  position: {
-    fontFamily: fonts.body,
-    fontSize: 12,
-    color: colors.steelGray,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    categoryLabel: {
+      ...type.micro,
+      color: c.accent,
+      letterSpacing: 2,
+      textTransform: 'uppercase',
+    },
+    playerName: {
+      ...type.h2,
+      color: c.textPrimary,
+      textAlign: 'center',
+    },
+    teamName: {
+      ...type.captionBold,
+      color: c.textSecondary,
+    },
+    position: {
+      ...type.caption,
+      color: c.textSecondary,
+    },
+  });

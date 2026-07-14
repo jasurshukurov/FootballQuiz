@@ -1,0 +1,7 @@
+[
+  { "id": 14086, "name": "Ashley Young", "status": "retired", "current_team": "Ipswich Town", "league": null, "market_value_eur": 0, "retired_year": 2026 },
+  { "id": 30690, "name": "Sergio Romero", "status": "retired", "current_team": "Argentinos Juniors", "league": null, "market_value_eur": 0, "retired_year": 2026 },
+  { "id": 37647, "name": "Dimitri Payet", "status": "retired", "current_team": "Vasco da Gama", "league": null, "market_value_eur": 0, "retired_year": 2026 },
+  { "id": 47713, "name": "Mamadou Sakho", "status": "retired", "current_team": "Torpedo Kutaisi", "league": null, "market_value_eur": 0, "retired_year": 2026 },
+  { "id": 57280, "name": "Giacomo Bonaventura", "status": "retired", "current_team": "Al-Shabab", "league": null, "market_value_eur": 0, "retired_year": 2026 }
+]

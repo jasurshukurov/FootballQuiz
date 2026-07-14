@@ -1,362 +1,42 @@
 [
-  {
-    "id": 29260,
-    "name": "Giorgio Chiellini",
-    "status": "retired",
-    "current_team": "Los Angeles FC",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2023
-  },
-  {
-    "id": 52920,
-    "name": "Marcelo",
-    "status": "retired",
-    "current_team": "Fluminense",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2024
-  },
-  {
-    "id": 8163,
-    "name": "Rodri",
-    "status": "active",
-    "current_team": "Manchester City",
-    "league": "Premier League",
-    "market_value_eur": 100000000,
-    "retired_year": null
-  },
-  {
-    "id": 357565,
-    "name": "Rodri",
-    "status": "active",
-    "current_team": "Manchester City",
-    "league": "Premier League",
-    "market_value_eur": 100000000,
-    "retired_year": null
-  },
-  {
-    "id": 65230,
-    "name": "Sergio Busquets",
-    "status": "retired",
-    "current_team": "Inter Miami",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2025
-  },
-  {
-    "id": 5817,
-    "name": "Andrea Pirlo",
-    "status": "retired",
-    "current_team": "New York City FC",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2017
-  },
-  {
-    "id": 77,
-    "name": "Lúcio",
-    "status": "retired",
-    "current_team": "Brasiliense",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2020
-  },
-  {
-    "id": 15951,
-    "name": "Dani Alves",
-    "status": "retired",
-    "current_team": "Pumas UNAM",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2023
-  },
-  {
-    "id": 108390,
-    "name": "Thibaut Courtois",
-    "status": "active",
-    "current_team": "Real Madrid",
-    "league": "La Liga",
-    "market_value_eur": 25000000,
-    "retired_year": null
-  },
-  {
-    "id": 16306,
-    "name": "Casemiro",
-    "status": "active",
-    "current_team": "Inter Miami",
-    "league": "Premier League",
-    "market_value_eur": 8000000,
-    "retired_year": null
-  },
-  {
-    "id": 240306,
-    "name": "Bruno Fernandes",
-    "status": "active",
-    "current_team": "Manchester United",
-    "league": "Premier League",
-    "market_value_eur": 45000000,
-    "retired_year": null
-  },
-  {
-    "id": 548111,
-    "name": "Álex Baena",
-    "status": "active",
-    "current_team": "Atlético Madrid",
-    "league": "La Liga",
-    "market_value_eur": 50000000,
-    "retired_year": null
-  },
-  {
-    "id": 161056,
-    "name": "Joshua Kimmich",
-    "status": "active",
-    "current_team": "Bayern Munich",
-    "league": "Bundesliga",
-    "market_value_eur": 50000000,
-    "retired_year": null
-  },
-  {
-    "id": 3163,
-    "name": "Frank Lampard",
-    "status": "retired",
-    "current_team": "New York City FC",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2017
-  },
-  {
-    "id": 241641,
-    "name": "Bernardo Silva",
-    "status": "active",
-    "current_team": "Real Madrid",
-    "league": "La Liga",
-    "market_value_eur": 25000000,
-    "retired_year": null
-  },
-  {
-    "id": 434675,
-    "name": "Cody Gakpo",
-    "status": "active",
-    "current_team": "Liverpool",
-    "league": "Premier League",
-    "market_value_eur": 65000000,
-    "retired_year": null
-  },
-  {
-    "id": 3924,
-    "name": "Didier Drogba",
-    "status": "retired",
-    "current_team": "Phoenix Rising",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2018
-  },
-  {
-    "id": 2219,
-    "name": "Philipp Lahm",
-    "status": "retired",
-    "current_team": "Bayern Munich",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2017
-  },
-  {
-    "id": 22068,
-    "name": "Franck Ribéry",
-    "status": "retired",
-    "current_team": "Salernitana",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2022
-  },
-  {
-    "id": 35518,
-    "name": "David Silva",
-    "status": "retired",
-    "current_team": "Real Sociedad",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2023
-  },
-  {
-    "id": 709726,
-    "name": "Hugo Ekitiké",
-    "status": "active",
-    "current_team": "Liverpool",
-    "league": "Premier League",
-    "market_value_eur": 85000000,
-    "retired_year": null
-  },
-  {
-    "id": 406635,
-    "name": "Phil Foden",
-    "status": "active",
-    "current_team": "Manchester City",
-    "league": "Premier League",
-    "market_value_eur": 90000000,
-    "retired_year": null
-  },
-  {
-    "id": 164770,
-    "name": "Raphaël Varane",
-    "status": "retired",
-    "current_team": "Como",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2024
-  },
-  {
-    "id": 74857,
-    "name": "Marc-André ter Stegen",
-    "status": "active",
-    "current_team": "Barcelona",
-    "league": "La Liga",
-    "market_value_eur": 10000000,
-    "retired_year": null
-  },
-  {
-    "id": 433177,
-    "name": "Bukayo Saka",
-    "status": "active",
-    "current_team": "Arsenal",
-    "league": "Premier League",
-    "market_value_eur": 140000000,
-    "retired_year": null
-  },
-  {
-    "id": 288230,
-    "name": "Ousmane Dembélé",
-    "status": "active",
-    "current_team": "Paris Saint-Germain",
-    "league": "Ligue 1",
-    "market_value_eur": 100000000,
-    "retired_year": null
-  },
-  {
-    "id": 503733,
-    "name": "Anthony Gordon",
-    "status": "active",
-    "current_team": "Barcelona",
-    "league": "La Liga",
-    "market_value_eur": 75000000,
-    "retired_year": null
-  },
-  {
-    "id": 59377,
-    "name": "David de Gea",
-    "status": "active",
-    "current_team": "Fiorentina",
-    "league": "Serie A",
-    "market_value_eur": 10000000,
-    "retired_year": null
-  },
-  {
-    "id": 105470,
-    "name": "Alisson",
-    "status": "active",
-    "current_team": "Liverpool",
-    "league": "Premier League",
-    "market_value_eur": 20000000,
-    "retired_year": null
-  },
-  {
-    "id": 96341,
-    "name": "Romelu Lukaku",
-    "status": "active",
-    "current_team": "Napoli",
-    "league": "Serie A",
-    "market_value_eur": 18000000,
-    "retired_year": null
-  },
-  {
-    "id": 7594,
-    "name": "Carles Puyol",
-    "status": "retired",
-    "current_team": "Barcelona",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2014
-  },
-  {
-    "id": 5958,
-    "name": "Francesco Totti",
-    "status": "retired",
-    "current_team": "Roma",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2017
-  },
-  {
-    "id": 121483,
-    "name": "Jan Oblak",
-    "status": "active",
-    "current_team": "Atlético Madrid",
-    "league": "La Liga",
-    "market_value_eur": 20000000,
-    "retired_year": null
-  },
-  {
-    "id": 7980,
-    "name": "David Villa",
-    "status": "retired",
-    "current_team": "Vissel Kobe",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2019
-  },
-  {
-    "id": 314353,
-    "name": "Trent Alexander-Arnold",
-    "status": "active",
-    "current_team": "Real Madrid",
-    "league": "La Liga",
-    "market_value_eur": 70000000,
-    "retired_year": null
-  },
-  {
-    "id": 3235,
-    "name": "Rio Ferdinand",
-    "status": "retired",
-    "current_team": "Queens Park Rangers",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2015
-  },
-  {
-    "id": 258923,
-    "name": "Marcus Rashford",
-    "status": "active",
-    "current_team": "Manchester United",
-    "league": "Premier League",
-    "market_value_eur": 40000000,
-    "retired_year": null
-  },
-  {
-    "id": 39153,
-    "name": "Gonzalo Higuaín",
-    "status": "retired",
-    "current_team": "Inter Miami",
-    "league": null,
-    "market_value_eur": 0,
-    "retired_year": 2023
-  },
-  {
-    "id": 948294,
-    "name": "Nico Paz",
-    "status": "active",
-    "current_team": "Como",
-    "league": "Serie A",
-    "market_value_eur": 60000000,
-    "retired_year": null
-  },
-  {
-    "id": 406625,
-    "name": "Lautaro Martínez",
-    "status": "active",
-    "current_team": "Inter Milan",
-    "league": "Serie A",
-    "market_value_eur": 90000000,
-    "retired_year": null
-  }
+  { "id": 123, "name": "Christoph Metzelder", "status": "retired", "current_team": "Schalke 04", "league": null, "market_value_eur": 0, "retired_year": 2013 },
+  { "id": 122153, "name": "Paul Pogba", "status": "active", "current_team": "Monaco", "league": "Ligue 1", "market_value_eur": 5000000, "retired_year": null },
+  { "id": 125781, "name": "Antoine Griezmann", "status": "active", "current_team": "Orlando City", "league": null, "market_value_eur": 12000000, "retired_year": null },
+  { "id": 581678, "name": "Jude Bellingham", "status": "active", "current_team": "Real Madrid", "league": "La Liga", "market_value_eur": 180000000, "retired_year": null },
+  { "id": 58358, "name": "Thomas Müller", "status": "active", "current_team": "Vancouver Whitecaps", "league": null, "market_value_eur": 3000000, "retired_year": null },
+  { "id": 200512, "name": "Sadio Mané", "status": "active", "current_team": "Al-Nassr", "league": null, "market_value_eur": 12000000, "retired_year": null },
+  { "id": 139208, "name": "Virgil van Dijk", "status": "active", "current_team": "Liverpool", "league": "Premier League", "market_value_eur": 18000000, "retired_year": null },
+  { "id": 3109, "name": "Steven Gerrard", "status": "retired", "current_team": "LA Galaxy", "league": null, "market_value_eur": 0, "retired_year": 2016 },
+  { "id": 7767, "name": "Fernando Torres", "status": "retired", "current_team": "Sagan Tosu", "league": null, "market_value_eur": 0, "retired_year": 2019 },
+  { "id": 18944, "name": "Gerard Piqué", "status": "retired", "current_team": "Barcelona", "league": null, "market_value_eur": 0, "retired_year": 2022 },
+  { "id": 91845, "name": "Heung-min Son", "status": "active", "current_team": "Los Angeles FC", "league": null, "market_value_eur": 20000000, "retired_year": null },
+  { "id": 1600013, "name": "Raul Gonzalez", "status": "retired", "current_team": "New York Cosmos", "league": null, "market_value_eur": 0, "retired_year": 2015 },
+  { "id": 29260, "name": "Giorgio Chiellini", "status": "retired", "current_team": "Los Angeles FC", "league": null, "market_value_eur": 0, "retired_year": 2023 },
+  { "id": 1600014, "name": "Mesut Ozil", "status": "retired", "current_team": "Istanbul Basaksehir", "league": null, "market_value_eur": 0, "retired_year": 2023 },
+  { "id": 52920, "name": "Marcelo", "status": "retired", "current_team": "Fluminense", "league": null, "market_value_eur": 0, "retired_year": 2025 },
+  { "id": 1600015, "name": "Alessandro Del Piero", "status": "retired", "current_team": "Delhi Dynamos", "league": null, "market_value_eur": 0, "retired_year": 2014 },
+  { "id": 357565, "name": "Rodri", "status": "active", "current_team": "Manchester City", "league": "Premier League", "market_value_eur": 100000000, "retired_year": null },
+  { "id": 1600016, "name": "N'Golo Kante", "status": "active", "current_team": "Fenerbahce", "league": null, "market_value_eur": 8000000, "retired_year": null },
+  { "id": 65230, "name": "Sergio Busquets", "status": "retired", "current_team": "Inter Miami", "league": null, "market_value_eur": 0, "retired_year": 2025 },
+  { "id": 5817, "name": "Andrea Pirlo", "status": "retired", "current_team": "New York City FC", "league": null, "market_value_eur": 0, "retired_year": 2017 },
+  { "id": 1600017, "name": "Roberto Carlos", "status": "retired", "current_team": "Delhi Dynamos", "league": null, "market_value_eur": 0, "retired_year": 2015 },
+  { "id": 77, "name": "Lúcio", "status": "retired", "current_team": "Brasiliense", "league": null, "market_value_eur": 0, "retired_year": 2020 },
+  { "id": 15951, "name": "Dani Alves", "status": "retired", "current_team": "Pumas UNAM", "league": null, "market_value_eur": 0, "retired_year": 2023 },
+  { "id": 108390, "name": "Thibaut Courtois", "status": "active", "current_team": "Real Madrid", "league": "La Liga", "market_value_eur": 25000000, "retired_year": null },
+  { "id": 16306, "name": "Casemiro", "status": "active", "current_team": "Inter Miami", "league": null, "market_value_eur": 8000000, "retired_year": null },
+  { "id": 1600018, "name": "Angel Di Maria", "status": "active", "current_team": "Rosario Central", "league": null, "market_value_eur": 1500000, "retired_year": null },
+  { "id": 240306, "name": "Bruno Fernandes", "status": "active", "current_team": "Manchester United", "league": "Premier League", "market_value_eur": 45000000, "retired_year": null },
+  { "id": 548111, "name": "Álex Baena", "status": "active", "current_team": "Atlético Madrid", "league": "La Liga", "market_value_eur": 50000000, "retired_year": null },
+  { "id": 161056, "name": "Joshua Kimmich", "status": "active", "current_team": "Bayern Munich", "league": "Bundesliga", "market_value_eur": 50000000, "retired_year": null },
+  { "id": 3163, "name": "Frank Lampard", "status": "retired", "current_team": "New York City FC", "league": null, "market_value_eur": 0, "retired_year": 2017 },
+  { "id": 241641, "name": "Bernardo Silva", "status": "active", "current_team": "Real Madrid", "league": "La Liga", "market_value_eur": 25000000, "retired_year": null },
+  { "id": 434675, "name": "Cody Gakpo", "status": "active", "current_team": "Liverpool", "league": "Premier League", "market_value_eur": 65000000, "retired_year": null },
+  { "id": 3924, "name": "Didier Drogba", "status": "retired", "current_team": "Phoenix Rising", "league": null, "market_value_eur": 0, "retired_year": 2018 },
+  { "id": 1600019, "name": "Samuel Eto'o", "status": "retired", "current_team": "Qatar SC", "league": null, "market_value_eur": 0, "retired_year": 2019 },
+  { "id": 1600020, "name": "Thiago Silva", "status": "active", "current_team": "Fluminense", "league": null, "market_value_eur": 1000000, "retired_year": null },
+  { "id": 2219, "name": "Philipp Lahm", "status": "retired", "current_team": "Bayern Munich", "league": null, "market_value_eur": 0, "retired_year": 2017 },
+  { "id": 22068, "name": "Franck Ribéry", "status": "retired", "current_team": "Salernitana", "league": null, "market_value_eur": 0, "retired_year": 2022 },
+  { "id": 35518, "name": "David Silva", "status": "retired", "current_team": "Real Sociedad", "league": null, "market_value_eur": 0, "retired_year": 2023 },
+  { "id": 1600021, "name": "James Rodriguez", "status": "active", "current_team": "Minnesota United", "league": null, "market_value_eur": 3000000, "retired_year": null },
+  { "id": 709726, "name": "Hugo Ekitiké", "status": "active", "current_team": "Liverpool", "league": "Premier League", "market_value_eur": 85000000, "retired_year": null }
 ]

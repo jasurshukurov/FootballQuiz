@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { colors, fonts } from '@/constants/theme';
+import { type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 function msUntilLocalMidnight(): number {
   const now = new Date();
@@ -28,6 +30,8 @@ interface NextPuzzleCountdownProps {
 export default function NextPuzzleCountdown({
   label = 'Next puzzle in',
 }: NextPuzzleCountdownProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [remaining, setRemaining] = useState(msUntilLocalMidnight);
 
   useEffect(() => {
@@ -36,29 +40,31 @@ export default function NextPuzzleCountdown({
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={layout.container}>
       <Text style={styles.label}>{label}</Text>
       <Text style={styles.time}>{formatCountdown(remaining)}</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const layout = StyleSheet.create({
   container: {
     alignItems: 'center',
     gap: 2,
   },
-  label: {
-    fontSize: 11,
-    fontFamily: fonts.subheading,
-    color: colors.steelGray,
-    textTransform: 'uppercase',
-    letterSpacing: 1.5,
-  },
-  time: {
-    fontSize: 20,
-    fontFamily: fonts.scoreboard,
-    color: colors.pitchGreen,
-    letterSpacing: 2,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    label: {
+      ...type.micro,
+      color: c.textMuted,
+      textTransform: 'uppercase',
+      letterSpacing: 1.5,
+    },
+    time: {
+      ...type.score,
+      color: c.accent,
+      letterSpacing: 2,
+    },
+  });

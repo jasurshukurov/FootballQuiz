@@ -1,108 +1,107 @@
-import React, { useState } from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
-import { colors } from '@/constants/theme';
+import React, { useCallback, useMemo } from 'react';
+import { StyleSheet, Text, TextStyle } from 'react-native';
+import { borderRadius, spacing, touch, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+import Tappable, { TappableHaptic, TappableState } from '@/components/ui/Tappable';
 import { playClick } from '@/lib/sounds';
-import { triggerImpact } from '@/lib/haptics';
+
+type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
 
 interface RetroButtonProps {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: Variant;
   disabled?: boolean;
+  /** Haptic fired on press, forwarded to Tappable: light impact (default),
+   *  success notification, or none. */
+  haptic?: TappableHaptic;
 }
 
+interface VariantTokens {
+  bg: string;
+  bgPressed: string;
+  label: string;
+  border?: string;
+}
+
+const buildVariants = (c: ThemeColors): Record<Variant, VariantTokens> => ({
+  primary: { bg: c.accent, bgPressed: c.accentDim, label: c.textOnAccent },
+  secondary: {
+    bg: c.bgCard,
+    bgPressed: c.bgCardPressed,
+    label: c.textPrimary,
+    border: c.border,
+  },
+  danger: { bg: c.danger, bgPressed: c.dangerBright, label: c.textPrimary },
+  ghost: { bg: 'transparent', bgPressed: c.accentSoft, label: c.accent },
+});
+
+/**
+ * The single button primitive. Variants: primary (accent fill), secondary
+ * (card + border), danger (red fill), ghost (transparent, accent label).
+ * Primary CTAs are `touch.cta` (56pt) tall; every variant clears `touch.min`.
+ * Built on Tappable: press-scale spring, web hover, haptic passthrough.
+ */
 export default function RetroButton({
   title,
   onPress,
   variant = 'primary',
   disabled = false,
+  haptic = 'impact',
 }: RetroButtonProps) {
-  const [pressed, setPressed] = useState(false);
+  const { colors } = useTheme();
+  const variants = useMemo(() => buildVariants(colors), [colors]);
+  const tokens = variants[variant];
 
-  const variantStyle = disabled
-    ? styles.disabled
-    : pressed
-      ? pressedVariantStyles[variant]
-      : variantStyles[variant];
-
-  const handlePress = () => {
-    triggerImpact();
+  const handlePress = useCallback(() => {
     playClick();
     onPress();
-  };
+  }, [onPress]);
+
+  const containerStyle = useCallback(
+    ({ pressed }: TappableState) => [
+      styles.base,
+      {
+        backgroundColor: disabled ? colors.bgCard : pressed ? tokens.bgPressed : tokens.bg,
+        borderWidth: tokens.border ? 1 : 0,
+        borderColor: tokens.border ?? 'transparent',
+        height: variant === 'primary' ? touch.cta : undefined,
+        opacity: disabled ? 0.5 : 1,
+      },
+    ],
+    [colors, tokens, variant, disabled],
+  );
+
+  const labelStyle: TextStyle = { color: disabled ? colors.textMuted : tokens.label };
 
   return (
-    <Pressable
+    <Tappable
       onPress={handlePress}
+      haptic={haptic}
       disabled={disabled}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-      style={[styles.base, variantStyle]}>
-      <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
-    </Pressable>
+      hitSlop={0}
+      accessibilityLabel={title}
+      hoverStyle={{ backgroundColor: tokens.bgPressed }}
+      style={containerStyle}>
+      <Text style={[styles.text, labelStyle]}>{title}</Text>
+    </Tappable>
   );
 }
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: 44,
-    minWidth: 44,
+    minHeight: touch.min,
+    minWidth: touch.min,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-  },
-  disabled: {
-    borderWidth: 2,
-    borderColor: colors.steelGray,
-    backgroundColor: 'rgba(108,117,125,0.5)',
+    borderRadius: borderRadius.md,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
   },
   text: {
+    ...type.bodyBold,
     textAlign: 'center',
-    fontSize: 16,
-    fontFamily: 'BarlowCondensed-SemiBold',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    color: colors.chalkWhite,
-  },
-  textDisabled: {
-    color: 'rgba(245,245,240,0.5)',
-  },
-});
-
-const variantStyles = StyleSheet.create({
-  primary: {
-    backgroundColor: colors.pitchGreen,
-    borderWidth: 2,
-    borderColor: colors.matchGreen,
-  },
-  secondary: {
-    backgroundColor: colors.retroBlack,
-    borderWidth: 2,
-    borderColor: colors.steelGray,
-  },
-  danger: {
-    backgroundColor: colors.cardRed,
-    borderWidth: 2,
-    borderColor: colors.cardRed,
-  },
-});
-
-const pressedVariantStyles = StyleSheet.create({
-  primary: {
-    backgroundColor: colors.matchGreen,
-    borderWidth: 2,
-    borderColor: colors.pitchGreen,
-  },
-  secondary: {
-    backgroundColor: colors.steelGray,
-    borderWidth: 2,
-    borderColor: colors.retroBlack,
-  },
-  danger: {
-    backgroundColor: 'rgba(230,57,70,0.8)',
-    borderWidth: 2,
-    borderColor: colors.cardRed,
+    letterSpacing: 0.3,
   },
 });

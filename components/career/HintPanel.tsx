@@ -2,7 +2,9 @@ import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import GlassCard from '@/components/ui/GlassCard';
-import { colors, spacing, fonts } from '@/constants/theme';
+import { spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { HintButton } from '@/components/career/HintButton';
 
 interface HintPanelProps {
@@ -19,6 +21,8 @@ const HINTS = [
 ] as const;
 
 function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: HintPanelProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const unlockedSet = useMemo(() => new Set(unlockedHints), [unlockedHints]);
   const isPremium = freeHintsRemaining <= 0;
 
@@ -50,8 +54,7 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
 
   return (
     <GlassCard style={styles.container}>
-      <Text
-        style={[styles.freeText, { color: hasFreeHints ? colors.pitchGreen : colors.cardYellow }]}>
+      <Text style={[styles.freeText, { color: hasFreeHints ? colors.accent : colors.streak }]}>
         {hasFreeHints
           ? `${freeHintsRemaining} free hint${freeHintsRemaining !== 1 ? 's' : ''} left`
           : 'Watch ad to unlock hints'}
@@ -74,35 +77,32 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
 
 export const HintPanel = React.memo(HintPanelInner);
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-  },
-  freeText: {
-    fontSize: 13,
-    fontFamily: fonts.scoreboard,
-    textAlign: 'center',
-    marginBottom: spacing.sm,
-    textShadowColor: 'rgba(5,242,108,0.6)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 8,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: 'rgba(255,255,255,0.06)',
-    marginVertical: spacing.sm,
-  },
-  row: {
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-  },
-  gap: {
-    width: spacing.sm,
-    backgroundColor: 'transparent',
-  },
-  rowGap: {
-    height: spacing.sm,
-    backgroundColor: 'transparent',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+    },
+    freeText: {
+      ...type.captionBold,
+      textAlign: 'center',
+      marginBottom: spacing.sm,
+    },
+    separator: {
+      height: 1,
+      backgroundColor: c.border,
+      marginVertical: spacing.sm,
+    },
+    row: {
+      flexDirection: 'row',
+      backgroundColor: 'transparent',
+    },
+    gap: {
+      width: spacing.sm,
+      backgroundColor: 'transparent',
+    },
+    rowGap: {
+      height: spacing.sm,
+      backgroundColor: 'transparent',
+    },
+  });

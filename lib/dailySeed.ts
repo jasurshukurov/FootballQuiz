@@ -60,3 +60,17 @@ export function createSeededRandom(seed: number): () => number {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+
+/**
+ * Unbiased seeded Fisher-Yates shuffle (returns a new array). Use this instead
+ * of `arr.sort(() => rng() - 0.5)` — a random comparator is biased and its
+ * output depends on the engine's sort algorithm.
+ */
+export function seededShuffle<T>(items: readonly T[], rng: () => number): T[] {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}

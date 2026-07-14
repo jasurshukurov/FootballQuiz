@@ -1,10 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Modal, View, Text, StyleSheet } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { GameStatus, GuessResult } from '@/types/game';
 import { buildShareText, whoAreYaStatusRows } from '@/lib/sharing';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
-import { colors } from '@/constants/theme';
+import { motion, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import ShareableResult from '@/components/ShareableResult';
 import RetroButton from './RetroButton';
 import GameOverActions from './GameOverActions';
@@ -19,6 +22,8 @@ interface ResultModalProps {
   maxGuesses: number;
   dailyNumber: number;
   guesses: GuessResult[];
+  /** Today's daily solve time for the share text (null on practice runs). */
+  solveTimeMs?: number | null;
   onClose: () => void;
   onPlayAgain: () => void;
 }
@@ -31,9 +36,12 @@ export default function ResultModal({
   maxGuesses,
   dailyNumber,
   guesses,
+  solveTimeMs = null,
   onClose,
   onPlayAgain,
 }: ResultModalProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const isWin = status === 'won';
   const shareRef = useRef<View>(null);
   const isGameOver = status === 'won' || status === 'lost';
@@ -46,43 +54,47 @@ export default function ResultModal({
     won: isWin,
     maxGuesses,
     statusRows: whoAreYaStatusRows(guesses),
+    solveTimeMs,
   });
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.overlay}>
-        <GlassCard style={styles.card} intensity={60}>
-          <Text style={styles.emoji}>{isWin ? '\u26BD' : '\uD83D\uDFE5'}</Text>
-          <Text style={styles.title}>{isWin ? 'You Got It!' : 'Game Over'}</Text>
-          <Text style={styles.subtitle}>
-            The player was <Text style={styles.targetName}>{targetName}</Text>
-          </Text>
-          {isWin && (
-            <Text style={styles.winText}>
-              Solved in {guessCount}/{maxGuesses} guesses
+        <Animated.View entering={FadeIn.duration(motion.base)} style={layout.cardWrap}>
+          <GlassCard style={layout.card} intensity={60}>
+            <Text style={layout.emoji}>{isWin ? '⚽' : '🏁'}</Text>
+            <Text style={styles.title}>{isWin ? 'You Got It!' : 'Full Time'}</Text>
+            <Text style={styles.subtitle}>
+              The answer was <Text style={styles.targetName}>{targetName}</Text>
             </Text>
-          )}
-          {!isWin && <Text style={styles.loseText}>Better luck next time!</Text>}
-          <View style={styles.buttons}>
-            {isGameOver ? (
-              <GameOverActions
-                shareRef={shareRef}
-                shareText={shareText}
-                win={isWin}
-                onPlayAgain={onPlayAgain}
-                includeExtras={false}
-              />
-            ) : (
-              <RetroButton title="Play Again" onPress={onPlayAgain} />
+            {isWin && (
+              <Text style={styles.winText}>
+                Solved in {guessCount}/{maxGuesses} guesses
+              </Text>
             )}
-            <RetroButton title="Close" onPress={onClose} variant="secondary" />
-          </View>
-        </GlassCard>
+            {!isWin && <Text style={styles.loseText}>Back tomorrow for the next one.</Text>}
+            <View style={layout.buttons}>
+              {isGameOver ? (
+                <GameOverActions
+                  shareRef={shareRef}
+                  shareText={shareText}
+                  win={isWin}
+                  onPlayAgain={onPlayAgain}
+                  includeExtras={false}
+                  currentModeKey="who-are-ya"
+                />
+              ) : (
+                <RetroButton title="Play Again" onPress={onPlayAgain} />
+              )}
+              <RetroButton title="Close" onPress={onClose} variant="secondary" />
+            </View>
+          </GlassCard>
+        </Animated.View>
 
-        {isGameOver && <GameOverExtras win={isWin} />}
+        {isGameOver && <GameOverExtras win={isWin} currentModeKey="who-are-ya" />}
 
         {/* Offscreen shareable view for capture */}
-        <View style={styles.offscreen}>
+        <View style={layout.offscreen}>
           <View ref={shareRef} collapsable={false}>
             <ShareableResult
               dailyNumber={dailyNumber}
@@ -97,59 +109,65 @@ export default function ResultModal({
   );
 }
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    paddingHorizontal: 24,
+const layout = StyleSheet.create({
+  cardWrap: {
+    width: '100%',
+    maxWidth: 384,
   },
   card: {
     width: '100%',
-    maxWidth: 384,
     alignItems: 'center',
-    padding: 32,
+    padding: spacing.xxl,
   },
   emoji: {
-    marginBottom: 8,
-    fontSize: 36,
-  },
-  title: {
-    marginBottom: 16,
-    textAlign: 'center',
-    fontSize: 24,
-    fontFamily: 'BarlowCondensed-Bold',
-    color: colors.chalkWhite,
-  },
-  subtitle: {
-    marginBottom: 8,
-    textAlign: 'center',
-    fontSize: 16,
-    color: 'rgba(245,245,240,0.8)',
-  },
-  targetName: {
-    fontWeight: 'bold',
-    color: colors.matchGreen,
-  },
-  winText: {
-    marginBottom: 24,
-    textAlign: 'center',
-    fontSize: 14,
-    color: colors.cardYellow,
-  },
-  loseText: {
-    marginBottom: 24,
-    textAlign: 'center',
-    fontSize: 14,
-    color: colors.cardRed,
+    marginBottom: spacing.sm,
+    fontSize: type.display.fontSize,
   },
   buttons: {
     width: '100%',
-    gap: 12,
+    gap: spacing.md,
   },
   offscreen: {
     position: 'absolute',
     left: -9999,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    overlay: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.scrim,
+      paddingHorizontal: spacing.xl,
+    },
+    title: {
+      ...type.h2,
+      marginBottom: spacing.lg,
+      textAlign: 'center',
+      color: c.textPrimary,
+    },
+    subtitle: {
+      ...type.body,
+      marginBottom: spacing.sm,
+      textAlign: 'center',
+      color: c.textSecondary,
+    },
+    targetName: {
+      ...type.bodyBold,
+      color: c.accent,
+    },
+    winText: {
+      ...type.caption,
+      marginBottom: spacing.xl,
+      textAlign: 'center',
+      color: c.streak,
+    },
+    loseText: {
+      ...type.caption,
+      marginBottom: spacing.xl,
+      textAlign: 'center',
+      color: c.textSecondary,
+    },
+  });

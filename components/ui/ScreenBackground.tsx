@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { gradients } from '@/constants/theme';
+import { useTheme } from '@/hooks/useTheme';
 
 interface ScreenBackgroundProps {
   children: React.ReactNode;
@@ -9,14 +9,13 @@ interface ScreenBackgroundProps {
   gradient?: readonly string[];
 }
 
-export default function ScreenBackground({
-  children,
-  style,
-  gradient = gradients.screenBg,
-}: ScreenBackgroundProps) {
+export default function ScreenBackground({ children, style, gradient }: ScreenBackgroundProps) {
+  const theme = useTheme();
+  const stops = gradient ?? theme.gradients.screenBg;
+
   return (
     <LinearGradient
-      colors={gradient as [string, string, ...string[]]}
+      colors={stops as [string, string, ...string[]]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={[styles.container, style]}>

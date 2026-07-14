@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -6,7 +6,9 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { colors, fonts, shadows } from '@/constants/theme';
+import { fonts, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface AnimatedBarProps {
   label: string;
@@ -14,6 +16,7 @@ interface AnimatedBarProps {
   maxValue: number;
   index: number;
   labelWidth?: number;
+  /** Defaults to the theme accent. */
   barColor?: string;
 }
 
@@ -23,8 +26,12 @@ function AnimatedBar({
   maxValue,
   index,
   labelWidth = 20,
-  barColor = colors.pitchGreen,
+  barColor,
 }: AnimatedBarProps) {
+  const { colors, shadows } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+  const resolvedBarColor = barColor ?? colors.accent;
+
   const targetPercent = maxValue > 0 ? Math.max((value / maxValue) * 100, 8) : 8;
   const widthProgress = useSharedValue(0);
 
@@ -37,16 +44,16 @@ function AnimatedBar({
   }));
 
   return (
-    <View style={styles.row}>
+    <View style={layout.row}>
       <Text style={[styles.label, { width: labelWidth }]} numberOfLines={1}>
         {label}
       </Text>
-      <View style={styles.barContainer}>
+      <View style={layout.barContainer}>
         <Animated.View
           style={[
-            styles.bar,
+            layout.bar,
             shadows.neonGlow,
-            { backgroundColor: barColor, borderRightColor: '#00FF87' },
+            { backgroundColor: resolvedBarColor, borderRightColor: colors.accentBright },
             animatedStyle,
           ]}>
           <Text style={styles.valueText}>{value}</Text>
@@ -58,17 +65,11 @@ function AnimatedBar({
 
 export default React.memo(AnimatedBar);
 
-const styles = StyleSheet.create({
+const layout = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  label: {
-    textAlign: 'center',
-    fontSize: 12,
-    fontFamily: fonts.scoreboard,
-    color: colors.chalkWhite,
   },
   barContainer: {
     flex: 1,
@@ -81,9 +82,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
   },
-  valueText: {
-    fontSize: 12,
-    fontFamily: fonts.scoreboard,
-    color: colors.chalkWhite,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    label: {
+      ...type.caption,
+      textAlign: 'center',
+      fontFamily: fonts.scoreboard,
+      color: c.textPrimary,
+    },
+    valueText: {
+      ...type.caption,
+      fontFamily: fonts.scoreboard,
+      color: c.textPrimary,
+    },
+  });

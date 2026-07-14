@@ -8,7 +8,7 @@ import { triggerNotification } from '@/lib/haptics';
 interface CopyResultButtonProps {
   /** The Wordle-style block from buildShareText. */
   text: string;
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
 }
 
 /** Copies the share text to the clipboard with a success haptic and a brief
@@ -30,6 +30,7 @@ export default function CopyResultButton({ text, variant = 'secondary' }: CopyRe
       title={copied ? 'Copied!' : 'Copy Result'}
       onPress={handleCopy}
       variant={variant}
+      haptic="none"
     />
   );
 }

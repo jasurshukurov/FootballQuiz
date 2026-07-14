@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, ViewStyle, Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { borderRadius, colors, shadows } from '@/constants/theme';
+import { borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface GlassCardProps {
   children: React.ReactNode;
@@ -11,6 +13,9 @@ interface GlassCardProps {
 }
 
 function GlassCard({ children, style, intensity = 20, glow = false }: GlassCardProps) {
+  const theme = useTheme();
+  const { colors, shadows } = theme;
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const glowStyle = glow ? shadows.neonGlow : undefined;
 
   if (Platform.OS === 'web') {
@@ -19,23 +24,32 @@ function GlassCard({ children, style, intensity = 20, glow = false }: GlassCardP
 
   return (
     <View style={[styles.container, glowStyle, style]}>
-      <BlurView intensity={intensity} tint="dark" style={StyleSheet.absoluteFill} />
-      <View style={styles.content}>{children}</View>
+      <BlurView
+        intensity={intensity}
+        tint={theme.dark ? 'dark' : 'light'}
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={layout.content}>{children}</View>
     </View>
   );
 }
 
 export default React.memo(GlassCard);
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
-    overflow: 'hidden',
-  },
-  webFallback: {
-    backgroundColor: 'rgba(17,17,40,0.85)',
-  },
+const layout = StyleSheet.create({
   content: {},
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.border,
+      backgroundColor: c.bgCard,
+      overflow: 'hidden',
+    },
+    webFallback: {
+      backgroundColor: c.bgElevated,
+    },
+  });

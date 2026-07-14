@@ -1,7 +1,10 @@
-import React from 'react';
-import { Pressable, Text, View, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { Text, StyleSheet } from 'react-native';
 import ShakeView from '@/components/ui/ShakeView';
-import { colors, fonts, borderRadius, shadows } from '@/constants/theme';
+import Tappable from '@/components/ui/Tappable';
+import { type, spacing, borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface TransferCardProps {
   playerName: string;
@@ -20,6 +23,9 @@ function TransferCard({
   onPress,
   disabled,
 }: TransferCardProps) {
+  const { colors, shadows } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const cardStyle = correct
     ? styles.correctCard
     : wrong
@@ -30,54 +36,58 @@ function TransferCard({
 
   return (
     <ShakeView shake={!!wrong}>
-      <Pressable onPress={onPress} disabled={disabled}>
-        <View style={[styles.card, cardStyle, correct && shadows.neonGlow]}>
-          <Text style={styles.playerName}>{playerName}</Text>
-        </View>
-      </Pressable>
+      {/* Result haptics (success/error) fire from the screen — no tap impact. */}
+      <Tappable
+        onPress={onPress}
+        disabled={disabled}
+        haptic="none"
+        hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+        style={[styles.card, cardStyle, correct ? shadows.neonGlow : undefined]}>
+        <Text style={styles.playerName}>{playerName}</Text>
+      </Tappable>
     </ShakeView>
   );
 }
 
 export default React.memo(TransferCard);
 
-const styles = StyleSheet.create({
-  card: {
-    alignSelf: 'center',
-    width: '90%',
-    minHeight: 64,
-    backgroundColor: 'rgba(17,17,40,0.85)',
-    borderWidth: 1.5,
-    borderColor: 'rgba(255,255,255,0.12)',
-    borderRadius: borderRadius.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-  },
-  defaultCard: {
-    // uses base card styles
-  },
-  correctCard: {
-    backgroundColor: 'rgba(5,242,108,0.2)',
-    borderColor: colors.pitchGreen,
-    borderWidth: 2.5,
-  },
-  wrongCard: {
-    backgroundColor: 'rgba(230,57,70,0.2)',
-    borderColor: colors.cardRed,
-    borderWidth: 2.5,
-  },
-  selectedCard: {
-    borderColor: colors.chalkWhite,
-    borderWidth: 2,
-  },
-  playerName: {
-    fontSize: 20,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    textTransform: 'uppercase',
-    letterSpacing: 2,
-    textAlign: 'center',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    card: {
+      alignSelf: 'center',
+      width: '90%',
+      minHeight: 64,
+      backgroundColor: c.bgCard,
+      borderWidth: 1.5,
+      borderColor: c.border,
+      borderRadius: borderRadius.xl,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: spacing.lg,
+      paddingHorizontal: spacing.xl,
+    },
+    defaultCard: {
+      // uses base card styles
+    },
+    correctCard: {
+      backgroundColor: c.accentSoft,
+      borderColor: c.accent,
+      borderWidth: 2.5,
+    },
+    wrongCard: {
+      backgroundColor: c.dangerSoft,
+      borderColor: c.danger,
+      borderWidth: 2.5,
+    },
+    selectedCard: {
+      borderColor: c.borderStrong,
+      borderWidth: 2,
+    },
+    playerName: {
+      ...type.h2,
+      color: c.textPrimary,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
+      textAlign: 'center',
+    },
+  });

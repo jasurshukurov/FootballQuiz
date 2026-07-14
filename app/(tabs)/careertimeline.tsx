@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
-import { colors, fonts, spacing, gradients } from '@/constants/theme';
-import { triggerImpact, triggerNotification } from '@/lib/haptics';
+import Animated, { FadeIn } from 'react-native-reanimated';
+import { NotificationFeedbackType } from 'expo-haptics';
+import { spacing, type, motion } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+import { triggerNotification } from '@/lib/haptics';
 import { getModeSeed } from '@/lib/dailySeed';
 import { getDailyNumber } from '@/lib/dailyPuzzle';
 import {
@@ -19,18 +20,27 @@ import ClubSearchAutocomplete from '@/components/ui/ClubSearchAutocomplete';
 import GameOverActions from '@/components/ui/GameOverActions';
 import GiveUpButton from '@/components/career/GiveUpButton';
 import ShakeView from '@/components/ui/ShakeView';
+import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
+import ScreenHeader from '@/components/ui/ScreenHeader';
 import ShareableCareerTimelineResult from '@/components/ShareableCareerTimelineResult';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
+import { useDailyResultsStore } from '@/hooks/useDailyResultsStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
+import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import { buildShareText } from '@/lib/sharing';
 import { playCheer, playCrossbar } from '@/lib/sounds';
-import TutorialOverlay from '@/components/ui/TutorialOverlay';
+import RankBadge from '@/components/ui/RankBadge';
+import { getRank } from '@/lib/rankLadder';
 
 type GamePhase = 'playing' | 'won' | 'lost';
+type Feedback = null | 'wrong' | 'rightClubWrongYears';
 const MAX_LIVES = 3;
 
 export default function CareerTimelineScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [puzzle, setPuzzle] = useState<CareerTimelinePuzzle | null>(null);
   const [nodes, setNodes] = useState<TimelineNode[]>([]);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -39,10 +49,20 @@ export default function CareerTimelineScreen() {
   const [phase, setPhase] = useState<GamePhase>('playing');
   const [shakeWrong, setShakeWrong] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
+  const [feedback, setFeedback] = useState<Feedback>(null);
   const shareRef = useRef<View>(null);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
+  /** True while the current run IS the official daily (blob writes gate on it). */
+  const isDailyRun = useRef(true);
+  // Daily re-entry restoration: recorded result at MOUNT time restores the
+  // reveal panel instead of dealing the daily again (mount-only by design).
+  const [restoredDaily] = useState(() =>
+    useDailyProgressStore.getState().isCompleted('careertimeline'),
+  );
 
   const clubs = useMemo(() => getAllClubs(), []);
+
+  const solveTimeMs = useTodaySolveTime('careertimeline');
 
   const shareText = useMemo(
     () =>
@@ -56,12 +76,14 @@ export default function CareerTimelineScreen() {
             livesRemaining: lives,
             totalLives: MAX_LIVES,
             playerName: puzzle.playerName,
+            solveTimeMs,
           })
         : '',
-    [puzzle, dailyStreak, guessedCount, lives],
+    [puzzle, dailyStreak, guessedCount, lives, solveTimeMs],
   );
 
   const initGame = useCallback((seed: number, dayIndex?: number) => {
+    isDailyRun.current = dayIndex !== undefined;
     const p = generateCareerTimelinePuzzle(seed, dayIndex);
     setPuzzle(p);
     setNodes(p.nodes.map((n) => ({ ...n })));
@@ -71,18 +93,37 @@ export default function CareerTimelineScreen() {
     setPhase('playing');
     setShakeWrong(false);
     setHintsUsed(0);
+    setFeedback(null);
   }, []);
 
   useEffect(() => {
     const seed = getModeSeed('careertimeline');
+    if (restoredDaily) {
+      // Completed daily re-entry: rebuild the deterministic daily puzzle in its
+      // revealed end state; "Play Again" deals a practice run. Lives come from
+      // the persisted daily-result blob (older completions show none).
+      isDailyRun.current = false;
+      const p = generateCareerTimelinePuzzle(seed, getDailyNumber());
+      setPuzzle(p);
+      setNodes(p.nodes.map((n) => (n.isHidden ? { ...n, isGuessed: true } : { ...n })));
+      const guessed = useDailyProgressStore.getState().scoresByMode['careertimeline'] ?? 0;
+      const blob = useDailyResultsStore.getState().getResult<{ lives: number }>('careertimeline');
+      setGuessedCount(guessed);
+      setLives(blob?.lives ?? 0);
+      setPhase(guessed >= p.totalHidden ? 'won' : 'lost');
+      return;
+    }
     initGame(seed, getDailyNumber());
-  }, [initGame]);
+  }, [initGame, restoredDaily]);
 
   const handleNodePress = useCallback(
     (index: number) => {
       if (phase !== 'playing') return;
       const node = nodes[index];
       if (!node.isHidden || node.isGuessed) return;
+      // Solve-time stopwatch starts on the first node pick (no-ops after).
+      useSolveTimeStore.getState().markStarted('careertimeline');
+      setFeedback(null);
       setActiveIdx(index);
     },
     [phase, nodes],
@@ -94,7 +135,10 @@ export default function CareerTimelineScreen() {
       const node = nodes[index];
       if (!node.isHidden || node.isGuessed || node.hintRevealed) return;
 
-      triggerImpact(ImpactFeedbackStyle.Light);
+      // A hint is a meaningful first interaction too.
+      useSolveTimeStore.getState().markStarted('careertimeline');
+
+      // Tap haptic fires inside the node's Tappable — no extra impact here.
       const newNodes = nodes.map((n, i) => (i === index ? { ...n, hintRevealed: true } : n));
       setNodes(newNodes);
       setHintsUsed((prev) => prev + 1);
@@ -113,6 +157,7 @@ export default function CareerTimelineScreen() {
         // Correct guess
         triggerNotification(NotificationFeedbackType.Success);
         playCheer();
+        setFeedback(null);
         const newNodes = nodes.map((n, i) => (i === activeIdx ? { ...n, isGuessed: true } : n));
         setNodes(newNodes);
         const newGuessedCount = guessedCount + 1;
@@ -123,11 +168,22 @@ export default function CareerTimelineScreen() {
         if (newGuessedCount >= puzzle.totalHidden) {
           setPhase('won');
           const xp = Math.max(0, newGuessedCount * 25 + lives * 10 - hintsUsed * 5);
-          useManagerStore.getState().addXp('careertimeline', xp);
+          useManagerStore.getState().awardDailyXp('careertimeline', xp);
           useDailyProgressStore.getState().markCompleted('careertimeline', newGuessedCount);
+          useSolveTimeStore.getState().markCompleted('careertimeline', { countsForBest: true });
+          // Persist lives (DAILY run only) so re-entry restores the hearts row.
+          if (isDailyRun.current) {
+            useDailyResultsStore.getState().setResult('careertimeline', { lives });
+          }
         }
       } else {
-        // Wrong guess
+        // Wrong guess. Distinguish "right club, wrong years" — the guessed club
+        // IS somewhere in this career, just not the active stint — from a plain
+        // miss, so the softer feedback rewards partial knowledge.
+        const rightClubElsewhere = nodes.some(
+          (n, i) => i !== activeIdx && clubNamesMatch(clubName, n.club),
+        );
+        setFeedback(rightClubElsewhere ? 'rightClubWrongYears' : 'wrong');
         triggerNotification(NotificationFeedbackType.Error);
         playCrossbar();
         setShakeWrong(true);
@@ -142,12 +198,17 @@ export default function CareerTimelineScreen() {
           setPhase('lost');
           setActiveIdx(null);
           const xp = Math.max(0, guessedCount * 25 - hintsUsed * 5);
-          useManagerStore.getState().addXp('careertimeline', xp);
+          useManagerStore.getState().awardDailyXp('careertimeline', xp);
           useDailyProgressStore.getState().markCompleted('careertimeline', guessedCount);
+          // Losses never set a time PB.
+          useSolveTimeStore.getState().markCompleted('careertimeline', { countsForBest: false });
+          if (isDailyRun.current) {
+            useDailyResultsStore.getState().setResult('careertimeline', { lives: 0 });
+          }
         }
       }
     },
-    [activeIdx, phase, puzzle, nodes, guessedCount, lives],
+    [activeIdx, phase, puzzle, nodes, guessedCount, lives, hintsUsed],
   );
 
   const handleGiveUp = useCallback(() => {
@@ -159,9 +220,14 @@ export default function CareerTimelineScreen() {
     setPhase('lost');
     setActiveIdx(null);
     const xp = Math.max(0, guessedCount * 25 - hintsUsed * 5);
-    useManagerStore.getState().addXp('careertimeline', xp);
+    useManagerStore.getState().awardDailyXp('careertimeline', xp);
     useDailyProgressStore.getState().markCompleted('careertimeline', guessedCount);
-  }, [phase, puzzle, nodes, guessedCount, hintsUsed]);
+    // Giving up never sets a time PB.
+    useSolveTimeStore.getState().markCompleted('careertimeline', { countsForBest: false });
+    if (isDailyRun.current) {
+      useDailyResultsStore.getState().setResult('careertimeline', { lives });
+    }
+  }, [phase, puzzle, nodes, guessedCount, hintsUsed, lives]);
 
   const handlePlayAgain = useCallback(() => {
     initGame(Date.now());
@@ -169,161 +235,132 @@ export default function CareerTimelineScreen() {
 
   if (!puzzle) {
     return (
-      <LinearGradient
-        colors={gradients.screenBg}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}>
-        <SafeAreaView style={styles.container}>
-          <Text style={styles.loadingText}>Loading...</Text>
-        </SafeAreaView>
-      </LinearGradient>
+      <Screen scroll={false}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </Screen>
     );
   }
 
-  const heartsDisplay = '\u2764\uFE0F'.repeat(lives) + '\uD83D\uDDA4'.repeat(MAX_LIVES - lives);
+  const heartsDisplay = '❤️'.repeat(lives) + '🖤'.repeat(MAX_LIVES - lives);
 
   if (phase === 'won' || phase === 'lost') {
     return (
-      <LinearGradient
-        colors={gradients.screenBg}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.resultContainer}>
-            <Text
-              style={[styles.resultTitle, phase === 'won' ? styles.wonTitle : styles.lostTitle]}>
-              {phase === 'won' ? 'COMPLETE!' : 'GAME OVER'}
-            </Text>
-            <Text style={styles.resultPlayer}>{puzzle.playerName}</Text>
-            <Text style={styles.resultScore}>
-              {guessedCount}/{puzzle.totalHidden} clubs guessed
-            </Text>
-            <Text style={styles.resultHearts}>{heartsDisplay}</Text>
+      <Screen>
+        <ScreenHeader
+          eyebrow={`Daily #${getDailyNumber()}`}
+          title="Career Timeline"
+          modeKey="careertimeline"
+          subtitle={puzzle.playerName}
+        />
+        <Animated.View entering={FadeIn.duration(motion.base)} style={layoutStyles.resultContainer}>
+          <Text
+            style={[
+              layoutStyles.resultTitle,
+              phase === 'won' ? styles.wonTitle : styles.lostTitle,
+            ]}>
+            {phase === 'won' ? 'COMPLETE!' : 'GAME OVER'}
+          </Text>
+          <Text style={styles.resultScore}>
+            {guessedCount}/{puzzle.totalHidden} clubs guessed
+          </Text>
+          <Text style={layoutStyles.resultHearts}>{heartsDisplay}</Text>
 
-            <CareerTimeline nodes={nodes} activeNodeIndex={null} onNodePress={() => {}} />
+          <RankBadge rank={getRank(guessedCount, puzzle.totalHidden)} unit="clubs" />
 
-            <GameOverActions
-              shareRef={shareRef}
-              shareText={shareText}
-              win={phase === 'won'}
-              onPlayAgain={handlePlayAgain}
-              playAgainLabel="PLAY AGAIN"
+          <SolveTimeResult mode="careertimeline" />
+
+          <CareerTimeline nodes={nodes} activeNodeIndex={null} onNodePress={() => {}} />
+
+          <GameOverActions
+            shareRef={shareRef}
+            shareText={shareText}
+            win={phase === 'won'}
+            onPlayAgain={handlePlayAgain}
+            playAgainLabel="PLAY AGAIN"
+          />
+        </Animated.View>
+
+        {/* Keep the last game-over card (NEXT UP / countdown) scrollable clear of
+            the floating tab bar — extra clearance beyond Screen's tab-bar padding. */}
+        <View style={layoutStyles.bottomSpacer} />
+
+        {/* Offscreen shareable view */}
+        <View style={layoutStyles.offscreen}>
+          <View ref={shareRef} collapsable={false}>
+            <ShareableCareerTimelineResult
+              playerName={puzzle.playerName}
+              guessedCount={guessedCount}
+              totalHidden={puzzle.totalHidden}
+              livesRemaining={lives}
             />
           </View>
-
-          {/* Offscreen shareable view */}
-          <View style={styles.offscreen}>
-            <View ref={shareRef} collapsable={false}>
-              <ShareableCareerTimelineResult
-                playerName={puzzle.playerName}
-                guessedCount={guessedCount}
-                totalHidden={puzzle.totalHidden}
-                livesRemaining={lives}
-              />
-            </View>
-          </View>
-        </SafeAreaView>
-      </LinearGradient>
+        </View>
+      </Screen>
     );
   }
 
   return (
-    <LinearGradient
-      colors={gradients.screenBg}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}>
-      <SafeAreaView style={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.playerName}>{puzzle.playerName}</Text>
-            <Text style={styles.playerNationality}>{puzzle.playerNationality}</Text>
-          </View>
-          <View style={styles.headerRight}>
-            <View style={styles.livesRow}>
-              <Text style={styles.hearts}>{heartsDisplay}</Text>
+    <Screen scroll={false}>
+      <ScreenHeader
+        eyebrow={`Daily #${getDailyNumber()}`}
+        title="Career Timeline"
+        modeKey="careertimeline"
+        subtitle={`${puzzle.playerName} · ${puzzle.playerNationality}`}
+        right={
+          <View style={layoutStyles.headerRight}>
+            <View style={layoutStyles.livesRow}>
+              <Text style={layoutStyles.hearts}>{heartsDisplay}</Text>
               <Text style={styles.progressText}>
                 {guessedCount}/{puzzle.totalHidden}
               </Text>
             </View>
             <GiveUpButton onGiveUp={handleGiveUp} />
           </View>
-        </View>
+        }
+      />
 
-        {/* Timeline */}
-        <ShakeView shake={shakeWrong}>
-          <CareerTimeline
-            nodes={nodes}
-            activeNodeIndex={activeIdx}
-            onNodePress={handleNodePress}
-            onHintPress={handleHintPress}
-          />
-        </ShakeView>
-
-        {/* Club search - slides up when a node is active */}
-        {activeIdx !== null && (
-          <View style={styles.searchContainer}>
-            <Text style={styles.searchLabel}>
-              Which club? ({nodes[activeIdx].from} - {nodes[activeIdx].to})
-            </Text>
-            <ClubSearchAutocomplete
-              clubs={clubs}
-              onSelectClub={handleClubSelect}
-              placeholder="Search club..."
-              autoFocus
-              dropDirection="up"
-            />
-          </View>
-        )}
-        <TutorialOverlay
-          modeKey="careertimeline"
-          title="Career Timeline"
-          description="Complete the player's career history. Guess the hidden clubs using the search bar!"
+      {/* Timeline */}
+      <ShakeView shake={shakeWrong}>
+        <CareerTimeline
+          nodes={nodes}
+          activeNodeIndex={activeIdx}
+          onNodePress={handleNodePress}
+          onHintPress={handleHintPress}
         />
-      </SafeAreaView>
-    </LinearGradient>
+      </ShakeView>
+
+      {/* Club search - slides up when a node is active */}
+      {activeIdx !== null && (
+        <View style={layoutStyles.searchContainer}>
+          <Text style={styles.searchLabel}>
+            Which club? ({nodes[activeIdx].from} - {nodes[activeIdx].to})
+          </Text>
+          {feedback && (
+            <Text
+              style={[
+                layoutStyles.feedbackText,
+                feedback === 'rightClubWrongYears' ? styles.feedbackAmber : styles.feedbackRed,
+              ]}>
+              {feedback === 'rightClubWrongYears'
+                ? 'Right club, wrong years — try another stint'
+                : 'Not this one'}
+            </Text>
+          )}
+          <ClubSearchAutocomplete
+            clubs={clubs}
+            onSelectClub={handleClubSelect}
+            placeholder="Search club..."
+            autoFocus
+            dropDirection="up"
+          />
+        </View>
+      )}
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: spacing.lg,
-    paddingBottom: 100,
-  },
-  loadingText: {
-    fontFamily: fonts.heading,
-    fontSize: 20,
-    color: colors.chalkWhite,
-    textAlign: 'center',
-    marginTop: 100,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingVertical: spacing.md,
-  },
-  headerLeft: {
-    flex: 1,
-  },
-  playerName: {
-    fontFamily: fonts.heading,
-    fontSize: 24,
-    color: colors.chalkWhite,
-  },
-  playerNationality: {
-    fontFamily: fonts.body,
-    fontSize: 13,
-    color: colors.steelGray,
-    marginTop: 2,
-  },
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   headerRight: {
     alignItems: 'flex-end',
     gap: spacing.sm,
@@ -334,64 +371,70 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   hearts: {
-    fontSize: 20,
-  },
-  progressText: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 16,
-    color: colors.pitchGreen,
+    ...type.h3,
   },
   searchContainer: {
     paddingTop: spacing.md,
     paddingBottom: spacing.sm,
   },
-  searchLabel: {
-    fontFamily: fonts.subheading,
-    fontSize: 14,
-    color: colors.chalkWhite,
-    marginBottom: spacing.sm,
+  feedbackText: {
+    ...type.caption,
     textAlign: 'center',
+    marginBottom: spacing.sm,
   },
   resultContainer: {
-    flex: 1,
-    paddingTop: spacing.xl,
     gap: spacing.md,
   },
   resultTitle: {
-    fontFamily: fonts.heading,
-    fontSize: 36,
-    textAlign: 'center',
-  },
-  wonTitle: {
-    color: colors.pitchGreen,
-  },
-  lostTitle: {
-    color: colors.cardRed,
-  },
-  resultPlayer: {
-    fontFamily: fonts.heading,
-    fontSize: 22,
-    color: colors.chalkWhite,
-    textAlign: 'center',
-  },
-  resultScore: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 18,
-    color: colors.pitchGreen,
+    ...type.display,
     textAlign: 'center',
   },
   resultHearts: {
-    fontSize: 24,
+    ...type.h2,
     textAlign: 'center',
   },
-  buttonRow: {
-    marginTop: spacing.md,
-    alignItems: 'center',
-    minWidth: 200,
-    alignSelf: 'center',
+  bottomSpacer: {
+    height: TAB_BAR_HEIGHT + spacing.lg,
   },
   offscreen: {
     position: 'absolute',
     left: -9999,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    loadingText: {
+      ...type.h2,
+      color: c.textPrimary,
+      textAlign: 'center',
+      marginTop: 100,
+    },
+    progressText: {
+      ...type.score,
+      color: c.accent,
+    },
+    searchLabel: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+      marginBottom: spacing.sm,
+      textAlign: 'center',
+    },
+    feedbackAmber: {
+      color: c.streak,
+    },
+    feedbackRed: {
+      color: c.danger,
+    },
+    wonTitle: {
+      color: c.accent,
+    },
+    lostTitle: {
+      color: c.danger,
+    },
+    resultScore: {
+      ...type.score,
+      color: c.accent,
+      textAlign: 'center',
+    },
+  });

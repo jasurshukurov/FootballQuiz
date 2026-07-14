@@ -1,26 +1,39 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  Keyboard,
-  Platform,
-  FlatList,
-} from 'react-native';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { StyleSheet, View, Text, TextInput, Keyboard, Platform, FlatList } from 'react-native';
 import { BlurView } from 'expo-blur';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Fuse from 'fuse.js';
 
 import { Player } from '@/types/player';
+import Tappable from '@/components/ui/Tappable';
+import { createPlayerSearchEngine, PlayerSearchOptions } from '@/lib/playerSearch';
+import { shortenClubName } from '@/lib/clubNames';
 import { useDebounce } from '@/hooks/useDebounce';
-import { colors, fonts, spacing, borderRadius } from '@/constants/theme';
+import { spacing, borderRadius, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+
+export interface PlayerSearchAutocompleteHandle {
+  /** Clear the query (and hide the dropdown). */
+  clear: () => void;
+  focus: () => void;
+}
 
 interface PlayerSearchAutocompleteProps {
   players: Player[];
   onSelectPlayer: (player: Player) => void;
   excludeIds?: Set<number>;
+  /** Game-specific eligibility applied on top of the text ranking. */
+  filter?: (player: Player) => boolean;
+  /** Fires on every query edit (including internal clears) — lets a screen keep
+   *  a raw-text submit path (Top Lists' GUESS button) alongside the dropdown. */
+  onQueryChange?: (text: string) => void;
   placeholder?: string;
   maxResults?: number;
   disabled?: boolean;
@@ -28,74 +41,112 @@ interface PlayerSearchAutocompleteProps {
   dropDirection?: 'down' | 'up';
 }
 
-function PlayerSearchAutocomplete({
-  players,
-  onSelectPlayer,
-  excludeIds,
-  placeholder = 'Search player...',
-  maxResults = 8,
-  disabled = false,
-  autoFocus = false,
-  dropDirection = 'down',
-}: PlayerSearchAutocompleteProps) {
-  const [query, setQuery] = useState('');
-  const inputRef = useRef<TextInput>(null);
-  const debouncedQuery = useDebounce(query, 250);
+/**
+ * THE player search box (Career Path UX): type-ahead dropdown ranked by the
+ * shared fame-blended engine in lib/playerSearch — accuracy buckets first,
+ * fame as the tiebreak inside each bucket.
+ */
+const PlayerSearchAutocomplete = forwardRef<
+  PlayerSearchAutocompleteHandle,
+  PlayerSearchAutocompleteProps
+>(function PlayerSearchAutocomplete(
+  {
+    players,
+    onSelectPlayer,
+    excludeIds,
+    filter,
+    onQueryChange,
+    placeholder = 'Search player...',
+    maxResults = 8,
+    disabled = false,
+    autoFocus = false,
+    dropDirection = 'down',
+  },
+  ref,
+) {
+  const theme = useTheme();
+  const { colors } = theme;
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
-  const fuse = useMemo(
-    () =>
-      new Fuse(players, {
-        keys: ['name', 'normalized_name'],
-        threshold: 0.4,
-        distance: 100,
-        minMatchCharLength: 2,
-        ignoreLocation: true,
-      }),
-    [players],
-  );
+  const [query, setQuery] = useState('');
+  const [focused, setFocused] = useState(false);
+  const inputRef = useRef<TextInput>(null);
+  const debouncedQuery = useDebounce(query, 200);
+
+  const engine = useMemo(() => createPlayerSearchEngine(players), [players]);
+
+  const searchOpts = useMemo<PlayerSearchOptions>(() => {
+    const eligible =
+      excludeIds || filter
+        ? (p: Player) => !(excludeIds?.has(p.id) ?? false) && (filter ? filter(p) : true)
+        : undefined;
+    return { limit: maxResults, filter: eligible };
+  }, [excludeIds, filter, maxResults]);
 
   const results = useMemo(() => {
     if (debouncedQuery.length < 2) return [];
-    const fuseResults = fuse.search(debouncedQuery, {
-      limit: maxResults + (excludeIds?.size ?? 0),
-    });
-    const filtered = excludeIds
-      ? fuseResults.filter((r) => !excludeIds.has(r.item.id))
-      : fuseResults;
-    return filtered.slice(0, maxResults).map((r) => r.item);
-  }, [debouncedQuery, fuse, maxResults, excludeIds]);
+    return engine.search(debouncedQuery, searchOpts);
+  }, [debouncedQuery, engine, searchOpts]);
 
   const showDropdown = debouncedQuery.length >= 2;
   const showNoResults = showDropdown && results.length === 0;
 
+  const updateQuery = useCallback(
+    (text: string) => {
+      setQuery(text);
+      onQueryChange?.(text);
+    },
+    [onQueryChange],
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      clear: () => updateQuery(''),
+      focus: () => inputRef.current?.focus(),
+    }),
+    [updateQuery],
+  );
+
   const handleSelect = useCallback(
     (player: Player) => {
       onSelectPlayer(player);
-      setQuery('');
+      updateQuery('');
       Keyboard.dismiss();
     },
-    [onSelectPlayer],
+    [onSelectPlayer, updateQuery],
   );
 
   const handleClear = useCallback(() => {
-    setQuery('');
+    updateQuery('');
     inputRef.current?.focus();
-  }, []);
+  }, [updateQuery]);
 
   const handleSubmitEditing = useCallback(() => {
-    // No-op: Return/Enter must not trigger any action
-  }, []);
+    // Web keyboard flow: Enter picks the top-ranked result. On native the
+    // return key stays inert (selection is always an explicit tap).
+    if (Platform.OS !== 'web') return;
+    const q = query.trim();
+    if (q.length < 2) return;
+    const top = engine.search(q, searchOpts)[0];
+    if (top) handleSelect(top);
+  }, [query, engine, searchOpts, handleSelect]);
 
   const renderItem = useCallback(
     ({ item }: { item: Player }) => (
-      <Pressable
-        style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
-        onPress={() => handleSelect(item)}>
+      <Tappable
+        onPress={() => handleSelect(item)}
+        haptic="none"
+        hitSlop={0}
+        hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+        style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}>
         <Text style={styles.playerName}>{item.name}</Text>
-        <Text style={styles.playerTeam}>{item.current_team}</Text>
-      </Pressable>
+        {item.current_team ? (
+          <Text style={styles.playerTeam}>{shortenClubName(item.current_team)}</Text>
+        ) : null}
+      </Tappable>
     ),
-    [handleSelect],
+    [handleSelect, styles, colors],
   );
 
   const keyExtractor = useCallback((item: Player) => String(item.id), []);
@@ -103,39 +154,45 @@ function PlayerSearchAutocomplete({
   const isUp = dropDirection === 'up';
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.inputContainer}>
-        <FontAwesome name="search" size={16} color={colors.steelGray} style={styles.searchIcon} />
+    <View style={layout.wrapper}>
+      <View style={[styles.inputContainer, focused && styles.inputContainerFocused]}>
+        <FontAwesome name="search" size={16} color={colors.textMuted} style={layout.searchIcon} />
         <TextInput
           ref={inputRef}
           style={styles.input}
           value={query}
-          onChangeText={setQuery}
+          onChangeText={updateQuery}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder={placeholder}
-          placeholderTextColor={colors.steelGray}
+          placeholderTextColor={colors.textMuted}
           editable={!disabled}
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={autoFocus}
           blurOnSubmit={false}
           onSubmitEditing={handleSubmitEditing}
-          returnKeyType="none"
+          returnKeyType={Platform.OS === 'web' ? 'search' : 'none'}
         />
         {query.length > 0 && (
-          <Pressable onPress={handleClear} hitSlop={8}>
-            <FontAwesome name="times-circle" size={18} color={colors.steelGray} />
-          </Pressable>
+          <Tappable onPress={handleClear} haptic="none" accessibilityLabel="Clear search">
+            <FontAwesome name="times-circle" size={18} color={colors.textMuted} />
+          </Tappable>
         )}
       </View>
 
       {showDropdown && (
-        <View style={[styles.dropdown, isUp ? styles.dropdownUp : styles.dropdownDown]}>
+        <View style={[styles.dropdown, isUp ? layout.dropdownUp : layout.dropdownDown]}>
           <View style={styles.dropdownBg} />
           {Platform.OS !== 'web' ? (
-            <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView
+              intensity={40}
+              tint={theme.dark ? 'dark' : 'light'}
+              style={StyleSheet.absoluteFill}
+            />
           ) : null}
           {showNoResults ? (
-            <View style={styles.noResults}>
+            <View style={layout.noResults}>
               <Text style={styles.noResultsText}>No results found</Text>
             </View>
           ) : (
@@ -144,7 +201,7 @@ function PlayerSearchAutocomplete({
               renderItem={renderItem}
               keyExtractor={keyExtractor}
               keyboardShouldPersistTaps="handled"
-              style={styles.list}
+              style={layout.list}
               nestedScrollEnabled
             />
           )}
@@ -152,45 +209,17 @@ function PlayerSearchAutocomplete({
       )}
     </View>
   );
-}
+});
 
 export default React.memo(PlayerSearchAutocomplete);
 
-const styles = StyleSheet.create({
+const layout = StyleSheet.create({
   wrapper: {
     position: 'relative',
     zIndex: 100,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    borderWidth: 2,
-    borderColor: colors.neonGlow,
-    borderRadius: borderRadius.xl,
-    backgroundColor: colors.retroBlack,
-    zIndex: 101,
-  },
   searchIcon: {
     marginRight: spacing.sm,
-  },
-  input: {
-    flex: 1,
-    minHeight: 44,
-    fontSize: 16,
-    color: colors.chalkWhite,
-    fontFamily: fonts.body,
-  },
-  dropdown: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    zIndex: 100,
-    maxHeight: 300,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
-    borderRadius: borderRadius.lg,
-    overflow: 'hidden',
   },
   dropdownDown: {
     top: '100%',
@@ -200,42 +229,73 @@ const styles = StyleSheet.create({
     bottom: '100%',
     marginBottom: spacing.xs,
   },
-  dropdownBg: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(10,10,26,0.95)',
-  },
   list: {
     maxHeight: 296,
-  },
-  row: {
-    flexDirection: 'column',
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.glassBorder,
-  },
-  rowPressed: {
-    backgroundColor: colors.glassHighlight,
-  },
-  playerName: {
-    fontSize: 15,
-    color: colors.chalkWhite,
-    fontFamily: fonts.body,
-  },
-  playerTeam: {
-    fontSize: 12,
-    color: colors.steelGray,
-    fontFamily: fonts.body,
-    marginTop: 2,
   },
   noResults: {
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.xl,
     alignItems: 'center',
   },
-  noResultsText: {
-    fontSize: 14,
-    color: colors.steelGray,
-    fontFamily: fonts.body,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    inputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: borderRadius.xl,
+      backgroundColor: c.bgElevated,
+      zIndex: 101,
+    },
+    inputContainerFocused: {
+      borderColor: c.accentBorder,
+    },
+    input: {
+      ...type.body,
+      flex: 1,
+      minHeight: 44,
+      color: c.textPrimary,
+    },
+    dropdown: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      zIndex: 100,
+      maxHeight: 300,
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: borderRadius.lg,
+      overflow: 'hidden',
+    },
+    dropdownBg: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: c.bgElevated,
+    },
+    row: {
+      flexDirection: 'column',
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: c.border,
+    },
+    rowPressed: {
+      backgroundColor: c.accentSoft,
+    },
+    playerName: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+    },
+    playerTeam: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: 2,
+    },
+    noResultsText: {
+      ...type.body,
+      color: c.textMuted,
+    },
+  });

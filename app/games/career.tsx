@@ -1,1 +1,1 @@
-export { default } from '@/app/(tabs)/index';
+export { default } from '@/app/(tabs)/careerpath';

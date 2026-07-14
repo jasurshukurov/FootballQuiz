@@ -32,4 +32,32 @@ describe('matchGuessGenerator', () => {
     const puzzle = generateMatchGuessPuzzle(1);
     expect(puzzle.answer).toMatch(/^\d{4} .+ — .+ vs .+$/);
   });
+
+  it('is deterministic for a fixed seed + date (notability weighting)', () => {
+    for (const seed of [1, 42, 777]) {
+      const a = generateMatchGuessPuzzle(seed, '2026-07-13');
+      const b = generateMatchGuessPuzzle(seed, '2026-07-13');
+      expect(a).toEqual(b);
+    }
+  });
+
+  it('reveals obscure (unknown/low-fame) names before the stars', () => {
+    for (const seed of [2, 88, 314, 9000]) {
+      const puzzle = generateMatchGuessPuzzle(seed, '2026-07-18');
+      const fames = puzzle.revealOrder.map(fameOf);
+      // ascending fame => the first revealed is the least famous of the XI.
+      expect(fames[0]).toBe(Math.min(...fames));
+      expect(fames[fames.length - 1]).toBe(Math.max(...fames));
+    }
+  });
+
+  it('the band shifts which matches surface (iconic early week vs deep cuts)', () => {
+    // Same seeds, different bands: the two date-driven selections should not be
+    // identical across a spread of seeds (the weighting actually depends on the
+    // date). Determinism per (seed,date) is covered above.
+    const seeds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const monday = seeds.map((s) => generateMatchGuessPuzzle(s, '2026-07-13').matchId);
+    const saturday = seeds.map((s) => generateMatchGuessPuzzle(s, '2026-07-18').matchId);
+    expect(monday).not.toEqual(saturday);
+  });
 });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
@@ -6,9 +6,13 @@ import { useManagerStore } from '@/hooks/useManagerStore';
 import { getLevelForXp, getProgressToNextLevel } from '@/lib/managerLevels';
 import GlassCard from '@/components/ui/GlassCard';
 import PopInView from '@/components/ui/PopInView';
-import { colors, fonts, spacing } from '@/constants/theme';
+import { type, spacing, borderRadius, motion } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 export default function ManagerCard() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const totalXp = useManagerStore((s) => s.totalXp);
   const level = getLevelForXp(totalXp);
   const progress = getProgressToNextLevel(totalXp);
@@ -16,7 +20,7 @@ export default function ManagerCard() {
   const barWidth = useSharedValue(0);
 
   useEffect(() => {
-    barWidth.value = withTiming(progress.progress, { duration: 800 });
+    barWidth.value = withTiming(progress.progress, { duration: motion.slow });
   }, [progress.progress, barWidth]);
 
   const barStyle = useAnimatedStyle(() => ({
@@ -25,13 +29,13 @@ export default function ManagerCard() {
 
   return (
     <PopInView>
-      <GlassCard style={styles.card}>
-        <View style={styles.content}>
+      <GlassCard style={layoutStyles.card}>
+        <View style={layoutStyles.content}>
           <View style={styles.levelBadge}>
             <Text style={styles.levelNumber}>{level.level}</Text>
           </View>
 
-          <View style={styles.info}>
+          <View style={layoutStyles.info}>
             <Text style={styles.title}>{level.title}</Text>
 
             <View style={styles.progressBarBg}>
@@ -46,7 +50,8 @@ export default function ManagerCard() {
   );
 }
 
-const styles = StyleSheet.create({
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   card: {
     marginBottom: spacing.lg,
   },
@@ -56,47 +61,47 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     gap: spacing.lg,
   },
-  levelBadge: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    borderWidth: 2,
-    borderColor: colors.pitchGreen,
-    backgroundColor: 'rgba(5,242,108,0.15)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  levelNumber: {
-    fontSize: 28,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-  },
   info: {
     flex: 1,
   },
-  title: {
-    fontSize: 20,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    marginBottom: spacing.sm,
-  },
-  progressBarBg: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'rgba(108,117,125,0.3)',
-    overflow: 'hidden',
-    marginBottom: spacing.xs,
-  },
-  progressBarFill: {
-    height: '100%',
-    borderRadius: 4,
-    backgroundColor: colors.pitchGreen,
-  },
-  xpText: {
-    fontSize: 12,
-    fontFamily: fonts.subheading,
-    color: colors.steelGray,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    levelBadge: {
+      width: 60,
+      height: 60,
+      borderRadius: borderRadius.full,
+      borderWidth: 2,
+      borderColor: c.accent,
+      backgroundColor: c.accentSoft,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    levelNumber: {
+      ...type.h1,
+      color: c.accent,
+    },
+    title: {
+      ...type.h2,
+      color: c.textPrimary,
+      textTransform: 'uppercase',
+      marginBottom: spacing.sm,
+    },
+    progressBarBg: {
+      height: 8,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.bgCard,
+      overflow: 'hidden',
+      marginBottom: spacing.xs,
+    },
+    progressBarFill: {
+      height: '100%',
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accent,
+    },
+    xpText: {
+      ...type.caption,
+      color: c.textSecondary,
+    },
+  });

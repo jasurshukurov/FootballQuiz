@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PopInView from '@/components/ui/PopInView';
-import { colors, spacing, borderRadius, fonts } from '@/constants/theme';
+import { spacing, borderRadius, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { JerseyIcon } from '@/components/career/JerseyIcon';
 
 export interface ClubStyle {
@@ -20,6 +22,8 @@ interface CareerClubCardProps {
 }
 
 function CareerClubCardInner({ club, from, to, showYears, index }: CareerClubCardProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const style = getClubStyle(club);
   return (
     <PopInView delay={index * 100}>
@@ -262,52 +266,51 @@ export function getClubStyle(club: string): ClubStyle {
 
 export const CareerClubCard = React.memo(CareerClubCardInner);
 
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(17,17,40,0.9)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.06)',
-    minHeight: 52,
-    marginBottom: spacing.xs,
-    borderRadius: borderRadius.sm,
-    overflow: 'hidden',
-  },
-  accent: {
-    width: 4,
-    height: '100%',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-  },
-  jerseyWrapper: {
-    marginLeft: spacing.lg,
-    marginRight: spacing.md,
-  },
-  clubName: {
-    flex: 1,
-    fontSize: 15,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    letterSpacing: 1,
-  },
-  years: {
-    fontSize: 13,
-    fontFamily: fonts.scoreboard,
-    color: colors.pitchGreen,
-    marginLeft: spacing.sm,
-  },
-  dragGrip: {
-    flexDirection: 'row',
-    marginLeft: spacing.sm,
-    marginRight: spacing.md,
-    gap: -4,
-  },
-  gripDot: {
-    fontSize: 18,
-    color: colors.steelGray,
-    letterSpacing: -2,
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    card: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: c.bgCard,
+      borderWidth: 1,
+      borderColor: c.border,
+      minHeight: 52,
+      marginBottom: spacing.xs,
+      borderRadius: borderRadius.sm,
+      overflow: 'hidden',
+    },
+    accent: {
+      width: 4,
+      height: '100%',
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+    },
+    jerseyWrapper: {
+      marginLeft: spacing.lg,
+      marginRight: spacing.md,
+    },
+    clubName: {
+      flex: 1,
+      ...type.h3,
+      color: c.textPrimary,
+      letterSpacing: 1,
+    },
+    years: {
+      ...type.score,
+      color: c.accent,
+      marginLeft: spacing.sm,
+    },
+    dragGrip: {
+      flexDirection: 'row',
+      marginLeft: spacing.sm,
+      marginRight: spacing.md,
+      gap: -4,
+    },
+    gripDot: {
+      ...type.h3,
+      color: c.textMuted,
+      letterSpacing: -2,
+    },
+  });

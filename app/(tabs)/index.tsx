@@ -1,276 +1,518 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter, type Href } from 'expo-router';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
-import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
-import { Player } from '@/types/player';
-import { triggerImpact, triggerNotification } from '@/lib/haptics';
-import { getAllPlayersWithCareer } from '@/lib/playerData';
-import { getModeSeed } from '@/lib/dailySeed';
-import { getDailyNumber } from '@/lib/dailyPuzzle';
-import { colors, spacing, fonts } from '@/constants/theme';
-import { useCareerGameStore } from '@/hooks/useCareerGameStore';
-import { useManagerStore } from '@/hooks/useManagerStore';
+import Screen from '@/components/ui/Screen';
+import Tappable from '@/components/ui/Tappable';
+import ProgressRing from '@/components/ui/ProgressRing';
+import { useTheme } from '@/hooks/useTheme';
+import { type ThemeColors } from '@/constants/themes';
+import { spacing, borderRadius, type, motion, touch, fonts, opacity } from '@/constants/theme';
+import { getActiveModes, type GameMode } from '@/lib/modeRegistry';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
-import { TimelineView } from '@/components/career/TimelineView';
-import { HintPanel } from '@/components/career/HintPanel';
-import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
-import { TierBadge } from '@/components/career/TierBadge';
-import LifeSegments from '@/components/career/LifeSegments';
-import GiveUpButton from '@/components/career/GiveUpButton';
-import GameOverCard from '@/components/career/GameOverCard';
-import LastChanceHint from '@/components/ui/LastChanceHint';
-import GameOverActions from '@/components/ui/GameOverActions';
-import TutorialOverlay from '@/components/ui/TutorialOverlay';
-import ShareableCareerPathResult from '@/components/ShareableCareerPathResult';
-import { buildShareText } from '@/lib/sharing';
-import { playWhistle } from '@/lib/sounds';
+import { useSolveTimeStore } from '@/hooks/useSolveTimeStore';
+import { useDisabledModes } from '@/hooks/useRemoteConfigStore';
+import { getDailyNumber } from '@/lib/dailyPuzzle';
+import { getTodayDateString } from '@/lib/dailySeed';
+import { formatDuration } from '@/lib/solveTime';
 
-const MAX_ATTEMPTS = 3;
+/** Cap staggered entrances — no `entering` beyond this index. */
+const STAGGER_CAP = 12;
 
-const TAB_BAR_HEIGHT = 80;
+function greetingForHour(hour: number): string {
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  return 'Good evening';
+}
 
-export default function CareerScreen() {
-  const {
-    currentPlayer,
-    scrambledCareer,
-    unlockedHints,
-    gameStatus,
-    attemptsLeft,
-    guessResult,
-    startDailyGame,
-    makeGuess,
-    attemptUnlockHint,
-    resetGame,
-    giveUp,
-  } = useCareerGameStore();
+function formatToday(d: Date): string {
+  return d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+}
 
-  const insets = useSafeAreaInsets();
+type Styles = ReturnType<typeof createStyles>;
 
-  const allPlayers = useMemo(() => getAllPlayersWithCareer(), []);
-  const shareRef = useRef<View>(null);
-  const dailyStreak = useDailyStateStore((s) => s.currentStreak);
-
-  useEffect(() => {
-    startDailyGame(getModeSeed('careerpath'));
-    playWhistle();
-  }, [startDailyGame]);
-
-  // Record streak/XP/daily-progress once the daily puzzle ends.
-  useEffect(() => {
-    if (gameStatus === 'won') {
-      const xp = 50 + attemptsLeft * 15;
-      useManagerStore.getState().addXp('careerpath', xp);
-      useDailyProgressStore.getState().markCompleted('careerpath', attemptsLeft);
-    } else if (gameStatus === 'lost') {
-      useManagerStore.getState().addXp('careerpath', 10);
-      useDailyProgressStore.getState().markCompleted('careerpath', 0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameStatus]);
-
-  const shakeX = useSharedValue(0);
-
-  const shakeStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: shakeX.value }],
-  }));
-
-  const handleSelectPlayer = useCallback(
-    (player: Player) => {
-      triggerImpact(ImpactFeedbackStyle.Medium);
-      makeGuess(player.name);
-    },
-    [makeGuess],
-  );
-
-  useEffect(() => {
-    if (guessResult === 'wrong') {
-      triggerNotification(NotificationFeedbackType.Error);
-      shakeX.value = withSequence(
-        withTiming(-10, { duration: 50 }),
-        withTiming(10, { duration: 50 }),
-        withTiming(-10, { duration: 50 }),
-        withTiming(10, { duration: 50 }),
-        withTiming(0, { duration: 50 }),
-      );
-    }
-  }, [guessResult, attemptsLeft, shakeX]);
-
-  const showYears = unlockedHints.includes('YEARS');
-  const isSorted = unlockedHints.includes('SORT');
-  const showNationality = unlockedHints.includes('NATIONALITY');
-  const showPosition = unlockedHints.includes('POSITION');
-  const freeHintsRemaining = Math.max(0, 2 - unlockedHints.length);
-
-  const isPlaying = gameStatus === 'playing';
-  const isWon = gameStatus === 'won';
-  const isLost = gameStatus === 'lost';
-  const isLastChance = isPlaying && attemptsLeft === 1;
-
-  const shareText = useMemo(
-    () =>
-      buildShareText({
-        mode: 'careerpath',
-        dailyNumber: getDailyNumber(),
-        dailyStreak,
-        won: isWon,
-        attemptsUsed: MAX_ATTEMPTS - attemptsLeft,
-        totalAttempts: MAX_ATTEMPTS,
-        playerName: currentPlayer?.name ?? '',
-      }),
-    [dailyStreak, isWon, attemptsLeft, currentPlayer],
-  );
-
+/** Large hero card for the FIRST unplayed mode of the day. */
+function FeaturedCard({
+  mode,
+  onPress,
+  c,
+  glow,
+  styles,
+}: {
+  mode: GameMode;
+  onPress: () => void;
+  c: ThemeColors;
+  glow: readonly [string, string];
+  styles: Styles;
+}) {
   return (
-    <LinearGradient
-      colors={['#0D1B2A', '#1B0A2E']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}>
-      <View style={[styles.container, { paddingBottom: TAB_BAR_HEIGHT + insets.bottom + 16 }]}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Career Path</Text>
-          {currentPlayer && <TierBadge tier={currentPlayer.tier} />}
-        </View>
-
-        {(showNationality || showPosition) && (
-          <View style={styles.hintsRow}>
-            {showNationality && currentPlayer && (
-              <View style={styles.hintChip}>
-                <Text style={styles.hintChipText}>{currentPlayer.nationality}</Text>
-              </View>
-            )}
-            {showPosition && currentPlayer && (
-              <View style={styles.hintChip}>
-                <Text style={styles.hintChipText}>{currentPlayer.position}</Text>
-              </View>
-            )}
-          </View>
-        )}
-
-        <TimelineView career={scrambledCareer} showYears={showYears} isSorted={isSorted} />
-
-        {isPlaying && (
-          <View style={styles.bottomSection}>
-            <HintPanel
-              unlockedHints={unlockedHints}
-              onUnlockHint={attemptUnlockHint}
-              freeHintsRemaining={freeHintsRemaining}
-            />
-
-            {isLastChance && <LastChanceHint />}
-
-            <Animated.View style={shakeStyle}>
-              <PlayerSearchAutocomplete
-                players={allPlayers}
-                onSelectPlayer={handleSelectPlayer}
-                placeholder="Guess the player..."
-                dropDirection="up"
-              />
-              <View style={styles.attemptsRow}>
-                <LifeSegments total={3} remaining={attemptsLeft} />
-                <GiveUpButton onGiveUp={giveUp} />
-              </View>
-            </Animated.View>
-          </View>
-        )}
-
-        {(isWon || isLost) && (
-          <>
-            <GameOverCard
-              playerName={currentPlayer?.name ?? ''}
-              playerImage={currentPlayer?.image_url}
-              isWin={isWon}
-              onNextPlayer={resetGame}
-            />
-            <GameOverActions
-              shareRef={shareRef}
-              shareText={shareText}
-              win={isWon}
-              shareVariant="secondary"
-            />
-            {/* Offscreen shareable view */}
-            <View style={styles.offscreen}>
-              <View ref={shareRef} collapsable={false}>
-                <ShareableCareerPathResult
-                  playerName={currentPlayer?.name ?? ''}
-                  isWin={isWon}
-                  attemptsUsed={MAX_ATTEMPTS - attemptsLeft}
-                  totalAttempts={MAX_ATTEMPTS}
-                />
-              </View>
-            </View>
-          </>
-        )}
-        <TutorialOverlay
-          modeKey="careerpath"
-          title="Career Path"
-          description="Guess the mystery player from their scrambled career history. Unlock hints to reveal clues. You have 3 guesses!"
-        />
+    <Tappable
+      onPress={onPress}
+      accessibilityLabel={`Play ${mode.title}`}
+      hoverStyle={{ backgroundColor: c.bgCardPressed }}
+      style={styles.featuredCard}>
+      <LinearGradient
+        colors={glow}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.featuredIcon}>
+        <FontAwesome name={mode.icon} size={30} color={c.accent} />
       </View>
-    </LinearGradient>
+      <View style={styles.cardText}>
+        <Text style={styles.featuredEyebrow}>Up next</Text>
+        <Text style={styles.featuredTitle}>{mode.title}</Text>
+        <Text style={styles.featuredTease} numberOfLines={2}>
+          {mode.tease}
+        </Text>
+        <View style={styles.playPill}>
+          <FontAwesome name="play" size={10} color={c.textOnAccent} />
+          <Text style={styles.playPillText}>Play</Text>
+        </View>
+      </View>
+    </Tappable>
   );
 }
 
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: spacing.md,
-  },
-  title: {
-    fontSize: 24,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-  },
-  hintsRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  hintChip: {
-    backgroundColor: 'rgba(5,242,108,0.15)',
-    borderWidth: 1,
-    borderColor: colors.pitchGreen,
-    borderRadius: 8,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
-  },
-  hintChipText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: colors.pitchGreen,
-  },
-  bottomSection: {
-    gap: spacing.md,
-  },
-  attemptsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: spacing.md,
-  },
-  offscreen: {
-    position: 'absolute',
-    left: -9999,
-  },
-});
+/** Rich row for a mode not yet played today. */
+function UpNextRow({
+  mode,
+  onPress,
+  c,
+  styles,
+}: {
+  mode: GameMode;
+  onPress: () => void;
+  c: ThemeColors;
+  styles: Styles;
+}) {
+  return (
+    <Tappable
+      onPress={onPress}
+      accessibilityLabel={`Play ${mode.title}`}
+      hoverStyle={{ backgroundColor: c.bgCardPressed }}
+      style={styles.card}>
+      <View style={styles.iconSquare}>
+        <FontAwesome name={mode.icon} size={20} color={c.accent} />
+      </View>
+      <View style={styles.cardText}>
+        <Text style={styles.cardTitle}>{mode.title}</Text>
+        <Text style={styles.cardTease} numberOfLines={1}>
+          {mode.tease}
+        </Text>
+      </View>
+      <FontAwesome name="chevron-right" size={14} color={c.textMuted} />
+    </Tappable>
+  );
+}
+
+/** Compact row for a mode already completed today. Tapping re-opens the result. */
+function DoneRow({
+  mode,
+  score,
+  timeLabel,
+  onPress,
+  c,
+  styles,
+}: {
+  mode: GameMode;
+  score?: number;
+  timeLabel?: string;
+  onPress: () => void;
+  c: ThemeColors;
+  styles: Styles;
+}) {
+  return (
+    <Tappable
+      onPress={onPress}
+      accessibilityLabel={`${mode.title} — done today`}
+      hoverStyle={{ backgroundColor: c.bgCardPressed }}
+      style={styles.doneRow}>
+      <FontAwesome name="check-circle" size={16} color={c.accent} />
+      <Text style={styles.doneTitle} numberOfLines={1}>
+        {mode.title}
+      </Text>
+      {timeLabel !== undefined && <Text style={styles.doneTime}>⏱ {timeLabel}</Text>}
+      {score !== undefined && <Text style={styles.doneScore}>{score}</Text>}
+    </Tappable>
+  );
+}
+
+export default function TodayScreen() {
+  const router = useRouter();
+  const { colors, gradients } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
+  const completedModes = useDailyProgressStore((s) => s.completedModes);
+  const scoresByMode = useDailyProgressStore((s) => s.scoresByMode);
+  const solveTimesByMode = useSolveTimeStore((s) => s.byMode);
+  const solveTimesDate = useSolveTimeStore((s) => s.date);
+  const checkAndResetForNewDay = useDailyProgressStore((s) => s.checkAndResetForNewDay);
+  const currentStreak = useDailyStateStore((s) => s.currentStreak);
+  // Subscribe so a remote-config change re-renders the feed.
+  useDisabledModes();
+
+  useEffect(() => {
+    checkAndResetForNewDay();
+  }, [checkAndResetForNewDay]);
+
+  const now = new Date();
+  const greeting = greetingForHour(now.getHours());
+  const dateLabel = formatToday(now);
+  const dailyNumber = getDailyNumber();
+
+  const modes = getActiveModes();
+  const { unplayed, done } = useMemo(() => {
+    const up: GameMode[] = [];
+    const dn: GameMode[] = [];
+    for (const m of modes) {
+      if (completedModes[m.key]) dn.push(m);
+      else up.push(m);
+    }
+    return { unplayed: up, done: dn };
+  }, [modes, completedModes]);
+
+  const total = modes.length;
+  const playedCount = done.length;
+  const progress = total > 0 ? playedCount / total : 0;
+  const allDone = total > 0 && playedCount === total;
+
+  const openMode = (mode: GameMode) => {
+    router.navigate(mode.route as Href);
+  };
+
+  const featured = unplayed[0];
+  const rest = unplayed.slice(1);
+
+  return (
+    <Screen>
+      {/* ── Hero: greeting + date + progress ring + streak ── */}
+      <View style={styles.hero}>
+        <View style={styles.heroText}>
+          <Text style={styles.greeting}>{greeting}</Text>
+          <Text style={styles.date}>{dateLabel}</Text>
+          <View style={styles.meterRow}>
+            {allDone ? (
+              <Animated.View entering={FadeIn.duration(motion.base)}>
+                <Text style={styles.allDoneLabel}>All done today</Text>
+              </Animated.View>
+            ) : (
+              <Text style={styles.meterLabel}>
+                {playedCount}/{total} played today
+              </Text>
+            )}
+            {currentStreak > 0 && (
+              <View style={styles.streakPill}>
+                <FontAwesome name="fire" size={12} color={colors.streak} />
+                <Text style={styles.streakText}>{currentStreak}</Text>
+              </View>
+            )}
+          </View>
+        </View>
+        <ProgressRing
+          size={64}
+          strokeWidth={5}
+          progress={progress}
+          color={allDone ? colors.accentBright : colors.accent}
+          trackColor={colors.bgCard}>
+          <Text style={styles.ringText}>
+            {playedCount}/{total}
+          </Text>
+        </ProgressRing>
+      </View>
+
+      {/* ── Up next: featured hero card + rich rows ── */}
+      {unplayed.length > 0 && (
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Up next</Text>
+          <View style={styles.cardList}>
+            {featured && (
+              <Animated.View entering={FadeInDown.duration(motion.base)}>
+                <FeaturedCard
+                  mode={featured}
+                  onPress={() => openMode(featured)}
+                  c={colors}
+                  glow={gradients.activeGlow}
+                  styles={styles}
+                />
+              </Animated.View>
+            )}
+            {rest.map((mode, i) => {
+              const idx = i + 1; // featured card is index 0
+              const row = (
+                <UpNextRow mode={mode} onPress={() => openMode(mode)} c={colors} styles={styles} />
+              );
+              return idx < STAGGER_CAP ? (
+                <Animated.View
+                  key={mode.key}
+                  entering={FadeInDown.delay(idx * 40).duration(motion.base)}>
+                  {row}
+                </Animated.View>
+              ) : (
+                <View key={mode.key}>{row}</View>
+              );
+            })}
+          </View>
+        </View>
+      )}
+
+      {/* ── Done today: compact result rows ── */}
+      {done.length > 0 && (
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Done today</Text>
+          <View style={styles.doneList}>
+            {done.map((mode) => {
+              const elapsedMs =
+                solveTimesDate === getTodayDateString()
+                  ? solveTimesByMode[mode.key]?.elapsedMs
+                  : undefined;
+              return (
+                <DoneRow
+                  key={mode.key}
+                  mode={mode}
+                  score={scoresByMode[mode.key]}
+                  timeLabel={elapsedMs != null ? formatDuration(elapsedMs) : undefined}
+                  onPress={() => openMode(mode)}
+                  c={colors}
+                  styles={styles}
+                />
+              );
+            })}
+          </View>
+        </View>
+      )}
+
+      {/* ── Archive entry (visually subordinate) ── */}
+      <Tappable
+        onPress={() => router.push('/(tabs)/archive' as Href)}
+        accessibilityLabel="Archive — replay past days"
+        hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+        style={styles.archiveCard}>
+        <FontAwesome name="calendar" size={16} color={colors.textMuted} />
+        <View style={styles.cardText}>
+          <Text style={styles.archiveTitle}>Archive</Text>
+          <Text style={styles.archiveSub} numberOfLines={1}>
+            Replay past days — no effect on your streak
+          </Text>
+        </View>
+        <FontAwesome name="chevron-right" size={13} color={colors.textMuted} />
+      </Tappable>
+
+      <Text style={styles.footerNote}>Football Daily #{dailyNumber}</Text>
+    </Screen>
+  );
+}
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    hero: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: spacing.lg,
+      marginBottom: spacing.xl,
+    },
+    heroText: {
+      flex: 1,
+    },
+    greeting: {
+      ...type.h1,
+      color: c.textPrimary,
+    },
+    date: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: spacing.xs,
+    },
+    meterRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginTop: spacing.md,
+    },
+    meterLabel: {
+      ...type.captionBold,
+      color: c.textSecondary,
+    },
+    allDoneLabel: {
+      ...type.captionBold,
+      color: c.accentBright,
+    },
+    streakPill: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: 2,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.streakSoft,
+    },
+    streakText: {
+      ...type.captionBold,
+      color: c.streak,
+    },
+    ringText: {
+      fontFamily: fonts.scoreboard,
+      fontSize: type.caption.fontSize,
+      lineHeight: type.caption.lineHeight,
+      color: c.textPrimary,
+    },
+    section: {
+      marginBottom: spacing.xl,
+    },
+    sectionLabel: {
+      ...type.micro,
+      color: c.textMuted,
+      letterSpacing: 1.5,
+      textTransform: 'uppercase',
+      marginBottom: spacing.md,
+    },
+    cardList: {
+      gap: spacing.md,
+    },
+    // Featured "Up Next" hero card
+    featuredCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.lg,
+      padding: spacing.lg,
+      borderRadius: borderRadius.xl,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.bgCard,
+      overflow: 'hidden',
+    },
+    featuredIcon: {
+      width: 64,
+      height: 64,
+      borderRadius: borderRadius.lg,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.accentSoft,
+    },
+    featuredEyebrow: {
+      ...type.micro,
+      color: c.accent,
+      letterSpacing: 1.5,
+      textTransform: 'uppercase',
+      marginBottom: 2,
+    },
+    featuredTitle: {
+      ...type.h2,
+      color: c.textPrimary,
+    },
+    featuredTease: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: 2,
+    },
+    playPill: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      gap: spacing.xs,
+      marginTop: spacing.sm,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.xs,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accent,
+    },
+    playPillText: {
+      ...type.captionBold,
+      color: c.textOnAccent,
+    },
+    // Standard unplayed row
+    card: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+      minHeight: touch.cta,
+      padding: spacing.md,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.border,
+      backgroundColor: c.bgCard,
+    },
+    iconSquare: {
+      width: 44,
+      height: 44,
+      borderRadius: borderRadius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.accentSoft,
+    },
+    cardText: {
+      flex: 1,
+    },
+    cardTitle: {
+      ...type.h3,
+      color: c.textPrimary,
+    },
+    cardTease: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: 2,
+    },
+    // Done rows
+    doneList: {
+      gap: spacing.sm,
+    },
+    doneRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+      minHeight: touch.min,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.md,
+      borderWidth: 1,
+      borderColor: c.border,
+      backgroundColor: c.bgCard,
+      opacity: opacity.high,
+    },
+    doneTitle: {
+      ...type.bodyBold,
+      color: c.textSecondary,
+      flex: 1,
+    },
+    doneScore: {
+      ...type.score,
+      color: c.accent,
+    },
+    doneTime: {
+      ...type.caption,
+      color: c.textMuted,
+    },
+    // Archive entry
+    archiveCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+      minHeight: touch.min,
+      padding: spacing.md,
+      borderRadius: borderRadius.md,
+      borderWidth: 1,
+      borderColor: c.border,
+      backgroundColor: c.bgElevated,
+    },
+    archiveTitle: {
+      ...type.bodyBold,
+      color: c.textSecondary,
+    },
+    archiveSub: {
+      ...type.caption,
+      color: c.textMuted,
+      marginTop: 1,
+    },
+    footerNote: {
+      ...type.micro,
+      color: c.textMuted,
+      textAlign: 'center',
+      marginTop: spacing.xl,
+    },
+  });

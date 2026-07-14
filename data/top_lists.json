@@ -56,21 +56,21 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 5,
+        "name": "Harry Kane",
+        "value": 14,
+        "unit": "goals",
+        "aliases": [
+          "Kane"
+        ]
+      },
+      {
+        "rank": 7,
         "name": "Just Fontaine",
         "value": 13,
         "unit": "goals",
         "aliases": [
           "Fontaine"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Harry Kane",
-        "value": 13,
-        "unit": "goals",
-        "aliases": [
-          "Kane"
         ]
       },
       {
@@ -94,7 +94,7 @@
       {
         "rank": 1,
         "name": "Lionel Messi",
-        "value": 30,
+        "value": 32,
         "unit": "matches",
         "aliases": [
           "Messi",
@@ -140,30 +140,30 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 5,
+        "name": "Luka Modric",
+        "value": 23,
+        "unit": "matches",
+        "aliases": [
+          "Modric"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Manuel Neuer",
+        "value": 23,
+        "unit": "matches",
+        "aliases": [
+          "Neuer"
+        ]
+      },
+      {
+        "rank": 8,
         "name": "Diego Maradona",
         "value": 21,
         "unit": "matches",
         "aliases": [
           "Maradona"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Uwe Seeler",
-        "value": 21,
-        "unit": "matches",
-        "aliases": [
-          "Seeler"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Wladyslaw Zmuda",
-        "value": 21,
-        "unit": "matches",
-        "aliases": [
-          "Zmuda"
         ]
       }
     ]
@@ -206,9 +206,9 @@
         ]
       },
       {
-        "rank": 4,
+        "rank": 3,
         "name": "Bader Al-Mutawa",
-        "value": 196,
+        "value": 202,
         "unit": "caps",
         "aliases": [
           "Al-Mutawa"
@@ -225,29 +225,29 @@
       },
       {
         "rank": 6,
+        "name": "Ahmed Mubarak",
+        "value": 193,
+        "unit": "caps",
+        "aliases": [
+          "Kano"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Hassan Al-Haydos",
+        "value": 188,
+        "unit": "caps",
+        "aliases": [
+          "Al-Haydos"
+        ]
+      },
+      {
+        "rank": 8,
         "name": "Ahmed Hassan",
         "value": 184,
         "unit": "caps",
         "aliases": [
           "Ahmed Hassan"
-        ]
-      },
-      {
-        "rank": 7,
-        "name": "Sergio Ramos",
-        "value": 180,
-        "unit": "caps",
-        "aliases": [
-          "Ramos"
-        ]
-      },
-      {
-        "rank": 7,
-        "name": "Andres Guardado",
-        "value": 180,
-        "unit": "caps",
-        "aliases": [
-          "Guardado"
         ]
       }
     ]
@@ -403,6 +403,7 @@
     "id": "copa-america-all-time-top-scorers",
     "title": "Copa America All-Time Top Scorers",
     "group": "international",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -451,13 +452,13 @@
         ]
       },
       {
-        "rank": 6,
-        "name": "Gabriel Batistuta",
-        "value": 13,
+        "rank": 5,
+        "name": "Lionel Messi",
+        "value": 14,
         "unit": "goals",
         "aliases": [
-          "Batistuta",
-          "Bati"
+          "Messi",
+          "Leo Messi"
         ]
       }
     ]
@@ -2091,6 +2092,16 @@
       },
       {
         "rank": 2,
+        "name": "Kevin De Bruyne",
+        "value": 38,
+        "unit": "goals",
+        "aliases": [
+          "De Bruyne",
+          "KDB"
+        ]
+      },
+      {
+        "rank": 3,
         "name": "Eden Hazard",
         "value": 33,
         "unit": "goals",
@@ -2099,7 +2110,7 @@
         ]
       },
       {
-        "rank": 3,
+        "rank": 4,
         "name": "Paul Van Himst",
         "value": 30,
         "unit": "goals",
@@ -2108,7 +2119,7 @@
         ]
       },
       {
-        "rank": 3,
+        "rank": 4,
         "name": "Bernard Voorhoof",
         "value": 30,
         "unit": "goals",
@@ -2117,21 +2128,12 @@
         ]
       },
       {
-        "rank": 5,
+        "rank": 6,
         "name": "Marc Wilmots",
-        "value": 29,
+        "value": 28,
         "unit": "goals",
         "aliases": [
           "Wilmots"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Wesley Sonck",
-        "value": 24,
-        "unit": "goals",
-        "aliases": [
-          "Sonck"
         ]
       }
     ]
@@ -2266,6 +2268,7 @@
     "id": "mexico-all-time-top-scorers",
     "title": "Mexico All-Time Top Scorers",
     "group": "national",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -2279,6 +2282,16 @@
       },
       {
         "rank": 2,
+        "name": "Raúl Jiménez",
+        "value": 48,
+        "unit": "goals",
+        "aliases": [
+          "Jimenez",
+          "Raul Jimenez"
+        ]
+      },
+      {
+        "rank": 3,
         "name": "Jared Borgetti",
         "value": 46,
         "unit": "goals",
@@ -2287,9 +2300,9 @@
         ]
       },
       {
-        "rank": 3,
+        "rank": 4,
         "name": "Cuauhtemoc Blanco",
-        "value": 39,
+        "value": 38,
         "unit": "goals",
         "aliases": [
           "Cuauhtemoc Blanco",
@@ -2297,16 +2310,7 @@
         ]
       },
       {
-        "rank": 4,
-        "name": "Carlos Hermosillo",
-        "value": 35,
-        "unit": "goals",
-        "aliases": [
-          "Hermosillo"
-        ]
-      },
-      {
-        "rank": 4,
+        "rank": 5,
         "name": "Luis Hernandez",
         "value": 35,
         "unit": "goals",
@@ -2316,11 +2320,11 @@
       },
       {
         "rank": 6,
-        "name": "Enrique Borja",
-        "value": 31,
+        "name": "Carlos Hermosillo",
+        "value": 34,
         "unit": "goals",
         "aliases": [
-          "Borja"
+          "Hermosillo"
         ]
       }
     ]
@@ -2329,6 +2333,7 @@
     "id": "usa-all-time-top-scorers",
     "title": "USA Men's All-Time Top Scorers",
     "group": "national",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -2368,20 +2373,20 @@
       },
       {
         "rank": 5,
+        "name": "Christian Pulisic",
+        "value": 33,
+        "unit": "goals",
+        "aliases": [
+          "Pulisic"
+        ]
+      },
+      {
+        "rank": 6,
         "name": "Brian McBride",
         "value": 30,
         "unit": "goals",
         "aliases": [
           "McBride"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Joe-Max Moore",
-        "value": 24,
-        "unit": "goals",
-        "aliases": [
-          "Joe-Max Moore"
         ]
       }
     ]
@@ -2444,6 +2449,7 @@
     "id": "wales-all-time-top-scorers",
     "title": "Wales All-Time Top Scorers",
     "group": "national",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -2494,7 +2500,7 @@
       {
         "rank": 6,
         "name": "Aaron Ramsey",
-        "value": 20,
+        "value": 21,
         "unit": "goals",
         "aliases": [
           "Ramsey"
@@ -2506,6 +2512,7 @@
     "id": "hungary-all-time-top-scorers",
     "title": "Hungary All-Time Top Scorers",
     "group": "national",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -2554,11 +2561,11 @@
       },
       {
         "rank": 6,
-        "name": "Ferenc Bene",
-        "value": 36,
+        "name": "Nandor Hidegkuti",
+        "value": 39,
         "unit": "goals",
         "aliases": [
-          "Bene"
+          "Hidegkuti"
         ]
       }
     ]
@@ -2567,6 +2574,7 @@
     "id": "japan-all-time-top-scorers",
     "title": "Japan All-Time Top Scorers",
     "group": "national",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -2598,20 +2606,20 @@
       },
       {
         "rank": 4,
+        "name": "Hiromi Hara",
+        "value": 37,
+        "unit": "goals",
+        "aliases": [
+          "Hara"
+        ]
+      },
+      {
+        "rank": 4,
         "name": "Keisuke Honda",
         "value": 37,
         "unit": "goals",
         "aliases": [
           "Honda"
-        ]
-      },
-      {
-        "rank": 5,
-        "name": "Shinji Kagawa",
-        "value": 31,
-        "unit": "goals",
-        "aliases": [
-          "Kagawa"
         ]
       }
     ]
@@ -2635,7 +2643,7 @@
       {
         "rank": 2,
         "name": "Son Heung-min",
-        "value": 51,
+        "value": 56,
         "unit": "goals",
         "aliases": [
           "Son",
@@ -2662,20 +2670,20 @@
       },
       {
         "rank": 5,
+        "name": "Kim Jae-han",
+        "value": 33,
+        "unit": "goals",
+        "aliases": [
+          "Kim Jae-han"
+        ]
+      },
+      {
+        "rank": 5,
         "name": "Lee Dong-gook",
         "value": 33,
         "unit": "goals",
         "aliases": [
           "Lee Dong-gook"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Kim Do-hoon",
-        "value": 30,
-        "unit": "goals",
-        "aliases": [
-          "Kim Do-hoon"
         ]
       }
     ]
@@ -2709,7 +2717,7 @@
       {
         "rank": 3,
         "name": "Hassan El-Shazly",
-        "value": 42,
+        "value": 49,
         "unit": "goals",
         "aliases": [
           "El-Shazly"
@@ -2717,20 +2725,21 @@
       },
       {
         "rank": 4,
-        "name": "Ahmed Hassan",
-        "value": 33,
+        "name": "El-Sayed El-Dhizui",
+        "value": 41,
         "unit": "goals",
         "aliases": [
-          "Ahmed Hassan"
+          "El-Dhizui"
         ]
       },
       {
         "rank": 5,
-        "name": "Mahmoud El-Khatib",
-        "value": 30,
+        "name": "Mohamed Aboutrika",
+        "value": 38,
         "unit": "goals",
         "aliases": [
-          "El-Khatib"
+          "Aboutrika",
+          "Abou Trika"
         ]
       }
     ]
@@ -2754,17 +2763,17 @@
       },
       {
         "rank": 2,
-        "name": "Karim Bagheri",
-        "value": 50,
+        "name": "Mehdi Taremi",
+        "value": 60,
         "unit": "goals",
         "aliases": [
-          "Bagheri"
+          "Taremi"
         ]
       },
       {
         "rank": 3,
         "name": "Sardar Azmoun",
-        "value": 45,
+        "value": 57,
         "unit": "goals",
         "aliases": [
           "Azmoun"
@@ -2772,11 +2781,11 @@
       },
       {
         "rank": 4,
-        "name": "Mehdi Taremi",
-        "value": 40,
+        "name": "Karim Bagheri",
+        "value": 50,
         "unit": "goals",
         "aliases": [
-          "Taremi"
+          "Bagheri"
         ]
       },
       {
@@ -3953,7 +3962,17 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 4,
+        "name": "Flamengo",
+        "value": 4,
+        "unit": "titles",
+        "aliases": [
+          "CR Flamengo",
+          "Mengao"
+        ]
+      },
+      {
+        "rank": 7,
         "name": "Nacional",
         "value": 3,
         "unit": "titles",
@@ -3963,7 +3982,7 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 7,
         "name": "São Paulo",
         "value": 3,
         "unit": "titles",
@@ -3973,21 +3992,12 @@
         ]
       },
       {
-        "rank": 6,
+        "rank": 7,
         "name": "Grêmio",
         "value": 3,
         "unit": "titles",
         "aliases": [
           "Gremio"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Olimpia",
-        "value": 3,
-        "unit": "titles",
-        "aliases": [
-          "Club Olimpia"
         ]
       }
     ]
@@ -6056,7 +6066,7 @@
       {
         "rank": 4,
         "name": "Mohamed Salah",
-        "value": 191,
+        "value": 193,
         "unit": "goals",
         "aliases": [
           "Salah"
@@ -6272,15 +6282,6 @@
       },
       {
         "rank": 6,
-        "name": "Mark Schwarzer",
-        "value": 544,
-        "unit": "appearances",
-        "aliases": [
-          "Schwarzer"
-        ]
-      },
-      {
-        "rank": 7,
         "name": "Gary Speed",
         "value": 535,
         "unit": "appearances",
@@ -6289,12 +6290,21 @@
         ]
       },
       {
-        "rank": 8,
+        "rank": 7,
         "name": "Emile Heskey",
         "value": 516,
         "unit": "appearances",
         "aliases": [
           "Heskey"
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Mark Schwarzer",
+        "value": 514,
+        "unit": "appearances",
+        "aliases": [
+          "Schwarzer"
         ]
       },
       {
@@ -6419,6 +6429,7 @@
     "id": "la-liga-most-appearances",
     "title": "Most La Liga appearances (all-time)",
     "group": "leagues",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -6449,29 +6460,30 @@
       },
       {
         "rank": 4,
+        "name": "Antoine Griezmann",
+        "value": 564,
+        "unit": "appearances",
+        "aliases": [
+          "Griezmann",
+          "Grizi"
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Dani Parejo",
+        "value": 558,
+        "unit": "appearances",
+        "aliases": [
+          "Parejo"
+        ]
+      },
+      {
+        "rank": 6,
         "name": "Raul",
         "value": 550,
         "unit": "appearances",
         "aliases": [
           "Raul Gonzalez"
-        ]
-      },
-      {
-        "rank": 5,
-        "name": "Manolo Sanchis",
-        "value": 523,
-        "unit": "appearances",
-        "aliases": [
-          "Sanchis"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Lionel Messi",
-        "value": 520,
-        "unit": "appearances",
-        "aliases": [
-          "Messi"
         ]
       }
     ]
@@ -6638,6 +6650,7 @@
     "id": "bundesliga-all-time-scorers",
     "title": "Bundesliga all-time top scorers",
     "group": "leagues",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -6697,7 +6710,7 @@
       {
         "rank": 7,
         "name": "Ulf Kirsten",
-        "value": 182,
+        "value": 181,
         "unit": "goals",
         "aliases": [
           "Kirsten"
@@ -6718,6 +6731,7 @@
     "id": "bundesliga-most-appearances",
     "title": "Most Bundesliga appearances (all-time)",
     "group": "leagues",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -6767,6 +6781,15 @@
       },
       {
         "rank": 6,
+        "name": "Manuel Neuer",
+        "value": 545,
+        "unit": "appearances",
+        "aliases": [
+          "Neuer"
+        ]
+      },
+      {
+        "rank": 7,
         "name": "Klaus Fischer",
         "value": 535,
         "unit": "appearances",
@@ -6775,21 +6798,12 @@
         ]
       },
       {
-        "rank": 7,
+        "rank": 8,
         "name": "Eike Immel",
         "value": 534,
         "unit": "appearances",
         "aliases": [
           "Immel"
-        ]
-      },
-      {
-        "rank": 8,
-        "name": "Willi Neuberger",
-        "value": 520,
-        "unit": "appearances",
-        "aliases": [
-          "Neuberger"
         ]
       }
     ]
@@ -7219,21 +7233,21 @@
       },
       {
         "rank": 6,
+        "name": "Ferenc Puskas",
+        "value": 4,
+        "unit": "Pichichis",
+        "aliases": [
+          "Puskas"
+        ]
+      },
+      {
+        "rank": 7,
         "name": "Cristiano Ronaldo",
         "value": 3,
         "unit": "Pichichis",
         "aliases": [
           "Ronaldo",
           "CR7"
-        ]
-      },
-      {
-        "rank": 7,
-        "name": "Kylian Mbappe",
-        "value": 2,
-        "unit": "Pichichis",
-        "aliases": [
-          "Mbappe"
         ]
       }
     ]
@@ -9849,6 +9863,7 @@
     "id": "man-city-top-scorers",
     "title": "Manchester City all-time top scorers",
     "group": "clubs-records",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -9880,6 +9895,15 @@
       },
       {
         "rank": 4,
+        "name": "Erling Haaland",
+        "value": 162,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 5,
         "name": "Colin Bell",
         "value": 153,
         "unit": "goals",
@@ -9888,7 +9912,7 @@
         ]
       },
       {
-        "rank": 5,
+        "rank": 6,
         "name": "Joe Hayes",
         "value": 152,
         "unit": "goals",
@@ -9897,7 +9921,7 @@
         ]
       },
       {
-        "rank": 5,
+        "rank": 6,
         "name": "Billy Meredith",
         "value": 152,
         "unit": "goals",
@@ -9906,21 +9930,12 @@
         ]
       },
       {
-        "rank": 7,
+        "rank": 8,
         "name": "Francis Lee",
         "value": 148,
         "unit": "goals",
         "aliases": [
           "Lee"
-        ]
-      },
-      {
-        "rank": 8,
-        "name": "Tommy Browell",
-        "value": 139,
-        "unit": "goals",
-        "aliases": [
-          "Browell"
         ]
       }
     ]
@@ -10009,11 +10024,12 @@
     "id": "bayern-munich-top-scorers",
     "title": "Bayern Munich all-time top scorers",
     "group": "clubs-records",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
         "name": "Gerd Müller",
-        "value": 566,
+        "value": 565,
         "unit": "goals",
         "aliases": [
           "Gerd Muller",
@@ -10041,20 +10057,20 @@
       },
       {
         "rank": 4,
+        "name": "Rainer Ohlhauser",
+        "value": 229,
+        "unit": "goals",
+        "aliases": [
+          "Ohlhauser"
+        ]
+      },
+      {
+        "rank": 5,
         "name": "Karl-Heinz Rummenigge",
         "value": 217,
         "unit": "goals",
         "aliases": [
           "Rummenigge"
-        ]
-      },
-      {
-        "rank": 5,
-        "name": "Rainer Ohlhauser",
-        "value": 167,
-        "unit": "goals",
-        "aliases": [
-          "Ohlhauser"
         ]
       },
       {
@@ -11441,6 +11457,7 @@
     "id": "manchester-derby-top-scorers",
     "title": "Most goals in the Manchester derby",
     "group": "clubs-records",
+    "as_of": "2026-07",
     "entries": [
       {
         "rank": 1,
@@ -11489,6 +11506,15 @@
       },
       {
         "rank": 6,
+        "name": "Erling Haaland",
+        "value": 8,
+        "unit": "goals",
+        "aliases": [
+          "Haaland"
+        ]
+      },
+      {
+        "rank": 6,
         "name": "Colin Bell",
         "value": 8,
         "unit": "goals",
@@ -11503,15 +11529,6 @@
         "unit": "goals",
         "aliases": [
           "Cantona"
-        ]
-      },
-      {
-        "rank": 6,
-        "name": "Brian Kidd",
-        "value": 8,
-        "unit": "goals",
-        "aliases": [
-          "Kidd"
         ]
       }
     ]
@@ -11543,7 +11560,7 @@
       {
         "rank": 3,
         "name": "Alexander Isak",
-        "value": 150,
+        "value": 144.5,
         "unit": "€M",
         "aliases": [
           "Isak"
@@ -11551,47 +11568,48 @@
       },
       {
         "rank": 4,
-        "name": "Philippe Coutinho",
-        "value": 145,
+        "name": "Elliot Anderson",
+        "value": 135.5,
         "unit": "€M",
         "aliases": [
-          "Coutinho"
+          "Anderson"
         ]
       },
       {
         "rank": 5,
-        "name": "Ousmane Dembélé",
-        "value": 135,
-        "unit": "€M",
-        "aliases": [
-          "Dembele"
-        ]
-      },
-      {
-        "rank": 6,
         "name": "João Félix",
-        "value": 127,
+        "value": 126,
         "unit": "€M",
         "aliases": [
           "Joao Felix"
         ]
       },
       {
-        "rank": 7,
-        "name": "Florian Wirtz",
-        "value": 125,
-        "unit": "€M",
-        "aliases": [
-          "Wirtz"
-        ]
-      },
-      {
-        "rank": 8,
+        "rank": 6,
         "name": "Enzo Fernández",
         "value": 121,
         "unit": "€M",
         "aliases": [
           "Enzo Fernandez"
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Antoine Griezmann",
+        "value": 120,
+        "unit": "€M",
+        "aliases": [
+          "Griezmann",
+          "Grizi"
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Philippe Coutinho",
+        "value": 118.4,
+        "unit": "€M",
+        "aliases": [
+          "Coutinho"
         ]
       }
     ]

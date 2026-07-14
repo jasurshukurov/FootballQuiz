@@ -37,7 +37,11 @@ import common  # noqa: E402
 MV_MIN = 0
 MV_MAX = 300_000_000
 VALID_STATUS = {"active", "retired"}
-PATCH_GLOB = os.path.join(common.DATA_DIR, "research_patches", "patch_*.json")
+PATCH_GLOBS = [
+    os.path.join(common.DATA_DIR, "research_patches", "patch_*.json"),
+    # 2026-07 full-DB sweep (stage 2a/2b) writes sweep_patch_*.json.
+    os.path.join(common.DATA_DIR, "research_patches", "sweep_patch_*.json"),
+]
 
 
 def known_leagues(players):
@@ -104,8 +108,17 @@ def apply_record(player, rec, resolve_club, leagues):
     player["retired_year"] = rec.get("retired_year") if rec["status"] == "retired" else None
 
     # current_team — resolve the common name to an existing club string.
+    # new_club: researcher asserts the club is NOT in players_db and the given
+    # string is the vetted official name — write it verbatim, bypassing the
+    # resolver (whose fuzzy tiers could hit a wrong near-namesake club).
     requested = (rec.get("current_team") or "").strip()
-    if requested:
+    if requested and rec.get("new_club") is True:
+        player["current_team"] = requested
+        outcome["club"] = "set"
+        outcome["method"] = "new_club"
+        outcome["resolved_team"] = requested
+        outcome["requested_team"] = requested
+    elif requested:
         resolved, method = resolve_club(requested)
         if resolved:
             player["current_team"] = resolved
@@ -138,9 +151,9 @@ def main():
     leagues = known_leagues(players)
     resolve_club = common.build_club_resolver(players)
 
-    patch_files = sorted(glob.glob(PATCH_GLOB))
+    patch_files = sorted(set(f for g in PATCH_GLOBS for f in glob.glob(g)))
     if not patch_files:
-        print("no patch files found at %s" % PATCH_GLOB)
+        print("no patch files found at %s" % " | ".join(PATCH_GLOBS))
         print("(researchers write filled patch_NN.json there; nothing to do)")
         return
 

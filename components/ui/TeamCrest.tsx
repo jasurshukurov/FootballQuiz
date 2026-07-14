@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { getTeamColors } from '@/data/teamColors';
+import { useThemeColors } from '@/hooks/useTheme';
 
 interface TeamCrestProps {
   teamName: string;
@@ -8,6 +9,8 @@ interface TeamCrestProps {
 }
 
 export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
+  const colors = useThemeColors();
+  // primary/secondary are real-world club colors (data, not theme).
   const { primary, secondary, pattern = 'circle' } = getTeamColors(teamName);
 
   const shieldStyle = {
@@ -17,6 +20,7 @@ export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
     borderBottomLeftRadius: size * 0.5,
     borderBottomRightRadius: size * 0.5,
     backgroundColor: primary,
+    borderColor: colors.borderStrong,
   };
 
   return (
@@ -83,7 +87,6 @@ const styles = StyleSheet.create({
   shield: {
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
   },
   stripe: {
     position: 'absolute',

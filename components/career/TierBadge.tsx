@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
-import { spacing, borderRadius } from '@/constants/theme';
+import { spacing, borderRadius, type } from '@/constants/theme';
 import { DifficultyTier, TIER_LABELS, TIER_COLORS } from '@/types/career';
 
 interface TierBadgeProps {
@@ -40,7 +39,6 @@ const styles = StyleSheet.create({
     marginRight: spacing.xs,
   },
   label: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...type.captionBold,
   },
 });

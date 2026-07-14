@@ -148,7 +148,6 @@ describe('buildShareText', () => {
       'agent',
       'blindranking',
       'careertimeline',
-      'marketmovers',
       'guessmatch',
       'toplists',
     ];
@@ -158,19 +157,33 @@ describe('buildShareText', () => {
     const text = buildDailyRecapText({
       dailyNumber: 560,
       dailyStreak: 5,
-      totalModes: 12,
+      totalModes: 11,
       completedModes,
       scoresByMode,
     });
     const lines = text.split('\n');
-    expect(lines[0]).toBe('Football Quiz #560 — Perfect Day! (12/12)');
+    expect(lines[0]).toBe('Football Quiz #560 — Perfect Day! (11/11)');
     expect(lines[1]).toBe('🎬 Career Path 0');
     expect(lines).toContain('🔍 Who Are Ya 1');
-    expect(lines).toContain('📋 Top Lists 11');
+    expect(lines).toContain('📋 Top Lists 10');
     expect(lines).toContain('🔥 5-day streak');
     expect(lines[lines.length - 1]).toBe(URL_560);
-    // header + 12 mode lines + streak + url
-    expect(lines).toHaveLength(15);
+    // header + 11 mode lines + streak + url
+    expect(lines).toHaveLength(14);
+  });
+
+  it('ignores persisted completions for deprecated modes (e.g. marketmovers)', () => {
+    // A user who completed Market Movers before its deprecation still has
+    // { marketmovers: true } in today's persisted completedModes. The recap
+    // must neither list it nor let it inflate the count past totalModes.
+    const text = buildDailyRecapText({
+      dailyNumber: 560,
+      dailyStreak: 0,
+      totalModes: 11,
+      completedModes: { marketmovers: true, grid: true },
+      scoresByMode: { marketmovers: 7, grid: 9 },
+    });
+    expect(text.split('\n')).toEqual(['Football Quiz #560 — (1/11)', '🎯 Grid 9', URL_560]);
   });
 
   it('builds a partial recap listing only completed modes', () => {

@@ -1,36 +1,24 @@
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTodayDateString } from '@/lib/dailySeed';
+import {
+  ALL_NOTIFICATION_IDS,
+  PlannedNotification,
+  PlannedTrigger,
+  STREAK_SAVER_ID,
+  planSchedule,
+} from '@/lib/notificationPlan';
+import { useNotificationPrefsStore } from '@/hooks/useNotificationPrefsStore';
+import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 
-const DAILY_REMINDER_ID = 'daily-reminder';
 const ANDROID_CHANNEL_ID = 'daily-reminders';
 const SCHEDULED_DATE_KEY = '@notifications_scheduled_date';
 const PERMISSION_ASKED_KEY = '@notifications_permission_asked';
 const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
 
-const REMINDER_MESSAGES = [
-  'New Daily Modes are live! Can you complete all 10?',
-  'The Mystery Player is waiting...',
-  '10 new challenges just dropped!',
-  'Your rivals are already playing today',
-];
+type NotificationsModule = typeof import('expo-notifications');
 
-function getStreakMessage(streak: number): string {
-  return `Don't lose your ${streak}-day streak!`;
-}
-
-function pickMessage(currentStreak?: number): string {
-  if (currentStreak && currentStreak > 1) {
-    // 50% chance to show streak message when there's a streak
-    if (Math.random() < 0.5) {
-      return getStreakMessage(currentStreak);
-    }
-  }
-  const index = Math.floor(Math.random() * REMINDER_MESSAGES.length);
-  return REMINDER_MESSAGES[index];
-}
-
-async function getNotifications() {
+async function getNotifications(): Promise<NotificationsModule | null> {
   if (Platform.OS === 'web') return null;
   return await import('expo-notifications');
 }
@@ -52,6 +40,7 @@ async function ensureAndroidChannel(): Promise<void> {
   });
 }
 
+/** Global kill switch (More screen toggle). Independent of the frequency pref. */
 export async function isNotificationsEnabled(): Promise<boolean> {
   const stored = await AsyncStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
   return stored !== 'false'; // enabled by default
@@ -59,11 +48,21 @@ export async function isNotificationsEnabled(): Promise<boolean> {
 
 export async function setNotificationsEnabled(enabled: boolean): Promise<void> {
   await AsyncStorage.setItem(NOTIFICATIONS_ENABLED_KEY, String(enabled));
-  if (!enabled) {
+  if (enabled) {
+    // The user just flipped notifications ON — an explicit interaction, so
+    // requesting OS permission here is welcome, not jarring.
+    await applyNotificationSchedule({ interactive: true });
+  } else {
     await cancelAllPendingNotifications();
   }
 }
 
+/**
+ * Asks the OS for notification permission, at most once ever (beyond that the
+ * user manages it in system settings). Callers decide WHEN this is
+ * appropriate — see `interactive` in applyNotificationSchedule; it is never
+ * called on plain app launch.
+ */
 export async function requestNotificationPermissions(): Promise<boolean> {
   const Notifications = await getNotifications();
   if (!Notifications) return false;
@@ -83,63 +82,151 @@ export async function requestNotificationPermissions(): Promise<boolean> {
   return status === 'granted';
 }
 
-export async function scheduleNextDayReminder(currentStreak?: number): Promise<void> {
+async function hasGrantedPermission(Notifications: NotificationsModule): Promise<boolean> {
+  const { status } = await Notifications.getPermissionsAsync();
+  return status === 'granted';
+}
+
+function toExpoTrigger(Notifications: NotificationsModule, trigger: PlannedTrigger) {
+  const channel = Platform.OS === 'android' ? { channelId: ANDROID_CHANNEL_ID } : {};
+  switch (trigger.kind) {
+    case 'daily':
+      return {
+        type: Notifications.SchedulableTriggerInputTypes.DAILY,
+        hour: trigger.hour,
+        minute: trigger.minute,
+        ...channel,
+      } as const;
+    case 'weekly':
+      return {
+        type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
+        weekday: trigger.weekday, // 1 = Sunday … 7 = Saturday
+        hour: trigger.hour,
+        minute: trigger.minute,
+        ...channel,
+      } as const;
+    case 'date':
+      return {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: trigger.date,
+        ...channel,
+      } as const;
+  }
+}
+
+async function scheduleOne(
+  Notifications: NotificationsModule,
+  planned: PlannedNotification,
+): Promise<void> {
+  await Notifications.scheduleNotificationAsync({
+    identifier: planned.identifier,
+    content: {
+      title: planned.title,
+      body: planned.body,
+      sound: true,
+    },
+    trigger: toExpoTrigger(Notifications, planned.trigger),
+  });
+}
+
+export interface ApplyScheduleOptions {
+  /** Current streak; defaults to the daily-state store's value. */
+  streak?: number;
+  /**
+   * True when triggered by an explicit user action (settings change, first
+   * completed daily). Only then may the OS permission prompt appear —
+   * plain app-opens never prompt.
+   */
+  interactive?: boolean;
+  /** Whether today's daily is already done; defaults to the store's answer. */
+  playedToday?: boolean;
+}
+
+/**
+ * The single choke point for schedule mutations: cancels every notification
+ * we own, then re-schedules per current preferences. Idempotent — safe to
+ * call on every app open, pref change, or daily completion.
+ */
+export async function applyNotificationSchedule(options: ApplyScheduleOptions = {}): Promise<void> {
   const Notifications = await getNotifications();
   if (!Notifications) return;
 
-  const enabled = await isNotificationsEnabled();
-  if (!enabled) return;
-
+  // Always start from a clean slate so stale identifiers never linger.
   await cancelAllPendingNotifications();
 
-  const hasPermission = await requestNotificationPermissions();
-  if (!hasPermission) return;
+  const enabled = await isNotificationsEnabled();
+  const prefs = useNotificationPrefsStore.getState();
+  // 'off' (or the kill switch) means never even ask for permission.
+  if (!enabled || prefs.frequency === 'off') return;
 
-  // Create the channel every time before scheduling, since the permission
-  // request no longer runs on returning sessions.
+  const granted = options.interactive
+    ? await requestNotificationPermissions()
+    : await hasGrantedPermission(Notifications);
+  if (!granted) return;
+
   await ensureAndroidChannel();
 
-  const message = pickMessage(currentStreak);
+  const dailyState = useDailyStateStore.getState();
   const today = getTodayDateString();
-  await AsyncStorage.setItem(SCHEDULED_DATE_KEY, today);
+  const streak = options.streak ?? dailyState.currentStreak;
+  const playedToday = options.playedToday ?? dailyState.lastCompletedDate === today;
 
-  await Notifications.scheduleNotificationAsync({
-    identifier: DAILY_REMINDER_ID,
-    content: {
-      title: 'Football Quiz',
-      body: message,
-      sound: true,
-      ...(Platform.OS === 'android' ? { channelId: ANDROID_CHANNEL_ID } : {}),
+  const plan = planSchedule(
+    {
+      frequency: prefs.frequency,
+      reminderHour: prefs.reminderHour,
+      streakSaver: prefs.streakSaver,
     },
-    trigger: {
-      type: Notifications.SchedulableTriggerInputTypes.DAILY,
-      hour: 10,
-      minute: 0,
-    },
+    { streak, now: new Date(), playedToday },
+  );
+  for (const planned of plan) {
+    await scheduleOne(Notifications, planned);
+  }
+
+  await AsyncStorage.setItem(SCHEDULED_DATE_KEY, today);
+}
+
+/**
+ * Called from the daily-completion path. Today is done, so tonight's
+ * streak-saver one-off must not fire; the rest of the schedule is refreshed
+ * (this is also the "soft ask" moment — the one non-settings place a
+ * first-time permission prompt may appear).
+ */
+export async function scheduleNextDayReminder(currentStreak?: number): Promise<void> {
+  await cancelTonightStreakSaver();
+  await applyNotificationSchedule({
+    streak: currentStreak,
+    playedToday: true,
+    interactive: true,
   });
+}
+
+/** Cancels only tonight's streak-saver one-off (the moment daily play completes). */
+export async function cancelTonightStreakSaver(): Promise<void> {
+  const Notifications = await getNotifications();
+  if (!Notifications) return;
+  await Notifications.cancelScheduledNotificationAsync(STREAK_SAVER_ID);
 }
 
 export async function cancelAllPendingNotifications(): Promise<void> {
   const Notifications = await getNotifications();
   if (!Notifications) return;
 
-  // Cancel only our daily reminder, not every scheduled notification the app
+  // Cancel only OUR identifiers, never every scheduled notification the app
   // may have, so completing a mode doesn't wipe unrelated notifications.
-  await Notifications.cancelScheduledNotificationAsync(DAILY_REMINDER_ID);
-}
-
-export async function rescheduleIfNeeded(): Promise<void> {
-  const enabled = await isNotificationsEnabled();
-  if (!enabled) return;
-
-  const lastScheduled = await AsyncStorage.getItem(SCHEDULED_DATE_KEY);
-  const today = getTodayDateString();
-
-  // Re-schedule if we haven't scheduled today
-  if (lastScheduled !== today) {
-    await scheduleNextDayReminder();
+  for (const id of ALL_NOTIFICATION_IDS) {
+    await Notifications.cancelScheduledNotificationAsync(id);
   }
 }
 
-// Keep backward-compatible export for existing _layout.tsx usage
+/**
+ * Runs on every app open (from useNotificationSetup). Re-applies the schedule
+ * non-interactively — it never triggers a permission prompt, and it refreshes
+ * the streak-saver one-off for today when applicable.
+ */
+export async function rescheduleIfNeeded(): Promise<void> {
+  await applyNotificationSchedule({ interactive: false });
+}
+
+// Keep backward-compatible export for existing call sites
 export const scheduleDailyReminder = scheduleNextDayReminder;

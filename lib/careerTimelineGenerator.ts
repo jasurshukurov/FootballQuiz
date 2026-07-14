@@ -1,6 +1,22 @@
 import { CareerEntry } from '@/types/career';
 import { getAllCareerPlayers } from './careerData';
 import { rotatingPick, ROTATION_SALT } from './dailyRotation';
+import { getFameByName } from './playerData';
+import { getTodayDateString, seededShuffle } from './dailySeed';
+import {
+  bandForDate,
+  filterByFameBand,
+  resolveSkillTier,
+  skillAdjustedBand,
+} from './difficultyCurve';
+import { shortenClubName } from './clubNames';
+
+/**
+ * Fixed number of hidden middle clubs. Kept equal to the screen's life count so
+ * every daily puzzle has the same shape and scores are comparable day to day
+ * (a puzzle that happened to hide 2 clubs was strictly easier than one hiding 4).
+ */
+export const HIDDEN_COUNT = 3;
 
 export interface TimelineNode {
   club: string;
@@ -37,58 +53,44 @@ function seededRandom(seed: number): () => number {
 export function generateCareerTimelinePuzzle(
   seed: number,
   dayIndex?: number,
+  dateStr: string = getTodayDateString(),
 ): CareerTimelinePuzzle {
   const rng = seededRandom(seed);
   const allPlayers = getAllCareerPlayers();
-  // Only pick well-known players (beginner/amateur/semi_pro tiers = most famous)
-  const FAMOUS_TIERS = new Set(['beginner', 'amateur', 'semi_pro']);
-  const eligible = allPlayers.filter((p) => p.career.length >= 3 && FAMOUS_TIERS.has(p.tier));
+
+  // Need first + last revealed and HIDDEN_COUNT hideable middles, so a career
+  // must have at least HIDDEN_COUNT + 2 stints.
+  const minStints = HIDDEN_COUNT + 2;
+  const longEnough = allPlayers.filter((p) => p.career.length >= minStints);
+
+  // Weekly difficulty band drives which players surface: household names early
+  // week, deeper cuts on the weekend. filterByFameBand widens the fame window if
+  // a band is too thin so the pool never empties.
+  // Skill tier (neutral 0 without play history) shifts the fame window by at
+  // most one step; filterByFameBand still widens so the pool never starves.
+  const band = skillAdjustedBand(bandForDate(dateStr), resolveSkillTier('careertimeline'));
+  const eligible = filterByFameBand(longEnough, band, (p) => getFameByName(p.name)?.fame_score);
 
   const player =
     dayIndex === undefined
       ? eligible[Math.floor(rng() * eligible.length)]
       : rotatingPick(eligible, dayIndex, ROTATION_SALT.careerTimeline);
 
-  const nodes: TimelineNode[] = player.career.map((entry: CareerEntry, i: number) => {
-    const isFirst = i === 0;
-    const isLast = i === player.career.length - 1;
-    // Always reveal first and last
-    if (isFirst || isLast) {
-      return {
-        club: entry.club,
-        from: entry.from,
-        to: entry.to,
-        isHidden: false,
-        isGuessed: false,
-        hintRevealed: false,
-      };
-    }
-    // ~50% chance to hide middle clubs
-    return {
-      club: entry.club,
-      from: entry.from,
-      to: entry.to,
-      isHidden: rng() < 0.5,
-      isGuessed: false,
-      hintRevealed: false,
-    };
-  });
+  const nodes: TimelineNode[] = player.career.map((entry: CareerEntry) => ({
+    club: entry.club,
+    from: entry.from,
+    to: entry.to,
+    isHidden: false,
+    isGuessed: false,
+    hintRevealed: false,
+  }));
 
-  // Hide at least 2 middle clubs when the career is long enough (>=4 stints);
-  // for a 3-stint career only the single middle node can be hidden.
+  // Always reveal first and last; hide a FIXED count of middle clubs chosen with
+  // an unbiased seeded shuffle (never a random-comparator sort).
   const middleIndices: number[] = [];
   for (let i = 1; i < nodes.length - 1; i++) middleIndices.push(i);
-  const desiredHidden = Math.min(2, middleIndices.length);
-  const hiddenSet = new Set(middleIndices.filter((i) => nodes[i].isHidden));
-  // Deterministically hide more middle nodes until we reach the desired count.
-  const shuffledMiddles = [...middleIndices].sort(() => rng() - 0.5);
-  for (const idx of shuffledMiddles) {
-    if (hiddenSet.size >= desiredHidden) break;
-    if (!hiddenSet.has(idx)) {
-      nodes[idx].isHidden = true;
-      hiddenSet.add(idx);
-    }
-  }
+  const toHide = seededShuffle(middleIndices, rng).slice(0, HIDDEN_COUNT);
+  for (const idx of toHide) nodes[idx].isHidden = true;
 
   const totalHidden = nodes.filter((n) => n.isHidden).length;
 
@@ -110,20 +112,6 @@ export function getClubHint(club: string): string {
   return `${firstLetter}${blanks}`;
 }
 
-// Alias map for common club name abbreviations
-const CLUB_ALIASES: Record<string, string[]> = {
-  'paris saint-germain': ['psg'],
-  'manchester united': ['man united', 'man utd'],
-  'manchester city': ['man city'],
-  'fc barcelona': ['barca', 'barcelona'],
-  'real madrid': ['real'],
-  'bayern munich': ['bayern', 'fc bayern munchen', 'fc bayern münchen'],
-  juventus: ['juve'],
-  'inter milan': ['inter', 'internazionale'],
-  'atletico madrid': ['atletico', 'atletico de madrid', 'atlético de madrid'],
-  'tottenham hotspur': ['spurs', 'tottenham'],
-};
-
 function normalize(str: string): string {
   return str
     .normalize('NFD')
@@ -132,63 +120,48 @@ function normalize(str: string): string {
     .trim();
 }
 
-// Build reverse alias map: alias -> canonical names
-const reverseAliases = new Map<string, string[]>();
-for (const [canonical, aliases] of Object.entries(CLUB_ALIASES)) {
-  const normCanonical = normalize(canonical);
-  // Map canonical to itself
-  if (!reverseAliases.has(normCanonical)) {
-    reverseAliases.set(normCanonical, []);
-  }
-  reverseAliases.get(normCanonical)!.push(normCanonical);
-  // Map each alias to canonical
-  for (const alias of aliases) {
-    const normAlias = normalize(alias);
-    if (!reverseAliases.has(normAlias)) {
-      reverseAliases.set(normAlias, []);
-    }
-    reverseAliases.get(normAlias)!.push(normCanonical);
-    // Also map canonical back from alias
-    reverseAliases.get(normCanonical)!.push(normAlias);
-  }
+/**
+ * Canonical club key: strip legal/organizational suffixes (shared shortener),
+ * fold diacritics, lowercase. Two spellings of the SAME club collapse to one
+ * key; two DIFFERENT clubs never do — the old substring/prefix matching let
+ * "Real Sociedad" satisfy a "Real Madrid" target, which this removes.
+ */
+function canonical(name: string): string {
+  return normalize(shortenClubName(name));
 }
 
-function getAliasGroup(name: string): string[] {
-  const norm = normalize(name);
-  // Check direct match
-  if (reverseAliases.has(norm)) {
-    return reverseAliases.get(norm)!;
-  }
-  // Check if name contains or is contained by any alias key
-  for (const [key, group] of reverseAliases.entries()) {
-    if (norm.includes(key) || key.includes(norm)) {
-      return group;
-    }
-  }
-  return [norm];
-}
+/**
+ * Curated synonym sets — ONLY explicit, human-verified equivalents. There is no
+ * substring, prefix, or "contains" matching: a guess matches a target iff their
+ * canonical keys are identical or they share one of these groups.
+ */
+const ALIAS_GROUPS: string[][] = [
+  ['manchester united', 'man united', 'man utd'],
+  ['manchester city', 'man city'],
+  ['paris saint-germain', 'psg'],
+  ['fc barcelona', 'barcelona', 'barca'],
+  ['bayern munich', 'bayern munchen', 'fc bayern munich'],
+  ['inter milan', 'inter', 'internazionale'],
+  ['tottenham hotspur', 'tottenham', 'spurs'],
+  ['atletico madrid', 'atletico de madrid'],
+  ['juventus', 'juve'],
+  ['wolverhampton wanderers', 'wolves'],
+];
+
+// canonical alias key -> group id, for O(1) equivalence checks.
+const aliasGroupId = new Map<string, number>();
+ALIAS_GROUPS.forEach((group, i) => {
+  for (const name of group) aliasGroupId.set(canonical(name), i);
+});
 
 export function clubNamesMatch(guess: string, target: string): boolean {
-  const normGuess = normalize(guess);
-  const normTarget = normalize(target);
-
-  // Direct match
-  if (normGuess === normTarget) return true;
-
-  // Check if either appears in the other (partial containment)
-  if (normTarget.includes(normGuess) || normGuess.includes(normTarget)) return true;
-
-  // Check alias groups
-  const guessGroup = getAliasGroup(normGuess);
-  const targetGroup = getAliasGroup(normTarget);
-
-  for (const g of guessGroup) {
-    for (const t of targetGroup) {
-      if (g === t) return true;
-    }
-  }
-
-  return false;
+  const g = canonical(guess);
+  const t = canonical(target);
+  if (!g || !t) return false;
+  if (g === t) return true;
+  const gi = aliasGroupId.get(g);
+  const ti = aliasGroupId.get(t);
+  return gi !== undefined && gi === ti;
 }
 
 let cachedClubs: { name: string; normalizedName: string }[] | null = null;

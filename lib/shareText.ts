@@ -214,8 +214,12 @@ export function buildShareText(input: ShareResultInput): string {
 // Daily recap ("Share your day") — one block stitching every mode's result.
 // ---------------------------------------------------------------------------
 
-/** The 10 daily modes in display order, with the emoji + name used in the recap.
- *  `key` matches useDailyProgressStore completedModes / scoresByMode keys. */
+/** The daily modes in display order, with the emoji + name used in the recap.
+ *  `key` matches useDailyProgressStore completedModes / scoresByMode keys.
+ *  Deprecated modes (e.g. 'marketmovers') are removed here too, so a stale
+ *  persisted completion never inflates the recap count past totalModes.
+ *  (The single-game ShareResultInput 'marketmovers' variant above is kept —
+ *  the dormant screen still compiles and shares if routed directly.) */
 const RECAP_MODES: { key: string; emoji: string; name: string }[] = [
   { key: 'careerpath', emoji: '🎬', name: 'Career Path' },
   { key: 'who-are-ya', emoji: '🔍', name: 'Who Are Ya' },
@@ -227,7 +231,6 @@ const RECAP_MODES: { key: string; emoji: string; name: string }[] = [
   { key: 'agent', emoji: '💰', name: 'The Agent' },
   { key: 'blindranking', emoji: '📊', name: 'Blind Ranking' },
   { key: 'careertimeline', emoji: '🛤️', name: 'Career Timeline' },
-  { key: 'marketmovers', emoji: '💰', name: 'Market Movers' },
   { key: 'guessmatch', emoji: '⚽', name: 'Guess the Match' },
 ];
 

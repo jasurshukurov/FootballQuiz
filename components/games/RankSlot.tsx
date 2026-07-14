@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Pressable, View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -9,8 +9,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
 import TeamCrest from '@/components/ui/TeamCrest';
+import Tappable from '@/components/ui/Tappable';
 import { Player } from '@/types/player';
-import { colors, fonts, spacing, borderRadius } from '@/constants/theme';
+import { SlotStatus } from '@/lib/blindRankingGenerator';
+import { type, spacing, borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface RankSlotProps {
   rank: number;
@@ -18,7 +22,8 @@ interface RankSlotProps {
   onPress: () => void;
   disabled: boolean;
   isRevealing: boolean;
-  isCorrect?: boolean;
+  /** Reveal outcome for this slot: exact (green), adjacent (amber), wrong (red). */
+  status?: SlotStatus;
 }
 
 export default function RankSlot({
@@ -27,8 +32,10 @@ export default function RankSlot({
   onPress,
   disabled,
   isRevealing,
-  isCorrect,
+  status,
 }: RankSlotProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const scale = useSharedValue(1);
   const shakeX = useSharedValue(0);
   const borderColorProgress = useSharedValue(0);
@@ -44,12 +51,18 @@ export default function RankSlot({
       scale.value = 0.9;
       scale.value = withSpring(1, { damping: 12, stiffness: 150 });
     }
-  }, [player?.id]);
+    // Keyed on the id, not the object: the pop must replay only when a
+    // different player fills the slot, not on re-renders with a fresh ref.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player?.id, scale]);
+
+  const revealColor =
+    status === 'exact' ? colors.accent : status === 'adjacent' ? colors.streak : colors.danger;
 
   useEffect(() => {
-    if (isRevealing && isCorrect !== undefined) {
+    if (isRevealing && status !== undefined) {
       borderColorProgress.value = withTiming(1, { duration: 300 });
-      if (!isCorrect) {
+      if (status === 'wrong') {
         shakeX.value = withSequence(
           withTiming(-6, { duration: 50 }),
           withTiming(6, { duration: 50 }),
@@ -59,88 +72,62 @@ export default function RankSlot({
         );
       }
     }
-  }, [isRevealing, isCorrect, borderColorProgress, shakeX]);
+  }, [isRevealing, status, borderColorProgress, shakeX]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }, { translateX: shakeX.value }],
   }));
 
   const borderStyle = useAnimatedStyle(() => {
-    if (!isRevealing || isCorrect === undefined) {
-      return { borderColor: player ? colors.glassBorder : colors.neonGlow };
+    if (!isRevealing || status === undefined) {
+      return { borderColor: player ? colors.border : colors.accentBorder };
     }
-    const color = isCorrect ? '#52B788' : '#E63946';
     return {
-      borderColor: color,
+      borderColor: revealColor,
       borderWidth: 2,
     };
-  });
+  }, [isRevealing, status, player, colors, revealColor]);
 
   if (!player) {
     return (
-      <Pressable onPress={onPress} disabled={disabled}>
+      <Tappable
+        onPress={onPress}
+        disabled={disabled}
+        hoverStyle={{ backgroundColor: colors.bgCardPressed, borderRadius: borderRadius.lg }}>
         <Animated.View style={[styles.emptySlot, borderStyle]}>
           <Text style={styles.rankNumber}>#{rank}</Text>
           <Text style={styles.tapText}>Tap to place</Text>
         </Animated.View>
-      </Pressable>
+      </Tappable>
     );
   }
 
   return (
-    <Pressable onPress={onPress} disabled={disabled}>
+    <Tappable onPress={onPress} disabled={disabled} haptic="none">
       <Animated.View style={[animatedStyle]}>
         <Animated.View style={[styles.filledSlot, borderStyle]}>
-          <GlassCard style={styles.innerCard}>
-            <View style={styles.content}>
+          <GlassCard style={layoutStyles.innerCard}>
+            <View style={layoutStyles.content}>
               <Text style={styles.rankBadge}>#{rank}</Text>
               <TeamCrest teamName={player.current_team} size={18} />
               <Text style={styles.playerName} numberOfLines={1}>
                 {player.name}
               </Text>
-              {isRevealing && isCorrect !== undefined && (
-                <Text style={[styles.resultIcon, isCorrect ? styles.correct : styles.wrong]}>
-                  {isCorrect ? '\u2713' : '\u2717'}
+              {isRevealing && status !== undefined && (
+                <Text style={[styles.resultIcon, { color: revealColor }]}>
+                  {status === 'exact' ? '✓' : status === 'adjacent' ? '≈' : '✗'}
                 </Text>
               )}
             </View>
           </GlassCard>
         </Animated.View>
       </Animated.View>
-    </Pressable>
+    </Tappable>
   );
 }
 
-const styles = StyleSheet.create({
-  emptySlot: {
-    height: 52,
-    borderRadius: borderRadius.lg,
-    borderWidth: 1.5,
-    borderStyle: 'dashed',
-    borderColor: colors.neonGlow,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.sm,
-  },
-  rankNumber: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 16,
-    color: colors.pitchGreen,
-  },
-  tapText: {
-    fontFamily: fonts.subheading,
-    fontSize: 13,
-    color: colors.steelGray,
-  },
-  filledSlot: {
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
-    marginBottom: spacing.sm,
-    overflow: 'hidden',
-  },
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   innerCard: {
     borderRadius: 0,
     borderWidth: 0,
@@ -152,26 +139,48 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     gap: spacing.sm,
   },
-  rankBadge: {
-    fontFamily: fonts.scoreboard,
-    fontSize: 14,
-    color: colors.pitchGreen,
-    width: 28,
-  },
-  playerName: {
-    flex: 1,
-    fontFamily: fonts.subheading,
-    fontSize: 15,
-    color: colors.chalkWhite,
-  },
-  resultIcon: {
-    fontFamily: fonts.heading,
-    fontSize: 18,
-  },
-  correct: {
-    color: colors.matchGreen,
-  },
-  wrong: {
-    color: colors.cardRed,
-  },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    emptySlot: {
+      height: 52,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1.5,
+      borderStyle: 'dashed',
+      borderColor: c.accentBorder,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      marginBottom: spacing.sm,
+    },
+    rankNumber: {
+      ...type.score,
+      color: c.accent,
+    },
+    tapText: {
+      ...type.caption,
+      color: c.textSecondary,
+    },
+    filledSlot: {
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.border,
+      marginBottom: spacing.sm,
+      overflow: 'hidden',
+    },
+    rankBadge: {
+      ...type.score,
+      color: c.accent,
+      width: 28,
+    },
+    playerName: {
+      flex: 1,
+      ...type.bodyBold,
+      color: c.textPrimary,
+    },
+    resultIcon: {
+      ...type.h3,
+    },
+  });

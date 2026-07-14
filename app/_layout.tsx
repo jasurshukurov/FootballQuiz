@@ -1,9 +1,18 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
+import { ThemeProvider, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import Head from 'expo-router/head';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useMemo, useState } from 'react';
+import { Platform } from 'react-native';
 import 'react-native-reanimated';
 
 import '../global.css';
@@ -15,7 +24,7 @@ import { fetchRemoteConfig, RemoteConfig } from '@/lib/remoteConfig';
 import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
 import StreakRepairPrompt from '@/components/ui/StreakRepairPrompt';
 import MaintenanceScreen from '@/components/ui/MaintenanceScreen';
-import { colors } from '@/constants/theme';
+import { useTheme } from '@/hooks/useTheme';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -25,25 +34,16 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync();
 
-const RetroTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: colors.pitchGreen,
-    background: colors.retroBlack,
-    card: colors.broadcasterDark,
-    text: colors.chalkWhite,
-    border: colors.pitchGreen,
-    notification: colors.cardRed,
-  },
-};
-
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     'SpaceMono-Bold': require('../assets/fonts/SpaceMono-Bold.ttf'),
     'BarlowCondensed-Bold': require('../assets/fonts/BarlowCondensed-Bold.ttf'),
     'BarlowCondensed-SemiBold': require('../assets/fonts/BarlowCondensed-SemiBold.ttf'),
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
     ...FontAwesome.font,
   });
 
@@ -67,8 +67,33 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const checkAndUpdateStreak = useDailyStateStore((s) => s.checkAndUpdateStreak);
   const [remoteConfig, setRemoteConfig] = useState<RemoteConfig | null>(null);
+  const theme = useTheme();
 
   useNotificationSetup();
+
+  // Navigation chrome (backgrounds, headers, transitions) follows the theme.
+  const navTheme = useMemo(() => {
+    const base = theme.dark ? DarkTheme : DefaultTheme;
+    return {
+      ...base,
+      colors: {
+        ...base.colors,
+        primary: theme.colors.accent,
+        background: theme.colors.bgBase,
+        card: theme.colors.bgElevated,
+        text: theme.colors.textPrimary,
+        border: theme.colors.border,
+        notification: theme.colors.danger,
+      },
+    };
+  }, [theme]);
+
+  // On web the document body shows through during overscroll — keep it in sync.
+  useEffect(() => {
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      document.body.style.backgroundColor = theme.colors.bgBase;
+    }
+  }, [theme]);
 
   useEffect(() => {
     checkAndUpdateStreak();
@@ -89,7 +114,14 @@ function RootLayoutNav() {
   }
 
   return (
-    <ThemeProvider value={RetroTheme}>
+    <ThemeProvider value={navTheme}>
+      {/* Web: default document title (helmet-managed, so the static <title> in
+          +html.tsx is overridden by an empty tag unless set here). Routes can
+          still override with their own <Head><title>. No-op on native. */}
+      <Head>
+        <title>Football Quiz</title>
+      </Head>
+      <StatusBar style={theme.dark ? 'light' : 'dark'} />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="games" options={{ headerShown: false }} />

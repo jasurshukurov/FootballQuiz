@@ -1,12 +1,12 @@
 {
   "note": "current_team values that could not be resolved to an existing players_db club string; other fields were still applied. Fix the club name or add it to club_id_map.json.",
-  "count": 12,
+  "count": 17,
   "rows": [
     {
-      "id": 7600,
-      "name": "Andrés Iniesta",
-      "requested_current_team": "Emirates Club",
-      "kept_current_team": "Futbol Club Barcelona",
+      "id": 146660,
+      "name": "Ronaldo",
+      "requested_current_team": "FK Rostov",
+      "kept_current_team": "Cd Castellón",
       "source": "patch_01.json"
     },
     {
@@ -14,7 +14,14 @@
       "name": "Fernando Torres",
       "requested_current_team": "Sagan Tosu",
       "kept_current_team": "Gimnàstic De Tarragona",
-      "source": "patch_01.json"
+      "source": "patch_02.json"
+    },
+    {
+      "id": 1600014,
+      "name": "Mesut Ozil",
+      "requested_current_team": "Istanbul Basaksehir",
+      "kept_current_team": "Fenerbahce",
+      "source": "patch_02.json"
     },
     {
       "id": 77,
@@ -31,60 +38,88 @@
       "source": "patch_02.json"
     },
     {
+      "id": 406625,
+      "name": "Lautaro Martínez",
+      "requested_current_team": "Inter",
+      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
+      "source": "patch_03.json"
+    },
+    {
       "id": 315853,
       "name": "Alessandro Bastoni",
       "requested_current_team": "Inter",
       "kept_current_team": "Football Club Internazionale Milano S.p.A.",
-      "source": "patch_03.json"
+      "source": "patch_04.json"
     },
     {
       "id": 79422,
       "name": "Keylor Navas",
       "requested_current_team": "Pumas UNAM",
       "kept_current_team": "Unam Pumas",
-      "source": "patch_04.json"
+      "source": "patch_06.json"
     },
     {
-      "id": 198116,
-      "name": "Federico Dimarco",
-      "requested_current_team": "Inter",
-      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
-      "source": "patch_05.json"
+      "id": 735570,
+      "name": "João Gomes",
+      "requested_current_team": "Wolves",
+      "kept_current_team": "Wolverhampton Wanderers Football Club",
+      "source": "patch_07.json"
+    },
+    {
+      "id": 140206,
+      "name": "Ladislav Krejci",
+      "requested_current_team": "Wolves",
+      "kept_current_team": "Wolverhampton Wanderers Football Club",
+      "source": "patch_07.json"
+    },
+    {
+      "id": 521964,
+      "name": "Malick Thiaw",
+      "requested_current_team": "Newcastle",
+      "kept_current_team": "Newcastle United Football Club",
+      "source": "patch_07.json"
     },
     {
       "id": 503160,
       "name": "Paul Nebel",
       "requested_current_team": "Mainz 05",
       "kept_current_team": "1. Fußball- und Sportverein Mainz 05",
-      "source": "patch_06.json"
-    },
-    {
-      "id": 146854,
-      "name": "Wissam Ben Yedder",
-      "requested_current_team": "Wydad AC",
-      "kept_current_team": "Sakaryaspor",
-      "source": "patch_06.json"
-    },
-    {
-      "id": 827734,
-      "name": "Ange-Yoan Bonny",
-      "requested_current_team": "Inter",
-      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
       "source": "patch_07.json"
     },
     {
-      "id": 691316,
-      "name": "Luis Henrique",
-      "requested_current_team": "Inter",
-      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
+      "id": 388165,
+      "name": "Yoane Wissa",
+      "requested_current_team": "Newcastle",
+      "kept_current_team": "Newcastle United Football Club",
       "source": "patch_08.json"
     },
     {
-      "id": 321528,
-      "name": "Denzel Dumfries",
-      "requested_current_team": "Inter",
-      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
+      "id": 503749,
+      "name": "Jacob Ramsey",
+      "requested_current_team": "Newcastle",
+      "kept_current_team": "Newcastle United Football Club",
+      "source": "patch_08.json"
+    },
+    {
+      "id": 1600077,
+      "name": "George Best",
+      "requested_current_team": "Brisbane Lions",
+      "kept_current_team": "San Jose Earthquakes",
       "source": "patch_09.json"
+    },
+    {
+      "id": 418543,
+      "name": "Perr Schuurs",
+      "requested_current_team": "NEC Nijmegen",
+      "kept_current_team": "Torino Calcio",
+      "source": "patch_11.json"
+    },
+    {
+      "id": 47713,
+      "name": "Mamadou Sakho",
+      "requested_current_team": "Torpedo Kutaisi",
+      "kept_current_team": "Montpellier HSC",
+      "source": "patch_12_retirees.json"
     }
   ]
 }

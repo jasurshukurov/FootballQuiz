@@ -1,6 +1,11 @@
 import { Player } from '@/types/player';
 import { getAllPlayers, isActivePlayer, getFameForPlayer } from './playerData';
-import { bandForDate, bandFameOffset, progressionForRound } from './difficultyCurve';
+import {
+  bandForDate,
+  bandFameOffset,
+  progressionForRound,
+  resolveSkillTier,
+} from './difficultyCurve';
 import { getTodayDateString } from './dailySeed';
 
 export function formatMarketValue(value: number): string {
@@ -32,6 +37,25 @@ export function getPlayerDifficulty(player: Player): string {
   if (score >= 50) return 'Medium';
   if (score >= 30) return 'Hard';
   return 'Expert';
+}
+
+/**
+ * Whether a Higher/Lower guess is correct, given the current and challenger
+ * numeric values (market value or transfer fee — the logic is identical, so both
+ * streak modes share this one definition).
+ *
+ * Ties (equal values) are correct for BOTH guesses by design: the generators
+ * guarantee a value gap so a tie can't occur in practice, but if a future data
+ * change ever produced an equal pair we award the point rather than silently
+ * resolve a hidden coin-flip against the player.
+ */
+export function isHigherLowerCorrect(
+  guess: 'higher' | 'lower',
+  currentValue: number,
+  challengerValue: number,
+): boolean {
+  if (challengerValue === currentValue) return true;
+  return guess === 'higher' ? challengerValue > currentValue : challengerValue < currentValue;
 }
 
 function seededRandom(seed: number): () => number {
@@ -76,8 +100,20 @@ function getFilteredPlayers(): Player[] {
  *
  * `fameOffset` defaults to the current day's band offset; pass an explicit value
  * for deterministic tests / the QA sim.
+ *
+ * `startRound` continues the ramp when the screen extends the queue mid-run
+ * (pass the current queue length) so difficulty keeps rising instead of resetting
+ * to "easy". `prevTailValue` is the market value of the previous queue's last card,
+ * threaded in so the seam pair (old tail vs new head) is gap-checked like any
+ * other consecutive pair rather than risking a coin-flip at the join.
  */
-export function generatePlayerQueue(seed: number, count: number, fameOffset?: number): Player[] {
+export function generatePlayerQueue(
+  seed: number,
+  count: number,
+  fameOffset?: number,
+  startRound = 0,
+  prevTailValue?: number | null,
+): Player[] {
   const players = getFilteredPlayers();
   const rng = seededRandom(seed);
 
@@ -88,12 +124,15 @@ export function generatePlayerQueue(seed: number, count: number, fameOffset?: nu
   }
 
   const offset = fameOffset ?? bandFameOffset(bandForDate(getTodayDateString()));
+  // Per-user skill tier (neutral 0 without play history) steepens/softens the
+  // in-session ramp by at most one step.
+  const skillTier = resolveSkillTier('higherlower');
 
   const queue: Player[] = [];
   const used = new Set<number>();
   for (let i = 0; i < count; i++) {
-    const prog = progressionForRound(i);
-    const last = queue.length > 0 ? queue[queue.length - 1].market_value : null;
+    const prog = progressionForRound(startRound + i, skillTier);
+    const last = queue.length > 0 ? queue[queue.length - 1].market_value : (prevTailValue ?? null);
     const pick = pickNextByProgression(
       shuffled,
       used,

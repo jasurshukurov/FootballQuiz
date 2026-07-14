@@ -8,7 +8,7 @@
  *   - Agent distractors never share the exact target fee.
  */
 
-import { generateConnectionsPuzzle } from '../connectionsGenerator';
+import { generateConnectionsPuzzle, specMatchersForIdentity } from '../connectionsGenerator';
 import { getDailyTarget } from '../dailyPuzzle';
 import { shortenClubName } from '../clubNames';
 import { seededShuffle, rotatingPick } from '../dailyRotation';
@@ -21,9 +21,8 @@ import { generateDailyAgentGame, parseFeeToNumber } from '../agentGameGenerator'
 import { getModeSeed } from '../dailySeed';
 import { getAllTransferHistories } from '../transferData';
 
-const SEEDS = Array.from({ length: 40 }, (_, i) =>
-  getModeSeed('connections', `2026-08-${String((i % 28) + 1).padStart(2, '0')}`),
-);
+const DATES = Array.from({ length: 28 }, (_, i) => `2026-08-${String(i + 1).padStart(2, '0')}`);
+const SEEDS = DATES.map((d) => getModeSeed('connections', d));
 
 describe('Connections name dedupe', () => {
   it('never repeats a display name anywhere on the board', () => {
@@ -51,62 +50,21 @@ describe('Connections name dedupe', () => {
     }
   });
 
-  it('has cross-category exclusivity (each name placeable in exactly one group)', () => {
-    const byName = new Map<string, Player[]>();
-    for (const pl of getAllPlayers()) {
-      if (!byName.has(pl.name)) byName.set(pl.name, []);
-      byName.get(pl.name)!.push(pl);
-    }
-    const types = ['nationality', 'current_team', 'position', 'league'] as const;
-    const POSITIONS = new Set(
-      getAllPlayers()
-        .map((p) => p.position)
-        .filter(Boolean),
-    );
-    const LEAGUES = new Set(
-      getAllPlayers()
-        .map((p) => p.league)
-        .filter(Boolean),
-    );
-    const NATIONS = new Set(
-      getAllPlayers()
-        .map((p) => p.nationality)
-        .filter(Boolean),
-    );
-    // fix the spec TYPE from the label, then the value shared by all members
-    const deriveSpec = (label: string, names: string[]) => {
-      let type: (typeof types)[number] | null = null;
-      if (POSITIONS.has(label.replace(/s$/, ''))) type = 'position';
-      else if (label.endsWith(' players')) {
-        const base = label.slice(0, -' players'.length);
-        type = LEAGUES.has(base) ? 'league' : NATIONS.has(base) ? 'nationality' : 'current_team';
-      }
-      const shared = (t: (typeof types)[number]) => {
-        const sets = names.map(
-          (n) => new Set((byName.get(n) ?? []).map((p) => p[t]).filter(Boolean)),
-        );
-        for (const v of sets[0]) if (sets.every((s) => s.has(v))) return v;
-        return null;
-      };
-      const order = type ? [type, ...types.filter((t) => t !== type)] : types;
-      for (const t of order) {
-        const v = shared(t);
-        if (v) return { type: t, value: v };
-      }
-      return null;
-    };
-    for (const seed of SEEDS) {
-      const p = generateConnectionsPuzzle(seed);
-      const specs = p.categories.map((c) => deriveSpec(c.name, c.playerNames));
+  it('has cross-category exclusivity (each player fits exactly one group)', () => {
+    // Exact check against the generator's own criteria: every chosen player
+    // must match their own category and conflict with none of the other three.
+    const byId = new Map<number, Player>(getAllPlayers().map((pl) => [pl.id, pl]));
+    for (const date of DATES) {
+      const p = generateConnectionsPuzzle(getModeSeed('connections', date), date);
+      const matchers = p.categories.map((c) => specMatchersForIdentity(c.identity!));
       p.categories.forEach((cat, ci) => {
-        const own = specs[ci];
-        const foreign = specs.filter((_, cj) => cj !== ci);
-        for (const name of cat.playerNames) {
-          const cands = (byName.get(name) ?? []).filter((pl) => own && pl[own.type] === own.value);
-          const hasExclusive = cands.some(
-            (pl) => !foreign.some((s) => s && pl[s.type] === s.value),
-          );
-          expect(hasExclusive).toBe(true);
+        expect(matchers[ci]).toBeDefined();
+        for (const id of cat.playerIds!) {
+          const player = byId.get(id)!;
+          expect(matchers[ci]!.matches(player)).toBe(true);
+          matchers.forEach((m, cj) => {
+            if (cj !== ci) expect(m!.conflicts(player)).toBe(false);
+          });
         }
       });
     }

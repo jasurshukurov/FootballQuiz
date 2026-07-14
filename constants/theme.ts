@@ -1,42 +1,26 @@
-export const colors = {
-  // Core palette
-  pitchGreen: '#05F26C',
-  neonGreen: '#00FF87',
-  offsideRed: '#FF2D55',
-  floodlightWhite: '#F0F6FC',
-  chalkWhite: '#F5F5F0',
-  cardRed: '#E63946',
-  cardYellow: '#F4A261',
-  matchGreen: '#52B788',
-  steelGray: '#6C757D',
+/**
+ * "Floodlit Pitch" design system — v2 tokens, v3 theming.
+ *
+ * Layers:
+ *   1. themes    — constants/themes.ts owns all color/gradient/shadow values
+ *                  (four themes); components read them via useTheme()
+ *   2. colors    — STATIC floodlit fallback (see note below)
+ *   3. type      — the ONLY sanctioned font sizes/line heights
+ *   4. spacing / radius / motion / touch — theme-independent constants
+ *
+ * NOTE (v3): the static `colors` / `gradients` / `shadows` exports below are
+ * the floodlit fallback — components must use useTheme() instead; only
+ * non-React code (share-text builders, scripts, notifications) may import
+ * these static exports.
+ */
 
-  // Neo-Retro Broadcast backgrounds
-  retroBlack: '#0A0A1A',
-  midnightNavy: '#0D1B2A',
-  deepPurple: '#1B0A2E',
-  broadcasterDark: '#111128',
+import { THEMES } from '@/constants/themes';
 
-  // Glass
-  glassWhite: 'rgba(255,255,255,0.08)',
-  glassBorder: 'rgba(255,255,255,0.12)',
-  glassHighlight: 'rgba(5,242,108,0.15)',
+/** @deprecated in components — use `useTheme().colors`. Floodlit fallback. */
+export const colors = THEMES.floodlit.colors;
 
-  // Neon glow
-  neonGlow: 'rgba(5,242,108,0.4)',
-  neonGlowStrong: 'rgba(5,242,108,0.6)',
-} as const;
-
-// Gradient presets for expo-linear-gradient
-export const gradients = {
-  // Main screen background: navy -> midnight purple
-  screenBg: ['#0D1B2A', '#1B0A2E'] as const,
-  // Subtle card gradient
-  cardBg: ['rgba(13,27,42,0.9)', 'rgba(27,10,46,0.9)'] as const,
-  // Active/highlighted gradient
-  activeGlow: ['rgba(5,242,108,0.2)', 'rgba(0,255,135,0.05)'] as const,
-  // Header gradient
-  headerBg: ['#0D1B2A', '#111128'] as const,
-} as const;
+/** @deprecated in components — use `useTheme().gradients`. Floodlit fallback. */
+export const gradients = THEMES.floodlit.gradients;
 
 export const spacing = {
   xs: 4,
@@ -49,42 +33,70 @@ export const spacing = {
 } as const;
 
 export const borderRadius = {
-  sm: 6,
-  md: 8,
-  lg: 12,
-  xl: 16,
-  xxl: 24,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 28,
   full: 9999,
 } as const;
 
 export const opacity = {
-  glass: 0.08,
-  glassBorder: 0.12,
+  glass: 0.045,
+  glassBorder: 0.1,
   subtle: 0.5,
   medium: 0.7,
   high: 0.85,
 } as const;
 
 export const fonts = {
+  // Display / headlines — condensed, "shirt numbering" feel
   heading: 'BarlowCondensed-Bold',
   subheading: 'BarlowCondensed-SemiBold',
+  // Numbers, scores, share-text — monospace keeps columns aligned
   scoreboard: 'SpaceMono-Bold',
-  body: 'SpaceMono-Regular',
+  mono: 'SpaceMono-Regular',
+  // UI text — Inter
+  body: 'Inter_400Regular',
+  bodyMedium: 'Inter_500Medium',
+  bodySemiBold: 'Inter_600SemiBold',
+  bodyBold: 'Inter_700Bold',
 } as const;
 
-export const shadows = {
-  neonGlow: {
-    shadowColor: '#05F26C',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-  cardShadow: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 6,
-  },
+/**
+ * Typography scale — the only sanctioned fontSize/lineHeight pairs.
+ * Usage: <Text style={type.h2}> or spread into StyleSheet entries.
+ */
+export const type = {
+  display: { fontFamily: fonts.heading, fontSize: 40, lineHeight: 44, letterSpacing: 0.5 },
+  h1: { fontFamily: fonts.heading, fontSize: 28, lineHeight: 32, letterSpacing: 0.5 },
+  h2: { fontFamily: fonts.subheading, fontSize: 22, lineHeight: 26, letterSpacing: 0.3 },
+  h3: { fontFamily: fonts.subheading, fontSize: 18, lineHeight: 22, letterSpacing: 0.3 },
+  body: { fontFamily: fonts.body, fontSize: 15, lineHeight: 21 },
+  bodyBold: { fontFamily: fonts.bodySemiBold, fontSize: 15, lineHeight: 21 },
+  caption: { fontFamily: fonts.body, fontSize: 13, lineHeight: 18 },
+  captionBold: { fontFamily: fonts.bodyMedium, fontSize: 13, lineHeight: 18 },
+  micro: { fontFamily: fonts.bodyMedium, fontSize: 11, lineHeight: 14, letterSpacing: 0.4 },
+  score: { fontFamily: fonts.scoreboard, fontSize: 18, lineHeight: 24 },
+  scoreLarge: { fontFamily: fonts.scoreboard, fontSize: 28, lineHeight: 34 },
+} as const;
+
+/** @deprecated in components — use `useTheme().shadows`. Floodlit fallback. */
+export const shadows = THEMES.floodlit.shadows;
+
+/** Motion constants — one vocabulary of durations/springs app-wide. */
+export const motion = {
+  fast: 150,
+  base: 250,
+  slow: 400,
+  spring: { damping: 50, stiffness: 400 }, // reveal/settle
+  // Softened from damping 14 — visible overshoot reads as "jumping" (user
+  // feedback). Near-critical settle; reserve real bounce for Confetti only.
+  springBouncy: { damping: 26, stiffness: 220 },
+} as const;
+
+/** Minimum touch target (pt). Primary CTAs should be 56+. */
+export const touch = {
+  min: 44,
+  cta: 56,
 } as const;

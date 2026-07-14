@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import Animated, {
-  Easing,
   useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withSequence,
-  withTiming,
+  withSpring,
 } from 'react-native-reanimated';
 import { NotificationFeedbackType } from 'expo-haptics';
 
-import { colors, fonts } from '@/constants/theme';
+import { borderRadius, motion, spacing, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { triggerNotification } from '@/lib/haptics';
 
 const MILESTONES = [3, 7, 30, 100];
@@ -19,21 +19,23 @@ interface StreakBadgeProps {
   streak: number;
 }
 
-/** Shows the current daily streak on a result card with a scale-in reveal.
- *  At milestone streaks (3/7/30/100) it gets a distinct flourish + success haptic. */
+/** The current daily streak as an amber flame + count. Pops with a bouncy
+ *  spring whenever the count increments; milestone streaks (3/7/30/100) add a
+ *  label and a success haptic. */
 export default function StreakBadge({ streak }: StreakBadgeProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const isMilestone = MILESTONES.includes(streak);
-  const scale = useSharedValue(0);
+  const scale = useSharedValue(1);
+  const prevStreak = useRef(0);
 
   useEffect(() => {
-    if (streak <= 0) return;
-    scale.value = withDelay(
-      200,
-      withSequence(
-        withTiming(1.18, { duration: 240, easing: Easing.out(Easing.back(2)) }),
-        withTiming(1, { duration: 160 }),
-      ),
-    );
+    const incremented = streak > prevStreak.current;
+    prevStreak.current = streak;
+    if (streak <= 0 || !incremented) return;
+
+    // Subtle acknowledgement pulse — big bouncy scales read as "jumping".
+    scale.value = withSequence(withSpring(1.06, motion.spring), withSpring(1, motion.spring));
     if (isMilestone) {
       triggerNotification(NotificationFeedbackType.Success);
     }
@@ -44,8 +46,8 @@ export default function StreakBadge({ streak }: StreakBadgeProps) {
   if (streak <= 0) return null;
 
   return (
-    <Animated.View style={[styles.container, isMilestone && styles.milestone, animatedStyle]}>
-      <Text style={[styles.text, isMilestone && styles.milestoneText]}>
+    <Animated.View style={[styles.container, animatedStyle]}>
+      <Text style={styles.text}>
         {'🔥'} {streak}-day streak
       </Text>
       {isMilestone && <Text style={styles.milestoneLabel}>Milestone!</Text>}
@@ -53,36 +55,28 @@ export default function StreakBadge({ streak }: StreakBadgeProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    borderRadius: 9999,
-    borderWidth: 1,
-    borderColor: 'rgba(5,242,108,0.3)',
-    backgroundColor: 'rgba(5,242,108,0.12)',
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    gap: 2,
-  },
-  milestone: {
-    borderColor: colors.cardYellow,
-    backgroundColor: 'rgba(244,162,97,0.15)',
-  },
-  text: {
-    fontSize: 15,
-    fontFamily: fonts.subheading,
-    color: colors.pitchGreen,
-    letterSpacing: 0.5,
-  },
-  milestoneText: {
-    color: colors.cardYellow,
-  },
-  milestoneLabel: {
-    fontSize: 11,
-    fontFamily: fonts.heading,
-    color: colors.cardYellow,
-    textTransform: 'uppercase',
-    letterSpacing: 2,
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      alignSelf: 'center',
+      borderRadius: borderRadius.full,
+      borderWidth: 1,
+      borderColor: c.streak,
+      backgroundColor: c.streakSoft,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.xs,
+      gap: 2,
+    },
+    text: {
+      ...type.bodyBold,
+      color: c.streakBright,
+      letterSpacing: 0.5,
+    },
+    milestoneLabel: {
+      ...type.micro,
+      color: c.streak,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
+    },
+  });

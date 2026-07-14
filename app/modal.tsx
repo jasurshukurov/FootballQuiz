@@ -1,35 +1,46 @@
+import React, { useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import Screen from '@/components/ui/Screen';
+import { useTheme } from '@/hooks/useTheme';
+import { type ThemeColors } from '@/constants/themes';
+import { spacing, type } from '@/constants/theme';
 
 export default function ModalScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
+  return (
+    <Screen scroll={false} withTabBar={false} contentStyle={layout.content}>
+      <View style={layout.body}>
+        <Text style={styles.title}>Football Trivia</Text>
+        <Text style={styles.subtitle}>A new player every day.</Text>
+      </View>
+      {/* Light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View>
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
+const layout = StyleSheet.create({
+  content: {
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  body: {
+    alignItems: 'center',
+    gap: spacing.sm,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    title: {
+      ...type.h1,
+      color: c.textPrimary,
+    },
+    subtitle: {
+      ...type.body,
+      color: c.textSecondary,
+    },
+  });

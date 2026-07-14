@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import JerseySlot from './JerseySlot';
 import { Match } from '@/types/match';
 import { getTeamColors } from '@/data/teamColors';
-import { colors } from '@/constants/theme';
+import { spacing, borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 
 interface SoccerPitchProps {
   match: Match;
@@ -30,42 +31,28 @@ export default function SoccerPitch({
   shakingSlot,
   onSlotPress,
 }: SoccerPitchProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const teamName = teamSide === 'a' ? match.opponent_a : match.opponent_b;
   const lineupNames = teamSide === 'a' ? match.lineup_a_names : match.lineup_b_names;
   const teamColor = getTeamColors(teamName);
 
   return (
     <View style={styles.pitch}>
-      {/* Mowing stripes */}
+      {/* Mowing stripes — faint green bands for a floodlit night pitch */}
       {Array.from({ length: 8 }).map((_, i) => (
         <View
           key={i}
           style={[
-            styles.mowStripe,
+            layoutStyles.mowStripe,
             {
               top: `${i * 12.5}%`,
               height: '12.5%',
-              backgroundColor: i % 2 === 0 ? '#3D8B37' : '#357A30',
+              backgroundColor: i % 2 === 0 ? colors.accentSoft : 'transparent',
             },
           ]}
         />
       ))}
-
-      {/* Vignette edges */}
-      <LinearGradient colors={['rgba(0,0,0,0.4)', 'transparent']} style={styles.vignetteTop} />
-      <LinearGradient colors={['transparent', 'rgba(0,0,0,0.4)']} style={styles.vignetteBottom} />
-      <LinearGradient
-        colors={['rgba(0,0,0,0.4)', 'transparent']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.vignetteLeft}
-      />
-      <LinearGradient
-        colors={['transparent', 'rgba(0,0,0,0.4)']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.vignetteRight}
-      />
 
       {/* Center circle */}
       <View style={styles.centerCircle} />
@@ -77,9 +64,9 @@ export default function SoccerPitch({
       <View style={styles.penaltyBoxBottom} />
 
       {/* Formation rows */}
-      <View style={styles.formationContainer}>
+      <View style={layoutStyles.formationContainer}>
         {FORMATION_ROWS.map((row, rowIdx) => (
-          <View key={rowIdx} style={styles.formationRow}>
+          <View key={rowIdx} style={layoutStyles.formationRow}>
             {row.indices.map((playerIdx, i) => (
               <JerseySlot
                 key={playerIdx}
@@ -98,103 +85,18 @@ export default function SoccerPitch({
   );
 }
 
-const styles = StyleSheet.create({
-  pitch: {
-    width: '100%',
-    aspectRatio: 0.7,
-    backgroundColor: colors.matchGreen,
-    borderRadius: 12,
-    borderWidth: 3,
-    borderColor: 'rgba(255,255,255,0.5)',
-    overflow: 'hidden',
-    position: 'relative',
-  },
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   mowStripe: {
     position: 'absolute',
     left: 0,
     right: 0,
     zIndex: 0,
   },
-  vignetteTop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '30%',
-    zIndex: 1,
-  },
-  vignetteBottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: '30%',
-    zIndex: 1,
-  },
-  vignetteLeft: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    width: '15%',
-    zIndex: 1,
-  },
-  vignetteRight: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    width: '15%',
-    zIndex: 1,
-  },
-  centerLine: {
-    position: 'absolute',
-    top: '50%',
-    left: 0,
-    right: 0,
-    height: 1,
-    backgroundColor: 'rgba(255,255,255,0.4)',
-    zIndex: 2,
-  },
-  centerCircle: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    width: 80,
-    height: 80,
-    marginLeft: -40,
-    marginTop: -40,
-    borderRadius: 40,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.4)',
-    zIndex: 2,
-  },
-  penaltyBoxTop: {
-    position: 'absolute',
-    top: 0,
-    left: '25%',
-    width: '50%',
-    height: '14%',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: 'rgba(255,255,255,0.4)',
-    zIndex: 2,
-  },
-  penaltyBoxBottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: '25%',
-    width: '50%',
-    height: '14%',
-    borderWidth: 1,
-    borderBottomWidth: 0,
-    borderColor: 'rgba(255,255,255,0.4)',
-    zIndex: 2,
-  },
   formationContainer: {
     flex: 1,
     justifyContent: 'space-evenly',
-    paddingVertical: 16,
+    paddingVertical: spacing.lg,
     zIndex: 3,
   },
   formationRow: {
@@ -203,3 +105,61 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    pitch: {
+      width: '100%',
+      aspectRatio: 0.7,
+      backgroundColor: c.bgElevated,
+      borderRadius: borderRadius.md,
+      borderWidth: 1,
+      borderColor: c.borderStrong,
+      overflow: 'hidden',
+      position: 'relative',
+    },
+    centerLine: {
+      position: 'absolute',
+      top: '50%',
+      left: 0,
+      right: 0,
+      height: 1,
+      backgroundColor: c.borderStrong,
+      zIndex: 2,
+    },
+    centerCircle: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      width: 80,
+      height: 80,
+      marginLeft: -40,
+      marginTop: -40,
+      borderRadius: borderRadius.full,
+      borderWidth: 1,
+      borderColor: c.borderStrong,
+      zIndex: 2,
+    },
+    penaltyBoxTop: {
+      position: 'absolute',
+      top: 0,
+      left: '25%',
+      width: '50%',
+      height: '14%',
+      borderWidth: 1,
+      borderTopWidth: 0,
+      borderColor: c.borderStrong,
+      zIndex: 2,
+    },
+    penaltyBoxBottom: {
+      position: 'absolute',
+      bottom: 0,
+      left: '25%',
+      width: '50%',
+      height: '14%',
+      borderWidth: 1,
+      borderBottomWidth: 0,
+      borderColor: c.borderStrong,
+      zIndex: 2,
+    },
+  });

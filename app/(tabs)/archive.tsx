@@ -1,12 +1,18 @@
 import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View } from 'react-native';
 import { useRouter, type Href } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { colors, fonts, spacing, borderRadius, gradients } from '@/constants/theme';
-import { triggerImpact } from '@/lib/haptics';
+import Screen from '@/components/ui/Screen';
+import ScreenHeader from '@/components/ui/ScreenHeader';
+import Tappable from '@/components/ui/Tappable';
+import { useTheme } from '@/hooks/useTheme';
+import { type ThemeColors } from '@/constants/themes';
+import { spacing, borderRadius, type, touch, motion } from '@/constants/theme';
+
+/** Cap staggered entrances — no `entering` beyond this index. */
+const STAGGER_CAP = 12;
 
 // The modes wired for archive/practice play (their screens read ?practiceDate).
 const PRACTICE_MODES = [
@@ -28,6 +34,8 @@ function formatLabel(d: Date): string {
 
 export default function ArchiveScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const days = useMemo(() => {
     const list: { dateStr: string; label: string }[] = [];
@@ -41,93 +49,85 @@ export default function ArchiveScreen() {
   }, []);
 
   const openPractice = (route: string, dateStr: string) => {
-    triggerImpact();
     router.push({ pathname: route, params: { practiceDate: dateStr } } as Href);
   };
 
   return (
-    <LinearGradient colors={gradients.screenBg} style={styles.gradient}>
-      <SafeAreaView style={styles.container} edges={['bottom']}>
-        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-          <Text style={styles.intro}>
-            Replay any of the last 30 days. Practice runs never affect your streak or stats.
-          </Text>
-          {days.map((day) => (
-            <View key={day.dateStr} style={styles.row}>
-              <View style={styles.dateWrap}>
-                <Text style={styles.dateLabel}>{day.label}</Text>
-                <Text style={styles.dateSub}>{day.dateStr}</Text>
-              </View>
-              <View style={styles.modeIcons}>
-                {PRACTICE_MODES.map((m) => (
-                  <Pressable
-                    key={m.key}
-                    style={styles.iconBtn}
-                    onPress={() => openPractice(m.route, day.dateStr)}>
-                    <FontAwesome name={m.icon} size={18} color={colors.pitchGreen} />
-                  </Pressable>
-                ))}
-              </View>
+    <Screen>
+      <ScreenHeader
+        eyebrow="Practice"
+        title="Archive"
+        subtitle="Replay any of the last 30 days. Practice runs never affect your streak or stats."
+      />
+      {days.map((day, i) => {
+        const row = (
+          <View style={styles.row}>
+            <View style={styles.dateWrap}>
+              <Text style={styles.dateLabel}>{day.label}</Text>
+              <Text style={styles.dateSub}>{day.dateStr}</Text>
             </View>
-          ))}
-        </ScrollView>
-      </SafeAreaView>
-    </LinearGradient>
+            <View style={styles.modeIcons}>
+              {PRACTICE_MODES.map((m) => (
+                <Tappable
+                  key={m.key}
+                  accessibilityLabel={`Practice ${m.key} on ${day.dateStr}`}
+                  hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+                  style={styles.iconBtn}
+                  onPress={() => openPractice(m.route, day.dateStr)}>
+                  <FontAwesome name={m.icon} size={18} color={colors.accent} />
+                </Tappable>
+              ))}
+            </View>
+          </View>
+        );
+        return i < STAGGER_CAP ? (
+          <Animated.View
+            key={day.dateStr}
+            entering={FadeInDown.delay(i * 40).duration(motion.base)}>
+            {row}
+          </Animated.View>
+        ) : (
+          <View key={day.dateStr}>{row}</View>
+        );
+      })}
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-  },
-  scroll: {
-    padding: spacing.lg,
-    paddingBottom: 100,
-  },
-  intro: {
-    fontFamily: fonts.subheading,
-    fontSize: 13,
-    color: colors.steelGray,
-    marginBottom: spacing.lg,
-    lineHeight: 18,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(108,117,125,0.15)',
-  },
-  dateWrap: {
-    flex: 1,
-  },
-  dateLabel: {
-    fontFamily: fonts.subheading,
-    fontSize: 15,
-    color: colors.chalkWhite,
-  },
-  dateSub: {
-    fontFamily: fonts.body,
-    fontSize: 11,
-    color: colors.steelGray,
-    marginTop: 2,
-  },
-  modeIcons: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-  },
-  iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: borderRadius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(5,242,108,0.25)',
-    backgroundColor: 'rgba(5,242,108,0.08)',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
+    },
+    dateWrap: {
+      flex: 1,
+    },
+    dateLabel: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+    },
+    dateSub: {
+      ...type.caption,
+      color: c.textMuted,
+      marginTop: 2,
+    },
+    modeIcons: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+    },
+    iconBtn: {
+      width: touch.min,
+      height: touch.min,
+      borderRadius: borderRadius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.accentSoft,
+    },
+  });

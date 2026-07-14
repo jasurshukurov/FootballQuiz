@@ -1,8 +1,11 @@
-import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import { colors, fonts, gradients } from '@/constants/theme';
+import { type, spacing, borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 
 interface ShareableTopListsResultProps {
@@ -20,12 +23,17 @@ export default function ShareableTopListsResult({
   livesUsed,
   slots,
 }: ShareableTopListsResultProps) {
+  const { colors, gradients } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const currentStreak = useDailyStateStore((s) => s.currentStreak);
   const row = slots.map((f) => (f ? '🟩' : '⬜')).join('');
 
   return (
-    <LinearGradient colors={gradients.screenBg} style={styles.container}>
-      <Text style={styles.branding}>FOOTBALL QUIZ</Text>
+    <LinearGradient colors={gradients.cardBg} style={styles.container}>
+      <View style={styles.header}>
+        <FontAwesome name="list-ol" size={18} color={colors.accent} />
+        <Text style={styles.branding}>FOOTBALL DAILY</Text>
+      </View>
       <Text style={styles.mode}>Top Lists</Text>
       <Text style={styles.listTitle}>{title}</Text>
       <Text style={styles.score}>
@@ -35,66 +43,70 @@ export default function ShareableTopListsResult({
       <Text style={styles.lives}>
         {livesUsed} {livesUsed === 1 ? 'life' : 'lives'} used
       </Text>
-      {currentStreak > 0 && <Text style={styles.streak}>{currentStreak} day streak</Text>}
-      <Text style={styles.cta}>Can you name them all? Play at footballquiz.app</Text>
+      {currentStreak > 0 && <Text style={styles.streak}>🔥 {currentStreak} day streak</Text>}
+      <Text style={styles.cta}>Play at footballquiz.app</Text>
     </LinearGradient>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    borderRadius: 16,
-    paddingVertical: 32,
-    paddingHorizontal: 24,
-    minWidth: 320,
-  },
-  branding: {
-    fontSize: 28,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    marginBottom: 12,
-    letterSpacing: 2,
-  },
-  mode: {
-    fontSize: 18,
-    fontFamily: fonts.heading,
-    color: colors.chalkWhite,
-    marginBottom: 4,
-  },
-  listTitle: {
-    fontSize: 14,
-    fontFamily: fonts.subheading,
-    color: 'rgba(245,245,240,0.8)',
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  score: {
-    fontSize: 40,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    marginBottom: 8,
-  },
-  row: {
-    fontSize: 22,
-    marginBottom: 8,
-  },
-  lives: {
-    fontSize: 13,
-    fontFamily: fonts.body,
-    color: colors.steelGray,
-  },
-  streak: {
-    marginTop: 8,
-    fontSize: 14,
-    fontFamily: fonts.subheading,
-    color: colors.pitchGreen,
-  },
-  cta: {
-    marginTop: 16,
-    fontSize: 11,
-    fontFamily: fonts.body,
-    color: colors.steelGray,
-    textAlign: 'center',
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      borderRadius: borderRadius.xl,
+      borderWidth: 1,
+      borderColor: c.border,
+      // Solid canvas under the translucent cardBg gradient — react-native-view-shot
+      // captures must never end up with a transparent background.
+      backgroundColor: c.bgBase,
+      paddingVertical: spacing.xxl,
+      paddingHorizontal: spacing.xl,
+      minWidth: 320,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    branding: {
+      ...type.h3,
+      color: c.accent,
+      letterSpacing: 2,
+    },
+    mode: {
+      ...type.h3,
+      color: c.textPrimary,
+      marginBottom: spacing.xs,
+    },
+    listTitle: {
+      ...type.captionBold,
+      color: c.textSecondary,
+      textAlign: 'center',
+      marginBottom: spacing.md,
+    },
+    score: {
+      ...type.scoreLarge,
+      color: c.accentBright,
+      marginBottom: spacing.sm,
+    },
+    row: {
+      ...type.h2,
+      marginBottom: spacing.sm,
+    },
+    lives: {
+      ...type.caption,
+      color: c.textMuted,
+    },
+    streak: {
+      ...type.captionBold,
+      color: c.streak,
+      marginTop: spacing.sm,
+    },
+    cta: {
+      ...type.caption,
+      color: c.textMuted,
+      marginTop: spacing.md,
+      textAlign: 'center',
+    },
+  });

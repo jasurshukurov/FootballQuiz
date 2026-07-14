@@ -1,13 +1,16 @@
 import { Stack } from 'expo-router';
-import { colors, fonts } from '@/constants/theme';
+import { useTheme } from '@/hooks/useTheme';
+import { fonts, type } from '@/constants/theme';
 
 export default function GamesLayout() {
+  const { colors } = useTheme();
+
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: colors.midnightNavy },
-        headerTintColor: colors.chalkWhite,
-        headerTitleStyle: { fontFamily: fonts.heading, fontSize: 20 },
+        headerStyle: { backgroundColor: colors.bgElevated },
+        headerTintColor: colors.textPrimary,
+        headerTitleStyle: { fontFamily: fonts.heading, fontSize: type.h3.fontSize },
         headerBackTitle: 'Back',
       }}>
       <Stack.Screen name="who-are-ya" options={{ title: 'My name is...' }} />

@@ -62,6 +62,23 @@ NAMESAKE_OVERRIDES = {
     99946: 2931,
 }
 
+# --- manual fame overrides (players_db id -> new score/tier) -------------------
+# Applied LAST, over the name/auto-joined value. Web-verified July 2026.
+# (a) DEMOTE obscure namesakes who inherited a star's fame via a shared name so
+#     they drop out of the guessable pool (fame<55). reset_metrics rebuilds the
+#     entry from the journeyman's own row (their inherited peak_valuation etc.
+#     belonged to the star). The star keeps the high score on his own row:
+#       'Ronaldo' Rostov 146660  -> Nazário 1600007 still carries 86.77 (gid 12178)
+#       'Cafú' Kasımpaşa 203655  -> the Brazil RB legend Cafu has NO players_db row
+# (b) BUMP verified post-2024 breakouts to current stature (keep their metrics).
+MANUAL_FAME_OVERRIDES = {
+    146660: {"fame_score": 32.0, "difficulty_tier": "Legendary", "reset_metrics": True},
+    203655: {"fame_score": 37.0, "difficulty_tier": "Legendary", "reset_metrics": True},
+    914562: {"fame_score": 76.0, "difficulty_tier": "Amateur"},   # Désiré Doué: 2x UCL, Ligue1+UCL YPOTY, WC26
+    845654: {"fame_score": 70.0, "difficulty_tier": "Amateur"},   # Kenan Yıldız: Serie A Best U23 25/26, Juve/Türkiye
+    670681: {"fame_score": 72.0, "difficulty_tier": "Amateur"},   # João Neves: PSG treble core, WC26
+}
+
 
 def pick_famous(rows):
     """Choose the row most likely to be the actual famous player."""
@@ -162,6 +179,27 @@ def main():
         (override_changed if str(pid) in fame_by_id else override_new).append(pid)
         fame_by_id[str(pid)] = entry_from_fame(f, p["name"])
 
+    # manual score/tier overrides (demotions + breakout bumps)
+    manual_applied = []
+    for pid, ov in MANUAL_FAME_OVERRIDES.items():
+        key = str(pid)
+        p = by_id.get(pid)
+        base = fame_by_id.get(key)
+        if ov.get("reset_metrics") or base is None:
+            entry = {
+                "name": (p["name"] if p else (base or {}).get("name", "")),
+                "fame_score": ov["fame_score"],
+                "difficulty_tier": ov["difficulty_tier"],
+                "peak_valuation": (p.get("market_value") if p else 0) or 0,
+                "peak_game_rating": 0, "elite_exposure": 0, "wikipedia_pageviews": 0,
+            }
+        else:
+            entry = {**base, "fame_score": ov["fame_score"],
+                     "difficulty_tier": ov["difficulty_tier"]}
+        prev = (base or {}).get("fame_score")
+        fame_by_id[key] = entry
+        manual_applied.append((pid, entry["name"], prev, ov["fame_score"]))
+
     out = os.path.join(DATA, "fame_by_id.json")
     json.dump(fame_by_id, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
@@ -178,6 +216,9 @@ def main():
     print("\nUnmatched pool names (no players_db row; excluded from pool):")
     for u in sorted(unmatched_pool, key=lambda x: -x["fame"]):
         print(f"  {u['fame']:.1f}  {u['name']}  (tokenset candidates: {u['tokenset_candidates']})")
+    print("\nManual fame overrides applied (id | name | old -> new):")
+    for pid, nm, prev, new in manual_applied:
+        print(f"  {pid} {nm}: {prev} -> {new}")
     print("\nNamesake overrides applied:")
     print(f"  ids that NEWLY gained an entry: {override_new}")
     print(f"  ids whose entry was corrected:  {override_changed}")

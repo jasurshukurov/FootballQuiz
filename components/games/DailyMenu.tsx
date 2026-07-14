@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Pressable, Share, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Share, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import * as Clipboard from 'expo-clipboard';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter, type Href } from 'expo-router';
@@ -8,59 +9,25 @@ import GlassCard from '@/components/ui/GlassCard';
 import Confetti from '@/components/ui/Confetti';
 import NextPuzzleCountdown from '@/components/ui/NextPuzzleCountdown';
 import RetroButton from '@/components/ui/RetroButton';
+import Tappable from '@/components/ui/Tappable';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useDisabledModes } from '@/hooks/useRemoteConfigStore';
-import { colors, fonts } from '@/constants/theme';
+import { type, spacing, borderRadius, touch, motion } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+import { GAME_MODES } from '@/lib/modeRegistry';
 import { getDailyNumber } from '@/lib/dailyPuzzle';
 import { buildDailyRecapText } from '@/lib/sharing';
-import { triggerImpact } from '@/lib/haptics';
 import { playCheer } from '@/lib/sounds';
 
-type GameMode = {
-  key: string;
-  label: string;
-  route: string;
-  icon: React.ComponentProps<typeof FontAwesome>['name'];
-};
-
-const MODES: GameMode[] = [
-  { key: 'careerpath', label: 'Career Path', route: '/(tabs)/', icon: 'road' },
-  { key: 'who-are-ya', label: 'My name is...', route: '/(tabs)/whoareya', icon: 'futbol-o' },
-  { key: 'grid', label: 'Grid', route: '/(tabs)/explore', icon: 'th' },
-  { key: 'missing11', label: 'Missing 11', route: '/(tabs)/missing11', icon: 'users' },
-  { key: 'connections', label: 'Connections', route: '/(tabs)/connections', icon: 'link' },
-  { key: 'toplists', label: 'Top Lists', route: '/(tabs)/toplists', icon: 'list-ol' },
-  { key: 'higherlower', label: 'Higher / Lower', route: '/(tabs)/higherlower', icon: 'arrows-v' },
-  { key: 'agent', label: 'Agent', route: '/(tabs)/agent', icon: 'money' },
-  {
-    key: 'blindranking',
-    label: 'Blind Ranking',
-    route: '/(tabs)/blindranking',
-    icon: 'sort-amount-desc',
-  },
-  {
-    key: 'careertimeline',
-    label: 'Career Timeline',
-    route: '/(tabs)/careertimeline',
-    icon: 'road',
-  },
-  {
-    key: 'marketmovers',
-    label: 'Market Movers',
-    route: '/(tabs)/marketmovers',
-    icon: 'line-chart',
-  },
-  {
-    key: 'guessmatch',
-    label: 'Guess the Match',
-    route: '/(tabs)/guessmatch',
-    icon: 'flag-checkered',
-  },
-];
+/** Staggered entrance cap — only the first N mode rows animate in. */
+const MAX_ENTRANCE = 12;
 
 export default function DailyMenu() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { completedModes, scoresByMode, checkAndResetForNewDay, getCompletedCount, getTotalModes } =
     useDailyProgressStore();
   const recordPerfectDay = useDailyProgressStore((s) => s.recordPerfectDay);
@@ -69,8 +36,8 @@ export default function DailyMenu() {
 
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Tap haptic fires inside RetroButton — no extra impact here.
   const handleShareDay = useCallback(async () => {
-    triggerImpact();
     const text = buildDailyRecapText({
       dailyNumber: getDailyNumber(),
       dailyStreak,
@@ -109,25 +76,25 @@ export default function DailyMenu() {
   }, [isPerfect, recordPerfectDay]);
 
   return (
-    <GlassCard style={styles.container}>
+    <GlassCard style={layoutStyles.container}>
       {showConfetti && <Confetti />}
-      <View style={styles.inner}>
+      <View style={layoutStyles.inner}>
         <Text style={styles.title}>TODAY&apos;S CHALLENGES</Text>
 
         {isPerfect && (
           <View style={styles.perfectBanner}>
             <Text style={styles.perfectText}>PERFECT DAY!</Text>
             <NextPuzzleCountdown />
-            <View style={styles.shareDayButton}>
+            <View style={layoutStyles.shareDayButton}>
               <RetroButton title="Share your day" onPress={handleShareDay} />
             </View>
           </View>
         )}
 
         {/* Progress summary */}
-        <View style={styles.progressRow}>
+        <View style={layoutStyles.progressRow}>
           <Text style={styles.progressText}>
-            {completedCount}/{totalModes} Complete
+            {completedCount}/{totalModes} played
           </Text>
         </View>
 
@@ -137,45 +104,54 @@ export default function DailyMenu() {
         </View>
 
         {/* Mode rows */}
-        <View style={styles.modeList}>
-          {MODES.map((mode) => {
+        <View style={layoutStyles.modeList}>
+          {GAME_MODES.map((mode, i) => {
             const done = !!completedModes[mode.key];
             const score = scoresByMode[mode.key];
             const disabled = disabledModes.includes(mode.key);
 
             return (
-              <Pressable
+              <Animated.View
                 key={mode.key}
-                style={[styles.modeRow, disabled && styles.modeRowDisabled]}
-                disabled={disabled}
-                onPress={() => {
-                  if (disabled) return;
-                  triggerImpact();
-                  router.navigate(mode.route as Href);
-                }}>
-                <FontAwesome
-                  name={mode.icon}
-                  size={18}
-                  color={done && !disabled ? colors.pitchGreen : colors.steelGray}
-                  style={styles.modeIcon}
-                />
-                <Text style={[styles.modeLabel, done && styles.modeLabelDone]} numberOfLines={1}>
-                  {mode.label}
-                </Text>
-                {disabled ? (
-                  <Text style={styles.unavailableText}>Temporarily unavailable</Text>
-                ) : done ? (
-                  <View style={styles.doneIndicator}>
-                    {score !== undefined && <Text style={styles.scoreText}>{score}</Text>}
-                    <FontAwesome name="check-circle" size={18} color={colors.pitchGreen} />
+                entering={
+                  i < MAX_ENTRANCE ? FadeInDown.delay(i * 40).duration(motion.base) : undefined
+                }>
+                <Tappable
+                  style={[layoutStyles.modeRow, disabled && layoutStyles.modeRowDisabled]}
+                  hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+                  disabled={disabled}
+                  onPress={() => {
+                    if (disabled) return;
+                    router.navigate(mode.route as Href);
+                  }}>
+                  <View style={[styles.iconWrap, done && !disabled && styles.iconWrapDone]}>
+                    <FontAwesome
+                      name={mode.icon}
+                      size={16}
+                      color={done && !disabled ? colors.accent : colors.textSecondary}
+                    />
                   </View>
-                ) : (
-                  <View style={styles.playIndicator}>
-                    <Text style={styles.playText}>PLAY</Text>
-                    <FontAwesome name="chevron-right" size={12} color={colors.steelGray} />
+                  <View style={layoutStyles.modeTextWrap}>
+                    <Text
+                      style={[styles.modeLabel, done && styles.modeLabelDone]}
+                      numberOfLines={1}>
+                      {mode.title}
+                    </Text>
+                    <Text style={styles.modeTease} numberOfLines={1}>
+                      {disabled ? 'Temporarily unavailable' : mode.tease}
+                    </Text>
                   </View>
-                )}
-              </Pressable>
+                  {!disabled &&
+                    (done ? (
+                      <View style={layoutStyles.doneIndicator}>
+                        {score !== undefined && <Text style={styles.scoreText}>{score}</Text>}
+                        <FontAwesome name="check-circle" size={18} color={colors.accent} />
+                      </View>
+                    ) : (
+                      <FontAwesome name="chevron-right" size={14} color={colors.textMuted} />
+                    ))}
+                </Tappable>
+              </Animated.View>
             );
           })}
         </View>
@@ -184,116 +160,112 @@ export default function DailyMenu() {
   );
 }
 
-const styles = StyleSheet.create({
+// Layout-only styles stay module-scope.
+const layoutStyles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    marginBottom: spacing.lg,
   },
   inner: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    letterSpacing: 2,
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  perfectBanner: {
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: 12,
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(5,242,108,0.4)',
-    backgroundColor: 'rgba(5,242,108,0.1)',
-  },
-  perfectText: {
-    fontSize: 22,
-    fontFamily: fonts.heading,
-    color: colors.pitchGreen,
-    letterSpacing: 3,
+    padding: spacing.lg,
   },
   shareDayButton: {
-    marginTop: 4,
+    marginTop: spacing.xs,
     minWidth: 200,
   },
   progressRow: {
     alignItems: 'center',
-    marginBottom: 8,
-  },
-  progressText: {
-    fontSize: 14,
-    fontFamily: fonts.subheading,
-    color: colors.chalkWhite,
-    letterSpacing: 1,
-  },
-  progressBarBg: {
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: 'rgba(108,117,125,0.3)',
-    marginBottom: 16,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-    borderRadius: 3,
-    backgroundColor: colors.pitchGreen,
+    marginBottom: spacing.sm,
   },
   modeList: {
-    gap: 2,
+    gap: spacing.xs / 2,
   },
   modeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(108,117,125,0.15)',
-  },
-  modeIcon: {
-    width: 28,
-    textAlign: 'center',
-  },
-  modeLabel: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 15,
-    fontFamily: fonts.subheading,
-    color: colors.chalkWhite,
-  },
-  modeLabelDone: {
-    color: colors.steelGray,
+    minHeight: touch.min,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    borderRadius: borderRadius.md,
   },
   modeRowDisabled: {
     opacity: 0.4,
   },
-  unavailableText: {
-    fontSize: 11,
-    fontFamily: fonts.subheading,
-    color: colors.steelGray,
-    fontStyle: 'italic',
+  modeTextWrap: {
+    flex: 1,
+    marginLeft: spacing.md,
   },
   doneIndicator: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-  },
-  scoreText: {
-    fontSize: 13,
-    fontFamily: fonts.subheading,
-    color: colors.pitchGreen,
-  },
-  playIndicator: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  playText: {
-    fontSize: 12,
-    fontFamily: fonts.subheading,
-    color: colors.steelGray,
-    letterSpacing: 1,
+    gap: spacing.sm,
   },
 });
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    title: {
+      ...type.h2,
+      color: c.accent,
+      letterSpacing: 2,
+      textAlign: 'center',
+      marginBottom: spacing.md,
+    },
+    perfectBanner: {
+      alignItems: 'center',
+      gap: spacing.sm - 2,
+      marginBottom: spacing.md,
+      paddingVertical: spacing.md - 2,
+      borderRadius: borderRadius.md,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.accentSoft,
+    },
+    perfectText: {
+      ...type.h1,
+      color: c.accent,
+      letterSpacing: 3,
+    },
+    progressText: {
+      ...type.captionBold,
+      color: c.textPrimary,
+      letterSpacing: 1,
+    },
+    progressBarBg: {
+      height: 6,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.bgCard,
+      marginBottom: spacing.lg,
+      overflow: 'hidden',
+    },
+    progressBarFill: {
+      height: '100%',
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accent,
+    },
+    iconWrap: {
+      width: 32,
+      height: 32,
+      borderRadius: borderRadius.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.bgCard,
+    },
+    iconWrapDone: {
+      backgroundColor: c.accentSoft,
+    },
+    modeLabel: {
+      ...type.bodyBold,
+      color: c.textPrimary,
+    },
+    modeLabelDone: {
+      color: c.textSecondary,
+    },
+    modeTease: {
+      ...type.caption,
+      color: c.textMuted,
+    },
+    scoreText: {
+      ...type.score,
+      color: c.accent,
+    },
+  });

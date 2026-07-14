@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react';
-import { TextInput, Pressable, StyleSheet } from 'react-native';
+import React, { useCallback, useMemo } from 'react';
+import { TextInput, StyleSheet, Text, View } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
-import { colors, spacing, borderRadius } from '@/constants/theme';
+import { spacing, borderRadius, type } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+import Tappable from '@/components/ui/Tappable';
 
 interface GuessInputProps {
   value: string;
@@ -21,11 +23,16 @@ function GuessInputInner({
   attemptsLeft,
   disabled,
 }: GuessInputProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const handleSubmit = useCallback(() => {
     if (value.trim().length > 0 && !disabled) {
       onSubmit();
     }
   }, [value, disabled, onSubmit]);
+
+  const submitDisabled = disabled || value.trim().length === 0;
 
   return (
     <View style={styles.container}>
@@ -35,19 +42,20 @@ function GuessInputInner({
           value={value}
           onChangeText={onChangeText}
           placeholder="Guess the player..."
-          placeholderTextColor={colors.steelGray}
+          placeholderTextColor={colors.textMuted}
           returnKeyType="done"
           onSubmitEditing={handleSubmit}
           editable={!disabled}
           autoCorrect={false}
           autoCapitalize="words"
         />
-        <Pressable
-          style={[styles.submitButton, disabled && styles.submitDisabled]}
+        <Tappable
+          haptic="none"
+          style={[styles.submitButton, submitDisabled && styles.submitDisabled]}
           onPress={handleSubmit}
-          disabled={disabled || value.trim().length === 0}>
+          disabled={submitDisabled}>
           <Text style={styles.submitText}>Submit</Text>
-        </Pressable>
+        </Tappable>
       </View>
       <View style={styles.attemptsRow}>
         <Text style={styles.attemptsText}>
@@ -60,7 +68,7 @@ function GuessInputInner({
               style={[
                 styles.dot,
                 {
-                  backgroundColor: i < attemptsLeft ? colors.pitchGreen : colors.steelGray,
+                  backgroundColor: i < attemptsLeft ? colors.accent : colors.border,
                 },
               ]}
             />
@@ -73,62 +81,62 @@ function GuessInputInner({
 
 export const GuessInput = React.memo(GuessInputInner);
 
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: spacing.sm,
-  },
-  inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  input: {
-    flex: 1,
-    height: 48,
-    borderWidth: 1.5,
-    borderColor: colors.steelGray,
-    borderRadius: borderRadius.lg,
-    paddingHorizontal: spacing.md,
-    color: colors.chalkWhite,
-    fontSize: 16,
-    backgroundColor: colors.retroBlack,
-  },
-  submitButton: {
-    height: 48,
-    paddingHorizontal: spacing.lg,
-    backgroundColor: colors.pitchGreen,
-    borderRadius: borderRadius.lg,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: spacing.sm,
-  },
-  submitDisabled: {
-    opacity: 0.4,
-  },
-  submitText: {
-    color: colors.retroBlack,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  attemptsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: spacing.sm,
-    backgroundColor: 'transparent',
-  },
-  attemptsText: {
-    fontSize: 13,
-    color: colors.steelGray,
-    marginRight: spacing.sm,
-  },
-  dots: {
-    flexDirection: 'row',
-    gap: spacing.xs,
-    backgroundColor: 'transparent',
-  },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-  },
-});
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      paddingVertical: spacing.sm,
+    },
+    inputRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+    },
+    input: {
+      flex: 1,
+      height: 48,
+      borderWidth: 1.5,
+      borderColor: c.border,
+      borderRadius: borderRadius.lg,
+      paddingHorizontal: spacing.md,
+      color: c.textPrimary,
+      ...type.body,
+      backgroundColor: c.bgElevated,
+    },
+    submitButton: {
+      height: 48,
+      paddingHorizontal: spacing.lg,
+      backgroundColor: c.accent,
+      borderRadius: borderRadius.lg,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: spacing.sm,
+    },
+    submitDisabled: {
+      opacity: 0.4,
+    },
+    submitText: {
+      ...type.bodyBold,
+      color: c.textOnAccent,
+    },
+    attemptsRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: spacing.sm,
+      backgroundColor: 'transparent',
+    },
+    attemptsText: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginRight: spacing.sm,
+    },
+    dots: {
+      flexDirection: 'row',
+      gap: spacing.xs,
+      backgroundColor: 'transparent',
+    },
+    dot: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+    },
+  });

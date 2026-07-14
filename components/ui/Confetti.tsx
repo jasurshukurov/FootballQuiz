@@ -3,25 +3,33 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
 
-import { colors } from '@/constants/theme';
+import { useThemeColors } from '@/hooks/useTheme';
 
-const PALETTE = [
-  colors.pitchGreen,
-  colors.neonGreen,
-  colors.cardYellow,
-  colors.cardRed,
-  colors.matchGreen,
-  colors.floodlightWhite,
-];
+type Intensity = 'low' | 'med' | 'high';
 
-const PARTICLE_COUNT = 40;
+const PARTICLE_COUNTS: Record<Intensity, number> = {
+  low: 24,
+  med: 40,
+  high: 64,
+};
 
-function Particle({ index, width, height }: { index: number; width: number; height: number }) {
+function Particle({
+  index,
+  width,
+  height,
+  color,
+}: {
+  index: number;
+  width: number;
+  height: number;
+  color: string;
+}) {
   // Randomised once per mount so the burst has organic spread without
   // recomputing on every frame/render.
   const cfg = useMemo(
@@ -32,7 +40,6 @@ function Particle({ index, width, height }: { index: number; width: number; heig
       duration: 1700 + Math.random() * 1000,
       rotateTo: (Math.random() * 6 - 3) * 360,
       size: 7 + Math.random() * 7,
-      color: PALETTE[index % PALETTE.length],
       round: index % 2 === 0,
     }),
     [index, width],
@@ -66,7 +73,7 @@ function Particle({ index, width, height }: { index: number; width: number; heig
           left: cfg.left,
           width: cfg.size,
           height: cfg.size,
-          backgroundColor: cfg.color,
+          backgroundColor: color,
           borderRadius: cfg.round ? cfg.size / 2 : 2,
         },
         style,
@@ -75,16 +82,43 @@ function Particle({ index, width, height }: { index: number; width: number; heig
   );
 }
 
-/** Lightweight one-shot confetti burst. Renders ~40 falling particles then
- *  should be unmounted by the parent (it does not loop). pointerEvents="none"
- *  so it never intercepts taps. */
-export default function Confetti() {
+interface ConfettiProps {
+  /** Particle density, scaled to result quality (perfect > win > partial). */
+  intensity?: Intensity;
+}
+
+/** Lightweight one-shot confetti burst. Renders a burst of falling particles
+ *  then should be unmounted by the parent (it does not loop). pointerEvents="none"
+ *  so it never intercepts taps. Skipped entirely under reduced-motion. */
+export default function Confetti({ intensity = 'med' }: ConfettiProps) {
   const { width, height } = useWindowDimensions();
+  const reducedMotion = useReducedMotion();
+  const colors = useThemeColors();
+
+  const palette = useMemo(
+    () => [
+      colors.accent,
+      colors.accentBright,
+      colors.streak,
+      colors.streakBright,
+      colors.accentDim,
+      colors.textPrimary,
+    ],
+    [colors],
+  );
+
+  if (reducedMotion) return null;
 
   return (
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-      {Array.from({ length: PARTICLE_COUNT }).map((_, i) => (
-        <Particle key={i} index={i} width={width} height={height} />
+      {Array.from({ length: PARTICLE_COUNTS[intensity] }).map((_, i) => (
+        <Particle
+          key={i}
+          index={i}
+          width={width}
+          height={height}
+          color={palette[i % palette.length]}
+        />
       ))}
     </View>
   );
