@@ -4,12 +4,16 @@ export interface RemoteConfig {
   maintenance_mode: boolean;
   disabled_modes: string[];
   message: string;
+  /** Kill switch for the global leaderboard (identity, sync and UI).
+   *  Optional so older cached configs stay parseable; missing means enabled. */
+  leaderboardEnabled?: boolean;
 }
 
 const DEFAULT_CONFIG: RemoteConfig = {
   maintenance_mode: false,
   disabled_modes: [],
   message: '',
+  leaderboardEnabled: true,
 };
 
 // Served via CloudFront (config bucket is private; OAC-only access).

@@ -6,7 +6,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { StyleSheet, View, Text, TextInput, Keyboard, Platform, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Keyboard,
+  Platform,
+  FlatList,
+  TextStyle,
+} from 'react-native';
 import { BlurView } from 'expo-blur';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
@@ -159,7 +168,7 @@ const PlayerSearchAutocomplete = forwardRef<
         <FontAwesome name="search" size={16} color={colors.textMuted} style={layout.searchIcon} />
         <TextInput
           ref={inputRef}
-          style={styles.input}
+          style={[styles.input, webInputReset]}
           value={query}
           onChangeText={updateQuery}
           onFocus={() => setFocused(true)}
@@ -239,6 +248,11 @@ const layout = StyleSheet.create({
   },
 });
 
+// Web only: strip the browser's default focus outline on the underlying <input>.
+// The themed container border (accent on focus) is the visible focus indicator.
+const webInputReset: TextStyle | null =
+  Platform.OS === 'web' ? ({ outlineStyle: 'none' } as unknown as TextStyle) : null;
+
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
     inputContainer: {
@@ -252,7 +266,7 @@ const createStyles = (c: ThemeColors) =>
       zIndex: 101,
     },
     inputContainerFocused: {
-      borderColor: c.accentBorder,
+      borderColor: c.accent,
     },
     input: {
       ...type.body,

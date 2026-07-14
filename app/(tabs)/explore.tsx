@@ -74,6 +74,9 @@ export default function ExploreScreen() {
   // practice and replays).
   const [placements, setPlacements] = useState<Record<string, GridPlacement>>({});
   const [usedIds, setUsedIds] = useState<Set<number>>(new Set());
+  // Wrong guesses per cell ("row-col" -> playerIds): a wrong pick costs a guess
+  // but keeps the square open, and the same player can't be re-wasted on it.
+  const [wrongByCell, setWrongByCell] = useState<Record<string, number[]>>({});
   const [guessesUsed, setGuessesUsed] = useState(0);
   const [points, setPoints] = useState(0);
   const [hintsUsed, setHintsUsed] = useState(0);
@@ -116,12 +119,14 @@ export default function ExploreScreen() {
       const s = useGridGameStore.getState();
       setPlacements({ ...s.placements });
       setUsedIds(new Set(s.usedPlayerIds));
+      setWrongByCell({ ...(s.wrongByCell ?? {}) });
       setGuessesUsed(s.guessesUsed);
       setPoints(s.points);
       setHintsUsed(s.hintsUsed);
     } else {
       setPlacements({});
       setUsedIds(new Set());
+      setWrongByCell({});
       setGuessesUsed(0);
       setPoints(0);
       setHintsUsed(0);
@@ -188,15 +193,22 @@ export default function ExploreScreen() {
       const { row, col } = activeCell;
       const key = cellKey(row, col);
       const cell = grid.cells[row][col];
+      // Reject a player already placed (used up) or already tried wrong on THIS
+      // cell — a duplicate must never silently burn a guess.
+      if (usedIds.has(player.id) || (wrongByCell[key] ?? []).includes(player.id)) {
+        closeSheet();
+        return;
+      }
       const isCorrect = cell.matches(player);
       const nextGuessesUsed = guessesUsed + 1;
 
-      setUsedIds((prev) => new Set(prev).add(player.id));
       setGuessesUsed(nextGuessesUsed);
 
       let nextScore = score;
       if (isCorrect) {
         triggerNotification(NotificationFeedbackType.Success);
+        // A correct pick fills the square and uses the player up board-wide.
+        setUsedIds((prev) => new Set(prev).add(player.id));
         // Rarity proxy: an obscure correct pick is a "deep cut" worth bonus
         // points on top of the base square. XP is awarded once at game over.
         const pick = scoreCorrectPick(getFameForPlayer(player)?.fame_score);
@@ -212,11 +224,14 @@ export default function ExploreScreen() {
         if (isDailyRun) useGridGameStore.getState().recordCorrect(key, placement, pick.total);
       } else {
         triggerNotification(NotificationFeedbackType.Error);
-        // The square stays open — the guess is what's spent.
+        // The square stays OPEN — retry it with someone else. The guess is what's
+        // spent; the wrong player is barred from this square only (may answer
+        // another).
+        setWrongByCell((prev) => ({ ...prev, [key]: [...(prev[key] ?? []), player.id] }));
         setWrongFlashKey(key);
         if (wrongFlashTimer.current) clearTimeout(wrongFlashTimer.current);
         wrongFlashTimer.current = setTimeout(() => setWrongFlashKey(null), 700);
-        if (isDailyRun) useGridGameStore.getState().recordWrong(player.id);
+        if (isDailyRun) useGridGameStore.getState().recordWrong(key, player.id);
       }
 
       // Practice/replay runs never touch progress, XP or streak.
@@ -228,7 +243,7 @@ export default function ExploreScreen() {
 
       closeSheet();
     },
-    [activeCell, grid, gameOver, guessesUsed, score, isDailyRun, closeSheet],
+    [activeCell, grid, gameOver, guessesUsed, score, isDailyRun, usedIds, wrongByCell, closeSheet],
   );
 
   const handleHint = useCallback(() => {
@@ -247,6 +262,7 @@ export default function ExploreScreen() {
     if (isPractice) {
       setPlacements({});
       setUsedIds(new Set());
+      setWrongByCell({});
       setGuessesUsed(0);
       setPoints(0);
       setHintsUsed(0);
@@ -270,6 +286,9 @@ export default function ExploreScreen() {
 
   const activeRowCat = activeCell ? grid.rows[activeCell.row] : null;
   const activeColCat = activeCell ? grid.cols[activeCell.col] : null;
+  const activeCellWrongIds = activeCell
+    ? (wrongByCell[cellKey(activeCell.row, activeCell.col)] ?? [])
+    : [];
   const hintsLeft = TOTAL_HINTS - hintsUsed;
 
   return (
@@ -348,7 +367,7 @@ export default function ExploreScreen() {
 
       {/* One-guess-left tension: a nudge, never guilt. */}
       {!gameOver && guessesLeft === 1 && (
-        <Text style={styles.tensionLine}>Last guess — make it count.</Text>
+        <Text style={styles.tensionLine}>Last guess. Make it count.</Text>
       )}
 
       {/* Game over */}
@@ -358,7 +377,7 @@ export default function ExploreScreen() {
             <Text style={styles.verdictTitle}>{score === 9 ? 'PERFECT GRID!' : 'FULL TIME'}</Text>
             <Text style={styles.verdictScore}>{score}/9</Text>
             <Text style={styles.verdictSubtitle}>
-              {score === 9 ? 'All nine — flawless.' : `You filled ${score} of 9 squares.`}
+              {score === 9 ? 'All nine, flawless.' : `You filled ${score} of 9 squares.`}
             </Text>
             <RankBadge
               rank={getRank(score, 9)}
@@ -399,7 +418,7 @@ export default function ExploreScreen() {
               <PlayerSearchAutocomplete
                 players={allPlayers}
                 onSelectPlayer={handleSelectPlayer}
-                filter={(p) => !usedIds.has(p.id)}
+                filter={(p) => !usedIds.has(p.id) && !activeCellWrongIds.includes(p.id)}
                 placeholder="Search any player…"
                 autoFocus
               />

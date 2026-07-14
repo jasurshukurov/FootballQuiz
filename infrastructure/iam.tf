@@ -49,6 +49,9 @@ resource "aws_iam_role_policy" "cognito_unauth_dynamodb" {
     Version = "2012-10-17"
     Statement = [
       {
+        # Guests may read/write ONLY items whose partition key is their own
+        # Cognito identity id (covers leaderboard rows, which are keyed by
+        # identity id with sortKey LB#...).
         Effect = "Allow"
         Action = [
           "dynamodb:PutItem",
@@ -61,6 +64,15 @@ resource "aws_iam_role_policy" "cognito_unauth_dynamodb" {
             "dynamodb:LeadingKeys" = "$${cognito-identity.amazonaws.com:sub}"
           }
         }
+      },
+      {
+        # Leaderboard reads: top-N by score via the GSI. The index only
+        # contains items that carry lbShard/lbScore (leaderboard rows), so
+        # this cannot leak other users' non-leaderboard data. No leading-key
+        # condition here: the GSI hash key is the shared shard, not the user.
+        Effect   = "Allow"
+        Action   = ["dynamodb:Query"]
+        Resource = "${aws_dynamodb_table.user_stats.arn}/index/leaderboard-index"
       }
     ]
   })

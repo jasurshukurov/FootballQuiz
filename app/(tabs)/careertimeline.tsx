@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { NotificationFeedbackType } from 'expo-haptics';
 import { spacing, type, motion } from '@/constants/theme';
@@ -19,6 +19,7 @@ import CareerTimeline from '@/components/games/CareerTimeline';
 import ClubSearchAutocomplete from '@/components/ui/ClubSearchAutocomplete';
 import GameOverActions from '@/components/ui/GameOverActions';
 import GiveUpButton from '@/components/career/GiveUpButton';
+import LivesIndicator from '@/components/ui/LivesIndicator';
 import ShakeView from '@/components/ui/ShakeView';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
@@ -241,9 +242,12 @@ export default function CareerTimelineScreen() {
     );
   }
 
-  const heartsDisplay = '❤️'.repeat(lives) + '🖤'.repeat(MAX_LIVES - lives);
-
   if (phase === 'won' || phase === 'lost') {
+    const isWon = phase === 'won';
+    // Graceful, never-shame verdict: a loss still celebrates what was found and
+    // frames the reveal below as "here's the answer", not a failure.
+    const verdict = isWon ? 'COMPLETE!' : guessedCount > 0 ? 'GOOD RUN!' : 'FULL-TIME';
+
     return (
       <Screen>
         <ScreenHeader
@@ -252,33 +256,37 @@ export default function CareerTimelineScreen() {
           modeKey="careertimeline"
           subtitle={puzzle.playerName}
         />
-        <Animated.View entering={FadeIn.duration(motion.base)} style={layoutStyles.resultContainer}>
-          <Text
-            style={[
-              layoutStyles.resultTitle,
-              phase === 'won' ? styles.wonTitle : styles.lostTitle,
-            ]}>
-            {phase === 'won' ? 'COMPLETE!' : 'GAME OVER'}
-          </Text>
-          <Text style={styles.resultScore}>
-            {guessedCount}/{puzzle.totalHidden} clubs guessed
-          </Text>
-          <Text style={layoutStyles.resultHearts}>{heartsDisplay}</Text>
+        <View style={layoutStyles.resultContainer}>
+          <Animated.View entering={FadeIn.duration(motion.base)} style={layoutStyles.resultHero}>
+            <Text style={[styles.resultTitle, !isWon && styles.resultTitleLost]}>{verdict}</Text>
+            <Text style={styles.scoreText}>
+              {guessedCount}/{puzzle.totalHidden}
+            </Text>
+            <Text style={styles.scoreLabel}>CLUBS FOUND</Text>
+            <LivesIndicator total={MAX_LIVES} remaining={lives} />
+          </Animated.View>
 
-          <RankBadge rank={getRank(guessedCount, puzzle.totalHidden)} unit="clubs" />
+          <Animated.View entering={FadeIn.delay(150).duration(motion.base)}>
+            <RankBadge rank={getRank(guessedCount, puzzle.totalHidden)} unit="clubs" />
+          </Animated.View>
 
           <SolveTimeResult mode="careertimeline" />
 
-          <CareerTimeline nodes={nodes} activeNodeIndex={null} onNodePress={() => {}} />
+          {/* Answer reveal — the full career, hidden stints now shown. */}
+          <View style={layoutStyles.revealSection}>
+            <Text style={styles.revealLabel}>THE FULL CAREER</Text>
+            <CareerTimeline nodes={nodes} activeNodeIndex={null} onNodePress={() => {}} />
+          </View>
 
           <GameOverActions
             shareRef={shareRef}
             shareText={shareText}
-            win={phase === 'won'}
+            win={isWon}
             onPlayAgain={handlePlayAgain}
             playAgainLabel="PLAY AGAIN"
+            currentModeKey="careertimeline"
           />
-        </Animated.View>
+        </View>
 
         {/* Keep the last game-over card (NEXT UP / countdown) scrollable clear of
             the floating tab bar — extra clearance beyond Screen's tab-bar padding. */}
@@ -300,6 +308,8 @@ export default function CareerTimelineScreen() {
   }
 
   return (
+    // scroll={false}: the board scrolls INTERNALLY so the search + lives/give-up
+    // controls stay pinned above the floating tab bar (never occluded).
     <Screen scroll={false}>
       <ScreenHeader
         eyebrow={`Daily #${getDailyNumber()}`}
@@ -307,29 +317,31 @@ export default function CareerTimelineScreen() {
         modeKey="careertimeline"
         subtitle={`${puzzle.playerName} · ${puzzle.playerNationality}`}
         right={
-          <View style={layoutStyles.headerRight}>
-            <View style={layoutStyles.livesRow}>
-              <Text style={layoutStyles.hearts}>{heartsDisplay}</Text>
-              <Text style={styles.progressText}>
-                {guessedCount}/{puzzle.totalHidden}
-              </Text>
-            </View>
-            <GiveUpButton onGiveUp={handleGiveUp} />
+          <View style={layoutStyles.progressPill}>
+            <Text style={styles.progressValue}>
+              {guessedCount}/{puzzle.totalHidden}
+            </Text>
+            <Text style={styles.progressLabel}>FOUND</Text>
           </View>
         }
       />
 
-      {/* Timeline */}
-      <ShakeView shake={shakeWrong}>
-        <CareerTimeline
-          nodes={nodes}
-          activeNodeIndex={activeIdx}
-          onNodePress={handleNodePress}
-          onHintPress={handleHintPress}
-        />
-      </ShakeView>
+      {/* Timeline — fills remaining height and scrolls when the career is long. */}
+      <ScrollView
+        style={layoutStyles.board}
+        contentContainerStyle={layoutStyles.boardContent}
+        showsVerticalScrollIndicator={false}>
+        <ShakeView shake={shakeWrong}>
+          <CareerTimeline
+            nodes={nodes}
+            activeNodeIndex={activeIdx}
+            onNodePress={handleNodePress}
+            onHintPress={handleHintPress}
+          />
+        </ShakeView>
+      </ScrollView>
 
-      {/* Club search - slides up when a node is active */}
+      {/* Club search - appears when a hidden stint is active */}
       {activeIdx !== null && (
         <View style={layoutStyles.searchContainer}>
           <Text style={styles.searchLabel}>
@@ -342,7 +354,7 @@ export default function CareerTimelineScreen() {
                 feedback === 'rightClubWrongYears' ? styles.feedbackAmber : styles.feedbackRed,
               ]}>
               {feedback === 'rightClubWrongYears'
-                ? 'Right club, wrong years — try another stint'
+                ? 'Right club, wrong years. Try another stint'
                 : 'Not this one'}
             </Text>
           )}
@@ -355,23 +367,26 @@ export default function CareerTimelineScreen() {
           />
         </View>
       )}
+
+      {/* Lives + give-up, bottom-anchored below the board (never at the top). */}
+      <View style={layoutStyles.controlBar}>
+        <LivesIndicator total={MAX_LIVES} remaining={lives} />
+        <GiveUpButton onGiveUp={handleGiveUp} />
+      </View>
     </Screen>
   );
 }
 
 // Layout-only styles stay module-scope.
 const layoutStyles = StyleSheet.create({
-  headerRight: {
-    alignItems: 'flex-end',
-    gap: spacing.sm,
-  },
-  livesRow: {
-    flexDirection: 'row',
+  progressPill: {
     alignItems: 'center',
-    gap: spacing.sm,
   },
-  hearts: {
-    ...type.h3,
+  board: {
+    flex: 1,
+  },
+  boardContent: {
+    paddingBottom: spacing.sm,
   },
   searchContainer: {
     paddingTop: spacing.md,
@@ -382,16 +397,23 @@ const layoutStyles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.sm,
   },
+  controlBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: spacing.md,
+  },
   resultContainer: {
+    alignItems: 'center',
     gap: spacing.md,
   },
-  resultTitle: {
-    ...type.display,
-    textAlign: 'center',
+  resultHero: {
+    alignItems: 'center',
+    gap: spacing.md,
   },
-  resultHearts: {
-    ...type.h2,
-    textAlign: 'center',
+  revealSection: {
+    width: '100%',
+    marginTop: spacing.md,
   },
   bottomSpacer: {
     height: TAB_BAR_HEIGHT + spacing.lg,
@@ -410,9 +432,14 @@ const createStyles = (c: ThemeColors) =>
       textAlign: 'center',
       marginTop: 100,
     },
-    progressText: {
+    progressValue: {
       ...type.score,
       color: c.accent,
+    },
+    progressLabel: {
+      ...type.micro,
+      color: c.textMuted,
+      letterSpacing: 1.5,
     },
     searchLabel: {
       ...type.bodyBold,
@@ -426,15 +453,30 @@ const createStyles = (c: ThemeColors) =>
     feedbackRed: {
       color: c.danger,
     },
-    wonTitle: {
-      color: c.accent,
-    },
-    lostTitle: {
-      color: c.danger,
-    },
-    resultScore: {
-      ...type.score,
+    resultTitle: {
+      ...type.display,
       color: c.accent,
       textAlign: 'center',
+    },
+    resultTitleLost: {
+      color: c.textPrimary,
+    },
+    scoreText: {
+      ...type.scoreLarge,
+      color: c.textPrimary,
+      textAlign: 'center',
+    },
+    scoreLabel: {
+      ...type.micro,
+      color: c.textSecondary,
+      letterSpacing: 2,
+      textAlign: 'center',
+    },
+    revealLabel: {
+      ...type.micro,
+      color: c.textSecondary,
+      letterSpacing: 2,
+      textAlign: 'center',
+      marginBottom: spacing.sm,
     },
   });

@@ -12,7 +12,7 @@ const POSITION_MAP: Record<string, string> = {
   Defender: 'DEF',
   Goalkeeper: 'GK',
   Midfield: 'MID',
-  Missing: '—',
+  Missing: 'N/A',
 
   // Extended positions (in case data evolves)
   'Center Back': 'CB',

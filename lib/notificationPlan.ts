@@ -66,15 +66,15 @@ export const REMINDER_MESSAGES = [
   "Today's puzzles are ready when you are",
   'A fresh Mystery Player is waiting',
   'Two minutes of football trivia with your coffee? ☕',
-  'New daily challenges are up — they keep all day, no rush',
+  'New daily challenges are up. They keep all day, no rush',
 ];
 
 export function getStreakMessage(streak: number): string {
-  return `Day ${streak} streak — one quick game keeps it alive`;
+  return `Day ${streak} streak: one quick game keeps it alive`;
 }
 
 export function getStreakSaverMessage(streak: number): string {
-  return `Still time today — one quick game keeps your ${streak}-day streak alive 🔥`;
+  return `Still time today. One quick game keeps your ${streak}-day streak alive 🔥`;
 }
 
 /**

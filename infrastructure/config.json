@@ -1,5 +1,6 @@
 {
   "maintenance_mode": false,
   "disabled_modes": [],
-  "message": ""
+  "message": "",
+  "leaderboardEnabled": true
 }

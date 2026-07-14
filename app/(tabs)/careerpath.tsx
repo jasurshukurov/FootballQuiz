@@ -25,7 +25,7 @@ import { TimelineView } from '@/components/career/TimelineView';
 import { HintPanel } from '@/components/career/HintPanel';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
 import { TierBadge } from '@/components/career/TierBadge';
-import LifeSegments from '@/components/career/LifeSegments';
+import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/career/GiveUpButton';
 import GameOverCard from '@/components/career/GameOverCard';
 import LastChanceHint from '@/components/ui/LastChanceHint';
@@ -206,7 +206,7 @@ export default function CareerScreen() {
               dropDirection="up"
             />
             <View style={styles.attemptsRow}>
-              <LifeSegments total={3} remaining={attemptsLeft} />
+              <LivesIndicator total={3} remaining={attemptsLeft} />
               <GiveUpButton onGiveUp={giveUp} />
             </View>
           </Animated.View>

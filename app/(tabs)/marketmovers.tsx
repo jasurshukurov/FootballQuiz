@@ -309,7 +309,7 @@ export default function MarketMoversScreen() {
 
   if (gameState === 'gameover') {
     const gap = gapPercent(current.fee, challenger.fee);
-    const gapText = gap <= 10 ? `So close — within ${gap}%!` : `Off by ${gap}%`;
+    const gapText = gap <= 10 ? `So close, within ${gap}%!` : `Off by ${gap}%`;
     return (
       <Screen>
         <ScreenHeader

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet, Platform, TextStyle } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { spacing, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
@@ -28,7 +28,7 @@ export default function SearchInput({
       <View style={layout.inner}>
         <FontAwesome name="search" size={16} color={colors.textMuted} />
         <TextInput
-          style={styles.input}
+          style={[styles.input, webInputReset]}
           value={value}
           onChangeText={onChangeText}
           onFocus={() => setFocused(true)}
@@ -52,6 +52,11 @@ const layout = StyleSheet.create({
   },
 });
 
+// Web only: strip the browser's default focus outline on the underlying <input>.
+// The themed container border (accent on focus) is the visible focus indicator.
+const webInputReset: TextStyle | null =
+  Platform.OS === 'web' ? ({ outlineStyle: 'none' } as unknown as TextStyle) : null;
+
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
     container: {
@@ -60,7 +65,7 @@ const createStyles = (c: ThemeColors) =>
     },
     containerFocused: {
       borderWidth: 1,
-      borderColor: c.accentBorder,
+      borderColor: c.accent,
     },
     input: {
       ...type.body,

@@ -5,6 +5,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import AnimatedBar from '@/components/ui/AnimatedBar';
+import LeaderboardPreview from '@/components/ui/LeaderboardPreview';
 import ThemePicker from '@/components/ui/ThemePicker';
 import NotificationSettings from '@/components/ui/NotificationSettings';
 import { spacing, borderRadius, type } from '@/constants/theme';
@@ -78,6 +79,9 @@ export default function StatsScreen() {
         <HeadlineStat value={String(totalXp)} label="XP" styles={styles} />
       </View>
 
+      {/* Global leaderboard teaser (hidden when the feature flag is off) */}
+      <LeaderboardPreview />
+
       {/* Per-mode stat cards */}
       {playedModes.length > 0 && (
         <View style={styles.section}>
@@ -102,7 +106,7 @@ export default function StatsScreen() {
       {/* My name is... distribution */}
       {hasDistribution && (
         <View style={styles.section}>
-          <Text style={styles.sectionLabel}>My name is… — guess distribution</Text>
+          <Text style={styles.sectionLabel}>My name is… · guess distribution</Text>
           <Text style={styles.sectionNote}>
             {gamesPlayed} played · {winRate}% solved
           </Text>

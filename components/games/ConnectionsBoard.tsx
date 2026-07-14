@@ -110,7 +110,7 @@ export default React.memo(ConnectionsBoard);
 // Layout-only + fixed-ink styles; group colors are applied inline per row.
 const styles = StyleSheet.create({
   container: {
-    gap: spacing.sm + 2,
+    gap: spacing.sm,
     paddingHorizontal: spacing.xs,
   },
   solvedRow: {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    gap: spacing.sm + 2,
+    gap: spacing.sm,
   },
   tileWrapper: {
     flex: 1,

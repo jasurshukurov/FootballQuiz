@@ -75,7 +75,7 @@ function matchYear(match: RawMatch): number {
 }
 
 function matchLabel(match: RawMatch): string {
-  return `${matchYear(match)} ${shortCompetition(match.competition)} — ${match.opponent_a} vs ${match.opponent_b}`;
+  return `${matchYear(match)} ${shortCompetition(match.competition)} · ${match.opponent_a} vs ${match.opponent_b}`;
 }
 
 function mulberry32(seed: number): () => number {

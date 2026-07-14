@@ -13,7 +13,7 @@ export default function PracticePill({ date }: { date: string }) {
 
   return (
     <View style={styles.pill}>
-      <Text style={styles.text}>{`PRACTICE — ${date}`}</Text>
+      <Text style={styles.text}>{`PRACTICE · ${date}`}</Text>
     </View>
   );
 }

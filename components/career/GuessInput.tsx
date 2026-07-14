@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { TextInput, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { TextInput, StyleSheet, Text, View, Platform, TextStyle } from 'react-native';
 
 import { spacing, borderRadius, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
@@ -25,6 +25,7 @@ function GuessInputInner({
 }: GuessInputProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
+  const [focused, setFocused] = useState(false);
 
   const handleSubmit = useCallback(() => {
     if (value.trim().length > 0 && !disabled) {
@@ -38,9 +39,11 @@ function GuessInputInner({
     <View style={styles.container}>
       <View style={styles.inputRow}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, focused && styles.inputFocused, webInputReset]}
           value={value}
           onChangeText={onChangeText}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder="Guess the player..."
           placeholderTextColor={colors.textMuted}
           returnKeyType="done"
@@ -81,6 +84,11 @@ function GuessInputInner({
 
 export const GuessInput = React.memo(GuessInputInner);
 
+// Web only: strip the browser's default focus outline on the underlying <input>.
+// The themed border (accent on focus) is the visible focus indicator.
+const webInputReset: TextStyle | null =
+  Platform.OS === 'web' ? ({ outlineStyle: 'none' } as unknown as TextStyle) : null;
+
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
     container: {
@@ -101,6 +109,9 @@ const createStyles = (c: ThemeColors) =>
       color: c.textPrimary,
       ...type.body,
       backgroundColor: c.bgElevated,
+    },
+    inputFocused: {
+      borderColor: c.accent,
     },
     submitButton: {
       height: 48,

@@ -246,7 +246,7 @@ export default function AgentScreen() {
                     {r.correct ? '✓' : '✗'}
                   </Text>
                   <Text style={styles.resultText} numberOfLines={2}>
-                    {r.round.targetFee} — {r.round.correctPlayerName}
+                    {r.round.targetFee} · {r.round.correctPlayerName}
                   </Text>
                 </Animated.View>
               ))}

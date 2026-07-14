@@ -19,6 +19,8 @@ import ShakeView from '@/components/ui/ShakeView';
 import GameOverActions from '@/components/ui/GameOverActions';
 import RetroButton from '@/components/ui/RetroButton';
 import Tappable from '@/components/ui/Tappable';
+import LivesIndicator from '@/components/ui/LivesIndicator';
+import GiveUpButton from '@/components/career/GiveUpButton';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import ShareableMatchGuessResult from '@/components/ShareableMatchGuessResult';
@@ -31,8 +33,6 @@ const TOTAL_NAMES = 11;
 const MAX_WRONG = 3;
 /** RankBadge denominator: a solve on the very first name is the ceiling. */
 const MAX_SCORE = 12;
-/** Staggered entrance cap for list rows. */
-const MAX_ENTRANCE = 12;
 
 type Phase = 'playing' | 'won' | 'lost';
 
@@ -50,6 +50,10 @@ export default function GuessMatchScreen() {
   const [score, setScore] = useState(0);
   const [wrongPicks, setWrongPicks] = useState(0);
   const [shakeWrong, setShakeWrong] = useState(false);
+  // The option just picked wrong — briefly flashed red, then cleared. Never
+  // disables the option (you can pick it again).
+  const [wrongOption, setWrongOption] = useState<string | null>(null);
+  const [gaveUp, setGaveUp] = useState(false);
   const shareRef = useRef<View>(null);
   const isFirstGame = useRef(true);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
@@ -68,6 +72,8 @@ export default function GuessMatchScreen() {
     setScore(0);
     setWrongPicks(0);
     setShakeWrong(false);
+    setWrongOption(null);
+    setGaveUp(false);
   }, []);
 
   useEffect(() => {
@@ -122,12 +128,16 @@ export default function GuessMatchScreen() {
         return;
       }
 
-      // Wrong: costs an attempt but does NOT disable the option or reveal a free
-      // name — elimination is no longer a free path to the answer. Revealing a
-      // name (the paid hint) stays a deliberate, score-lowering choice.
+      // Wrong: costs an attempt and flashes the tapped option red, but does NOT
+      // disable it — you can pick it again. Revealing a name (the paid hint)
+      // stays the only deliberate, score-lowering path to the answer.
       triggerNotification(NotificationFeedbackType.Error);
       setShakeWrong(true);
-      setTimeout(() => setShakeWrong(false), 450);
+      setWrongOption(option);
+      setTimeout(() => {
+        setShakeWrong(false);
+        setWrongOption(null);
+      }, 500);
       const nextWrong = wrongPicks + 1;
       setWrongPicks(nextWrong);
       if (nextWrong >= MAX_WRONG) {
@@ -136,6 +146,12 @@ export default function GuessMatchScreen() {
     },
     [phase, puzzle, revealedCount, wrongPicks, finish],
   );
+
+  const handleGiveUp = useCallback(() => {
+    if (phase !== 'playing') return;
+    setGaveUp(true);
+    finish('lost', 0);
+  }, [phase, finish]);
 
   const solveTimeMs = useTodaySolveTime('guessmatch');
 
@@ -175,21 +191,26 @@ export default function GuessMatchScreen() {
           <Text style={styles.resultScore}>
             {phase === 'won' ? `+${score} points` : 'No points'}
           </Text>
-          {/* Game-over anatomy: verdict → score → rank → time → details. */}
+          {/* Game-over anatomy: verdict → score → rank → time → answer reveal. */}
           <RankBadge rank={getRank(score, MAX_SCORE)} unit="pts" />
           <SolveTimeResult mode="guessmatch" />
+          {/* Losses get a graceful reveal, never shame. */}
+          {phase === 'lost' && <Text style={styles.answerEyebrow}>THE MATCH WAS</Text>}
           <Text style={styles.answerLabel}>{puzzle.answer}</Text>
           {phase === 'won' ? (
             <Text style={styles.resultDetail}>
               Solved after {revealedCount}/{TOTAL_NAMES} names
             </Text>
           ) : (
-            <Text style={styles.resultDetail}>Out of guesses</Text>
+            <Text style={styles.resultDetail}>
+              {gaveUp ? 'You revealed the answer' : 'Out of guesses'}
+            </Text>
           )}
           <GameOverActions
             shareRef={shareRef}
             shareText={shareText}
             win={phase === 'won'}
+            currentModeKey="guessmatch"
             onPlayAgain={startGame}
             playAgainLabel="PLAY AGAIN"
           />
@@ -211,6 +232,9 @@ export default function GuessMatchScreen() {
     );
   }
 
+  const revealedNames = puzzle.revealOrder.slice(0, revealedCount);
+  const hiddenCount = TOTAL_NAMES - revealedCount;
+
   return (
     <Screen>
       <ScreenHeader
@@ -218,36 +242,50 @@ export default function GuessMatchScreen() {
         title="Guess the Match"
         modeKey="guessmatch"
         subtitle={`${puzzle.teamName}'s starting XI`}
-        right={
-          <View style={layoutStyles.metaPill}>
-            <Text style={styles.metaValue}>{scoreFor(revealedCount)}</Text>
-            <Text style={styles.metaLabel}>PTS</Text>
-          </View>
-        }
+        right={<LivesIndicator total={MAX_WRONG} remaining={MAX_WRONG - wrongPicks} />}
       />
 
-      <Text style={styles.meta}>
-        {revealedCount}/{TOTAL_NAMES} revealed
-      </Text>
-
-      <ShakeView shake={shakeWrong}>
-        <View style={layoutStyles.lineup}>
-          {puzzle.revealOrder.map((name, i) => {
-            const revealed = i < revealedCount;
-            return (
-              // Mount-only stagger (stable keys) — reveals must not re-animate.
-              <Animated.View
-                key={i}
-                entering={i < MAX_ENTRANCE ? FadeIn.delay(i * 40).duration(motion.base) : undefined}
-                style={[styles.nameChip, revealed && styles.nameChipRevealed]}>
-                <Text style={[styles.nameText, !revealed && styles.nameHidden]} numberOfLines={1}>
-                  {revealed ? name : '• • •'}
-                </Text>
-              </Animated.View>
-            );
-          })}
+      {/* Consolidated status: how far you have revealed and what a guess is worth
+          right now — replaces the old scattered pill + caption + hearts. */}
+      <View style={layoutStyles.statusRow}>
+        <View style={styles.statusChip}>
+          <Text style={styles.statusValue}>
+            {revealedCount}/{TOTAL_NAMES}
+          </Text>
+          <Text style={styles.statusLabel}>REVEALED</Text>
         </View>
-      </ShakeView>
+        <View style={styles.statusChip}>
+          <Text style={[styles.statusValue, styles.statusValueAccent]}>
+            {scoreFor(revealedCount)}
+          </Text>
+          <Text style={styles.statusLabel}>PTS IF YOU GUESS NOW</Text>
+        </View>
+      </View>
+
+      {/* Revealed names grow as a readable list; the still-hidden players collapse
+          into a compact pip row so the match options stay above the fold. */}
+      <View style={layoutStyles.lineup}>
+        {revealedNames.map((name, i) => (
+          <Animated.View
+            key={name}
+            entering={FadeIn.duration(motion.base)}
+            style={[styles.nameChip, i === revealedCount - 1 && styles.nameChipLatest]}>
+            <Text style={styles.nameText} numberOfLines={1}>
+              {name}
+            </Text>
+          </Animated.View>
+        ))}
+        {hiddenCount > 0 && (
+          <View style={layoutStyles.hiddenBlock}>
+            <View style={layoutStyles.hiddenPips}>
+              {Array.from({ length: hiddenCount }, (_, i) => (
+                <View key={i} style={styles.hiddenPip} />
+              ))}
+            </View>
+            <Text style={styles.hiddenLabel}>{hiddenCount} still hidden</Text>
+          </View>
+        )}
+      </View>
 
       {revealedCount < TOTAL_NAMES && (
         <View style={layoutStyles.revealButton}>
@@ -255,25 +293,30 @@ export default function GuessMatchScreen() {
         </View>
       )}
 
-      <View style={layoutStyles.promptRow}>
-        <Text style={styles.prompt}>Which match is this?</Text>
-        <Text style={layoutStyles.attempts}>
-          {'❤️'.repeat(MAX_WRONG - wrongPicks) + '🖤'.repeat(wrongPicks)}
-        </Text>
-      </View>
-      <View style={layoutStyles.options}>
-        {puzzle.options.map((option, i) => (
-          <Animated.View key={option} entering={FadeIn.delay(i * 40).duration(motion.base)}>
-            {/* Result haptics fire in handlePick, so no per-tap haptic here. */}
-            <Tappable
-              haptic="none"
-              onPress={() => handlePick(option)}
-              hoverStyle={{ backgroundColor: colors.bgCardPressed }}
-              style={styles.option}>
-              <Text style={styles.optionText}>{option}</Text>
-            </Tappable>
-          </Animated.View>
-        ))}
+      <Text style={styles.prompt}>Which match is this?</Text>
+      <ShakeView shake={shakeWrong}>
+        <View style={layoutStyles.options}>
+          {puzzle.options.map((option, i) => {
+            const isWrong = option === wrongOption;
+            return (
+              <Animated.View key={option} entering={FadeIn.delay(i * 40).duration(motion.base)}>
+                {/* Result haptics fire in handlePick, so no per-tap haptic here. */}
+                <Tappable
+                  haptic="none"
+                  onPress={() => handlePick(option)}
+                  testID={`match-option-${i}`}
+                  hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+                  style={[styles.option, isWrong && styles.optionWrong]}>
+                  <Text style={styles.optionText}>{option}</Text>
+                </Tappable>
+              </Animated.View>
+            );
+          })}
+        </View>
+      </ShakeView>
+
+      <View style={layoutStyles.giveUpRow}>
+        <GiveUpButton onGiveUp={handleGiveUp} />
       </View>
     </Screen>
   );
@@ -281,30 +324,37 @@ export default function GuessMatchScreen() {
 
 // Layout-only styles stay module-scope.
 const layoutStyles = StyleSheet.create({
-  metaPill: {
-    alignItems: 'center',
+  statusRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    marginBottom: spacing.md,
   },
   lineup: {
     gap: spacing.xs,
-    marginVertical: spacing.md,
+    marginBottom: spacing.md,
+  },
+  hiddenBlock: {
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginTop: spacing.xs,
+  },
+  hiddenPips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: spacing.xs,
   },
   revealButton: {
     alignSelf: 'center',
     minWidth: 220,
     marginBottom: spacing.md,
   },
-  promptRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  attempts: {
-    ...type.caption,
-  },
   options: {
     gap: spacing.sm,
+  },
+  giveUpRow: {
+    alignItems: 'center',
+    marginTop: spacing.lg,
   },
   resultContainer: {
     alignItems: 'center',
@@ -330,48 +380,64 @@ const createStyles = (c: ThemeColors) =>
       textAlign: 'center',
       marginTop: 100,
     },
-    metaValue: {
-      ...type.scoreLarge,
-      color: c.accent,
-    },
-    metaLabel: {
-      ...type.micro,
-      color: c.textMuted,
-      letterSpacing: 1.5,
-    },
-    meta: {
-      ...type.caption,
-      color: c.textSecondary,
-      textAlign: 'center',
-      marginBottom: spacing.md,
-    },
-    nameChip: {
+    statusChip: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 2,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.sm,
       borderRadius: borderRadius.md,
       borderWidth: 1,
       borderColor: c.border,
       backgroundColor: c.bgCard,
+    },
+    statusValue: {
+      ...type.scoreLarge,
+      color: c.textPrimary,
+    },
+    statusValueAccent: {
+      color: c.accent,
+    },
+    statusLabel: {
+      ...type.micro,
+      color: c.textMuted,
+      letterSpacing: 1,
+      textAlign: 'center',
+    },
+    nameChip: {
+      borderRadius: borderRadius.md,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.accentSoft,
       paddingVertical: spacing.sm,
       paddingHorizontal: spacing.md,
       minHeight: 44,
       justifyContent: 'center',
     },
-    nameChipRevealed: {
-      borderColor: c.accentBorder,
-      backgroundColor: c.accentSoft,
+    nameChipLatest: {
+      borderColor: c.accent,
     },
     nameText: {
       ...type.bodyBold,
       color: c.textPrimary,
       textAlign: 'center',
     },
-    nameHidden: {
+    hiddenPip: {
+      width: 26,
+      height: 8,
+      borderRadius: borderRadius.sm / 2,
+      backgroundColor: c.border,
+    },
+    hiddenLabel: {
+      ...type.micro,
       color: c.textMuted,
-      letterSpacing: 4,
+      letterSpacing: 1,
     },
     prompt: {
       ...type.bodyBold,
       color: c.textPrimary,
       textAlign: 'center',
+      marginBottom: spacing.md,
     },
     option: {
       borderRadius: borderRadius.lg,
@@ -382,6 +448,10 @@ const createStyles = (c: ThemeColors) =>
       paddingHorizontal: spacing.md,
       minHeight: 44,
       justifyContent: 'center',
+    },
+    optionWrong: {
+      borderColor: c.danger,
+      backgroundColor: c.dangerSoft,
     },
     optionText: {
       ...type.bodyBold,
@@ -396,11 +466,16 @@ const createStyles = (c: ThemeColors) =>
       ...type.scoreLarge,
       color: c.textPrimary,
     },
+    answerEyebrow: {
+      ...type.micro,
+      color: c.textMuted,
+      letterSpacing: 1.5,
+      marginTop: spacing.sm,
+    },
     answerLabel: {
       ...type.h3,
       color: c.textPrimary,
       textAlign: 'center',
-      marginTop: spacing.sm,
     },
     resultDetail: {
       ...type.caption,

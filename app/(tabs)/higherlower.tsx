@@ -331,7 +331,7 @@ export default function HigherLowerScreen() {
 
   if (gameState === 'gameover') {
     const gap = gapPercent(currentPlayer.market_value, challengerPlayer.market_value);
-    const gapText = gap <= 10 ? `So close — within ${gap}%!` : `Off by ${gap}%`;
+    const gapText = gap <= 10 ? `So close, within ${gap}%!` : `Off by ${gap}%`;
     return (
       <Screen scroll={false}>
         <View style={styles.gameOverContainer}>

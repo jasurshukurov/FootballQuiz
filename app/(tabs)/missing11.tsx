@@ -43,6 +43,8 @@ import { showRewardedAd, loadRewardedAd } from '@/lib/ads';
 import ShareableMissing11Result from '@/components/ShareableMissing11Result';
 import GameOverActions from '@/components/ui/GameOverActions';
 import GameOverExtras from '@/components/ui/GameOverExtras';
+import LivesIndicator from '@/components/ui/LivesIndicator';
+import GiveUpButton from '@/components/career/GiveUpButton';
 import { buildShareText } from '@/lib/sharing';
 import { playWhistle, playCheer, playCrossbar } from '@/lib/sounds';
 
@@ -270,6 +272,14 @@ export default function Missing11Screen() {
     }
   }, [hintUsed, lineupNames, revealedSlots, isPro]);
 
+  // Give up: reveal the full XI and end as a loss with what was found so far —
+  // a graceful "here's the answer" exit, never a shaming one (finishGame fills
+  // every slot on a loss).
+  const handleGiveUp = useCallback(() => {
+    if (gameState !== 'playing') return;
+    finishGame(false, revealedSlots.size);
+  }, [gameState, revealedSlots, finishGame]);
+
   const handleNewGame = useCallback(() => {
     const matches = getPlayableMatches();
     if (matches.length === 0) return;
@@ -318,11 +328,7 @@ export default function Missing11Screen() {
           <View style={styles.headerStats}>
             <Text style={styles.foundValue}>{foundCount}/11</Text>
             <View style={styles.livesRow}>
-              {Array.from({ length: 3 }).map((_, i) => (
-                <Text key={i} style={[styles.lifeIcon, i >= lives && styles.lifeIconLost]}>
-                  {i < lives ? '❤' : '♡'}
-                </Text>
-              ))}
+              <LivesIndicator size="sm" total={3} remaining={lives} />
             </View>
           </View>
         }
@@ -362,7 +368,7 @@ export default function Missing11Screen() {
           {focusedSlot !== null && (
             <Animated.View entering={FadeIn.duration(motion.base)}>
               <Text style={styles.slotHint}>
-                Slot {focusedSlot + 1}: {POSITION_HINT[focusedSlot]} — who wore it?
+                Slot {focusedSlot + 1}: {POSITION_HINT[focusedSlot]}. Who wore it?
               </Text>
             </Animated.View>
           )}
@@ -374,7 +380,7 @@ export default function Missing11Screen() {
           />
           <View style={styles.guessMeta}>
             <Text style={[styles.wrongHint, wrongFlash && styles.wrongHintActive]}>
-              {wrongFlash ? 'Not in this XI — life lost' : 'A wrong name costs a life'}
+              {wrongFlash ? 'Not in this XI, life lost' : 'A wrong name costs a life'}
             </Text>
             {!hintUsed && revealedSlots.size < 11 && (
               <RetroButton
@@ -389,6 +395,9 @@ export default function Missing11Screen() {
               <Text style={styles.hintTextValue}>{hintText}</Text>
             </Animated.View>
           )}
+          <View style={styles.giveUpRow}>
+            <GiveUpButton onGiveUp={handleGiveUp} />
+          </View>
         </View>
       )}
 
@@ -484,14 +493,11 @@ const createStyles = (c: ThemeColors) =>
     livesRow: {
       flexDirection: 'row',
       gap: spacing.xs,
-      marginTop: 2,
+      marginTop: spacing.xs,
     },
-    lifeIcon: {
-      ...type.h3,
-      color: c.danger,
-    },
-    lifeIconLost: {
-      opacity: 0.3,
+    giveUpRow: {
+      alignItems: 'center',
+      marginTop: spacing.xs,
     },
     header: {
       alignItems: 'center',

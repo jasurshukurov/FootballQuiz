@@ -7,4 +7,10 @@
  */
 export const FEATURES = {
   sharing: false,
+  /**
+   * leaderboard: local-first identity + global XP leaderboard (DynamoDB).
+   * Also gated remotely by config.json "leaderboardEnabled" (kill switch);
+   * both must be on. See lib/dynamoSync.isLeaderboardEnabled().
+   */
+  leaderboard: true,
 } as const;

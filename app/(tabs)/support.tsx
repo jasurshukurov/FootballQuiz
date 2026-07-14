@@ -7,10 +7,13 @@ import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import RetroButton from '@/components/ui/RetroButton';
 import Tappable from '@/components/ui/Tappable';
+import UsernameCard from '@/components/ui/UsernameCard';
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
 import { spacing, borderRadius, type, touch } from '@/constants/theme';
 import { useProStore } from '@/hooks/useProStore';
+import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
+import { FEATURES } from '@/lib/featureFlags';
 import { purchasePro, restorePurchases } from '@/lib/purchases';
 import { deleteUserAccount } from '@/lib/accountDeletion';
 import { isSoundEnabled, setSoundEnabled } from '@/lib/sounds';
@@ -19,7 +22,7 @@ import { isNotificationsEnabled, setNotificationsEnabled } from '@/lib/notificat
 
 // Only what Pro actually grants today.
 const PRO_FEATURES = [
-  { icon: 'lightbulb-o' as const, label: 'Free unlimited hints — never watch an ad for a clue' },
+  { icon: 'lightbulb-o' as const, label: 'Free unlimited hints, never watch an ad for a clue' },
   { icon: 'ban' as const, label: 'No ads' },
   { icon: 'heart' as const, label: 'Support ongoing development' },
 ];
@@ -92,6 +95,8 @@ export default function MoreScreen() {
   const router = useRouter();
   const { colors, styles } = useStyles();
   const isPro = useProStore((s) => s.isPro);
+  const leaderboardRemoteOn = useRemoteConfigStore((s) => s.config.leaderboardEnabled !== false);
+  const leaderboardOn = FEATURES.leaderboard && leaderboardRemoteOn;
   const [loading, setLoading] = useState(false);
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [hapticsOn, setHapticsOn] = useState(isHapticsEnabled());
@@ -140,7 +145,7 @@ export default function MoreScreen() {
       Alert.alert(
         restored ? 'Restored' : 'No Purchase Found',
         restored
-          ? 'Your support has been restored — hints and ad-free are back.'
+          ? 'Your support has been restored. Hints and ad-free are back.'
           : 'We could not find a previous purchase to restore.',
       );
     } catch {
@@ -210,13 +215,31 @@ export default function MoreScreen() {
         )}
       </View>
 
+      {/* Player identity + leaderboard (hidden when the feature flag is off) */}
+      {leaderboardOn && (
+        <>
+          <SectionLabel>Player</SectionLabel>
+          <View style={styles.group}>
+            <UsernameCard compact />
+            <LinkRow
+              icon="trophy"
+              label="Leaderboard"
+              sub="See how your XP stacks up worldwide"
+              onPress={() => {
+                router.push('/(tabs)/leaderboard' as Href);
+              }}
+            />
+          </View>
+        </>
+      )}
+
       {/* Practice & Archive */}
       <SectionLabel>Practice</SectionLabel>
       <View style={styles.group}>
         <LinkRow
           icon="calendar"
           label="Archive"
-          sub="Replay the last 30 days — no effect on your streak"
+          sub="Replay the last 30 days with no effect on your streak"
           onPress={() => {
             router.push('/(tabs)/archive' as Href);
           }}

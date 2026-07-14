@@ -10,27 +10,67 @@ import Tappable from '@/components/ui/Tappable';
 const THEME_KEYS = Object.keys(THEMES) as ThemeKey[];
 
 /**
- * 2x2 grid of theme swatch cards. Each card previews its own theme
- * (bgBase surface + accent/streak/text dots) so the user sees what they
- * are picking; the active card gets an accent ring + checkmark.
+ * Grid of theme swatch cards. The first card is "Match device" (follow the OS
+ * light/dark scheme); the rest each preview their own theme (bgBase surface +
+ * accent/streak/text dots) so the user sees what they are picking. The card
+ * matching the current *selection* gets an accent ring + checkmark — when the
+ * selection is 'system' that is the Match-device card, not the resolved theme.
  * Self-contained — drop into the Profile/More screen as <ThemePicker />.
  */
 export default function ThemePicker() {
   const active = useTheme();
+  const selection = useThemeStore((s) => s.themeKey);
   const setTheme = useThemeStore((s) => s.setTheme);
   const styles = useMemo(() => createStyles(active.colors), [active.colors]);
 
+  const systemActive = selection === 'system';
+
   return (
     <View style={styles.grid}>
+      <Tappable
+        key="system"
+        haptic="success"
+        onPress={() => setTheme('system')}
+        accessibilityLabel="Match device appearance"
+        testID="theme-option-system"
+        hoverStyle={{ borderColor: active.colors.borderStrong }}
+        style={[
+          styles.card,
+          {
+            backgroundColor: active.colors.bgElevated,
+            borderColor: systemActive ? active.colors.accent : active.colors.border,
+          },
+        ]}>
+        <View style={[styles.systemPreview, { borderColor: active.colors.border }]}>
+          <View style={[styles.systemHalf, { backgroundColor: THEMES.floodlit.colors.bgBase }]} />
+          <View style={[styles.systemHalf, { backgroundColor: THEMES.daybreak.colors.bgBase }]} />
+          <View style={styles.systemIconWrap}>
+            <FontAwesome name="adjust" size={18} color={active.colors.accent} />
+          </View>
+        </View>
+        <View style={styles.labelRow}>
+          <Text style={[styles.label, { color: active.colors.textPrimary }]} numberOfLines={1}>
+            Match device
+          </Text>
+          {systemActive && (
+            <FontAwesome name="check-circle" size={16} color={active.colors.accent} />
+          )}
+        </View>
+        <Text style={[styles.tagline, { color: active.colors.textSecondary }]} numberOfLines={2}>
+          Follows your light or dark setting
+        </Text>
+      </Tappable>
+
       {THEME_KEYS.map((key) => {
         const t = THEMES[key];
-        const isActive = key === active.key;
+        const isActive = key === selection;
         return (
           <Tappable
             key={key}
             haptic="success"
             onPress={() => setTheme(key)}
             accessibilityLabel={`Switch to ${t.label} theme`}
+            testID={`theme-option-${key}`}
             hoverStyle={{ borderColor: active.colors.borderStrong }}
             style={[
               styles.card,
@@ -88,6 +128,22 @@ const createStyles = (c: ThemeColors) =>
       borderRadius: borderRadius.sm,
       padding: spacing.sm,
       marginBottom: spacing.sm,
+    },
+    systemPreview: {
+      borderWidth: 1,
+      borderRadius: borderRadius.sm,
+      marginBottom: spacing.sm,
+      height: 48,
+      flexDirection: 'row',
+      overflow: 'hidden',
+    },
+    systemHalf: {
+      flex: 1,
+    },
+    systemIconWrap: {
+      ...StyleSheet.absoluteFillObject,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     previewCard: {
       height: 14,

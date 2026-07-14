@@ -28,9 +28,9 @@ describe('matchGuessGenerator', () => {
     }
   });
 
-  it('formats the answer label as "YYYY Competition — A vs B"', () => {
+  it('formats the answer label as "YYYY Competition · A vs B"', () => {
     const puzzle = generateMatchGuessPuzzle(1);
-    expect(puzzle.answer).toMatch(/^\d{4} .+ — .+ vs .+$/);
+    expect(puzzle.answer).toMatch(/^\d{4} .+ · .+ vs .+$/);
   });
 
   it('is deterministic for a fixed seed + date (notability weighting)', () => {

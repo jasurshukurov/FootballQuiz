@@ -48,7 +48,7 @@ describe('buildShareText', () => {
     });
     expect(text).toBe(
       [
-        'Football Quiz #560 — Who Are Ya 🔍',
+        'Football Quiz #560 · Who Are Ya 🔍',
         '2/8',
         '⬜⬜🟨🟩🟩',
         '🟩🟩🟩🟩🟩',
@@ -66,7 +66,7 @@ describe('buildShareText', () => {
       streak: 12,
     });
     expect(text).toBe(
-      ['Football Quiz #560 — Higher / Lower 📈', 'Streak: 12 🔥', URL_560].join('\n'),
+      ['Football Quiz #560 · Higher / Lower 📈', 'Streak: 12 🔥', URL_560].join('\n'),
     );
   });
 
@@ -81,7 +81,7 @@ describe('buildShareText', () => {
       slots: [true, true, false, true, false],
     });
     expect(text.split('\n')).toEqual([
-      'Football Quiz #560 — Top Lists 📋',
+      'Football Quiz #560 · Top Lists 📋',
       '3/5 found',
       '🟩🟩⬜🟩⬜',
       '2 lives used',
@@ -100,7 +100,7 @@ describe('buildShareText', () => {
       solvedDifficulties: [0, 1, 2, 3],
     });
     expect(text.split('\n')).toEqual([
-      'Football Quiz #560 — Connections 🔗',
+      'Football Quiz #560 · Connections 🔗',
       'Flawless!',
       '🟩🟩🟩🟩',
       '🟨🟨🟨🟨',
@@ -162,7 +162,7 @@ describe('buildShareText', () => {
       scoresByMode,
     });
     const lines = text.split('\n');
-    expect(lines[0]).toBe('Football Quiz #560 — Perfect Day! (11/11)');
+    expect(lines[0]).toBe('Football Quiz #560 · Perfect Day! (11/11)');
     expect(lines[1]).toBe('🎬 Career Path 0');
     expect(lines).toContain('🔍 Who Are Ya 1');
     expect(lines).toContain('📋 Top Lists 10');
@@ -183,7 +183,7 @@ describe('buildShareText', () => {
       completedModes: { marketmovers: true, grid: true },
       scoresByMode: { marketmovers: 7, grid: 9 },
     });
-    expect(text.split('\n')).toEqual(['Football Quiz #560 — (1/11)', '🎯 Grid 9', URL_560]);
+    expect(text.split('\n')).toEqual(['Football Quiz #560 · (1/11)', '🎯 Grid 9', URL_560]);
   });
 
   it('builds a partial recap listing only completed modes', () => {
@@ -195,7 +195,7 @@ describe('buildShareText', () => {
       scoresByMode: { grid: 9, toplists: 5 },
     });
     expect(text.split('\n')).toEqual([
-      'Football Quiz #560 — (2/10)',
+      'Football Quiz #560 · (2/10)',
       '🎯 Grid 9',
       '📋 Top Lists 5',
       URL_560,

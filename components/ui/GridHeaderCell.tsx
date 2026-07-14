@@ -13,9 +13,12 @@ interface GridHeaderCellProps {
   axis: 'col' | 'row';
 }
 
-/** Width of the left row-header rail — kept small so the 3 cells stay >= ~96pt
- *  on a 390pt phone. Imported by the screen for the corner spacer. */
-export const ROW_HEADER_WIDTH = 58;
+/** Width of the left row-header rail. Wide enough that long single-word labels
+ *  ("Goalkeeper", "Netherlands", "Leverkusen") fit without breaking mid-word at
+ *  the micro type size — RN-web ignores adjustsFontSizeToFit, so the rail width,
+ *  not font-shrink, has to do the work. Still leaves the 3 cells ~90pt on a
+ *  390pt phone. Imported by the screen for the corner spacer. */
+export const ROW_HEADER_WIDTH = 72;
 
 /** Kickers for the narrow left rail — the full ones ("PLAYED FOR") don't fit
  *  58pt and RN-web ignores adjustsFontSizeToFit. */
@@ -47,7 +50,7 @@ function GridHeaderCell({ category, axis }: GridHeaderCellProps) {
       {category.kind === 'nationality' && category.flag ? (
         <Text style={layout.flag}>{category.flag}</Text>
       ) : null}
-      <Text style={styles.label} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.75}>
+      <Text style={styles.label} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.7}>
         {category.label}
       </Text>
     </View>
@@ -91,6 +94,9 @@ const createStyles = (c: ThemeColors) =>
     },
     label: {
       ...type.micro,
+      // micro's 0.4 tracking widens long words enough to force a mid-word wrap
+      // in the narrow rail — the label reads fine without it.
+      letterSpacing: 0,
       textAlign: 'center',
       color: c.textPrimary,
     },

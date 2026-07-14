@@ -34,6 +34,7 @@ import PopInView from '@/components/ui/PopInView';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import Tappable from '@/components/ui/Tappable';
+import LivesIndicator from '@/components/ui/LivesIndicator';
 import { spacing, borderRadius, type, touch } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -54,7 +55,7 @@ export default function ConnectionsScreen() {
   const { practiceDate } = useLocalSearchParams<{ practiceDate?: string }>();
   const isPractice = !!practiceDate;
   const theme = useTheme();
-  const { colors, shadows } = theme;
+  const { colors } = theme;
   const styles = useMemo(() => createStyles(colors), [colors]);
   const [puzzle, setPuzzle] = useState<ConnectionsPuzzle | null>(null);
   const [tileNames, setTileNames] = useState<string[]>([]);
@@ -337,28 +338,16 @@ export default function ConnectionsScreen() {
         </View>
       )}
 
-      {/* Mistake dots */}
+      {/* Mistakes remaining — shared lives indicator (flashes the dot lost). */}
       <View style={styles.mistakesRow}>
         <Text style={styles.mistakesLabel}>Mistakes remaining:</Text>
-        <View style={styles.dots}>
-          {Array.from({ length: MAX_MISTAKES }).map((_, i) => {
-            const isActive = i < MAX_MISTAKES - mistakes;
-            const isFlashing = i === flashingDotIdx;
-            return (
-              <View
-                key={i}
-                style={[
-                  styles.dot,
-                  isFlashing
-                    ? styles.dotFlashing
-                    : isActive
-                      ? [styles.dotActive, shadows.neonGlow]
-                      : styles.dotUsed,
-                ]}
-              />
-            );
-          })}
-        </View>
+        <LivesIndicator
+          size="sm"
+          total={MAX_MISTAKES}
+          remaining={MAX_MISTAKES - mistakes}
+          flashIndex={flashingDotIdx}
+          label="Mistakes remaining"
+        />
       </View>
 
       {/* Push controls to the bottom of the screen */}
@@ -521,24 +510,6 @@ const createStyles = (c: ThemeColors) =>
     mistakesLabel: {
       ...type.caption,
       color: c.textSecondary,
-    },
-    dots: {
-      flexDirection: 'row',
-      gap: spacing.xs,
-    },
-    dot: {
-      width: 12,
-      height: 12,
-      borderRadius: borderRadius.full,
-    },
-    dotActive: {
-      backgroundColor: c.accent,
-    },
-    dotFlashing: {
-      backgroundColor: c.danger,
-    },
-    dotUsed: {
-      backgroundColor: c.borderStrong,
     },
     spacer: {
       flex: 1,

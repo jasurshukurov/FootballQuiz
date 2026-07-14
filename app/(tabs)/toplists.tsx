@@ -27,6 +27,8 @@ import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import ShakeView from '@/components/ui/ShakeView';
+import LivesIndicator from '@/components/ui/LivesIndicator';
+import GiveUpButton from '@/components/career/GiveUpButton';
 import GameOverActions from '@/components/ui/GameOverActions';
 import NextPuzzleCountdown from '@/components/ui/NextPuzzleCountdown';
 import ShareableTopListsResult from '@/components/ShareableTopListsResult';
@@ -139,6 +141,13 @@ export default function TopListsScreen() {
 
   const handleSelectPlayer = useCallback((player: Player) => submitText(player.name), [submitText]);
 
+  // Give up: reveal every remaining name and finish with what was found — a
+  // graceful exit for a stalled board, scored on the names already named.
+  const handleGiveUp = useCallback(() => {
+    if (revealAll) return;
+    finishRun(foundIndices, lives);
+  }, [revealAll, finishRun, foundIndices, lives]);
+
   const solveTimeMs = useTodaySolveTime('toplists');
 
   const livesUsed = MAX_LIVES - lives;
@@ -172,9 +181,9 @@ export default function TopListsScreen() {
               <Text style={styles.foundValue}>
                 {foundIndices.size}/{total}
               </Text>
-              <Text style={styles.livesText}>
-                {'❤️'.repeat(lives) + '🖤'.repeat(MAX_LIVES - lives)}
-              </Text>
+              <View style={styles.livesWrap}>
+                <LivesIndicator size="sm" total={MAX_LIVES} remaining={lives} />
+              </View>
             </View>
           ) : undefined
         }
@@ -237,6 +246,12 @@ export default function TopListsScreen() {
             testID="toplists-guess">
             <Text style={styles.submitText}>GUESS</Text>
           </Tappable>
+        </View>
+      )}
+
+      {!revealAll && (
+        <View style={styles.giveUpRow}>
+          <GiveUpButton onGiveUp={handleGiveUp} />
         </View>
       )}
 
@@ -312,9 +327,8 @@ const createStyles = (c: ThemeColors) =>
       ...type.score,
       color: c.accent,
     },
-    livesText: {
-      ...type.body,
-      marginTop: 2,
+    livesWrap: {
+      marginTop: spacing.xs,
     },
     listHeader: {
       alignItems: 'center',
@@ -386,6 +400,10 @@ const createStyles = (c: ThemeColors) =>
       letterSpacing: 1,
       // Fast/double clicks on web must not select the button label.
       userSelect: 'none',
+    },
+    giveUpRow: {
+      alignItems: 'center',
+      marginTop: spacing.md,
     },
     resultBlock: {
       alignItems: 'center',

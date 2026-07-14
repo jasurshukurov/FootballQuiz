@@ -7,7 +7,20 @@ import { goto, dismissTutorial, leafTexts, pressButton, clickText, isGameOver, h
 export const meta = { key: 'guessmatch', title: 'Guess the Match', route: '/guessmatch' };
 
 async function readOptions(page) {
-  return (await leafTexts(page, 680, 1050)).map((x) => x.t)
+  // Prefer the stable per-option testID (layout-independent). The match labels
+  // carry it as data-testid on web.
+  const loc = page.locator('[data-testid^="match-option-"]');
+  const n = await loc.count();
+  if (n) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const t = (await loc.nth(i).innerText().catch(() => '')).trim();
+      if (t) out.push(t);
+    }
+    if (out.length) return out;
+  }
+  // Fallback: positional scan (kept for resilience if testIDs ever change).
+  return (await leafTexts(page, 400, 1200)).map((x) => x.t)
     .filter((s) => /vs|final|cup|league|—|–|\d{4}/i.test(s));
 }
 

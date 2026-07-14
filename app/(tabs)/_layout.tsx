@@ -140,6 +140,7 @@ export default function TabLayout() {
       <Tabs.Screen name="marketmovers" options={{ href: null, title: 'Market Movers' }} />
       <Tabs.Screen name="guessmatch" options={{ href: null, title: 'Guess the Match' }} />
       <Tabs.Screen name="archive" options={{ href: null, title: 'Archive' }} />
+      <Tabs.Screen name="leaderboard" options={{ href: null, title: 'Leaderboard' }} />
     </Tabs>
   );
 }

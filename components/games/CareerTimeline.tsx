@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import TimelineNodeComponent from '@/components/games/TimelineNode';
 import { TimelineNode } from '@/lib/careerTimelineGenerator';
@@ -15,6 +15,9 @@ interface CareerTimelineProps {
 /** Staggered entrance cap — only the first N nodes animate in. */
 const MAX_ENTRANCE = 12;
 
+// Plain (non-scrolling) list: the parent <Screen> owns page-level scrolling, so
+// the timeline must NOT nest its own ScrollView — a nested vertical scroll
+// collapses / clips inside an auto-height parent and fights the page scroll.
 export default function CareerTimeline({
   nodes,
   activeNodeIndex,
@@ -22,7 +25,7 @@ export default function CareerTimeline({
   onHintPress,
 }: CareerTimelineProps) {
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
+    <View style={styles.content}>
       {nodes.map((node, index) => (
         // Stable key: keying on node.club remounted the row on every reveal,
         // replaying the entrance mid-game ("jumping"). Opacity-only entrance.
@@ -42,14 +45,11 @@ export default function CareerTimeline({
           />
         </Animated.View>
       ))}
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
   content: {
     paddingVertical: spacing.md,
   },

@@ -30,9 +30,13 @@ interface GridGameState {
   tier: SkillTier | null;
   /** Correct answers only, keyed "row-col". */
   placements: Record<string, GridPlacement>;
-  /** Every player already used on the board (correct or wrong) — a player can
-   *  only be played once per day. */
+  /** Players placed CORRECTLY — each fills exactly one square, so they can't be
+   *  reused elsewhere on the board. */
   usedPlayerIds: number[];
+  /** Wrong guesses tracked per cell ("row-col" -> playerIds). A wrong pick
+   *  costs a guess but leaves the square open; the same player can't be wasted
+   *  on that square again, yet may still be a valid answer for a DIFFERENT one. */
+  wrongByCell: Record<string, number[]>;
   guessesUsed: number;
   points: number;
   hintsUsed: number;
@@ -44,7 +48,7 @@ interface GridGameActions {
   /** Reserve the tier for the day (call before generating the grid). */
   lockTier: (date: string, tier: SkillTier) => SkillTier;
   recordCorrect: (cellKey: string, placement: GridPlacement, pointsEarned: number) => void;
-  recordWrong: (playerId: number) => void;
+  recordWrong: (cellKey: string, playerId: number) => void;
   recordHint: () => void;
 }
 
@@ -56,6 +60,7 @@ const emptyDay = (date: string): GridGameState => ({
   tier: null,
   placements: {},
   usedPlayerIds: [],
+  wrongByCell: {},
   guessesUsed: 0,
   points: 0,
   hintsUsed: 0,
@@ -89,10 +94,12 @@ export const useGridGameStore = create<GridGameStore>()(
         });
       },
 
-      recordWrong: (playerId) => {
+      recordWrong: (cellKey, playerId) => {
         const s = get();
+        const already = s.wrongByCell[cellKey] ?? [];
+        if (already.includes(playerId)) return; // duplicate — no guess spent
         set({
-          usedPlayerIds: [...s.usedPlayerIds, playerId],
+          wrongByCell: { ...s.wrongByCell, [cellKey]: [...already, playerId] },
           guessesUsed: s.guessesUsed + 1,
         });
       },

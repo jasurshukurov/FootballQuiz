@@ -32,7 +32,8 @@ export default function RankBadge({ rank, unit = 'more' }: RankBadgeProps) {
       <Text style={[styles.label, isTop && styles.labelTop]}>{rank.label.toUpperCase()}</Text>
       {rank.nextLabel ? (
         <Text style={styles.next}>
-          {rank.toNext} {unit} to {rank.nextLabel}
+          {rank.toNext} {rank.toNext === 1 && unit.endsWith('s') ? unit.slice(0, -1) : unit} to{' '}
+          {rank.nextLabel}
         </Text>
       ) : (
         <Text style={styles.next}>Top of the ladder</Text>

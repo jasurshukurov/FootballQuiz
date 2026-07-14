@@ -56,7 +56,7 @@ await goto(page, '/connections?practiceDate=2026-07-10');
 await dismissTutorial(page);
 out.practicePill = await hasText(page, 'PRACTICE');
 await shot(page, 'tier3_practice_pill');
-const EX = ['SHUFFLE','SUBMIT','DESELECT ALL','CONNECTIONS','Find 4 groups of 4 players','Mistakes remaining:','Home','Stats','Support','Modes','PRACTICE — 2026-07-10'];
+const EX = ['SHUFFLE','SUBMIT','DESELECT ALL','CONNECTIONS','Find 4 groups of 4 players','Mistakes remaining:','Home','Stats','Support','Modes','PRACTICE · 2026-07-10'];
 for (let round = 0; round < 4; round++) {
   const names = await page.evaluate((EXX) => {
     const o = [];

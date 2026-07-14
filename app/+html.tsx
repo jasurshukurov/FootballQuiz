@@ -15,7 +15,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
         <title>Football Quiz</title>
         <meta
           name="description"
-          content="Daily football trivia — guess players, careers, transfers and more with a fresh set of puzzles every day."
+          content="Daily football trivia: guess players, careers, transfers and more with a fresh set of puzzles every day."
         />
         {/* Matches the default theme's bgBase (Floodlit Night). The app theme is
             user-selected and defaults to dark regardless of OS scheme, so the

@@ -189,7 +189,7 @@ function buildBody(input: ShareResultInput): string[] {
 
 /**
  * Build a copyable Wordle-style result block for any mode, e.g.:
- *   Football Quiz #560 — Who Are Ya 🔍
+ *   Football Quiz #560 · Who Are Ya 🔍
  *   3/8
  *   🟥🟨⬜🟩🟩
  *   🔥 5-day streak
@@ -197,7 +197,7 @@ function buildBody(input: ShareResultInput): string[] {
  */
 export function buildShareText(input: ShareResultInput): string {
   const lines: string[] = [
-    `Football Quiz #${input.dailyNumber} — ${MODE_HEADERS[input.mode]}`,
+    `Football Quiz #${input.dailyNumber} · ${MODE_HEADERS[input.mode]}`,
     ...buildBody(input),
   ];
 
@@ -244,7 +244,7 @@ export interface DailyRecapInput {
 
 /**
  * Build the "Share your day" recap, stitching a line per completed mode:
- *   Football Quiz #560 — Perfect Day! (10/10)
+ *   Football Quiz #560 · Perfect Day! (10/10)
  *   🎬 Career Path 2
  *   🔍 Who Are Ya 3
  *   ...
@@ -256,7 +256,7 @@ export function buildDailyRecapText(input: DailyRecapInput): string {
   const perfect = completedCount === input.totalModes;
 
   const lines: string[] = [
-    `Football Quiz #${input.dailyNumber} — ${perfect ? 'Perfect Day! ' : ''}(${completedCount}/${input.totalModes})`,
+    `Football Quiz #${input.dailyNumber} · ${perfect ? 'Perfect Day! ' : ''}(${completedCount}/${input.totalModes})`,
   ];
 
   for (const mode of RECAP_MODES) {

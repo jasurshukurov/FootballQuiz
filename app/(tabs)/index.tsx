@@ -130,7 +130,7 @@ function DoneRow({
   return (
     <Tappable
       onPress={onPress}
-      accessibilityLabel={`${mode.title} — done today`}
+      accessibilityLabel={`${mode.title}, done today`}
       hoverStyle={{ backgroundColor: c.bgCardPressed }}
       style={styles.doneRow}>
       <FontAwesome name="check-circle" size={16} color={c.accent} />
@@ -290,14 +290,14 @@ export default function TodayScreen() {
       {/* ── Archive entry (visually subordinate) ── */}
       <Tappable
         onPress={() => router.push('/(tabs)/archive' as Href)}
-        accessibilityLabel="Archive — replay past days"
+        accessibilityLabel="Archive, replay past days"
         hoverStyle={{ backgroundColor: colors.bgCardPressed }}
         style={styles.archiveCard}>
         <FontAwesome name="calendar" size={16} color={colors.textMuted} />
         <View style={styles.cardText}>
           <Text style={styles.archiveTitle}>Archive</Text>
           <Text style={styles.archiveSub} numberOfLines={1}>
-            Replay past days — no effect on your streak
+            Replay past days with no effect on your streak
           </Text>
         </View>
         <FontAwesome name="chevron-right" size={13} color={colors.textMuted} />
