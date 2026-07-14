@@ -120,7 +120,7 @@ TMD_CACHE = CACHE_DIR / "tm_datasets_players.csv"
 REQUEST_TIMEOUT = 120
 HEADERS = {"User-Agent": "football-etl/1.0"}
 
-FAME_THRESHOLD = 55
+FAME_THRESHOLD = int(__import__("os").environ.get("FAME_THRESHOLD", "55"))
 TODAY = date.today()
 
 # Ground truths: normalized DB name -> required birth year.

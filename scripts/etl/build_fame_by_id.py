@@ -77,6 +77,17 @@ MANUAL_FAME_OVERRIDES = {
     914562: {"fame_score": 76.0, "difficulty_tier": "Amateur"},   # Désiré Doué: 2x UCL, Ligue1+UCL YPOTY, WC26
     845654: {"fame_score": 70.0, "difficulty_tier": "Amateur"},   # Kenan Yıldız: Serie A Best U23 25/26, Juve/Türkiye
     670681: {"fame_score": 72.0, "difficulty_tier": "Amateur"},   # João Neves: PSG treble core, WC26
+    # Éderson (Atalanta MF, b.1999) inherited the Man City GK's fame entry via
+    # the accent-variant "Éderson" fame_scores row; own fame as a Brazil
+    # international, not the GK's (July-2026 namesake sweep).
+    607854: {"fame_score": 64.0, "difficulty_tier": "Semi-Pro", "reset_metrics": True},
+    # Aaron Ramsey pair: BOTH fame_scores rows are ~52 with junk metrics, and
+    # the max-market-value pick handed the entry to the English winger
+    # (b.2003, Burnley). The Welsh star (50057: Arsenal 3x FA Cup, Juventus,
+    # 86 caps, retired 2026 at Pumas) never had his real fame — set it; the
+    # English youngster keeps his own modest score (July-2026 audit).
+    50057: {"fame_score": 76.0, "difficulty_tier": "Amateur", "reset_metrics": True},
+    646658: {"fame_score": 52.0, "difficulty_tier": "Semi-Pro", "reset_metrics": True},
 }
 
 
