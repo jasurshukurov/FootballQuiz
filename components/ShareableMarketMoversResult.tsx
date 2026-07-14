@@ -1,86 +1,42 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import { type, spacing, borderRadius } from '@/constants/theme';
+import { type, spacing } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
-import { useDailyStateStore } from '@/hooks/useDailyStateStore';
+import ShareCardShell from '@/components/ShareCardShell';
 
 interface ShareableMarketMoversResultProps {
   streak: number;
 }
 
 export default function ShareableMarketMoversResult({ streak }: ShareableMarketMoversResultProps) {
-  const { colors, gradients } = useTheme();
+  const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
-  const currentStreak = useDailyStateStore((s) => s.currentStreak);
 
   return (
-    <LinearGradient colors={gradients.cardBg} style={styles.container}>
-      <View style={styles.header}>
-        <FontAwesome name="line-chart" size={18} color={colors.accent} />
-        <Text style={styles.branding}>FOOTBALL DAILY</Text>
+    <ShareCardShell title="Market Movers" verdict={`${streak} STREAK`} won={streak > 0}>
+      <View style={styles.content}>
+        <Text style={styles.label}>TRANSFER STREAK</Text>
+        <Text style={styles.value}>{streak}</Text>
       </View>
-      <Text style={styles.title}>Market Movers</Text>
-      <Text style={styles.streakLabel}>TRANSFER STREAK</Text>
-      <Text style={styles.streakValue}>{streak}</Text>
-      {currentStreak > 0 && <Text style={styles.dailyStreak}>🔥 {currentStreak} day streak</Text>}
-      <Text style={styles.cta}>Play at footballquiz.app</Text>
-    </LinearGradient>
+    </ShareCardShell>
   );
 }
 
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
-    container: {
+    content: {
       alignItems: 'center',
-      borderRadius: borderRadius.xl,
-      borderWidth: 1,
-      borderColor: c.border,
-      // Solid canvas under the translucent cardBg gradient — react-native-view-shot
-      // captures must never end up with a transparent background.
-      backgroundColor: c.bgBase,
-      paddingVertical: spacing.xxl,
-      paddingHorizontal: spacing.xl,
-      minWidth: 320,
     },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: spacing.sm,
-      marginBottom: spacing.lg,
-    },
-    branding: {
-      ...type.h3,
-      color: c.accent,
-      letterSpacing: 2,
-    },
-    title: {
-      ...type.h3,
-      color: c.textPrimary,
-      marginBottom: spacing.lg,
-    },
-    streakLabel: {
+    label: {
       ...type.micro,
       color: c.textMuted,
       letterSpacing: 3,
-    },
-    streakValue: {
-      ...type.scoreLarge,
-      color: c.accentBright,
       marginBottom: spacing.sm,
     },
-    dailyStreak: {
-      ...type.captionBold,
-      color: c.streak,
-      marginTop: spacing.sm,
-    },
-    cta: {
-      ...type.caption,
-      color: c.textMuted,
-      marginTop: spacing.md,
-      textAlign: 'center',
+    value: {
+      ...type.scoreLarge,
+      color: c.accentBright,
     },
   });
