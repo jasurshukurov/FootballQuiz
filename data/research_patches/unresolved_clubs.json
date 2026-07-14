@@ -1,125 +1,349 @@
 {
   "note": "current_team values that could not be resolved to an existing players_db club string; other fields were still applied. Fix the club name or add it to club_id_map.json.",
-  "count": 17,
+  "count": 49,
   "rows": [
     {
-      "id": 146660,
-      "name": "Ronaldo",
-      "requested_current_team": "FK Rostov",
-      "kept_current_team": "Cd Castellón",
-      "source": "patch_01.json"
+      "id": 148455,
+      "name": "Mohamed Salah",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Liverpool Football Club",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 7767,
-      "name": "Fernando Torres",
-      "requested_current_team": "Sagan Tosu",
-      "kept_current_team": "Gimnàstic De Tarragona",
-      "source": "patch_02.json"
+      "id": 48280,
+      "name": "Edinson Cavani",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Boca Juniors",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 1600014,
-      "name": "Mesut Ozil",
-      "requested_current_team": "Istanbul Basaksehir",
-      "kept_current_team": "Fenerbahce",
-      "source": "patch_02.json"
+      "id": 25557,
+      "name": "Sergio Ramos",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Cf Monterrey",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 77,
-      "name": "Lúcio",
-      "requested_current_team": "Brasiliense",
+      "id": 1600024,
+      "name": "Raheem Sterling",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Feyenoord",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 40433,
+      "name": "Alexis Sánchez",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Sevilla Fútbol Club S.A.D.",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 171424,
+      "name": "Riyad Mahrez",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Al-Ahli",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 197838,
+      "name": "Jamie Vardy",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Unione Sportiva Cremonese S.p.A.",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 1600072,
+      "name": "Tim Cahill",
+      "requested_current_team": "Jamshedpur FC",
+      "kept_current_team": "Melbourne City Fc",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 357498,
+      "name": "Dušan Vlahović",
+      "requested_current_team": "Free agent",
       "kept_current_team": "Juventus Football Club",
-      "source": "patch_02.json"
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 15951,
-      "name": "Dani Alves",
-      "requested_current_team": "Pumas UNAM",
-      "kept_current_team": "Futbol Club Barcelona",
-      "source": "patch_02.json"
+      "id": 401173,
+      "name": "Jadon Sancho",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Aston Villa Football Club",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 406625,
-      "name": "Lautaro Martínez",
-      "requested_current_team": "Inter",
-      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
-      "source": "patch_03.json"
+      "id": 80444,
+      "name": "Philippe Coutinho",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Clube De Regatas Vasco Da Gama",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 315853,
-      "name": "Alessandro Bastoni",
-      "requested_current_team": "Inter",
-      "kept_current_team": "Football Club Internazionale Milano S.p.A.",
-      "source": "patch_04.json"
+      "id": 153084,
+      "name": "Leon Goretzka",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "FC Bayern München",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 79422,
-      "name": "Keylor Navas",
-      "requested_current_team": "Pumas UNAM",
-      "kept_current_team": "Unam Pumas",
-      "source": "patch_06.json"
+      "id": 43907,
+      "name": "André-Pierre Gignac",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Tigres Uanl",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 735570,
-      "name": "João Gomes",
-      "requested_current_team": "Wolves",
-      "kept_current_team": "Wolverhampton Wanderers Football Club",
-      "source": "patch_07.json"
+      "id": 187492,
+      "name": "Julian Brandt",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Borussia Dortmund",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 140206,
-      "name": "Ladislav Krejci",
-      "requested_current_team": "Wolves",
-      "kept_current_team": "Wolverhampton Wanderers Football Club",
-      "source": "patch_07.json"
+      "id": 170986,
+      "name": "Raphaël Guerreiro",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "FC Bayern München",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 521964,
-      "name": "Malick Thiaw",
-      "requested_current_team": "Newcastle",
-      "kept_current_team": "Newcastle United Football Club",
-      "source": "patch_07.json"
+      "id": 500054,
+      "name": "David Jurásek",
+      "requested_current_team": "Slavia Prague",
+      "kept_current_team": "Sk Slavia Prague",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 503160,
-      "name": "Paul Nebel",
-      "requested_current_team": "Mainz 05",
-      "kept_current_team": "1. Fußball- und Sportverein Mainz 05",
-      "source": "patch_07.json"
+      "id": 255906,
+      "name": "Scott McKenna",
+      "requested_current_team": "Dinamo Zagreb",
+      "kept_current_team": "Gnk Dinamo Zagreb",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 388165,
-      "name": "Yoane Wissa",
-      "requested_current_team": "Newcastle",
-      "kept_current_team": "Newcastle United Football Club",
-      "source": "patch_08.json"
+      "id": 59016,
+      "name": "David Alaba",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Real Madrid Club de Fútbol",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 503749,
-      "name": "Jacob Ramsey",
-      "requested_current_team": "Newcastle",
-      "kept_current_team": "Newcastle United Football Club",
-      "source": "patch_08.json"
+      "id": 81999,
+      "name": "Joselu",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Al-Gharafa Sc",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 1600077,
-      "name": "George Best",
-      "requested_current_team": "Brisbane Lions",
-      "kept_current_team": "San Jose Earthquakes",
-      "source": "patch_09.json"
+      "id": 413032,
+      "name": "Ibrahima Diallo",
+      "requested_current_team": "Al-Khor SC",
+      "kept_current_team": "Al-Ahli SC",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 418543,
-      "name": "Perr Schuurs",
-      "requested_current_team": "NEC Nijmegen",
-      "kept_current_team": "Torino Calcio",
-      "source": "patch_11.json"
+      "id": 212847,
+      "name": "Adam Webster",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Brighton and Hove Albion Football Club",
+      "source": "patch_90_audit2026.json"
     },
     {
-      "id": 47713,
-      "name": "Mamadou Sakho",
-      "requested_current_team": "Torpedo Kutaisi",
+      "id": 357156,
+      "name": "Diogo Leite",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "1. Fußballclub Union Berlin",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 282041,
+      "name": "Presnel Kimpembe",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Qatar Sc",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 568006,
+      "name": "Dennis Cirkin",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Sunderland Association Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 134294,
+      "name": "Danny Ings",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Sheffield United",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 365172,
+      "name": "Patson Daka",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Leicester City",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 183318,
+      "name": "Jamaal Lascelles",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Leicester City",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 127156,
+      "name": "Téji Savanier",
+      "requested_current_team": "Free Agent",
       "kept_current_team": "Montpellier HSC",
-      "source": "patch_12_retirees.json"
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 620313,
+      "name": "Lucas Gourna-Douath",
+      "requested_current_team": "Red Bull Salzburg",
+      "kept_current_team": "Le Havre Athletic Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 319900,
+      "name": "Elijah Adebayo",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Luton Town",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 410425,
+      "name": "Yves Bissouma",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Tottenham Hotspur Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 504148,
+      "name": "Tariq Lamptey",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Associazione Calcio Fiorentina",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 487843,
+      "name": "Lorenzo Colombo",
+      "requested_current_team": "Genoa",
+      "kept_current_team": "Genoa Cricket and Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 503871,
+      "name": "Morten Frendrup",
+      "requested_current_team": "Genoa",
+      "kept_current_team": "Genoa Cricket and Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 532937,
+      "name": "Johan Vásquez",
+      "requested_current_team": "Genoa",
+      "kept_current_team": "Genoa Cricket and Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 344596,
+      "name": "Malang Sarr",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Racing Club de Lens",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 387047,
+      "name": "Danilho Doekhi",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "1. Fußballclub Union Berlin",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 186590,
+      "name": "John Stones",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Manchester City Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 138927,
+      "name": "Daniel Carvajal",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Real Madrid Club de Fútbol",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 420064,
+      "name": "Caio Henrique",
+      "requested_current_team": "Ajax",
+      "kept_current_team": "Association sportive de Monaco Football Club",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 294808,
+      "name": "Franck Kessié",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Al-Ahli Sfc",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 659520,
+      "name": "Bilal Nadir",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Olympique de Marseille",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 486624,
+      "name": "Musa Barrow",
+      "requested_current_team": "Free Agent",
+      "kept_current_team": "Al-Taawoun Fc",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 450936,
+      "name": "Tanguy Ndombélé",
+      "requested_current_team": "Nice",
+      "kept_current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 323954,
+      "name": "Walace",
+      "requested_current_team": "Vitória",
+      "kept_current_team": "Esporte Clube Vitória",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 319745,
+      "name": "Dani Ceballos",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Real Madrid Club de Fútbol",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 250478,
+      "name": "Matt Targett",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Middlesbrough FC",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 223979,
+      "name": "Xaver Schlager",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "RasenBallsport Leipzig",
+      "source": "patch_90_audit2026.json"
+    },
+    {
+      "id": 49499,
+      "name": "Georginio Wijnaldum",
+      "requested_current_team": "Free agent",
+      "kept_current_team": "Al-Ettifaq Fc",
+      "source": "patch_90_audit2026.json"
     }
   ]
 }

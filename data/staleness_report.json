@@ -9,15 +9,15 @@
   "counts": {
     "players_db_total": 12227,
     "fame_scores_total": 12322,
-    "gameplay_relevant_players": 1475,
+    "gameplay_relevant_players": 1473,
     "default_market_value": 4,
-    "zero_market_value": 125,
-    "default_or_zero_market_value": 129,
-    "missing_age": 2,
-    "stale_team_suspect": 142,
-    "missing_badge": 52,
-    "distinct_unresolved_teams": 34,
-    "high_fame_without_players_db_match": 1
+    "zero_market_value": 145,
+    "default_or_zero_market_value": 149,
+    "missing_age": 14,
+    "stale_team_suspect": 148,
+    "missing_badge": 10,
+    "distinct_unresolved_teams": 1,
+    "high_fame_without_players_db_match": 3
   },
   "examples": {
     "default_market_value": [
@@ -36,17 +36,17 @@
         "market_value": 1000000
       },
       {
+        "id": 40433,
+        "name": "Alexis Sánchez",
+        "fame_score": 80.65,
+        "current_team": "Sevilla Fútbol Club S.A.D.",
+        "market_value": 1000000
+      },
+      {
         "id": 17965,
         "name": "Hugo Lloris",
         "fame_score": 80.16,
         "current_team": "Los Angeles Fc",
-        "market_value": 1000000
-      },
-      {
-        "id": 1600052,
-        "name": "Mario Balotelli",
-        "fame_score": 77.05,
-        "current_team": "Al-Ittifaq",
         "market_value": 1000000
       }
     ],
@@ -56,20 +56,6 @@
         "name": "Ronaldo de Assis Moreira",
         "fame_score": 96.42,
         "current_team": "Fluminense",
-        "market_value": 0
-      },
-      {
-        "id": 1600002,
-        "name": "Pele",
-        "fame_score": 95,
-        "current_team": "Santos",
-        "market_value": 0
-      },
-      {
-        "id": 1600003,
-        "name": "Diego Maradona",
-        "fame_score": 95,
-        "current_team": "Boca Juniors",
         "market_value": 0
       },
       {
@@ -120,223 +106,185 @@
         "fame_score": 86.68,
         "current_team": "Derby County",
         "market_value": 0
+      },
+      {
+        "id": 1600001,
+        "name": "Ronaldinho",
+        "fame_score": 86.52,
+        "current_team": "Fluminense",
+        "market_value": 0
+      },
+      {
+        "id": 7600,
+        "name": "Andrés Iniesta",
+        "fame_score": 86.51,
+        "current_team": "Emirates Club",
+        "market_value": 0
       }
     ],
     "missing_age": [
       {
-        "id": 32966,
-        "name": "Angelo",
-        "fame_score": 59.96,
-        "current_team": "Ud Sousense",
-        "market_value": 50000
-      },
-      {
-        "id": 39073,
-        "name": "Émerson",
-        "fame_score": 57.91,
-        "current_team": "Marseille",
-        "market_value": 12000000
-      }
-    ],
-    "missing_badge": [
-      {
-        "id": 1600004,
-        "name": "Gheorghe Hagi",
-        "fame_score": 92.95,
-        "current_team": "Galatasaray",
-        "market_value": 0
-      },
-      {
-        "id": 1600009,
-        "name": "Thierry Henry",
-        "fame_score": 85.49,
-        "current_team": "New York Red Bulls",
-        "market_value": 0
-      },
-      {
-        "id": 1600010,
-        "name": "Iker Casillas",
-        "fame_score": 85.03,
-        "current_team": "FC Porto",
-        "market_value": 0
-      },
-      {
-        "id": 1600013,
-        "name": "Raul Gonzalez",
-        "fame_score": 83.65,
+        "id": 1600002,
+        "name": "Pele",
+        "fame_score": 95,
         "current_team": "New York Cosmos",
         "market_value": 0
       },
       {
-        "id": 1600015,
-        "name": "Alessandro Del Piero",
-        "fame_score": 83.58,
-        "current_team": "Sydney Fc",
+        "id": 1600003,
+        "name": "Diego Maradona",
+        "fame_score": 95,
+        "current_team": "Boca Juniors",
         "market_value": 0
       },
       {
-        "id": 1600017,
-        "name": "Roberto Carlos",
-        "fame_score": 83.39,
-        "current_team": "Delhi Dynamos",
+        "id": 146660,
+        "name": "Ronaldo",
+        "fame_score": 86.77,
+        "current_team": "FK Rostov",
+        "market_value": 4000000
+      },
+      {
+        "id": 1600025,
+        "name": "Franz Beckenbauer",
+        "fame_score": 81.47,
+        "current_team": "New York Cosmos",
         "market_value": 0
       },
       {
-        "id": 1600018,
-        "name": "Angel Di Maria",
-        "fame_score": 83.23,
-        "current_team": "Ca Rosario Central",
-        "market_value": 1500000
-      },
-      {
-        "id": 1600019,
-        "name": "Samuel Eto'o",
-        "fame_score": 82.61,
-        "current_team": "Qatar Sc",
+        "id": 1600029,
+        "name": "Johan Cruyff",
+        "fame_score": 81.13,
+        "current_team": "Feyenoord",
         "market_value": 0
       },
       {
-        "id": 1600021,
-        "name": "James Rodriguez",
-        "fame_score": 82.47,
-        "current_team": "Minnesota United Fc",
-        "market_value": 3000000
+        "id": 203655,
+        "name": "Cafú",
+        "fame_score": 80.34,
+        "current_team": "Kasimpasa",
+        "market_value": 600000
       },
       {
-        "id": 1600022,
-        "name": "Arjen Robben",
-        "fame_score": 82.05,
-        "current_team": "FC Groningen",
+        "id": 668268,
+        "name": "Marquinhos",
+        "fame_score": 79.83,
+        "current_team": "Cruzeiro",
+        "market_value": 8000000
+      },
+      {
+        "id": 1600053,
+        "name": "Alfredo Di Stefano",
+        "fame_score": 76.97,
+        "current_team": "Reial Club Deportiu Espanyol de Barcelona S.A.D.",
         "market_value": 0
+      },
+      {
+        "id": 1600065,
+        "name": "Eusebio",
+        "fame_score": 73.93,
+        "current_team": "Benfica",
+        "market_value": 0
+      },
+      {
+        "id": 163058,
+        "name": "Fabinho",
+        "fame_score": 73.87,
+        "current_team": "Udinese Calcio",
+        "market_value": 200000
+      }
+    ],
+    "missing_badge": [
+      {
+        "id": 674612,
+        "name": "Youssouf Ndayishimiye",
+        "fame_score": 62.84,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 10000000
+      },
+      {
+        "id": 560593,
+        "name": "Hicham Boudaoui",
+        "fame_score": 62.73,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 15000000
+      },
+      {
+        "id": 1121298,
+        "name": "Juma Bah",
+        "fame_score": 61.33,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 6000000
+      },
+      {
+        "id": 448632,
+        "name": "Yehvann Diouf",
+        "fame_score": 60.98,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 12000000
+      },
+      {
+        "id": 569389,
+        "name": "Sofiane Diop",
+        "fame_score": 60.96,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 8000000
+      },
+      {
+        "id": 532775,
+        "name": "Melvin Bard",
+        "fame_score": 60.3,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 15000000
+      },
+      {
+        "id": 1089202,
+        "name": "Moïse Bombito",
+        "fame_score": 60.12,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 10000000
+      },
+      {
+        "id": 718201,
+        "name": "Kevin Carlos",
+        "fame_score": 60.03,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 6000000
+      },
+      {
+        "id": 535820,
+        "name": "Isak Jansson",
+        "fame_score": 56.63,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 6000000
+      },
+      {
+        "id": 450936,
+        "name": "Tanguy Ndombélé",
+        "fame_score": 56.07,
+        "current_team": "Olympique Gymnaste Club Nice Côte d'Azur",
+        "market_value": 4000000
       }
     ]
   },
   "top_unresolved_teams": [
     [
       "Olympique Gymnaste Club Nice Côte d'Azur",
-      13
-    ],
-    [
-      "Galatasaray",
-      3
-    ],
-    [
-      "FC Porto",
-      2
-    ],
-    [
-      "New York Cosmos",
-      2
-    ],
-    [
-      "Feyenoord",
-      2
-    ],
-    [
-      "Bolton Wanderers",
-      2
-    ],
-    [
-      "---",
-      1
-    ],
-    [
-      "New York Red Bulls",
-      1
-    ],
-    [
-      "Sydney Fc",
-      1
-    ],
-    [
-      "Delhi Dynamos",
-      1
-    ],
-    [
-      "Ca Rosario Central",
-      1
-    ],
-    [
-      "Qatar Sc",
-      1
-    ],
-    [
-      "Minnesota United Fc",
-      1
-    ],
-    [
-      "FC Groningen",
-      1
-    ],
-    [
-      "Montreal Impact",
-      1
-    ],
-    [
-      "Mogi Mirim Esporte Clube",
-      1
-    ],
-    [
-      "Qingdao Huanghai",
-      1
-    ],
-    [
-      "Al-Arabi Sc",
-      1
-    ],
-    [
-      "Celtic",
-      1
-    ],
-    [
-      "Kerala Blasters",
-      1
-    ],
-    [
-      "Sabail Fk",
-      1
-    ],
-    [
-      "Brescia Calcio",
-      1
-    ],
-    [
-      "Fc Goa",
-      1
-    ],
-    [
-      "Benfica",
-      1
-    ],
-    [
-      "Melbourne Victory",
-      1
-    ],
-    [
-      "Perth Glory",
-      1
-    ],
-    [
-      "Dynamo Moscow",
-      1
-    ],
-    [
-      "Melbourne City Fc",
-      1
-    ],
-    [
-      "Suzuka Point Getters",
-      1
-    ],
-    [
-      "Miami United",
-      1
+      10
     ]
   ],
   "high_fame_without_match_examples": [
     {
+      "name": "Xavi Hernandez",
+      "fame_score": 85.73
+    },
+    {
       "name": "Son Heung-min",
       "fame_score": 83.7
+    },
+    {
+      "name": "Alisson Becker",
+      "fame_score": 81.8
     }
   ]
 }

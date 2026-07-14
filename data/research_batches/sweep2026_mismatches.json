@@ -1,7 +1,7 @@
 {
   "sweep": "full2026",
   "stage": "1-bulk-tm-crosscheck",
-  "generated": "2026-07-14T07:20:44+00:00",
+  "generated": "2026-07-14T22:09:17+00:00",
   "source": "transfermarkt-datasets players.csv (cache tm_datasets_players.csv, current season 2025/26)",
   "caveat": "DETECTION ONLY. Every entry is a flag for the Wikipedia verification wave, not a verdict — especially status flags (last_season is unreliable) and market_value (goes stale legitimately). current_team flags whose note says the TM row is stale usually mean TM froze at the last tracked club and OUR value is the newer one. Systematic artifact classes below fame 55 are counted in summary.suppressed_systematic_flags, not listed.",
   "summary": {
@@ -18,19 +18,19 @@
       "name+club-disambiguated": 2
     },
     "fame35_joined": "11048/11100",
-    "active_players_compared": 12096,
+    "active_players_compared": 12067,
     "mismatch_counts_by_field": {
-      "status": 304,
-      "current_team": 172,
-      "market_value": 47,
-      "league": 46
+      "status": 298,
+      "current_team": 237,
+      "market_value": 27,
+      "league": 50
     },
     "suppressed_systematic_flags": {
-      "status_null_stale_low_fame": 9368,
-      "current_team_stale_tm_low_fame": 4171
+      "status_null_stale_low_fame": 9345,
+      "current_team_stale_tm_low_fame": 4160
     },
-    "total_mismatch_flags": 569,
-    "players_with_flags": 377,
+    "total_mismatch_flags": 612,
+    "players_with_flags": 339,
     "unmatched_fame55_count": 52
   },
   "unmatched_fame55": [
@@ -874,6 +874,16 @@
       "id": 29035,
       "name": "Ederson",
       "fame": 80.17,
+      "field": "league",
+      "ours": "Premier League",
+      "theirs": "Serie A",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=IT1"
+    },
+    {
+      "id": 29035,
+      "name": "Ederson",
+      "fame": 80.17,
       "field": "market_value",
       "ours": 20000000,
       "theirs": 700000,
@@ -1149,26 +1159,6 @@
       "theirs": 4000000,
       "confidence": "exact-corroborated",
       "note": "13.33x drift (values go stale legitimately)"
-    },
-    {
-      "id": 496094,
-      "name": "Karim Adeyemi",
-      "fame": 75.76,
-      "field": "current_team",
-      "ours": "Futbol Club Barcelona",
-      "theirs": "Borussia Dortmund",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Barcelona' vs 'Borussia Dortmund'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 496094,
-      "name": "Karim Adeyemi",
-      "fame": 75.76,
-      "field": "league",
-      "ours": "La Liga",
-      "theirs": "Bundesliga",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=L1"
     },
     {
       "id": 198008,
@@ -1485,10 +1475,10 @@
       "name": "Keisuke Honda",
       "fame": 72.27,
       "field": "current_team",
-      "ours": "Suzuka Point Getters",
+      "ours": "FC Jurong",
       "theirs": "Vitesse Arnhem",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Suzuka Point Getters' vs 'Vitesse Arnhem' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Fc Jurong' vs 'Vitesse Arnhem' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 1600074,
@@ -1691,26 +1681,6 @@
       "note": "6.00x drift (values go stale legitimately)"
     },
     {
-      "id": 486031,
-      "name": "Nico González",
-      "fame": 71.63,
-      "field": "current_team",
-      "ours": "Juventus Football Club",
-      "theirs": "Club Atlético de Madrid S.A.D.",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Juventus' vs 'Atletico Madrid'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 486031,
-      "name": "Nico González",
-      "fame": 71.63,
-      "field": "league",
-      "ours": "Serie A",
-      "theirs": "La Liga",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=ES1"
-    },
-    {
       "id": 404839,
       "name": "Andriy Lunin",
       "fame": 71.62,
@@ -1853,26 +1823,6 @@
     {
       "id": 257455,
       "name": "João Palhinha",
-      "fame": 70.86,
-      "field": "league",
-      "ours": "Bundesliga",
-      "theirs": "Premier League",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=GB1"
-    },
-    {
-      "id": 842341,
-      "name": "Maxime Estève",
-      "fame": 70.86,
-      "field": "current_team",
-      "ours": "RasenBallsport Leipzig",
-      "theirs": "Burnley Football Club",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'RB Leipzig' vs 'Burnley'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 842341,
-      "name": "Maxime Estève",
       "fame": 70.86,
       "field": "league",
       "ours": "Bundesliga",
@@ -2114,6 +2064,16 @@
       "id": 418543,
       "name": "Perr Schuurs",
       "fame": 70.01,
+      "field": "current_team",
+      "ours": "NEC Nijmegen",
+      "theirs": "Torino Calcio",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Nec Nijmegen' vs 'Torino' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 418543,
+      "name": "Perr Schuurs",
+      "fame": 70.01,
       "field": "market_value",
       "ours": 5000000,
       "theirs": 25000000,
@@ -2125,10 +2085,20 @@
       "name": "Lorenzo Insigne",
       "fame": 69.99,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2021",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 133964,
+      "name": "Lorenzo Insigne",
+      "fame": 69.99,
+      "field": "current_team",
+      "ours": "Sampdoria",
+      "theirs": "Società Sportiva Calcio Napoli",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Sampdoria' vs 'Napoli' (TM row itself stale: last_season=2021, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 398065,
@@ -2165,7 +2135,7 @@
       "name": "Kurt Zouma",
       "fame": 69.51,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2175,30 +2145,40 @@
       "name": "Kurt Zouma",
       "fame": 69.51,
       "field": "current_team",
-      "ours": "Cfr Cluj",
+      "ours": "Palm City FC",
       "theirs": "West Ham United Football Club",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Cfr Cluj' vs 'West Ham United' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Palm City Fc' vs 'West Ham United' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 496857,
       "name": "Edon Zhegrova",
       "fame": 69.43,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 132,
-      "name": "Tomas Rosicky",
-      "fame": 69.42,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2015",
+      "id": 496857,
+      "name": "Edon Zhegrova",
+      "fame": 69.43,
+      "field": "current_team",
+      "ours": "Juventus Football Club",
+      "theirs": "Lille Olympique Sporting Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Juventus' vs 'Lille' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 496857,
+      "name": "Edon Zhegrova",
+      "fame": 69.43,
+      "field": "league",
+      "ours": "Serie A",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
     },
     {
       "id": 43907,
@@ -2225,40 +2205,20 @@
       "name": "Mohamed Simakan",
       "fame": 69.32,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 34572,
-      "name": "Mario Mandzukic",
-      "fame": 69.22,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2020",
+      "id": 666234,
+      "name": "Mohamed Simakan",
+      "fame": 69.32,
+      "field": "current_team",
+      "ours": "Al-Nassr",
+      "theirs": "RasenBallsport Leipzig",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 162,
-      "name": "Marc Ziegler",
-      "fame": 68.8,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2012",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 4276,
-      "name": "Carlos Tevez",
-      "fame": 68.8,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2014",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Al-Nassr' vs 'RB Leipzig' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 225161,
@@ -2321,16 +2281,6 @@
       "note": "0.01x drift (values go stale legitimately)"
     },
     {
-      "id": 32467,
-      "name": "Ivan Rakitic",
-      "fame": 68.14,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
       "id": 503977,
       "name": "Taylor Harwood-Bellis",
       "fame": 68.1,
@@ -2365,10 +2315,20 @@
       "name": "Samuel Lino",
       "fame": 67.5,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 694928,
+      "name": "Samuel Lino",
+      "fame": 67.5,
+      "field": "current_team",
+      "ours": "Flamengo",
+      "theirs": "Club Atlético de Madrid S.A.D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Flamengo' vs 'Atletico Madrid' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 462380,
@@ -2415,10 +2375,20 @@
       "name": "Willian",
       "fame": 66.81,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 52769,
+      "name": "Willian",
+      "fame": 66.81,
+      "field": "current_team",
+      "ours": "Gremio",
+      "theirs": "Fulham Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Gremio' vs 'Fulham' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 203496,
@@ -2475,7 +2445,7 @@
       "name": "Pedro",
       "fame": 65.29,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2019",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2485,10 +2455,10 @@
       "name": "Pedro",
       "fame": 65.29,
       "field": "current_team",
-      "ours": "Zenit",
+      "ours": "Flamengo",
       "theirs": "Associazione Calcio Fiorentina",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Zenit' vs 'Fiorentina' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Flamengo' vs 'Fiorentina' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 775605,
@@ -2535,7 +2505,37 @@
       "name": "Ismaël Bennacer",
       "fame": 64.12,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 351816,
+      "name": "Ismaël Bennacer",
+      "fame": 64.12,
+      "field": "current_team",
+      "ours": "Associazione Calcio Milan",
+      "theirs": "Olympique de Marseille",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'AC Milan' vs 'Marseille' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 351816,
+      "name": "Ismaël Bennacer",
+      "fame": 64.12,
+      "field": "league",
+      "ours": "Serie A",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
+    },
+    {
+      "id": 243714,
+      "name": "Kingsley Coman",
+      "fame": 63.97,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2544,11 +2544,11 @@
       "id": 243714,
       "name": "Kingsley Coman",
       "fame": 63.97,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Al-Nassr",
+      "theirs": "FC Bayern München",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Al-Nassr' vs 'Bayern Munich' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 251106,
@@ -2565,8 +2565,28 @@
       "name": "Theo Hernández",
       "fame": 63.55,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 339808,
+      "name": "Theo Hernández",
+      "fame": 63.55,
+      "field": "current_team",
+      "ours": "Al-Hilal",
+      "theirs": "Associazione Calcio Milan",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Hilal' vs 'AC Milan' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 329145,
+      "name": "Diego Carlos",
+      "fame": 63.38,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -2574,9 +2594,19 @@
       "id": 329145,
       "name": "Diego Carlos",
       "fame": 63.38,
+      "field": "current_team",
+      "ours": "Fenerbahce",
+      "theirs": "Aston Villa Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Fenerbahce' vs 'Aston Villa' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 617060,
+      "name": "Mika Mármol",
+      "fame": 63.27,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "ours": "active",
+      "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -2584,11 +2614,11 @@
       "id": 617060,
       "name": "Mika Mármol",
       "fame": 63.27,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
+      "field": "current_team",
+      "ours": "Feyenoord",
+      "theirs": "UD Las Palmas",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Feyenoord' vs 'Las Palmas' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 357147,
@@ -2605,10 +2635,20 @@
       "name": "Ángel Correa",
       "fame": 63.04,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 266807,
+      "name": "Ángel Correa",
+      "fame": 63.04,
+      "field": "current_team",
+      "ours": "Tigres Uanl",
+      "theirs": "Club Atlético de Madrid S.A.D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Tigres Uanl' vs 'Atletico Madrid' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 207834,
@@ -2635,7 +2675,27 @@
       "name": "Benjamin Bourigeaud",
       "fame": 62.85,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 266359,
+      "name": "Benjamin Bourigeaud",
+      "fame": 62.85,
+      "field": "current_team",
+      "ours": "Al-Duhail",
+      "theirs": "Stade Rennais Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Duhail' vs 'Rennes' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 500054,
+      "name": "David Jurásek",
+      "fame": 62.73,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2644,8 +2704,18 @@
       "id": 500054,
       "name": "David Jurásek",
       "fame": 62.73,
+      "field": "current_team",
+      "ours": "Sk Slavia Prague",
+      "theirs": "Turn- und Sportgemeinschaft 1899 Hoffenheim Fußball-Spielbetriebs",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Sk Slavia Prague' vs 'TSG Hoffenheim' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 457931,
+      "name": "Luiz Felipe",
+      "fame": 62.63,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2654,8 +2724,28 @@
       "id": 457931,
       "name": "Luiz Felipe",
       "fame": 62.63,
+      "field": "current_team",
+      "ours": "Rayo Vallecano de Madrid S. A. D.",
+      "theirs": "Olympique de Marseille",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Rayo Vallecano' vs 'Marseille' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 457931,
+      "name": "Luiz Felipe",
+      "fame": 62.63,
+      "field": "league",
+      "ours": "La Liga",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
+    },
+    {
+      "id": 203394,
+      "name": "Andreas Pereira",
+      "fame": 62.41,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2664,11 +2754,11 @@
       "id": 203394,
       "name": "Andreas Pereira",
       "fame": 62.41,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Palmeiras",
+      "theirs": "Fulham Football Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Palmeiras' vs 'Fulham' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 255906,
@@ -2705,7 +2795,27 @@
       "name": "Mergim Berisha",
       "fame": 62.02,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 307924,
+      "name": "Mergim Berisha",
+      "fame": 62.02,
+      "field": "current_team",
+      "ours": "1.Fc Kaiserslautern",
+      "theirs": "Turn- und Sportgemeinschaft 1899 Hoffenheim Fußball-Spielbetriebs",
+      "confidence": "exact-corroborated",
+      "note": "normalized: '1.Fc Kaiserslautern' vs 'TSG Hoffenheim' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 610442,
+      "name": "Rasmus Højlund",
+      "fame": 62.02,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2714,11 +2824,21 @@
       "id": 610442,
       "name": "Rasmus Højlund",
       "fame": 62.02,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Società Sportiva Calcio Napoli",
+      "theirs": "Manchester United Football Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Napoli' vs 'Manchester United' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 610442,
+      "name": "Rasmus Højlund",
+      "fame": 62.02,
+      "field": "league",
+      "ours": "Serie A",
+      "theirs": "Premier League",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=GB1"
     },
     {
       "id": 331511,
@@ -2755,10 +2875,20 @@
       "name": "Victor Kristiansen",
       "fame": 61.92,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 564529,
+      "name": "Victor Kristiansen",
+      "fame": 61.92,
+      "field": "current_team",
+      "ours": "Panathinaikos F.C.",
+      "theirs": "Leicester City",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Panathinaikos' vs 'Leicester City' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 918969,
@@ -2775,10 +2905,20 @@
       "name": "George Ilenikhena",
       "fame": 61.81,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 1004834,
+      "name": "George Ilenikhena",
+      "fame": 61.81,
+      "field": "current_team",
+      "ours": "Al-Ittihad",
+      "theirs": "Association sportive de Monaco Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Ittihad' vs 'Monaco' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 251664,
@@ -2865,7 +3005,7 @@
       "name": "Allan Saint-Maximin",
       "fame": 61.57,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -2875,10 +3015,10 @@
       "name": "Allan Saint-Maximin",
       "fame": 61.57,
       "field": "current_team",
-      "ours": "Cf América",
+      "ours": "Charlotte Fc",
       "theirs": "Newcastle United Football Club",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Cf América' vs 'Newcastle United' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Charlotte Fc' vs 'Newcastle United' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 159372,
@@ -2925,20 +3065,20 @@
       "name": "Sergio Reguilón",
       "fame": 61.5,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 258,
-      "name": "Gerald Asamoah",
-      "fame": 61.47,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2013",
+      "id": 282429,
+      "name": "Sergio Reguilón",
+      "fame": 61.5,
+      "field": "current_team",
+      "ours": "Inter Miami",
+      "theirs": "Brentford Football Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Inter Miami' vs 'Brentford' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 426192,
@@ -3085,10 +3225,20 @@
       "name": "Miguel Almirón",
       "fame": 61.01,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 272999,
+      "name": "Miguel Almirón",
+      "fame": 61.01,
+      "field": "current_team",
+      "ours": "Atlanta United",
+      "theirs": "Newcastle United Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Atlanta United' vs 'Newcastle United' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 442531,
@@ -3135,7 +3285,7 @@
       "name": "Charlie Patino",
       "fame": 60.95,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2021",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3145,17 +3295,27 @@
       "name": "Charlie Patino",
       "fame": 60.95,
       "field": "current_team",
-      "ours": "Deportivo La Coruna",
+      "ours": "Deportivo de La Coruña",
       "theirs": "Arsenal Football Club",
       "confidence": "exact-corroborated",
       "note": "normalized: 'Deportivo La Coruna' vs 'Arsenal' (TM row itself stale: last_season=2021, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 581674,
+      "name": "Charlie Patino",
+      "fame": 60.95,
+      "field": "league",
+      "ours": "La Liga",
+      "theirs": "Premier League",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=GB1"
     },
     {
       "id": 229005,
       "name": "Abdou Diallo",
       "fame": 60.91,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3165,27 +3325,17 @@
       "name": "Abdou Diallo",
       "fame": 60.91,
       "field": "current_team",
-      "ours": "Al-Duhail",
+      "ours": "Umm Salal Sc",
       "theirs": "RasenBallsport Leipzig",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Al-Duhail' vs 'RB Leipzig' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
-    },
-    {
-      "id": 1084638,
-      "name": "Karim Coulibaly",
-      "fame": 60.9,
-      "field": "current_team",
-      "ours": "Sas Epinal",
-      "theirs": "Sportverein Werder Bremen von 1899",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Sas Epinal' vs 'Werder Bremen'; TM row is current (last_season=2025) so this is real signal"
+      "note": "normalized: 'Umm Salal Sc' vs 'RB Leipzig' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 433049,
       "name": "Youssef En-Nesyri",
       "fame": 60.87,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3195,10 +3345,10 @@
       "name": "Youssef En-Nesyri",
       "fame": 60.87,
       "field": "current_team",
-      "ours": "Fenerbahce",
+      "ours": "Al-Ittihad",
       "theirs": "Sevilla Fútbol Club S.A.D.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Fenerbahce' vs 'Sevilla' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Al-Ittihad' vs 'Sevilla' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 255744,
@@ -3225,20 +3375,20 @@
       "name": "Marvin Ducksch",
       "fame": 60.81,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 31579,
-      "name": "Adam Johnson",
-      "fame": 60.77,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2015",
+      "id": 125103,
+      "name": "Marvin Ducksch",
+      "fame": 60.81,
+      "field": "current_team",
+      "ours": "Birmingham City",
+      "theirs": "Sportverein Werder Bremen von 1899",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Birmingham City' vs 'Werder Bremen' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 284732,
@@ -3255,10 +3405,20 @@
       "name": "Gaetano Castrovilli",
       "fame": 60.72,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 303116,
+      "name": "Gaetano Castrovilli",
+      "fame": 60.72,
+      "field": "current_team",
+      "ours": "Cesena FC",
+      "theirs": "Società Sportiva Lazio S.p.A.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Cesena' vs 'Lazio' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 537762,
@@ -3275,7 +3435,7 @@
       "name": "Osman Bukari",
       "fame": 60.62,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2021",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3285,20 +3445,30 @@
       "name": "Osman Bukari",
       "fame": 60.62,
       "field": "current_team",
-      "ours": "Austin Fc",
+      "ours": "Widzew Lodz",
       "theirs": "Football Club de Nantes",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Austin Fc' vs 'Nantes' (TM row itself stale: last_season=2021, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Widzew Lodz' vs 'Nantes' (TM row itself stale: last_season=2021, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 81999,
       "name": "Joselu",
       "fame": 60.49,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 81999,
+      "name": "Joselu",
+      "fame": 60.49,
+      "field": "current_team",
+      "ours": "Al-Gharafa Sc",
+      "theirs": "Real Madrid Club de Fútbol",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Gharafa Sc' vs 'Real Madrid' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 246963,
@@ -3325,7 +3495,7 @@
       "name": "Santiago Ascacíbar",
       "fame": 60.45,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3335,10 +3505,10 @@
       "name": "Santiago Ascacíbar",
       "fame": 60.45,
       "field": "current_team",
-      "ours": "Club Estudiantes De La Plata",
+      "ours": "Boca Juniors",
       "theirs": "Unione Sportiva Cremonese S.p.A.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Club Estudiantes De La Plata' vs 'Cremonese' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Boca Juniors' vs 'Cremonese' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 292818,
@@ -3395,30 +3565,20 @@
       "name": "Presnel Kimpembe",
       "fame": 60.23,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 428791,
-      "name": "Paulinho",
-      "fame": 60.23,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2022",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 428791,
-      "name": "Paulinho",
+      "id": 282041,
+      "name": "Presnel Kimpembe",
       "fame": 60.23,
       "field": "current_team",
-      "ours": "América Futebol Clube (Mg)",
-      "theirs": "Bayer 04 Leverkusen Fußball",
+      "ours": "Qatar Sc",
+      "theirs": "Paris Saint-Germain Football Club",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'América Futebol Clube (Mg)' vs 'Bayer Leverkusen' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Qatar Sc' vs 'Paris Saint-Germain' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 627626,
@@ -3465,10 +3625,20 @@
       "name": "Danny Ings",
       "fame": 60.13,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 134294,
+      "name": "Danny Ings",
+      "fame": 60.13,
+      "field": "current_team",
+      "ours": "Sheffield United",
+      "theirs": "West Ham United Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Sheffield United' vs 'West Ham United' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 365172,
@@ -3485,7 +3655,27 @@
       "name": "Jamaal Lascelles",
       "fame": 60.09,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 183318,
+      "name": "Jamaal Lascelles",
+      "fame": 60.09,
+      "field": "current_team",
+      "ours": "Leicester City",
+      "theirs": "Newcastle United Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Leicester City' vs 'Newcastle United' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 166237,
+      "name": "Leandro Paredes",
+      "fame": 60.07,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3494,11 +3684,11 @@
       "id": 166237,
       "name": "Leandro Paredes",
       "fame": 60.07,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Boca Juniors",
+      "theirs": "Associazione Sportiva Roma",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Boca Juniors' vs 'Roma' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 127156,
@@ -3525,7 +3715,7 @@
       "name": "Ângelo",
       "fame": 59.96,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3535,20 +3725,30 @@
       "name": "Ângelo",
       "fame": 59.96,
       "field": "current_team",
-      "ours": "Ud Sousense",
+      "ours": "Al-Nassr",
       "theirs": "Racing Club de Strasbourg Alsace",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Ud Sousense' vs 'Strasbourg' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Al-Nassr' vs 'Strasbourg' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 413220,
       "name": "James Justin",
       "fame": 59.95,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 413220,
+      "name": "James Justin",
+      "fame": 59.95,
+      "field": "current_team",
+      "ours": "Leeds United Association Football Club",
+      "theirs": "Leicester City",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Leeds United' vs 'Leicester City' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 249126,
@@ -3595,10 +3795,20 @@
       "name": "Valentín Carboni",
       "fame": 59.82,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 787618,
+      "name": "Valentín Carboni",
+      "fame": 59.82,
+      "field": "current_team",
+      "ours": "Racing Club",
+      "theirs": "Olympique de Marseille",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Racing Club' vs 'Marseille' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 552549,
@@ -3625,10 +3835,20 @@
       "name": "Riccardo Sottil",
       "fame": 59.8,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 386455,
+      "name": "Riccardo Sottil",
+      "fame": 59.8,
+      "field": "current_team",
+      "ours": "Unione Sportiva Lecce",
+      "theirs": "Associazione Calcio Milan",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Lecce' vs 'AC Milan' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 413843,
@@ -3655,7 +3875,27 @@
       "name": "Becir Omeragic",
       "fame": 59.7,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 507344,
+      "name": "Becir Omeragic",
+      "fame": 59.7,
+      "field": "current_team",
+      "ours": "Fc Basel 1893",
+      "theirs": "Montpellier HSC",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Fc Basel 1893' vs 'Montpellier' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 433183,
+      "name": "Tommy Doyle",
+      "fame": 59.62,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3664,8 +3904,18 @@
       "id": 433183,
       "name": "Tommy Doyle",
       "fame": 59.62,
+      "field": "current_team",
+      "ours": "Birmingham City",
+      "theirs": "Wolverhampton Wanderers Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Birmingham City' vs 'Wolverhampton Wanderers' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 290532,
+      "name": "Saïd Benrahma",
+      "fame": 59.55,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3674,11 +3924,11 @@
       "id": 290532,
       "name": "Saïd Benrahma",
       "fame": 59.55,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Neom Sc",
+      "theirs": "Olympique Lyonnais",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Neom Sc' vs 'Lyon' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 406638,
@@ -3721,12 +3971,12 @@
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 490307,
-      "name": "Enock Mwepu",
-      "fame": 59.39,
+      "id": 562049,
+      "name": "Edoardo Bove",
+      "fame": 59.36,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2022",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -3734,8 +3984,18 @@
       "id": 562049,
       "name": "Edoardo Bove",
       "fame": 59.36,
+      "field": "current_team",
+      "ours": "Watford FC",
+      "theirs": "Associazione Sportiva Roma",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Watford' vs 'Roma' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 120205,
+      "name": "Michael Gregoritsch",
+      "fame": 59.35,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3744,18 +4004,18 @@
       "id": 120205,
       "name": "Michael Gregoritsch",
       "fame": 59.35,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "FC Augsburg",
+      "theirs": "Sport-Club Freiburg",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'FC Augsburg' vs 'SC Freiburg' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 170527,
       "name": "Timo Werner",
       "fame": 59.34,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3765,10 +4025,10 @@
       "name": "Timo Werner",
       "fame": 59.34,
       "field": "current_team",
-      "ours": "RB Leipzig",
+      "ours": "San Jose Earthquakes",
       "theirs": "Tottenham Hotspur Football Club",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'RB Leipzig' vs 'Tottenham Hotspur' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'San Jose Earthquakes' vs 'Tottenham Hotspur' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 511550,
@@ -3835,10 +4095,20 @@
       "name": "Conor Coady",
       "fame": 59.17,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 128901,
+      "name": "Conor Coady",
+      "fame": 59.17,
+      "field": "current_team",
+      "ours": "Wrexham Afc",
+      "theirs": "Leicester City",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Wrexham Afc' vs 'Leicester City' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 435485,
@@ -3865,8 +4135,28 @@
       "name": "Mohamed Camara",
       "fame": 59.03,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 543382,
+      "name": "Mohamed Camara",
+      "fame": 59.03,
+      "field": "current_team",
+      "ours": "Al-Sadd Sc",
+      "theirs": "Association sportive de Monaco Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Sadd Sc' vs 'Monaco' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 819215,
+      "name": "Julien Duranville",
+      "fame": 59.03,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -3874,11 +4164,21 @@
       "id": 819215,
       "name": "Julien Duranville",
       "fame": 59.03,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Olympique Lyonnais",
+      "theirs": "Borussia Dortmund",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Lyon' vs 'Borussia Dortmund' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 819215,
+      "name": "Julien Duranville",
+      "fame": 59.03,
+      "field": "league",
+      "ours": "Ligue 1",
+      "theirs": "Bundesliga",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=L1"
     },
     {
       "id": 308279,
@@ -3895,7 +4195,37 @@
       "name": "Arthur Melo",
       "fame": 59.0,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 362842,
+      "name": "Arthur Melo",
+      "fame": 59.0,
+      "field": "current_team",
+      "ours": "Juventus Football Club",
+      "theirs": "Girona Fútbol Club S. A. D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Juventus' vs 'Girona' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 362842,
+      "name": "Arthur Melo",
+      "fame": 59.0,
+      "field": "league",
+      "ours": "Serie A",
+      "theirs": "La Liga",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=ES1"
+    },
+    {
+      "id": 468066,
+      "name": "Jens Cajuste",
+      "fame": 58.98,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -3904,11 +4234,21 @@
       "id": 468066,
       "name": "Jens Cajuste",
       "fame": 58.98,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Società Sportiva Calcio Napoli",
+      "theirs": "Ipswich Town",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Napoli' vs 'Ipswich Town' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 468066,
+      "name": "Jens Cajuste",
+      "fame": 58.98,
+      "field": "league",
+      "ours": "Serie A",
+      "theirs": "Premier League",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=GB1"
     },
     {
       "id": 355627,
@@ -3955,10 +4295,20 @@
       "name": "Patrick Bamford",
       "fame": 58.93,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 183334,
+      "name": "Patrick Bamford",
+      "fame": 58.93,
+      "field": "current_team",
+      "ours": "Sheffield United",
+      "theirs": "Leeds United Association Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Sheffield United' vs 'Leeds United' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 540333,
@@ -3975,37 +4325,37 @@
       "name": "Deivid Washington",
       "fame": 58.92,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 1082850,
-      "name": "Deivid Washington",
-      "fame": 58.92,
-      "field": "current_team",
-      "ours": "Chelsea Fc U21",
-      "theirs": "Chelsea Football Club",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Chelsea Fc U21' vs 'Chelsea' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 164771,
       "name": "Jordan Veretout",
       "fame": 58.91,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 164771,
+      "name": "Jordan Veretout",
+      "fame": 58.91,
+      "field": "current_team",
+      "ours": "Al-Arabi",
+      "theirs": "Olympique Lyonnais",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Arabi' vs 'Lyon' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 66106,
       "name": "Sergio Canales",
       "fame": 58.87,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4015,10 +4365,10 @@
       "name": "Sergio Canales",
       "fame": 58.87,
       "field": "current_team",
-      "ours": "Cf Monterrey",
+      "ours": "Racing Santander",
       "theirs": "Real Betis Balompié S.A.D.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Cf Monterrey' vs 'Real Betis' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Racing Santander' vs 'Real Betis' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 322985,
@@ -4065,7 +4415,27 @@
       "name": "Lucas Martínez Quarta",
       "fame": 58.66,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 373373,
+      "name": "Lucas Martínez Quarta",
+      "fame": 58.66,
+      "field": "current_team",
+      "ours": "River Plate",
+      "theirs": "Associazione Calcio Fiorentina",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'River Plate' vs 'Fiorentina' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 250013,
+      "name": "Angelo Fulgini",
+      "fame": 58.65,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4074,11 +4444,11 @@
       "id": 250013,
       "name": "Angelo Fulgini",
       "fame": 58.65,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Al-Taawoun Fc",
+      "theirs": "Racing Club de Lens",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Al-Taawoun Fc' vs 'Lens' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 585949,
@@ -4135,7 +4505,27 @@
       "name": "Kevin Paredes",
       "fame": 58.59,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 711517,
+      "name": "Kevin Paredes",
+      "fame": 58.59,
+      "field": "current_team",
+      "ours": "FC Utrecht",
+      "theirs": "Verein für Leibesübungen Wolfsburg",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Fc Utrecht' vs 'VfL Wolfsburg' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 550829,
+      "name": "Matej Kovar",
+      "fame": 58.56,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4144,31 +4534,21 @@
       "id": 550829,
       "name": "Matej Kovar",
       "fame": 58.56,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "PSV Eindhoven",
+      "theirs": "Bayer 04 Leverkusen Fußball",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'PSV' vs 'Bayer Leverkusen' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 503980,
       "name": "Joe Gelhardt",
       "fame": 58.55,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 503980,
-      "name": "Joe Gelhardt",
-      "fame": 58.55,
-      "field": "current_team",
-      "ours": "Hull City",
-      "theirs": "Leeds United Association Football Club",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Hull City' vs 'Leeds United' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 294873,
@@ -4191,12 +4571,12 @@
       "note": "normalized: 'Internacional' vs 'Lille' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
-      "id": 30059,
-      "name": "Lars Bender",
-      "fame": 58.47,
+      "id": 457221,
+      "name": "Lucas Robertone",
+      "fame": 58.42,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2020",
+      "ours": "active",
+      "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -4204,11 +4584,11 @@
       "id": 457221,
       "name": "Lucas Robertone",
       "fame": 58.42,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
+      "field": "current_team",
+      "ours": "Velez Sarsfield",
+      "theirs": "UD Almería",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Velez Sarsfield' vs 'Almeria' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 225984,
@@ -4245,7 +4625,7 @@
       "name": "Guilherme Arana",
       "fame": 58.35,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2019",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4255,18 +4635,48 @@
       "name": "Guilherme Arana",
       "fame": 58.35,
       "field": "current_team",
-      "ours": "Atletico Mineiro",
+      "ours": "Fluminense",
       "theirs": "Atalanta Bergamasca Calcio S.p.a.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Atletico Mineiro' vs 'Atalanta' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Fluminense' vs 'Atalanta' (TM row itself stale: last_season=2019, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 197642,
       "name": "Chuba Akpom",
       "fame": 58.34,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 197642,
+      "name": "Chuba Akpom",
+      "fame": 58.34,
+      "field": "current_team",
+      "ours": "Ipswich Town",
+      "theirs": "Lille Olympique Sporting Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Ipswich Town' vs 'Lille' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 197642,
+      "name": "Chuba Akpom",
+      "fame": 58.34,
+      "field": "league",
+      "ours": "Premier League",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
+    },
+    {
+      "id": 263482,
+      "name": "Michael Olunga",
+      "fame": 58.3,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2017",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -4274,31 +4684,21 @@
       "id": 263482,
       "name": "Michael Olunga",
       "fame": 58.3,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2017",
+      "field": "current_team",
+      "ours": "Al-Arabi",
+      "theirs": "Girona Fútbol Club S. A. D.",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Al-Arabi' vs 'Girona' (TM row itself stale: last_season=2017, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 937955,
       "name": "Héctor Fort",
       "fame": 58.24,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 937955,
-      "name": "Héctor Fort",
-      "fame": 58.24,
-      "field": "current_team",
-      "ours": "Elche",
-      "theirs": "Futbol Club Barcelona",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Elche' vs 'Barcelona' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 180337,
@@ -4345,10 +4745,20 @@
       "name": "Iván Jaime",
       "fame": 58.23,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 610335,
+      "name": "Iván Jaime",
+      "fame": 58.23,
+      "field": "current_team",
+      "ours": "FC Porto",
+      "theirs": "Valencia Club de Fútbol S. A. D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Porto' vs 'Valencia' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 298589,
@@ -4375,7 +4785,27 @@
       "name": "Gonzalo Montiel",
       "fame": 58.19,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 402733,
+      "name": "Gonzalo Montiel",
+      "fame": 58.19,
+      "field": "current_team",
+      "ours": "River Plate",
+      "theirs": "Sevilla Fútbol Club S.A.D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'River Plate' vs 'Sevilla' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 102017,
+      "name": "Jorginho",
+      "fame": 58.17,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4384,11 +4814,11 @@
       "id": 102017,
       "name": "Jorginho",
       "fame": 58.17,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Flamengo",
+      "theirs": "Arsenal Football Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Flamengo' vs 'Arsenal' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 332179,
@@ -4575,10 +5005,30 @@
       "name": "Issa Kaboré",
       "fame": 57.68,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 649452,
+      "name": "Issa Kaboré",
+      "fame": 57.68,
+      "field": "current_team",
+      "ours": "Manchester City Football Club",
+      "theirs": "Sportverein Werder Bremen von 1899",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Manchester City' vs 'Werder Bremen' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 649452,
+      "name": "Issa Kaboré",
+      "fame": 57.68,
+      "field": "league",
+      "ours": "Premier League",
+      "theirs": "Bundesliga",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=L1"
     },
     {
       "id": 215616,
@@ -4641,31 +5091,11 @@
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 87210,
-      "name": "Davide Astori",
-      "fame": 57.59,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2017",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 87210,
-      "name": "Davide Astori",
-      "fame": 57.59,
-      "field": "current_team",
-      "ours": "---",
-      "theirs": "Associazione Calcio Fiorentina",
-      "confidence": "exact-corroborated",
-      "note": "normalized: '---' vs 'Fiorentina' (TM row itself stale: last_season=2017, TM club likely frozen pre-move — ours may well be the correct one)"
-    },
-    {
       "id": 446106,
       "name": "Juan Manuel Sanabria",
       "fame": 57.58,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2020",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4675,20 +5105,10 @@
       "name": "Juan Manuel Sanabria",
       "fame": 57.58,
       "field": "current_team",
-      "ours": "Atlético De San Luis",
+      "ours": "Real Salt Lake City",
       "theirs": "Club Atlético de Madrid S.A.D.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Atlético De San Luis' vs 'Atletico Madrid' (TM row itself stale: last_season=2020, TM club likely frozen pre-move — ours may well be the correct one)"
-    },
-    {
-      "id": 61834,
-      "name": "Ryan Mason",
-      "fame": 57.57,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2016",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Real Salt Lake City' vs 'Atletico Madrid' (TM row itself stale: last_season=2020, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 190263,
@@ -4735,10 +5155,20 @@
       "name": "Jaden Philogene",
       "fame": 57.49,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 665390,
+      "name": "Jaden Philogene",
+      "fame": 57.49,
+      "field": "current_team",
+      "ours": "Ipswich Town",
+      "theirs": "Aston Villa Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Ipswich Town' vs 'Aston Villa' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 486624,
@@ -4815,7 +5245,7 @@
       "name": "Gabriel Barbosa",
       "fame": 57.36,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2017",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -4825,18 +5255,38 @@
       "name": "Gabriel Barbosa",
       "fame": 57.36,
       "field": "current_team",
-      "ours": "Cruzeiro",
+      "ours": "Santos",
       "theirs": "Football Club Internazionale Milano S.p.A.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Cruzeiro' vs 'Inter Milan' (TM row itself stale: last_season=2017, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Santos' vs 'Inter Milan' (TM row itself stale: last_season=2017, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 127187,
       "name": "Abdoulaye Doucouré",
       "fame": 57.35,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 127187,
+      "name": "Abdoulaye Doucouré",
+      "fame": 57.35,
+      "field": "current_team",
+      "ours": "Neom Sc",
+      "theirs": "Everton Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Neom Sc' vs 'Everton' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 166677,
+      "name": "Brian Oliván",
+      "fame": 57.33,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -4844,9 +5294,19 @@
       "id": 166677,
       "name": "Brian Oliván",
       "fame": 57.33,
+      "field": "current_team",
+      "ours": "Sporting Gijón",
+      "theirs": "Reial Club Deportiu Espanyol de Barcelona S.A.D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Sporting Gijon' vs 'Espanyol' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 423444,
+      "name": "Fran Beltrán",
+      "fame": 57.24,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2022",
+      "ours": "active",
+      "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -4854,9 +5314,19 @@
       "id": 423444,
       "name": "Fran Beltrán",
       "fame": 57.24,
+      "field": "current_team",
+      "ours": "Girona Fútbol Club S. A. D.",
+      "theirs": "Real Club Celta de Vigo S. A. D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Girona' vs 'Celta Vigo' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 512385,
+      "name": "Luis Sinisterra",
+      "fame": 57.22,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -4864,19 +5334,19 @@
       "id": 512385,
       "name": "Luis Sinisterra",
       "fame": 57.22,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Cruzeiro",
+      "theirs": "Association Football Club Bournemouth",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Cruzeiro' vs 'Bournemouth' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
-      "id": 277,
-      "name": "Sérgio da Silva Pinto",
-      "fame": 57.21,
+      "id": 315145,
+      "name": "Azor Matusiwa",
+      "fame": 57.16,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2013",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -4884,11 +5354,21 @@
       "id": 315145,
       "name": "Azor Matusiwa",
       "fame": 57.16,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Ipswich Town",
+      "theirs": "Stade Rennais Football Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Ipswich Town' vs 'Rennes' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 315145,
+      "name": "Azor Matusiwa",
+      "fame": 57.16,
+      "field": "league",
+      "ours": "Premier League",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
     },
     {
       "id": 344830,
@@ -4915,10 +5395,20 @@
       "name": "Gastón Álvarez",
       "fame": 57.13,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 577486,
+      "name": "Gastón Álvarez",
+      "fame": 57.13,
+      "field": "current_team",
+      "ours": "Al-Qadsiah",
+      "theirs": "Getafe Club de Fútbol S. A. D. Team Dubai",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Qadsiah' vs 'Getafe' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 303219,
@@ -4951,16 +5441,6 @@
       "note": "normalized: 'Botafogo' vs 'Sevilla' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
-      "id": 332,
-      "name": "Benjamin Köhler",
-      "fame": 57.0,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2012",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
       "id": 189441,
       "name": "Lucas Ocampos",
       "fame": 56.99,
@@ -4985,10 +5465,20 @@
       "name": "Chris Mepham",
       "fame": 56.97,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 480987,
+      "name": "Chris Mepham",
+      "fame": 56.97,
+      "field": "current_team",
+      "ours": "West Bromwich Albion",
+      "theirs": "Association Football Club Bournemouth",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'West Brom' vs 'Bournemouth' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 422380,
@@ -5041,16 +5531,6 @@
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
-      "id": 82105,
-      "name": "Joel Matip",
-      "fame": 56.76,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
       "id": 506189,
       "name": "Flynn Downes",
       "fame": 56.76,
@@ -5075,7 +5555,27 @@
       "name": "Jota Silva",
       "fame": 56.52,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 663244,
+      "name": "Jota Silva",
+      "fame": 56.52,
+      "field": "current_team",
+      "ours": "Olympiacos Piraeus",
+      "theirs": "Nottingham Forest Football Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Olympiacos Piraeus' vs 'Nottingham Forest' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 962555,
+      "name": "Abakar Sylla",
+      "fame": 56.52,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5084,8 +5584,18 @@
       "id": 962555,
       "name": "Abakar Sylla",
       "fame": 56.52,
+      "field": "current_team",
+      "ours": "Football Club de Nantes",
+      "theirs": "Racing Club de Strasbourg Alsace",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Nantes' vs 'Strasbourg' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 546213,
+      "name": "Tuta",
+      "fame": 56.42,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5094,29 +5604,19 @@
       "id": 546213,
       "name": "Tuta",
       "fame": 56.42,
+      "field": "current_team",
+      "ours": "Al-Duhail",
+      "theirs": "Eintracht Frankfurt Fußball AG",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Duhail' vs 'Eintracht Frankfurt' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 719442,
+      "name": "David Da Costa",
+      "fame": 56.34,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 29993,
-      "name": "Sven Bender",
-      "fame": 56.4,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2020",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 60444,
-      "name": "Thiago Alcántara",
-      "fame": 56.39,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -5124,8 +5624,18 @@
       "id": 719442,
       "name": "David Da Costa",
       "fame": 56.34,
+      "field": "current_team",
+      "ours": "Portland Timbers",
+      "theirs": "Racing Club de Lens",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Portland Timbers' vs 'Lens' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 392959,
+      "name": "Andrea Colpani",
+      "fame": 56.33,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5134,11 +5644,11 @@
       "id": 392959,
       "name": "Andrea Colpani",
       "fame": 56.33,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "AC Monza",
+      "theirs": "Associazione Calcio Fiorentina",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Monza' vs 'Fiorentina' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 323831,
@@ -5215,10 +5725,20 @@
       "name": "Andy Delort",
       "fame": 56.23,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 122797,
+      "name": "Andy Delort",
+      "fame": 56.23,
+      "field": "current_team",
+      "ours": "AC Ajaccio",
+      "theirs": "Montpellier HSC",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'AC Ajaccio' vs 'Montpellier' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 169880,
@@ -5245,7 +5765,37 @@
       "name": "Mitchel Bakker",
       "fame": 55.99,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
+      "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 361065,
+      "name": "Mitchel Bakker",
+      "fame": 55.99,
+      "field": "current_team",
+      "ours": "Atalanta Bergamasca Calcio S.p.a.",
+      "theirs": "Lille Olympique Sporting Club",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Atalanta' vs 'Lille' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 361065,
+      "name": "Mitchel Bakker",
+      "fame": 55.99,
+      "field": "league",
+      "ours": "Serie A",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
+    },
+    {
+      "id": 148928,
+      "name": "Saúl Ñíguez",
+      "fame": 55.97,
+      "field": "status",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5254,8 +5804,18 @@
       "id": 148928,
       "name": "Saúl Ñíguez",
       "fame": 55.97,
+      "field": "current_team",
+      "ours": "Flamengo",
+      "theirs": "Sevilla Fútbol Club S.A.D.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Flamengo' vs 'Sevilla' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 93720,
+      "name": "Alexandre Lacazette",
+      "fame": 55.95,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5264,18 +5824,18 @@
       "id": 93720,
       "name": "Alexandre Lacazette",
       "fame": 55.95,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Neom Sc",
+      "theirs": "Olympique Lyonnais",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Neom Sc' vs 'Lyon' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 128220,
       "name": "Luis Alberto",
       "fame": 55.94,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5285,10 +5845,10 @@
       "name": "Luis Alberto",
       "fame": 55.94,
       "field": "current_team",
-      "ours": "Al-Duhail",
+      "ours": "Al-Wakrah Sc",
       "theirs": "Società Sportiva Lazio S.p.A.",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Al-Duhail' vs 'Lazio' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+      "note": "normalized: 'Al-Wakrah Sc' vs 'Lazio' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 156617,
@@ -5371,12 +5931,12 @@
       "note": "normalized: 'Paris FC' vs 'Brest' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
-      "id": 62915,
-      "name": "Álvaro Domínguez",
-      "fame": 55.78,
+      "id": 323954,
+      "name": "Walace",
+      "fame": 55.69,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2015",
+      "ours": "active",
+      "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -5384,11 +5944,11 @@
       "id": 323954,
       "name": "Walace",
       "fame": 55.69,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
+      "field": "current_team",
+      "ours": "Esporte Clube Vitória",
+      "theirs": "Udinese Calcio",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Esporte Clube Vitória' vs 'Udinese' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 468002,
@@ -5405,8 +5965,28 @@
       "name": "Marcin Bulka",
       "fame": 55.66,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 465955,
+      "name": "Marcin Bulka",
+      "fame": 55.66,
+      "field": "current_team",
+      "ours": "Neom Sc",
+      "theirs": "Olympique Gymnaste Club Nice Côte d'Azur",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Neom Sc' vs 'Nice' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 58884,
+      "name": "Nacho Fernández",
+      "fame": 55.56,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2023",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -5414,9 +5994,19 @@
       "id": 58884,
       "name": "Nacho Fernández",
       "fame": 55.56,
+      "field": "current_team",
+      "ours": "Al-Qadsiah",
+      "theirs": "Real Madrid Club de Fútbol",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Qadsiah' vs 'Real Madrid' (TM row itself stale: last_season=2023, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 554903,
+      "name": "Mateo Retegui",
+      "fame": 55.55,
       "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2023",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
@@ -5424,8 +6014,18 @@
       "id": 554903,
       "name": "Mateo Retegui",
       "fame": 55.55,
+      "field": "current_team",
+      "ours": "Al-Qadsiah",
+      "theirs": "Atalanta Bergamasca Calcio S.p.a.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Al-Qadsiah' vs 'Atalanta' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 421637,
+      "name": "Frank Onyeka",
+      "fame": 55.43,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5434,8 +6034,28 @@
       "id": 421637,
       "name": "Frank Onyeka",
       "fame": 55.43,
+      "field": "current_team",
+      "ours": "Coventry City",
+      "theirs": "Fußball-Club Augsburg 1907",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Coventry City' vs 'FC Augsburg' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
+    },
+    {
+      "id": 421637,
+      "name": "Frank Onyeka",
+      "fame": 55.43,
+      "field": "league",
+      "ours": "Premier League",
+      "theirs": "Bundesliga",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=L1"
+    },
+    {
+      "id": 250478,
+      "name": "Matt Targett",
+      "fame": 55.39,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
@@ -5444,11 +6064,11 @@
       "id": 250478,
       "name": "Matt Targett",
       "fame": 55.39,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2024",
+      "field": "current_team",
+      "ours": "Middlesbrough FC",
+      "theirs": "Newcastle United Football Club",
       "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+      "note": "normalized: 'Middlesbrough' vs 'Newcastle United' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 585550,
@@ -5465,10 +6085,20 @@
       "name": "Joaquín Correa",
       "fame": 55.27,
       "field": "status",
-      "ours": "null(=active)",
+      "ours": "active",
       "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 227081,
+      "name": "Joaquín Correa",
+      "fame": 55.27,
+      "field": "current_team",
+      "ours": "Botafogo",
+      "theirs": "Football Club Internazionale Milano S.p.A.",
+      "confidence": "exact-corroborated",
+      "note": "normalized: 'Botafogo' vs 'Inter Milan' (TM row itself stale: last_season=2024, TM club likely frozen pre-move — ours may well be the correct one)"
     },
     {
       "id": 49499,
@@ -5489,196 +6119,6 @@
       "theirs": "Associazione Sportiva Roma",
       "confidence": "exact-corroborated",
       "note": "normalized: 'Al-Ettifaq Fc' vs 'Roma' (TM row itself stale: last_season=2022, TM club likely frozen pre-move — ours may well be the correct one)"
-    },
-    {
-      "id": 126716,
-      "name": "Paco Alcácer",
-      "fame": 55.13,
-      "field": "status",
-      "ours": "null(=active)",
-      "theirs": "last_season=2021",
-      "confidence": "exact-corroborated",
-      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 72310,
-      "name": "Javi López",
-      "fame": 49.38,
-      "field": "market_value",
-      "ours": 5000000,
-      "theirs": 200000,
-      "confidence": "exact-corroborated",
-      "note": "0.04x drift (values go stale legitimately)"
-    },
-    {
-      "id": 6107,
-      "name": "Abdoulaye Faye",
-      "fame": 49.32,
-      "field": "league",
-      "ours": "Ligue 1",
-      "theirs": "Premier League",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=GB1"
-    },
-    {
-      "id": 6107,
-      "name": "Abdoulaye Faye",
-      "fame": 49.32,
-      "field": "market_value",
-      "ours": 3000000,
-      "theirs": 250000,
-      "confidence": "exact-corroborated",
-      "note": "0.08x drift (values go stale legitimately)"
-    },
-    {
-      "id": 121756,
-      "name": "Rômulo",
-      "fame": 49.27,
-      "field": "league",
-      "ours": "Bundesliga",
-      "theirs": "Serie A",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=IT1"
-    },
-    {
-      "id": 121756,
-      "name": "Rômulo",
-      "fame": 49.27,
-      "field": "market_value",
-      "ours": 2600000,
-      "theirs": 300000,
-      "confidence": "exact-corroborated",
-      "note": "0.12x drift (values go stale legitimately)"
-    },
-    {
-      "id": 282900,
-      "name": "Pablo Martínez",
-      "fame": 49.23,
-      "field": "league",
-      "ours": "La Liga",
-      "theirs": "Ligue 1",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=FR1"
-    },
-    {
-      "id": 282900,
-      "name": "Pablo Martínez",
-      "fame": 49.23,
-      "field": "market_value",
-      "ours": 2000000,
-      "theirs": 250000,
-      "confidence": "exact-corroborated",
-      "note": "0.12x drift (values go stale legitimately)"
-    },
-    {
-      "id": 160188,
-      "name": "Marcão",
-      "fame": 48.19,
-      "field": "league",
-      "ours": "La Liga",
-      "theirs": "Serie A",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=IT1"
-    },
-    {
-      "id": 160188,
-      "name": "Marcão",
-      "fame": 48.19,
-      "field": "market_value",
-      "ours": 2500000,
-      "theirs": 50000,
-      "confidence": "exact-corroborated",
-      "note": "0.02x drift (values go stale legitimately)"
-    },
-    {
-      "id": 15983,
-      "name": "Juan Rodríguez",
-      "fame": 47.75,
-      "field": "league",
-      "ours": "Serie A",
-      "theirs": "La Liga",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=ES1"
-    },
-    {
-      "id": 15983,
-      "name": "Juan Rodríguez",
-      "fame": 47.75,
-      "field": "market_value",
-      "ours": 1200000,
-      "theirs": 300000,
-      "confidence": "exact-corroborated",
-      "note": "0.25x drift (values go stale legitimately)"
-    },
-    {
-      "id": 169497,
-      "name": "Juan Cruz",
-      "fame": 47.22,
-      "field": "current_team",
-      "ours": "Leganes",
-      "theirs": "Club Atlético Osasuna",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Leganes' vs 'Osasuna'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 27683,
-      "name": "Jesús Vázquez",
-      "fame": 46.59,
-      "field": "market_value",
-      "ours": 3000000,
-      "theirs": 50000,
-      "confidence": "exact-corroborated",
-      "note": "0.02x drift (values go stale legitimately)"
-    },
-    {
-      "id": 124172,
-      "name": "Danny Ward",
-      "fame": 45.61,
-      "field": "market_value",
-      "ours": 5000000,
-      "theirs": 700000,
-      "confidence": "exact-corroborated",
-      "note": "0.14x drift (values go stale legitimately)"
-    },
-    {
-      "id": 472161,
-      "name": "Mamadou Coulibaly",
-      "fame": 44.86,
-      "field": "league",
-      "ours": "Ligue 1",
-      "theirs": "Serie A",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=IT1"
-    },
-    {
-      "id": 472161,
-      "name": "Mamadou Coulibaly",
-      "fame": 44.86,
-      "field": "market_value",
-      "ours": 4000000,
-      "theirs": 1300000,
-      "confidence": "exact-corroborated",
-      "note": "0.33x drift (values go stale legitimately)"
-    },
-    {
-      "id": 126665,
-      "name": "Idrissa Gueye",
-      "fame": 44.56,
-      "field": "current_team",
-      "ours": "Udinese",
-      "theirs": "Everton Football Club",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Udinese' vs 'Everton'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 126665,
-      "name": "Idrissa Gueye",
-      "fame": 44.56,
-      "field": "league",
-      "ours": "Serie A",
-      "theirs": "Premier League",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=GB1"
     },
     {
       "id": 114340,
@@ -5711,24 +6151,14 @@
       "note": "FLAG: TM records a current-season appearance for a player we mark retired"
     },
     {
-      "id": 39073,
-      "name": "Émerson",
-      "fame": 42.09,
-      "field": "market_value",
-      "ours": 12000000,
-      "theirs": 500000,
+      "id": 199341,
+      "name": "Óscar Gil",
+      "fame": 41.42,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2017",
       "confidence": "exact-corroborated",
-      "note": "0.04x drift (values go stale legitimately)"
-    },
-    {
-      "id": 53293,
-      "name": "Manu Fernández",
-      "fame": 41.94,
-      "field": "market_value",
-      "ours": 1500000,
-      "theirs": 300000,
-      "confidence": "exact-corroborated",
-      "note": "0.20x drift (values go stale legitimately)"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
       "id": 199341,
@@ -5751,56 +6181,6 @@
       "note": "TM comp=FR1"
     },
     {
-      "id": 817665,
-      "name": "Pablo",
-      "fame": 41.02,
-      "field": "current_team",
-      "ours": "Clube De Regatas Vasco Da Gama",
-      "theirs": "West Ham United Football Club",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Clube De Regatas Vasco Da Gama' vs 'West Ham United'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 287178,
-      "name": "Rubén Sánchez",
-      "fame": 41.01,
-      "field": "market_value",
-      "ours": 1500000,
-      "theirs": 400000,
-      "confidence": "exact-corroborated",
-      "note": "0.27x drift (values go stale legitimately)"
-    },
-    {
-      "id": 1175410,
-      "name": "Matías Pérez",
-      "fame": 40.1,
-      "field": "current_team",
-      "ours": "Ca Alvarado Ii",
-      "theirs": "Unione Sportiva Lecce",
-      "confidence": "exact-corroborated",
-      "note": "normalized: 'Ca Alvarado Ii' vs 'Lecce'; TM row is current (last_season=2025) so this is real signal"
-    },
-    {
-      "id": 35383,
-      "name": "Júnior Díaz",
-      "fame": 39.71,
-      "field": "league",
-      "ours": "Ligue 1",
-      "theirs": "Bundesliga",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=L1"
-    },
-    {
-      "id": 35383,
-      "name": "Júnior Díaz",
-      "fame": 39.71,
-      "field": "market_value",
-      "ours": 3000000,
-      "theirs": 75000,
-      "confidence": "exact-corroborated",
-      "note": "0.03x drift (values go stale legitimately)"
-    },
-    {
       "id": 627213,
       "name": "Gabriel Pereira",
       "fame": 38.56,
@@ -5821,26 +6201,6 @@
       "note": "0.04x drift (values go stale legitimately)"
     },
     {
-      "id": 76273,
-      "name": "Manu García",
-      "fame": 38.02,
-      "field": "league",
-      "ours": "Super League Greece",
-      "theirs": "La Liga",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=ES1"
-    },
-    {
-      "id": 76273,
-      "name": "Manu García",
-      "fame": 38.02,
-      "field": "market_value",
-      "ours": 2500000,
-      "theirs": 200000,
-      "confidence": "exact-corroborated",
-      "note": "0.08x drift (values go stale legitimately)"
-    },
-    {
       "id": 203655,
       "name": "Cafú",
       "fame": 37.0,
@@ -5849,26 +6209,6 @@
       "theirs": "last_season=2022",
       "confidence": "exact-corroborated",
       "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
-    },
-    {
-      "id": 29178,
-      "name": "Nino",
-      "fame": 36.84,
-      "field": "league",
-      "ours": "Russian Premier League",
-      "theirs": "La Liga",
-      "confidence": "exact-corroborated",
-      "note": "TM comp=ES1"
-    },
-    {
-      "id": 29178,
-      "name": "Nino",
-      "fame": 36.84,
-      "field": "market_value",
-      "ours": 11000000,
-      "theirs": 100000,
-      "confidence": "exact-corroborated",
-      "note": "0.01x drift (values go stale legitimately)"
     },
     {
       "id": 243096,
@@ -5884,21 +6224,21 @@
       "id": 290754,
       "name": "Malick Mbaye",
       "fame": 34.79,
-      "field": "league",
-      "ours": "Belgian Pro League",
-      "theirs": "Serie A",
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2018",
       "confidence": "exact-corroborated",
-      "note": "TM comp=IT1"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
       "id": 290754,
       "name": "Malick Mbaye",
       "fame": 34.79,
-      "field": "market_value",
-      "ours": 500000,
-      "theirs": 125000,
+      "field": "league",
+      "ours": "Belgian Pro League",
+      "theirs": "Serie A",
       "confidence": "exact-corroborated",
-      "note": "0.25x drift (values go stale legitimately)"
+      "note": "TM comp=IT1"
     },
     {
       "id": 146660,
@@ -5931,6 +6271,36 @@
       "note": "0.10x drift (values go stale legitimately)"
     },
     {
+      "id": 124172,
+      "name": "Danny Ward",
+      "fame": 0.0,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2018",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 160188,
+      "name": "Marcão",
+      "fame": 0.0,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2014",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 160188,
+      "name": "Marcão",
+      "fame": 0.0,
+      "field": "league",
+      "ours": "La Liga",
+      "theirs": "Serie A",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=IT1"
+    },
+    {
       "id": 163058,
       "name": "Fabinho",
       "fame": 0.0,
@@ -5944,11 +6314,21 @@
       "id": 227085,
       "name": "Jonas Hofmann",
       "fame": 0.0,
-      "field": "market_value",
-      "ours": 2000000,
-      "theirs": 150000,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2019",
       "confidence": "exact-corroborated",
-      "note": "0.07x drift (values go stale legitimately)"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 275028,
+      "name": "Juan Rodríguez",
+      "fame": 0.0,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2016",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
       "id": 275028,
@@ -5961,24 +6341,64 @@
       "note": "TM comp=ES1"
     },
     {
-      "id": 275028,
-      "name": "Juan Rodríguez",
+      "id": 282900,
+      "name": "Pablo Martínez",
       "fame": 0.0,
-      "field": "market_value",
-      "ours": 1200000,
-      "theirs": 250000,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2020",
       "confidence": "exact-corroborated",
-      "note": "0.21x drift (values go stale legitimately)"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 282900,
+      "name": "Pablo Martínez",
+      "fame": 0.0,
+      "field": "league",
+      "ours": "La Liga",
+      "theirs": "Ligue 1",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=FR1"
+    },
+    {
+      "id": 287178,
+      "name": "Rubén Sánchez",
+      "fame": 0.0,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2016",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 472161,
+      "name": "Mamadou Coulibaly",
+      "fame": 0.0,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2023",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 472161,
+      "name": "Mamadou Coulibaly",
+      "fame": 0.0,
+      "field": "league",
+      "ours": "Ligue 1",
+      "theirs": "Serie A",
+      "confidence": "exact-corroborated",
+      "note": "TM comp=IT1"
     },
     {
       "id": 495600,
       "name": "Álvaro García",
       "fame": 0.0,
-      "field": "market_value",
-      "ours": 1800000,
-      "theirs": 200000,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2021",
       "confidence": "exact-corroborated",
-      "note": "0.11x drift (values go stale legitimately)"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
       "id": 530902,
@@ -6014,21 +6434,21 @@
       "id": 654177,
       "name": "Mamadou Sylla",
       "fame": 0.0,
-      "field": "league",
-      "ours": "La Liga",
-      "theirs": "Premier League",
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2020",
       "confidence": "exact-corroborated",
-      "note": "TM comp=GB1"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
       "id": 654177,
       "name": "Mamadou Sylla",
       "fame": 0.0,
-      "field": "market_value",
-      "ours": 1500000,
-      "theirs": 150000,
+      "field": "league",
+      "ours": "La Liga",
+      "theirs": "Premier League",
       "confidence": "exact-corroborated",
-      "note": "0.10x drift (values go stale legitimately)"
+      "note": "TM comp=GB1"
     },
     {
       "id": 668268,
@@ -6044,6 +6464,16 @@
       "id": 827950,
       "name": "Ousmane Camara",
       "fame": 0.0,
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2022",
+      "confidence": "exact-corroborated",
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
+    },
+    {
+      "id": 827950,
+      "name": "Ousmane Camara",
+      "fame": 0.0,
       "field": "market_value",
       "ours": 1000000,
       "theirs": 150000,
@@ -6051,14 +6481,14 @@
       "note": "0.15x drift (values go stale legitimately)"
     },
     {
-      "id": 947431,
-      "name": "David López",
+      "id": 982848,
+      "name": "Raúl Jiménez",
       "fame": 0.0,
-      "field": "current_team",
-      "ours": "Girona",
-      "theirs": "Real Club Deportivo Mallorca S.A.D.",
+      "field": "status",
+      "ours": "active",
+      "theirs": "last_season=2024",
       "confidence": "exact-corroborated",
-      "note": "normalized: 'Girona' vs 'Mallorca'; TM row is current (last_season=2025) so this is real signal"
+      "note": "FLAG not verdict: TM shows no 2025/26 appearance; verify retirement/inactivity via Wikipedia wave"
     },
     {
       "id": 982848,

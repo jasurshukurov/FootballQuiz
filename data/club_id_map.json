@@ -1,4154 +1,4203 @@
 {
-  "clubs": [
-    {
-      "global_club_id": "fuball-und-sportverein-mainz",
-      "canonical_name": "1. Fußball- und Sportverein Mainz 05",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "fuballclub-koln",
-      "canonical_name": "1. Fußball-Club Köln",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "fuballclub-heidenheim",
-      "canonical_name": "1. Fußballclub Heidenheim 1846",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "fuballclub-union-berlin",
-      "canonical_name": "1. Fußballclub Union Berlin",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "munich",
-      "canonical_name": "1860 Munich",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "aberdeen",
-      "canonical_name": "Aberdeen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "abiola-babes",
-      "canonical_name": "Abiola Babes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "ac-ajaccio",
-      "canonical_name": "AC Ajaccio",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "ac-milan",
-      "canonical_name": "AC Milan",
-      "aliases": [
-        "Associazione Calcio Milan"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "adana-demirspor",
-      "canonical_name": "Adana Demirspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "afc-bournemouth",
-      "canonical_name": "AFC Bournemouth",
-      "aliases": [
-        "Association Football Club Bournemouth",
-        "Bournemouth"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "africa-sports",
-      "canonical_name": "Africa Sports",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "aik",
-      "canonical_name": "AIK",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "ajax",
-      "canonical_name": "Ajax",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "al-ahly",
-      "canonical_name": "Al Ahly",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "al-sadd",
-      "canonical_name": "Al Sadd",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alahli",
-      "canonical_name": "Al-Ahli",
-      "aliases": [
-        "Al Ahli"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alarabi",
-      "canonical_name": "Al-Arabi",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alduhail",
-      "canonical_name": "Al-Duhail",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "algharafa",
-      "canonical_name": "Al-Gharafa",
-      "aliases": [
-        "Al Gharafa"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alhilal",
-      "canonical_name": "Al-Hilal",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alittihad",
-      "canonical_name": "Al-Ittihad",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alnassr",
-      "canonical_name": "Al-Nassr",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alqadsiah",
-      "canonical_name": "Al-Qadsiah",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alrayyan",
-      "canonical_name": "Al-Rayyan",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alshabab",
-      "canonical_name": "Al-Shabab",
-      "aliases": [
-        "Al Shabab"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alwahda",
-      "canonical_name": "Al-Wahda",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "alaves",
-      "canonical_name": "Alaves",
-      "aliases": [
-        "Deportivo Alaves"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "albacete",
-      "canonical_name": "Albacete",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "ales",
-      "canonical_name": "Ales",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "almeria",
-      "canonical_name": "Almeria",
-      "aliases": [
-        "UD Almería"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "america-mineiro",
-      "canonical_name": "America Mineiro",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "amiens",
-      "canonical_name": "Amiens",
-      "aliases": [
-        "Amiens SC"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "anderlecht",
-      "canonical_name": "Anderlecht",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "angers",
-      "canonical_name": "Angers",
-      "aliases": [
-        "Angers Sporting Club de l'Ouest"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "antalyaspor",
-      "canonical_name": "Antalyaspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "antwerp",
-      "canonical_name": "Antwerp",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "anzhi-makhachkala",
-      "canonical_name": "Anzhi Makhachkala",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "argentinos-juniors",
-      "canonical_name": "Argentinos Juniors",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "arlesavignon",
-      "canonical_name": "Arles-Avignon",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "arminia-bielefeld",
-      "canonical_name": "Arminia Bielefeld",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "arsenal",
-      "canonical_name": "Arsenal",
-      "aliases": [
-        "Arsenal Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "as-cannes",
-      "canonical_name": "AS Cannes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "as-monaco",
-      "canonical_name": "AS Monaco",
-      "aliases": [
-        "Association sportive de Monaco Football Club",
-        "Monaco"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "as-roma",
-      "canonical_name": "AS Roma",
-      "aliases": [
-        "Associazione Sportiva Roma",
-        "Roma"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "as-saintetienne",
-      "canonical_name": "AS Saint-Étienne",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "ascoli",
-      "canonical_name": "Ascoli",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "aston-villa",
-      "canonical_name": "Aston Villa",
-      "aliases": [
-        "Aston Villa Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "atalanta",
-      "canonical_name": "Atalanta",
-      "aliases": [
-        "Atalanta Bergamasca Calcio S.p.a."
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "athletic-bilbao",
-      "canonical_name": "Athletic Bilbao",
-      "aliases": [
-        "Athletic Club Bilbao"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "atlanta-united",
-      "canonical_name": "Atlanta United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "atlas",
-      "canonical_name": "Atlas",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "atletico-celaya",
-      "canonical_name": "Atletico Celaya",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "atletico-madrid",
-      "canonical_name": "Atletico Madrid",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "atletico-mineiro",
-      "canonical_name": "Atletico Mineiro",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "atletico-paranaense",
-      "canonical_name": "Atletico Paranaense",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "augsburg",
-      "canonical_name": "Augsburg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "auxerre",
-      "canonical_name": "Auxerre",
-      "aliases": [
-        "Association de la Jeunesse auxerroise"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "avispa-fukuoka",
-      "canonical_name": "Avispa Fukuoka",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bahia",
-      "canonical_name": "Bahia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "banfield",
-      "canonical_name": "Banfield",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "baniyas",
-      "canonical_name": "Baniyas",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "barcelona",
-      "canonical_name": "Barcelona",
-      "aliases": [
-        "FC Barcelona",
-        "Futbol Club Barcelona"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "bari",
-      "canonical_name": "Bari",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "barnsley",
-      "canonical_name": "Barnsley",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "barranquilla",
-      "canonical_name": "Barranquilla",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "basaksehir",
-      "canonical_name": "Basaksehir",
-      "aliases": [
-        "Istanbul Basaksehir"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "basel",
-      "canonical_name": "Basel",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bastia",
-      "canonical_name": "Bastia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bayer-leverkusen-fuball",
-      "canonical_name": "Bayer 04 Leverkusen Fußball",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "bayer-leverkusen",
-      "canonical_name": "Bayer Leverkusen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bayern-munich",
-      "canonical_name": "Bayern Munich",
-      "aliases": [
-        "FC Bayern München"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "beijing-guoan",
-      "canonical_name": "Beijing Guoan",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "belenenses",
-      "canonical_name": "Belenenses",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "belgrano",
-      "canonical_name": "Belgrano",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bellmare-hiratsuka",
-      "canonical_name": "Bellmare Hiratsuka",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "benevento",
-      "canonical_name": "Benevento",
-      "aliases": [
-        "Benevento Calcio"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "benfica",
-      "canonical_name": "Benfica",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "besiktas",
-      "canonical_name": "Besiktas",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "beveren",
-      "canonical_name": "Beveren",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "birmingham-city",
-      "canonical_name": "Birmingham City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "blackburn-rovers",
-      "canonical_name": "Blackburn Rovers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "boavista",
-      "canonical_name": "Boavista",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "boca-juniors",
-      "canonical_name": "Boca Juniors",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bohemians",
-      "canonical_name": "Bohemians",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bologna",
-      "canonical_name": "Bologna",
-      "aliases": [
-        "Bologna Football Club 1909"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "bolton-wanderers",
-      "canonical_name": "Bolton Wanderers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bordeaux",
-      "canonical_name": "Bordeaux",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "borussia-dortmund",
-      "canonical_name": "Borussia Dortmund",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "borussia-monchengladbach",
-      "canonical_name": "Borussia Monchengladbach",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "borussia-neunkirchen",
-      "canonical_name": "Borussia Neunkirchen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "borussia-verein-fur-leibesubungen-monchengladbach",
-      "canonical_name": "Borussia Verein für Leibesübungen 1900 Mönchengladbach",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "boston-minutemen",
-      "canonical_name": "Boston Minutemen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "botafogo",
-      "canonical_name": "Botafogo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "boulogne",
-      "canonical_name": "Boulogne",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "braga",
-      "canonical_name": "Braga",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "brentford",
-      "canonical_name": "Brentford",
-      "aliases": [
-        "Brentford Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "brescia",
-      "canonical_name": "Brescia",
-      "aliases": [
-        "Brescia Calcio"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "brest",
-      "canonical_name": "Brest",
-      "aliases": [
-        "Stade brestois 29"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "brighton-hove-albion",
-      "canonical_name": "Brighton & Hove Albion",
-      "aliases": [
-        "Brighton"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "brighton-and-hove-albion-football-club",
-      "canonical_name": "Brighton and Hove Albion Football Club",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "brondby",
-      "canonical_name": "Brondby",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "bryne",
-      "canonical_name": "Bryne",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "buducnost-podgorica",
-      "canonical_name": "Buducnost Podgorica",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "burnley",
-      "canonical_name": "Burnley",
-      "aliases": [
-        "Burnley Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "cadiz",
-      "canonical_name": "Cadiz",
-      "aliases": [
-        "Cádiz CF"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "caen",
-      "canonical_name": "Caen",
-      "aliases": [
-        "SM Caen"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "cagliari",
-      "canonical_name": "Cagliari",
-      "aliases": [
-        "Cagliari Calcio"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "calcio-como",
-      "canonical_name": "Calcio Como",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "cardiff-city",
-      "canonical_name": "Cardiff City",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "carpi",
-      "canonical_name": "Carpi",
-      "aliases": [
-        "AC Carpi"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "catania-fc",
-      "canonical_name": "Catania FC",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "cavese",
-      "canonical_name": "Cavese",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cd-leganes",
-      "canonical_name": "CD Leganés",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "celta-vigo",
-      "canonical_name": "Celta Vigo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "celtic",
-      "canonical_name": "Celtic",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cerezo-osaka",
-      "canonical_name": "Cerezo Osaka",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cerro-porteno",
-      "canonical_name": "Cerro Porteno",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cesena-fc",
-      "canonical_name": "Cesena FC",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "chamois-niortais",
-      "canonical_name": "Chamois Niortais",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "charleroi",
-      "canonical_name": "Charleroi",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "chelsea",
-      "canonical_name": "Chelsea",
-      "aliases": [
-        "Chelsea Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "chemnitzer-fc",
-      "canonical_name": "Chemnitzer FC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "chennaiyin",
-      "canonical_name": "Chennaiyin",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "chester-city",
-      "canonical_name": "Chester City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "chicago-fire",
-      "canonical_name": "Chicago Fire",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "chievo-verona",
-      "canonical_name": "Chievo Verona",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "chmel-blsany",
-      "canonical_name": "Chmel Blsany",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "clermont-foot",
-      "canonical_name": "Clermont Foot 63",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "club-america",
-      "canonical_name": "Club America",
-      "aliases": [
-        "America"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "club-atletico-de-madrid-sad",
-      "canonical_name": "Club Atlético de Madrid S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "club-brugge",
-      "canonical_name": "Club Brugge",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cobh-ramblers",
-      "canonical_name": "Cobh Ramblers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cobreloa",
-      "canonical_name": "Cobreloa",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "colocolo",
-      "canonical_name": "Colo-Colo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "como",
-      "canonical_name": "Como",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "consadole-sapporo",
-      "canonical_name": "Consadole Sapporo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cordoba-cf",
-      "canonical_name": "Córdoba CF",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "corinthians",
-      "canonical_name": "Corinthians",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "coventry-city",
-      "canonical_name": "Coventry City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cremonese",
-      "canonical_name": "Cremonese",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cruzeiro",
-      "canonical_name": "Cruzeiro",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "crystal-palace",
-      "canonical_name": "Crystal Palace",
-      "aliases": [
-        "Crystal Palace Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "cska-moscow",
-      "canonical_name": "CSKA Moscow",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "cska-sofia",
-      "canonical_name": "CSKA Sofia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dalian-professional",
-      "canonical_name": "Dalian Professional",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "danubio",
-      "canonical_name": "Danubio",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "darmstadt",
-      "canonical_name": "Darmstadt 98",
-      "aliases": [
-        "SV Darmstadt 98"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "dc-united",
-      "canonical_name": "DC United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "defensa-y-justicia",
-      "canonical_name": "Defensa y Justicia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "delfino-pescara",
-      "canonical_name": "Delfino Pescara 1936",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "delhi-dynamos",
-      "canonical_name": "Delhi Dynamos",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "deportivo-alaves-s-a-d",
-      "canonical_name": "Deportivo Alavés S. A. D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "deportivo-de-la-coruna",
-      "canonical_name": "Deportivo de La Coruña",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "deportivo-la-coruna",
-      "canonical_name": "Deportivo La Coruna",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "derby-county",
-      "canonical_name": "Derby County",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dijon",
-      "canonical_name": "Dijon",
-      "aliases": [
-        "Dijon FCO"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "dinamo-bucharest",
-      "canonical_name": "Dinamo Bucharest",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dinamo-tbilisi",
-      "canonical_name": "Dinamo Tbilisi",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dinamo-zagreb",
-      "canonical_name": "Dinamo Zagreb",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "djibouti-telecom",
-      "canonical_name": "Djibouti Telecom",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dulwich-hamlet",
-      "canonical_name": "Dulwich Hamlet",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dundee-united",
-      "canonical_name": "Dundee United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "dynamo-moscow",
-      "canonical_name": "Dynamo Moscow",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "ea-guingamp",
-      "canonical_name": "EA Guingamp",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "eibar",
-      "canonical_name": "Eibar",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "eintracht-braunschweig",
-      "canonical_name": "Eintracht Braunschweig",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "eintracht-frankfurt",
-      "canonical_name": "Eintracht Frankfurt",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "eintracht-frankfurt-fuball-ag",
-      "canonical_name": "Eintracht Frankfurt Fußball AG",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "el-mokawloon",
-      "canonical_name": "El Mokawloon",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "elche-club-de-futbol-sad",
-      "canonical_name": "Elche Club de Fútbol S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "empoli",
-      "canonical_name": "Empoli",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "enugu-rangers",
-      "canonical_name": "Enugu Rangers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "envigado",
-      "canonical_name": "Envigado",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "espanyol",
-      "canonical_name": "Espanyol",
-      "aliases": [
-        "Reial Club Deportiu Espanyol de Barcelona S.A.D."
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "estac-troyes",
-      "canonical_name": "ESTAC Troyes",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "estudiantes",
-      "canonical_name": "Estudiantes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "everton",
-      "canonical_name": "Everton",
-      "aliases": [
-        "Everton Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "exeter-city",
-      "canonical_name": "Exeter City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "eyupspor",
-      "canonical_name": "Eyupspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-copenhagen",
-      "canonical_name": "FC Copenhagen",
-      "aliases": [
-        "Copenhagen"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-crotone",
-      "canonical_name": "FC Crotone",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "fc-dallas",
-      "canonical_name": "FC Dallas",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-empoli",
-      "canonical_name": "FC Empoli",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "fc-girondins-bordeaux",
-      "canonical_name": "FC Girondins Bordeaux",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "fc-goa",
-      "canonical_name": "FC Goa",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-ingolstadt",
-      "canonical_name": "FC Ingolstadt 04",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "fc-sochauxmontbeliard",
-      "canonical_name": "FC Sochaux-Montbéliard",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "fc-tokyo",
-      "canonical_name": "FC Tokyo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-twente",
-      "canonical_name": "FC Twente",
-      "aliases": [
-        "Twente"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-volendam",
-      "canonical_name": "FC Volendam",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fc-zurich",
-      "canonical_name": "FC Zurich",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "felgueiras",
-      "canonical_name": "Felgueiras",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fenerbahce",
-      "canonical_name": "Fenerbahce",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "feyenoord",
-      "canonical_name": "Feyenoord",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "figueirense",
-      "canonical_name": "Figueirense",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fiorentina",
-      "canonical_name": "Fiorentina",
-      "aliases": [
-        "Associazione Calcio Fiorentina"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "flamengo",
-      "canonical_name": "Flamengo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fleetwood-town",
-      "canonical_name": "Fleetwood Town",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "fluminense",
-      "canonical_name": "Fluminense",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "foggia",
-      "canonical_name": "Foggia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "football-club-de-metz",
-      "canonical_name": "Football Club de Metz",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "football-club-de-nantes",
-      "canonical_name": "Football Club de Nantes",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "football-club-lorientbretagne-sud",
-      "canonical_name": "Football Club Lorient-Bretagne Sud",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "fortuna-dusseldorf",
-      "canonical_name": "Fortuna Dusseldorf",
-      "aliases": [
-        "Fortuna Düsseldorf"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "frosinone",
-      "canonical_name": "Frosinone",
-      "aliases": [
-        "Frosinone Calcio"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "fulham",
-      "canonical_name": "Fulham",
-      "aliases": [
-        "Fulham Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "fuballclub-augsburg",
-      "canonical_name": "Fußball-Club Augsburg 1907",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "fuballclub-st-pauli-von",
-      "canonical_name": "Fußball-Club St. Pauli von 1910",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "galatasaray",
-      "canonical_name": "Galatasaray",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "gaziantepspor",
-      "canonical_name": "Gaziantepspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "genk",
-      "canonical_name": "Genk",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "genoa",
-      "canonical_name": "Genoa",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "genoa-cricket-and-football-club",
-      "canonical_name": "Genoa Cricket and Football Club",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "getafe",
-      "canonical_name": "Getafe",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "getafe-club-de-futbol-s-a-d-team-dubai",
-      "canonical_name": "Getafe Club de Fútbol S. A. D. Team Dubai",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "gfc-ajaccio",
-      "canonical_name": "GFC Ajaccio",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "girona",
-      "canonical_name": "Girona",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "girona-futbol-club-s-a-d",
-      "canonical_name": "Girona Fútbol Club S. A. D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "goteborg",
-      "canonical_name": "Goteborg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "granada",
-      "canonical_name": "Granada",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "granada-cf",
-      "canonical_name": "Granada CF",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "gremio",
-      "canonical_name": "Gremio",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "grenoble",
-      "canonical_name": "Grenoble",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "groningen",
-      "canonical_name": "Groningen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "grosseto",
-      "canonical_name": "Grosseto",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "guangzhou-evergrande",
-      "canonical_name": "Guangzhou Evergrande",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "guingamp",
-      "canonical_name": "Guingamp",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hajduk-split",
-      "canonical_name": "Hajduk Split",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "halifax-town",
-      "canonical_name": "Halifax Town",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hamburger-sport-verein",
-      "canonical_name": "Hamburger Sport Verein",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "hamburger-sv",
-      "canonical_name": "Hamburger SV",
-      "aliases": [
-        "Hamburg"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hannover",
-      "canonical_name": "Hannover 96",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "hebei-fc",
-      "canonical_name": "Hebei FC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "heerenveen",
-      "canonical_name": "Heerenveen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hellas-verona",
-      "canonical_name": "Hellas Verona",
-      "aliases": [
-        "Verona"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hercules",
-      "canonical_name": "Hercules",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hereford-united",
-      "canonical_name": "Hereford United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hertha-berlin",
-      "canonical_name": "Hertha Berlin",
-      "aliases": [
-        "Hertha BSC"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "hfc-haarlem",
-      "canonical_name": "HFC Haarlem",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "hibernian",
-      "canonical_name": "Hibernian",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "holstein-kiel",
-      "canonical_name": "Holstein Kiel",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "houston-dynamo",
-      "canonical_name": "Houston Dynamo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "huddersfield-town",
-      "canonical_name": "Huddersfield Town",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "hull-city",
-      "canonical_name": "Hull City",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "ifk-hassleholm",
-      "canonical_name": "IFK Hassleholm",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "independiente",
-      "canonical_name": "Independiente",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "independiente-del-valle",
-      "canonical_name": "Independiente del Valle",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "inter-miami",
-      "canonical_name": "Inter Miami",
-      "aliases": [
-        "Inter Miami CF"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "inter-milan",
-      "canonical_name": "Inter Milan",
-      "aliases": [
-        "Football Club Internazionale Milano S.p.A."
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "interblock",
-      "canonical_name": "Interblock",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "internacional",
-      "canonical_name": "Internacional",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "ipswich-town",
-      "canonical_name": "Ipswich Town",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "istanbulspor",
-      "canonical_name": "Istanbulspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "istres",
-      "canonical_name": "Istres",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "ituano",
-      "canonical_name": "Ituano",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "iwuanyanwu-nationale",
-      "canonical_name": "Iwuanyanwu Nationale",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "jamshedpur",
-      "canonical_name": "Jamshedpur",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "jeonbuk-hyundai-motors",
-      "canonical_name": "Jeonbuk Hyundai Motors",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "julius-berger",
-      "canonical_name": "Julius Berger",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "junior",
-      "canonical_name": "Junior",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "juventus",
-      "canonical_name": "Juventus",
-      "aliases": [
-        "Juventus Football Club"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "kaa-gent",
-      "canonical_name": "KAA Gent",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kaiserslautern",
-      "canonical_name": "Kaiserslautern",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "karlsruher-sc",
-      "canonical_name": "Karlsruher SC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kasimpasa",
-      "canonical_name": "Kasimpasa",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kawasaki-frontale",
-      "canonical_name": "Kawasaki Frontale",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kayserispor",
-      "canonical_name": "Kayserispor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kerala-blasters",
-      "canonical_name": "Kerala Blasters",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kitchee",
-      "canonical_name": "Kitchee",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "kyoto-purple-sanga",
-      "canonical_name": "Kyoto Purple Sanga",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "la-aztecs",
-      "canonical_name": "LA Aztecs",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "la-galaxy",
-      "canonical_name": "LA Galaxy",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lanus",
-      "canonical_name": "Lanus",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "las-palmas",
-      "canonical_name": "Las Palmas",
-      "aliases": [
-        "UD Las Palmas"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "las-vegas-quicksilvers",
-      "canonical_name": "Las Vegas Quicksilvers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lausannesport",
-      "canonical_name": "Lausanne-Sport",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lazio",
-      "canonical_name": "Lazio",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "le-havre",
-      "canonical_name": "Le Havre",
-      "aliases": [
-        "Le Havre Athletic Club"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "le-mans",
-      "canonical_name": "Le Mans",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lech-poznan",
-      "canonical_name": "Lech Poznan",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "leeds-united",
-      "canonical_name": "Leeds United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "leeds-united-association-football-club",
-      "canonical_name": "Leeds United Association Football Club",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "leganes",
-      "canonical_name": "Leganes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "leicester-city",
-      "canonical_name": "Leicester City",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "lens",
-      "canonical_name": "Lens",
-      "aliases": [
-        "Racing Club de Lens"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "leon",
-      "canonical_name": "Leon",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "leopard-douala",
-      "canonical_name": "Leopard Douala",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "levante",
-      "canonical_name": "Levante",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "levante-union-deportiva-sad",
-      "canonical_name": "Levante Unión Deportiva S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "leyton-orient",
-      "canonical_name": "Leyton Orient",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "liefering",
-      "canonical_name": "Liefering",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lille",
-      "canonical_name": "Lille",
-      "aliases": [
-        "Lille Olympique Sporting Club"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "lincoln-city",
-      "canonical_name": "Lincoln City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "liverpool",
-      "canonical_name": "Liverpool",
-      "aliases": [
-        "Liverpool Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "livorno",
-      "canonical_name": "Livorno",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lokomotiv-moscow",
-      "canonical_name": "Lokomotiv Moscow",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "lorient",
-      "canonical_name": "Lorient",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "los-angeles-fc",
-      "canonical_name": "Los Angeles FC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "luton-town",
-      "canonical_name": "Luton Town",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "maidenhead-united",
-      "canonical_name": "Maidenhead United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "malaga",
-      "canonical_name": "Malaga",
-      "aliases": [
-        "Málaga CF"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "mallorca",
-      "canonical_name": "Mallorca",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "malmo",
-      "canonical_name": "Malmo",
-      "aliases": [
-        "Malmo FF"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "manchester-city",
-      "canonical_name": "Manchester City",
-      "aliases": [
-        "Manchester City Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "manchester-united",
-      "canonical_name": "Manchester United",
-      "aliases": [
-        "Manchester United Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "maribor",
-      "canonical_name": "Maribor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "maritimo",
-      "canonical_name": "Maritimo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "marsala",
-      "canonical_name": "Marsala",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "marsonia",
-      "canonical_name": "Marsonia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "martigues",
-      "canonical_name": "Martigues",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "melbourne-city",
-      "canonical_name": "Melbourne City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "melbourne-victory",
-      "canonical_name": "Melbourne Victory",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "metalurh-donetsk",
-      "canonical_name": "Metalurh Donetsk",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "metz",
-      "canonical_name": "Metz",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "middlesbrough",
-      "canonical_name": "Middlesbrough",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "middlesbrough-fc",
-      "canonical_name": "Middlesbrough FC",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "midtjylland",
-      "canonical_name": "Midtjylland",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "millonarios",
-      "canonical_name": "Millonarios",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "millwall",
-      "canonical_name": "Millwall",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "mogi-mirim",
-      "canonical_name": "Mogi Mirim",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "molde",
-      "canonical_name": "Molde",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "montpellier",
-      "canonical_name": "Montpellier",
-      "aliases": [
-        "Montpellier HSC"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "montreal-impact",
-      "canonical_name": "Montreal Impact",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "monza",
-      "canonical_name": "Monza",
-      "aliases": [
-        "AC Monza"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "muangthong-united",
-      "canonical_name": "Muangthong United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "mulhouse",
-      "canonical_name": "Mulhouse",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "mumbai-city",
-      "canonical_name": "Mumbai City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nacional",
-      "canonical_name": "Nacional",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nagoya-grampus",
-      "canonical_name": "Nagoya Grampus",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nancy",
-      "canonical_name": "Nancy",
-      "aliases": [
-        "AS Nancy-Lorraine"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "nantes",
-      "canonical_name": "Nantes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "napoli",
-      "canonical_name": "Napoli",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "new-england-revolution",
-      "canonical_name": "New England Revolution",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "new-york-city-fc",
-      "canonical_name": "New York City FC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "new-york-cosmos",
-      "canonical_name": "New York Cosmos",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "new-york-red-bulls",
-      "canonical_name": "New York Red Bulls",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "newcastle-united",
-      "canonical_name": "Newcastle United",
-      "aliases": [
-        "Newcastle United Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "newells-old-boys",
-      "canonical_name": "Newell's Old Boys",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nice",
-      "canonical_name": "Nice",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nimes",
-      "canonical_name": "Nimes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nimes-olympique",
-      "canonical_name": "Nîmes Olympique",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "nk-zagreb",
-      "canonical_name": "NK Zagreb",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nordsjaelland",
-      "canonical_name": "Nordsjaelland",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "north-queensland-fury",
-      "canonical_name": "North Queensland Fury",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "northampton-town",
-      "canonical_name": "Northampton Town",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "norwich-city",
-      "canonical_name": "Norwich City",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "nottingham-forest",
-      "canonical_name": "Nottingham Forest",
-      "aliases": [
-        "Nottingham Forest Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "notts-county",
-      "canonical_name": "Notts County",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nuorese",
-      "canonical_name": "Nuorese",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "nuremberg",
-      "canonical_name": "Nuremberg",
-      "aliases": [
-        "1.FC Nuremberg"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "nurnberg",
-      "canonical_name": "Nurnberg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "olimpia",
-      "canonical_name": "Olimpia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "olimpija-ljubljana",
-      "canonical_name": "Olimpija Ljubljana",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "olympiacos",
-      "canonical_name": "Olympiacos",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "olympique-gymnaste-club-nice-cote-dazur",
-      "canonical_name": "Olympique Gymnaste Club Nice Côte d'Azur",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "olympique-lyon",
-      "canonical_name": "Olympique Lyon",
-      "aliases": [
-        "Lyon",
-        "Olympique Lyonnais"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "olympique-marseille",
-      "canonical_name": "Olympique Marseille",
-      "aliases": [
-        "Marseille",
-        "Olympique de Marseille"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "orlando-city",
-      "canonical_name": "Orlando City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "orleans",
-      "canonical_name": "Orleans",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "osasuna",
-      "canonical_name": "Osasuna",
-      "aliases": [
-        "Club Atlético Osasuna"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "osijek",
-      "canonical_name": "Osijek",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "oxford-united",
-      "canonical_name": "Oxford United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pachuca",
-      "canonical_name": "Pachuca",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pacos-de-ferreira",
-      "canonical_name": "Pacos de Ferreira",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "paderborn",
-      "canonical_name": "Paderborn",
-      "aliases": [
-        "SC Paderborn 07"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "padova",
-      "canonical_name": "Padova",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "palermo",
-      "canonical_name": "Palermo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "palermo-fc",
-      "canonical_name": "Palermo FC",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "palmeiras",
-      "canonical_name": "Palmeiras",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "panathinaikos",
-      "canonical_name": "Panathinaikos",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "paok",
-      "canonical_name": "PAOK",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "paris-fc",
-      "canonical_name": "Paris FC",
-      "aliases": [
-        "Paris Football Club"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "paris-saintgermain",
-      "canonical_name": "Paris Saint-Germain",
-      "aliases": [
-        "Paris Saint-Germain Football Club"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "parma",
-      "canonical_name": "Parma",
-      "aliases": [
-        "Parma Calcio 1913"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "partizan",
-      "canonical_name": "Partizan",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "penarol",
-      "canonical_name": "Penarol",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "persepolis",
-      "canonical_name": "Persepolis",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "persib-bandung",
-      "canonical_name": "Persib Bandung",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "perth-glory",
-      "canonical_name": "Perth Glory",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "perugia",
-      "canonical_name": "Perugia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pescara",
-      "canonical_name": "Pescara",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "peterborough-united",
-      "canonical_name": "Peterborough United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "phoenix-rising",
-      "canonical_name": "Phoenix Rising",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "piacenza",
-      "canonical_name": "Piacenza",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pisa",
-      "canonical_name": "Pisa",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pisa-sporting-club",
-      "canonical_name": "Pisa Sporting Club",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "platense",
-      "canonical_name": "Platense",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pohang-steelers",
-      "canonical_name": "Pohang Steelers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "porto",
-      "canonical_name": "Porto",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "portsmouth",
-      "canonical_name": "Portsmouth",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "preston-north-end",
-      "canonical_name": "Preston North End",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "proyecto-crecer",
-      "canonical_name": "Proyecto Crecer",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "psv-eindhoven",
-      "canonical_name": "PSV Eindhoven",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pune-city",
-      "canonical_name": "Pune City",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "pyunik",
-      "canonical_name": "Pyunik",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "qatar-sc",
-      "canonical_name": "Qatar SC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "queens-park",
-      "canonical_name": "Queen's Park",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "queens-park-rangers",
-      "canonical_name": "Queens Park Rangers",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "racing-club",
-      "canonical_name": "Racing Club",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "racing-club-de-strasbourg-alsace",
-      "canonical_name": "Racing Club de Strasbourg Alsace",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "rangers",
-      "canonical_name": "Rangers",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rayo-vallecano",
-      "canonical_name": "Rayo Vallecano",
-      "aliases": [
-        "Rayo Vallecano de Madrid S. A. D."
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "rb-leipzig",
-      "canonical_name": "RB Leipzig",
-      "aliases": [
-        "RasenBallsport Leipzig"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "reading",
-      "canonical_name": "Reading",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "reading-fc",
-      "canonical_name": "Reading FC",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "real-betis",
-      "canonical_name": "Real Betis",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "real-betis-balompie-sad",
-      "canonical_name": "Real Betis Balompié S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-club-celta-de-vigo-s-a-d",
-      "canonical_name": "Real Club Celta de Vigo S. A. D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-club-deportivo-mallorca-sad",
-      "canonical_name": "Real Club Deportivo Mallorca S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-madrid",
-      "canonical_name": "Real Madrid",
-      "aliases": [
-        "Real Madrid Club de Fútbol"
-      ],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-madrid-castilla",
-      "canonical_name": "Real Madrid Castilla",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "real-oviedo-sad",
-      "canonical_name": "Real Oviedo S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-sociedad",
-      "canonical_name": "Real Sociedad",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "real-sociedad-de-futbol-sad",
-      "canonical_name": "Real Sociedad de Fútbol S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-tamale-united",
-      "canonical_name": "Real Tamale United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "real-valladolid",
-      "canonical_name": "Real Valladolid",
-      "aliases": [
-        "Valladolid"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "real-valladolid-cf",
-      "canonical_name": "Real Valladolid CF",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "real-zaragoza",
-      "canonical_name": "Real Zaragoza",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "recreativo",
-      "canonical_name": "Recreativo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "red-bull-salzburg",
-      "canonical_name": "Red Bull Salzburg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "red-star-belgrade",
-      "canonical_name": "Red Star Belgrade",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "reims",
-      "canonical_name": "Reims",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rennes",
-      "canonical_name": "Rennes",
-      "aliases": [
-        "Stade Rennais Football Club"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "ribeirao",
-      "canonical_name": "Ribeirao",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "right-to-dream",
-      "canonical_name": "Right to Dream",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rio-ave",
-      "canonical_name": "Rio Ave",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "river-plate",
-      "canonical_name": "River Plate",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rnk-split",
-      "canonical_name": "RNK Split",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "roeselare",
-      "canonical_name": "Roeselare",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rosario-central",
-      "canonical_name": "Rosario Central",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rostov",
-      "canonical_name": "Rostov",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rotherham-united",
-      "canonical_name": "Rotherham United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rubin-kazan",
-      "canonical_name": "Rubin Kazan",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "rustavi",
-      "canonical_name": "Rustavi",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sabah-fa",
-      "canonical_name": "Sabah FA",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sagan-tosu",
-      "canonical_name": "Sagan Tosu",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "saintetienne",
-      "canonical_name": "Saint-Etienne",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "salernitana",
-      "canonical_name": "Salernitana",
-      "aliases": [
-        "US Salernitana 1919"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "salitas",
-      "canonical_name": "Salitas",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sampdoria",
-      "canonical_name": "Sampdoria",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "santos",
-      "canonical_name": "Santos",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sao-paulo",
-      "canonical_name": "Sao Paulo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "saprissa",
-      "canonical_name": "Saprissa",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sassuolo",
-      "canonical_name": "Sassuolo",
-      "aliases": [
-        "Unione Sportiva Sassuolo Calcio"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "sc-bastia",
-      "canonical_name": "SC Bastia",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "sc-freiburg",
-      "canonical_name": "SC Freiburg",
-      "aliases": [
-        "Sport-Club Freiburg"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "schalke",
-      "canonical_name": "Schalke 04",
-      "aliases": [
-        "FC Schalke 04"
-      ],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "scunthorpe-united",
-      "canonical_name": "Scunthorpe United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sd-eibar",
-      "canonical_name": "SD Eibar",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "sd-huesca",
-      "canonical_name": "SD Huesca",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "seattle-sounders",
-      "canonical_name": "Seattle Sounders",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "seoul-eland",
-      "canonical_name": "Seoul E-Land",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sepahan",
-      "canonical_name": "Sepahan",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sevilla",
-      "canonical_name": "Sevilla",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sevilla-futbol-club-sad",
-      "canonical_name": "Sevilla Fútbol Club S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "shakhtar-donetsk",
-      "canonical_name": "Shakhtar Donetsk",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "shanghai-port",
-      "canonical_name": "Shanghai Port",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "shanghai-shenhua",
-      "canonical_name": "Shanghai Shenhua",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sheffield-united",
-      "canonical_name": "Sheffield United",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "sheffield-wednesday",
-      "canonical_name": "Sheffield Wednesday",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "shonan-bellmare",
-      "canonical_name": "Shonan Bellmare",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "shooting-stars",
-      "canonical_name": "Shooting Stars",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "shrewsbury-town",
-      "canonical_name": "Shrewsbury Town",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "siena",
-      "canonical_name": "Siena",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "siena-fc",
-      "canonical_name": "Siena FC",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "sinttruiden",
-      "canonical_name": "Sint-Truiden",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sion",
-      "canonical_name": "Sion",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sivasspor",
-      "canonical_name": "Sivasspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "slavia-prague",
-      "canonical_name": "Slavia Prague",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sochaux",
-      "canonical_name": "Sochaux",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "societa-sportiva-calcio-napoli",
-      "canonical_name": "Società Sportiva Calcio Napoli",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "societa-sportiva-lazio-spa",
-      "canonical_name": "Società Sportiva Lazio S.p.A.",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "southampton",
-      "canonical_name": "Southampton",
-      "aliases": [
-        "Southampton FC"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "spal",
-      "canonical_name": "SPAL",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "sparta-prague",
-      "canonical_name": "Sparta Prague",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "spartak-moscow",
-      "canonical_name": "Spartak Moscow",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "spezia",
-      "canonical_name": "Spezia",
-      "aliases": [
-        "Spezia Calcio"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "sporting-cp",
-      "canonical_name": "Sporting CP",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sporting-gijon",
-      "canonical_name": "Sporting Gijon",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sporting-gijon",
-      "canonical_name": "Sporting Gijón",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "sportul-studentesc",
-      "canonical_name": "Sportul Studentesc",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sportverein-werder-bremen-von",
-      "canonical_name": "Sportverein Werder Bremen von 1899",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "spvgg-greuther-furth",
-      "canonical_name": "SpVgg Greuther Fürth",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "st-pauli",
-      "canonical_name": "St. Pauli",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "stade-brestois",
-      "canonical_name": "Stade Brestois",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "stade-reims",
-      "canonical_name": "Stade Reims",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "steaua-bucharest",
-      "canonical_name": "Steaua Bucharest",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "stockport-county",
-      "canonical_name": "Stockport County",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "stocksbridge-park-steels",
-      "canonical_name": "Stocksbridge Park Steels",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "stoke-city",
-      "canonical_name": "Stoke City",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "strasbourg",
-      "canonical_name": "Strasbourg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "stromsgodset",
-      "canonical_name": "Stromsgodset",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sturm-graz",
-      "canonical_name": "Sturm Graz",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sunderland",
-      "canonical_name": "Sunderland",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sunderland-association-football-club",
-      "canonical_name": "Sunderland Association Football Club",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "swansea-city",
-      "canonical_name": "Swansea City",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "sydney-fc",
-      "canonical_name": "Sydney FC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "sydney-united",
-      "canonical_name": "Sydney United",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "talleres",
-      "canonical_name": "Talleres",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "tersana",
-      "canonical_name": "Tersana",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "thonon-evian-grand-geneve-fc",
-      "canonical_name": "Thonon Évian Grand Genève FC",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "tigres-uanl",
-      "canonical_name": "Tigres UANL",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "tonnerre-yaounde",
-      "canonical_name": "Tonnerre Yaounde",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "torino",
-      "canonical_name": "Torino",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "torino-calcio",
-      "canonical_name": "Torino Calcio",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "toronto-fc",
-      "canonical_name": "Toronto FC",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "toronto-metros",
-      "canonical_name": "Toronto Metros",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "torres",
-      "canonical_name": "Torres",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "tottenham-hotspur",
-      "canonical_name": "Tottenham Hotspur",
-      "aliases": [
-        "Tottenham Hotspur Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "toulouse",
-      "canonical_name": "Toulouse",
-      "aliases": [
-        "Toulouse Football Club"
-      ],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "tours",
-      "canonical_name": "Tours",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "trabzonspor",
-      "canonical_name": "Trabzonspor",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "treviso",
-      "canonical_name": "Treviso",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "troyes",
-      "canonical_name": "Troyes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "tsg-hoffenheim",
-      "canonical_name": "TSG Hoffenheim",
-      "aliases": [
-        "Hoffenheim"
-      ],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "turn-und-sportgemeinschaft-hoffenheim-fuballspielbetriebs",
-      "canonical_name": "Turn- und Sportgemeinschaft 1899 Hoffenheim Fußball-Spielbetriebs",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "uc-sampdoria",
-      "canonical_name": "UC Sampdoria",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "udinese",
-      "canonical_name": "Udinese",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "udinese-calcio",
-      "canonical_name": "Udinese Calcio",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "unam",
-      "canonical_name": "UNAM",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "union-berlin",
-      "canonical_name": "Union Berlin",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "union-saintgilloise",
-      "canonical_name": "Union Saint-Gilloise",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "unione-sportiva-cremonese-spa",
-      "canonical_name": "Unione Sportiva Cremonese S.p.A.",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "unione-sportiva-lecce",
-      "canonical_name": "Unione Sportiva Lecce",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "urawa-red-diamonds",
-      "canonical_name": "Urawa Red Diamonds",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "us-livorno",
-      "canonical_name": "US Livorno 1915",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "utrecht",
-      "canonical_name": "Utrecht",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "valence",
-      "canonical_name": "Valence",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "valencia",
-      "canonical_name": "Valencia",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "valencia-club-de-futbol-s-a-d",
-      "canonical_name": "Valencia Club de Fútbol S. A. D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "valenciennes",
-      "canonical_name": "Valenciennes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "valenciennes-fc",
-      "canonical_name": "Valenciennes FC",
-      "aliases": [],
-      "league": "Ligue 1",
-      "country": "France"
-    },
-    {
-      "global_club_id": "vancouver-whitecaps",
-      "canonical_name": "Vancouver Whitecaps",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vasco-da-gama",
-      "canonical_name": "Vasco da Gama",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "venezia",
-      "canonical_name": "Venezia",
-      "aliases": [
-        "Venezia FC"
-      ],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "verein-fur-bewegungsspiele-stuttgart",
-      "canonical_name": "Verein für Bewegungsspiele Stuttgart 1893",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "verein-fur-leibesubungen-wolfsburg",
-      "canonical_name": "Verein für Leibesübungen Wolfsburg",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "verona-hellas-football-club",
-      "canonical_name": "Verona Hellas Football Club",
-      "aliases": [],
-      "league": "Serie A",
-      "country": "Italy"
-    },
-    {
-      "global_club_id": "vfb-stuttgart",
-      "canonical_name": "VfB Stuttgart",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vfl-bochum",
-      "canonical_name": "VfL Bochum",
-      "aliases": [],
-      "league": "Bundesliga",
-      "country": "Germany"
-    },
-    {
-      "global_club_id": "vfl-wolfsburg",
-      "canonical_name": "VfL Wolfsburg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vicenza",
-      "canonical_name": "Vicenza",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "villarreal",
-      "canonical_name": "Villarreal",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "villarreal-club-de-futbol-sad",
-      "canonical_name": "Villarreal Club de Fútbol S.A.D.",
-      "aliases": [],
-      "league": "La Liga",
-      "country": "Spain"
-    },
-    {
-      "global_club_id": "vissel-kobe",
-      "canonical_name": "Vissel Kobe",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vitesse",
-      "canonical_name": "Vitesse",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vitoria",
-      "canonical_name": "Vitoria",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vitoria-guimaraes",
-      "canonical_name": "Vitoria Guimaraes",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vitoria-setubal",
-      "canonical_name": "Vitoria Setubal",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vojvodina",
-      "canonical_name": "Vojvodina",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "vvvvenlo",
-      "canonical_name": "VVV-Venlo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "washington-diplomats",
-      "canonical_name": "Washington Diplomats",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "watford",
-      "canonical_name": "Watford",
-      "aliases": [
-        "Watford FC"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "werder-bremen",
-      "canonical_name": "Werder Bremen",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "west-bromwich-albion",
-      "canonical_name": "West Bromwich Albion",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "west-ham-united",
-      "canonical_name": "West Ham United",
-      "aliases": [
-        "West Ham United Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "westerlo",
-      "canonical_name": "Westerlo",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "wigan-athletic",
-      "canonical_name": "Wigan Athletic",
-      "aliases": [],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "willem-ii",
-      "canonical_name": "Willem II",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "wolverhampton",
-      "canonical_name": "Wolverhampton",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "wolverhampton-wanderers",
-      "canonical_name": "Wolverhampton Wanderers",
-      "aliases": [
-        "Wolverhampton Wanderers Football Club"
-      ],
-      "league": "Premier League",
-      "country": "England"
-    },
-    {
-      "global_club_id": "wrexham",
-      "canonical_name": "Wrexham",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "zenit-saint-petersburg",
-      "canonical_name": "Zenit Saint Petersburg",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "znicz-pruszkow",
-      "canonical_name": "Znicz Pruszkow",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    },
-    {
-      "global_club_id": "zurich",
-      "canonical_name": "Zurich",
-      "aliases": [],
-      "league": "",
-      "country": ""
-    }
-  ],
-  "stats": {
-    "total_clubs": 566,
-    "total_aliases": 638
+ "clubs": [
+  {
+   "global_club_id": "fuball-und-sportverein-mainz",
+   "canonical_name": "1. Fußball- und Sportverein Mainz 05",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "fuballclub-koln",
+   "canonical_name": "1. Fußball-Club Köln",
+   "aliases": [
+    "FC Köln"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "fuballclub-heidenheim",
+   "canonical_name": "1. Fußballclub Heidenheim 1846",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "fuballclub-union-berlin",
+   "canonical_name": "1. Fußballclub Union Berlin",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "munich",
+   "canonical_name": "1860 Munich",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "aberdeen",
+   "canonical_name": "Aberdeen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "abiola-babes",
+   "canonical_name": "Abiola Babes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "ac-ajaccio",
+   "canonical_name": "AC Ajaccio",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "ac-milan",
+   "canonical_name": "AC Milan",
+   "aliases": [
+    "Associazione Calcio Milan"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "adana-demirspor",
+   "canonical_name": "Adana Demirspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "afc-bournemouth",
+   "canonical_name": "AFC Bournemouth",
+   "aliases": [
+    "Association Football Club Bournemouth",
+    "Bournemouth"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "africa-sports",
+   "canonical_name": "Africa Sports",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "aik",
+   "canonical_name": "AIK",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "ajax",
+   "canonical_name": "Ajax",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "al-ahly",
+   "canonical_name": "Al Ahly",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "al-sadd",
+   "canonical_name": "Al Sadd",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alahli",
+   "canonical_name": "Al-Ahli",
+   "aliases": [
+    "Al Ahli"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alarabi",
+   "canonical_name": "Al-Arabi",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alduhail",
+   "canonical_name": "Al-Duhail",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "algharafa",
+   "canonical_name": "Al-Gharafa",
+   "aliases": [
+    "Al Gharafa"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alhilal",
+   "canonical_name": "Al-Hilal",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alittihad",
+   "canonical_name": "Al-Ittihad",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alnassr",
+   "canonical_name": "Al-Nassr",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alqadsiah",
+   "canonical_name": "Al-Qadsiah",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alrayyan",
+   "canonical_name": "Al-Rayyan",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alshabab",
+   "canonical_name": "Al-Shabab",
+   "aliases": [
+    "Al Shabab"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alwahda",
+   "canonical_name": "Al-Wahda",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "alaves",
+   "canonical_name": "Alaves",
+   "aliases": [
+    "Deportivo Alaves"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "albacete",
+   "canonical_name": "Albacete",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "ales",
+   "canonical_name": "Ales",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "almeria",
+   "canonical_name": "Almeria",
+   "aliases": [
+    "UD Almería"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "america-mineiro",
+   "canonical_name": "America Mineiro",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "amiens",
+   "canonical_name": "Amiens",
+   "aliases": [
+    "Amiens SC"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "anderlecht",
+   "canonical_name": "Anderlecht",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "angers",
+   "canonical_name": "Angers",
+   "aliases": [
+    "Angers Sporting Club de l'Ouest"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "antalyaspor",
+   "canonical_name": "Antalyaspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "antwerp",
+   "canonical_name": "Antwerp",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "anzhi-makhachkala",
+   "canonical_name": "Anzhi Makhachkala",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "argentinos-juniors",
+   "canonical_name": "Argentinos Juniors",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "arlesavignon",
+   "canonical_name": "Arles-Avignon",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "arminia-bielefeld",
+   "canonical_name": "Arminia Bielefeld",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "arsenal",
+   "canonical_name": "Arsenal",
+   "aliases": [
+    "Arsenal Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "as-cannes",
+   "canonical_name": "AS Cannes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "as-monaco",
+   "canonical_name": "AS Monaco",
+   "aliases": [
+    "Association sportive de Monaco Football Club",
+    "Monaco"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "as-roma",
+   "canonical_name": "AS Roma",
+   "aliases": [
+    "Associazione Sportiva Roma",
+    "Roma"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "as-saintetienne",
+   "canonical_name": "AS Saint-Étienne",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "ascoli",
+   "canonical_name": "Ascoli",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "aston-villa",
+   "canonical_name": "Aston Villa",
+   "aliases": [
+    "Aston Villa Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "atalanta",
+   "canonical_name": "Atalanta",
+   "aliases": [
+    "Atalanta Bergamasca Calcio S.p.a."
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "athletic-bilbao",
+   "canonical_name": "Athletic Bilbao",
+   "aliases": [
+    "Athletic Club Bilbao"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "atlanta-united",
+   "canonical_name": "Atlanta United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "atlas",
+   "canonical_name": "Atlas",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "atletico-celaya",
+   "canonical_name": "Atletico Celaya",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "atletico-madrid",
+   "canonical_name": "Atletico Madrid",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "atletico-mineiro",
+   "canonical_name": "Atletico Mineiro",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "atletico-paranaense",
+   "canonical_name": "Atletico Paranaense",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "augsburg",
+   "canonical_name": "Augsburg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "auxerre",
+   "canonical_name": "Auxerre",
+   "aliases": [
+    "Association de la Jeunesse auxerroise"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "avispa-fukuoka",
+   "canonical_name": "Avispa Fukuoka",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bahia",
+   "canonical_name": "Bahia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "banfield",
+   "canonical_name": "Banfield",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "baniyas",
+   "canonical_name": "Baniyas",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "barcelona",
+   "canonical_name": "Barcelona",
+   "aliases": [
+    "FC Barcelona",
+    "Futbol Club Barcelona"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "bari",
+   "canonical_name": "Bari",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "barnsley",
+   "canonical_name": "Barnsley",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "barranquilla",
+   "canonical_name": "Barranquilla",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "basaksehir",
+   "canonical_name": "Basaksehir",
+   "aliases": [
+    "Istanbul Basaksehir"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "basel",
+   "canonical_name": "Basel",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bastia",
+   "canonical_name": "Bastia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bayer-leverkusen-fuball",
+   "canonical_name": "Bayer 04 Leverkusen Fußball",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "bayer-leverkusen",
+   "canonical_name": "Bayer Leverkusen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bayern-munich",
+   "canonical_name": "Bayern Munich",
+   "aliases": [
+    "FC Bayern München"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "beijing-guoan",
+   "canonical_name": "Beijing Guoan",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "belenenses",
+   "canonical_name": "Belenenses",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "belgrano",
+   "canonical_name": "Belgrano",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bellmare-hiratsuka",
+   "canonical_name": "Bellmare Hiratsuka",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "benevento",
+   "canonical_name": "Benevento",
+   "aliases": [
+    "Benevento Calcio"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "benfica",
+   "canonical_name": "Benfica",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "besiktas",
+   "canonical_name": "Besiktas",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "beveren",
+   "canonical_name": "Beveren",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "birmingham-city",
+   "canonical_name": "Birmingham City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "blackburn-rovers",
+   "canonical_name": "Blackburn Rovers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "boavista",
+   "canonical_name": "Boavista",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "boca-juniors",
+   "canonical_name": "Boca Juniors",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bohemians",
+   "canonical_name": "Bohemians",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bologna",
+   "canonical_name": "Bologna",
+   "aliases": [
+    "Bologna Football Club 1909"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "bolton-wanderers",
+   "canonical_name": "Bolton Wanderers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bordeaux",
+   "canonical_name": "Bordeaux",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "borussia-dortmund",
+   "canonical_name": "Borussia Dortmund",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "borussia-monchengladbach",
+   "canonical_name": "Borussia Monchengladbach",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "borussia-neunkirchen",
+   "canonical_name": "Borussia Neunkirchen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "borussia-verein-fur-leibesubungen-monchengladbach",
+   "canonical_name": "Borussia Verein für Leibesübungen 1900 Mönchengladbach",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "boston-minutemen",
+   "canonical_name": "Boston Minutemen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "botafogo",
+   "canonical_name": "Botafogo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "boulogne",
+   "canonical_name": "Boulogne",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "braga",
+   "canonical_name": "Braga",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "brentford",
+   "canonical_name": "Brentford",
+   "aliases": [
+    "Brentford Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "brescia",
+   "canonical_name": "Brescia",
+   "aliases": [
+    "Brescia Calcio"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "brest",
+   "canonical_name": "Brest",
+   "aliases": [
+    "Stade brestois 29"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "brighton-hove-albion",
+   "canonical_name": "Brighton & Hove Albion",
+   "aliases": [
+    "Brighton"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "brighton-and-hove-albion-football-club",
+   "canonical_name": "Brighton and Hove Albion Football Club",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "brondby",
+   "canonical_name": "Brondby",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "bryne",
+   "canonical_name": "Bryne",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "buducnost-podgorica",
+   "canonical_name": "Buducnost Podgorica",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "burnley",
+   "canonical_name": "Burnley",
+   "aliases": [
+    "Burnley Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "cadiz",
+   "canonical_name": "Cadiz",
+   "aliases": [
+    "Cádiz CF"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "caen",
+   "canonical_name": "Caen",
+   "aliases": [
+    "SM Caen"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "cagliari",
+   "canonical_name": "Cagliari",
+   "aliases": [
+    "Cagliari Calcio"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "calcio-como",
+   "canonical_name": "Calcio Como",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "cardiff-city",
+   "canonical_name": "Cardiff City",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "carpi",
+   "canonical_name": "Carpi",
+   "aliases": [
+    "AC Carpi"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "catania-fc",
+   "canonical_name": "Catania FC",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "cavese",
+   "canonical_name": "Cavese",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cd-leganes",
+   "canonical_name": "CD Leganés",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "celta-vigo",
+   "canonical_name": "Celta Vigo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "celtic",
+   "canonical_name": "Celtic",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cerezo-osaka",
+   "canonical_name": "Cerezo Osaka",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cerro-porteno",
+   "canonical_name": "Cerro Porteno",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cesena-fc",
+   "canonical_name": "Cesena FC",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "chamois-niortais",
+   "canonical_name": "Chamois Niortais",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "charleroi",
+   "canonical_name": "Charleroi",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "chelsea",
+   "canonical_name": "Chelsea",
+   "aliases": [
+    "Chelsea Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "chemnitzer-fc",
+   "canonical_name": "Chemnitzer FC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "chennaiyin",
+   "canonical_name": "Chennaiyin",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "chester-city",
+   "canonical_name": "Chester City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "chicago-fire",
+   "canonical_name": "Chicago Fire",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "chievo-verona",
+   "canonical_name": "Chievo Verona",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "chmel-blsany",
+   "canonical_name": "Chmel Blsany",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "clermont-foot",
+   "canonical_name": "Clermont Foot 63",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "club-america",
+   "canonical_name": "Club America",
+   "aliases": [
+    "America"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "club-atletico-de-madrid-sad",
+   "canonical_name": "Club Atlético de Madrid S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "club-brugge",
+   "canonical_name": "Club Brugge",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cobh-ramblers",
+   "canonical_name": "Cobh Ramblers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cobreloa",
+   "canonical_name": "Cobreloa",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "colocolo",
+   "canonical_name": "Colo-Colo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "como",
+   "canonical_name": "Como",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "consadole-sapporo",
+   "canonical_name": "Consadole Sapporo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cordoba-cf",
+   "canonical_name": "Córdoba CF",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "corinthians",
+   "canonical_name": "Corinthians",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "coventry-city",
+   "canonical_name": "Coventry City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cremonese",
+   "canonical_name": "Cremonese",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cruzeiro",
+   "canonical_name": "Cruzeiro",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "crystal-palace",
+   "canonical_name": "Crystal Palace",
+   "aliases": [
+    "Crystal Palace Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "cska-moscow",
+   "canonical_name": "CSKA Moscow",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "cska-sofia",
+   "canonical_name": "CSKA Sofia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dalian-professional",
+   "canonical_name": "Dalian Professional",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "danubio",
+   "canonical_name": "Danubio",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "darmstadt",
+   "canonical_name": "Darmstadt 98",
+   "aliases": [
+    "SV Darmstadt 98"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "dc-united",
+   "canonical_name": "DC United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "defensa-y-justicia",
+   "canonical_name": "Defensa y Justicia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "delfino-pescara",
+   "canonical_name": "Delfino Pescara 1936",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "delhi-dynamos",
+   "canonical_name": "Delhi Dynamos",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "deportivo-alaves-s-a-d",
+   "canonical_name": "Deportivo Alavés S. A. D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "deportivo-de-la-coruna",
+   "canonical_name": "Deportivo de La Coruña",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "deportivo-la-coruna",
+   "canonical_name": "Deportivo La Coruna",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "derby-county",
+   "canonical_name": "Derby County",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dijon",
+   "canonical_name": "Dijon",
+   "aliases": [
+    "Dijon FCO"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "dinamo-bucharest",
+   "canonical_name": "Dinamo Bucharest",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dinamo-tbilisi",
+   "canonical_name": "Dinamo Tbilisi",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dinamo-zagreb",
+   "canonical_name": "Dinamo Zagreb",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "djibouti-telecom",
+   "canonical_name": "Djibouti Telecom",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dulwich-hamlet",
+   "canonical_name": "Dulwich Hamlet",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dundee-united",
+   "canonical_name": "Dundee United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "dynamo-moscow",
+   "canonical_name": "Dynamo Moscow",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "ea-guingamp",
+   "canonical_name": "EA Guingamp",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "eibar",
+   "canonical_name": "Eibar",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "eintracht-braunschweig",
+   "canonical_name": "Eintracht Braunschweig",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "eintracht-frankfurt",
+   "canonical_name": "Eintracht Frankfurt",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "eintracht-frankfurt-fuball-ag",
+   "canonical_name": "Eintracht Frankfurt Fußball AG",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "el-mokawloon",
+   "canonical_name": "El Mokawloon",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "elche-club-de-futbol-sad",
+   "canonical_name": "Elche Club de Fútbol S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "empoli",
+   "canonical_name": "Empoli",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "enugu-rangers",
+   "canonical_name": "Enugu Rangers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "envigado",
+   "canonical_name": "Envigado",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "espanyol",
+   "canonical_name": "Espanyol",
+   "aliases": [
+    "Reial Club Deportiu Espanyol de Barcelona S.A.D."
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "estac-troyes",
+   "canonical_name": "ESTAC Troyes",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "estudiantes",
+   "canonical_name": "Estudiantes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "everton",
+   "canonical_name": "Everton",
+   "aliases": [
+    "Everton Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "exeter-city",
+   "canonical_name": "Exeter City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "eyupspor",
+   "canonical_name": "Eyupspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-copenhagen",
+   "canonical_name": "FC Copenhagen",
+   "aliases": [
+    "Copenhagen"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-crotone",
+   "canonical_name": "FC Crotone",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "fc-dallas",
+   "canonical_name": "FC Dallas",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-empoli",
+   "canonical_name": "FC Empoli",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "fc-girondins-bordeaux",
+   "canonical_name": "FC Girondins Bordeaux",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "fc-goa",
+   "canonical_name": "FC Goa",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-ingolstadt",
+   "canonical_name": "FC Ingolstadt 04",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "fc-sochauxmontbeliard",
+   "canonical_name": "FC Sochaux-Montbéliard",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "fc-tokyo",
+   "canonical_name": "FC Tokyo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-twente",
+   "canonical_name": "FC Twente",
+   "aliases": [
+    "Twente"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-volendam",
+   "canonical_name": "FC Volendam",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fc-zurich",
+   "canonical_name": "FC Zurich",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "felgueiras",
+   "canonical_name": "Felgueiras",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fenerbahce",
+   "canonical_name": "Fenerbahce",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "feyenoord",
+   "canonical_name": "Feyenoord",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "figueirense",
+   "canonical_name": "Figueirense",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fiorentina",
+   "canonical_name": "Fiorentina",
+   "aliases": [
+    "Associazione Calcio Fiorentina"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "flamengo",
+   "canonical_name": "Flamengo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fleetwood-town",
+   "canonical_name": "Fleetwood Town",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "fluminense",
+   "canonical_name": "Fluminense",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "foggia",
+   "canonical_name": "Foggia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "football-club-de-metz",
+   "canonical_name": "Football Club de Metz",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "football-club-de-nantes",
+   "canonical_name": "Football Club de Nantes",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "football-club-lorientbretagne-sud",
+   "canonical_name": "Football Club Lorient-Bretagne Sud",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "fortuna-dusseldorf",
+   "canonical_name": "Fortuna Dusseldorf",
+   "aliases": [
+    "Fortuna Düsseldorf"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "frosinone",
+   "canonical_name": "Frosinone",
+   "aliases": [
+    "Frosinone Calcio"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "fulham",
+   "canonical_name": "Fulham",
+   "aliases": [
+    "Fulham Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "fuballclub-augsburg",
+   "canonical_name": "Fußball-Club Augsburg 1907",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "fuballclub-st-pauli-von",
+   "canonical_name": "Fußball-Club St. Pauli von 1910",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "galatasaray",
+   "canonical_name": "Galatasaray",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "gaziantepspor",
+   "canonical_name": "Gaziantepspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "genk",
+   "canonical_name": "Genk",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "genoa",
+   "canonical_name": "Genoa",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "genoa-cricket-and-football-club",
+   "canonical_name": "Genoa Cricket and Football Club",
+   "aliases": [
+    "Genoa"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "getafe",
+   "canonical_name": "Getafe",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "getafe-club-de-futbol-s-a-d-team-dubai",
+   "canonical_name": "Getafe Club de Fútbol S. A. D. Team Dubai",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "gfc-ajaccio",
+   "canonical_name": "GFC Ajaccio",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "girona",
+   "canonical_name": "Girona",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "girona-futbol-club-s-a-d",
+   "canonical_name": "Girona Fútbol Club S. A. D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "goteborg",
+   "canonical_name": "Goteborg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "granada",
+   "canonical_name": "Granada",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "granada-cf",
+   "canonical_name": "Granada CF",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "gremio",
+   "canonical_name": "Gremio",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "grenoble",
+   "canonical_name": "Grenoble",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "groningen",
+   "canonical_name": "Groningen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "grosseto",
+   "canonical_name": "Grosseto",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "guangzhou-evergrande",
+   "canonical_name": "Guangzhou Evergrande",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "guingamp",
+   "canonical_name": "Guingamp",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hajduk-split",
+   "canonical_name": "Hajduk Split",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "halifax-town",
+   "canonical_name": "Halifax Town",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hamburger-sport-verein",
+   "canonical_name": "Hamburger Sport Verein",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "hamburger-sv",
+   "canonical_name": "Hamburger SV",
+   "aliases": [
+    "Hamburg"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hannover",
+   "canonical_name": "Hannover 96",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "hebei-fc",
+   "canonical_name": "Hebei FC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "heerenveen",
+   "canonical_name": "Heerenveen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hellas-verona",
+   "canonical_name": "Hellas Verona",
+   "aliases": [
+    "Verona"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hercules",
+   "canonical_name": "Hercules",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hereford-united",
+   "canonical_name": "Hereford United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hertha-berlin",
+   "canonical_name": "Hertha Berlin",
+   "aliases": [
+    "Hertha BSC"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "hfc-haarlem",
+   "canonical_name": "HFC Haarlem",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "hibernian",
+   "canonical_name": "Hibernian",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "holstein-kiel",
+   "canonical_name": "Holstein Kiel",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "houston-dynamo",
+   "canonical_name": "Houston Dynamo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "huddersfield-town",
+   "canonical_name": "Huddersfield Town",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "hull-city",
+   "canonical_name": "Hull City",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "ifk-hassleholm",
+   "canonical_name": "IFK Hassleholm",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "independiente",
+   "canonical_name": "Independiente",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "independiente-del-valle",
+   "canonical_name": "Independiente del Valle",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "inter-miami",
+   "canonical_name": "Inter Miami",
+   "aliases": [
+    "Inter Miami CF"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "inter-milan",
+   "canonical_name": "Inter Milan",
+   "aliases": [
+    "Football Club Internazionale Milano S.p.A.",
+    "Inter"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "interblock",
+   "canonical_name": "Interblock",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "internacional",
+   "canonical_name": "Internacional",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "ipswich-town",
+   "canonical_name": "Ipswich Town",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "istanbulspor",
+   "canonical_name": "Istanbulspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "istres",
+   "canonical_name": "Istres",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "ituano",
+   "canonical_name": "Ituano",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "iwuanyanwu-nationale",
+   "canonical_name": "Iwuanyanwu Nationale",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "jamshedpur",
+   "canonical_name": "Jamshedpur",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "jeonbuk-hyundai-motors",
+   "canonical_name": "Jeonbuk Hyundai Motors",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "julius-berger",
+   "canonical_name": "Julius Berger",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "junior",
+   "canonical_name": "Junior",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "juventus",
+   "canonical_name": "Juventus",
+   "aliases": [
+    "Juventus Football Club"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "kaa-gent",
+   "canonical_name": "KAA Gent",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kaiserslautern",
+   "canonical_name": "Kaiserslautern",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "karlsruher-sc",
+   "canonical_name": "Karlsruher SC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kasimpasa",
+   "canonical_name": "Kasimpasa",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kawasaki-frontale",
+   "canonical_name": "Kawasaki Frontale",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kayserispor",
+   "canonical_name": "Kayserispor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kerala-blasters",
+   "canonical_name": "Kerala Blasters",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kitchee",
+   "canonical_name": "Kitchee",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "kyoto-purple-sanga",
+   "canonical_name": "Kyoto Purple Sanga",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "la-aztecs",
+   "canonical_name": "LA Aztecs",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "la-galaxy",
+   "canonical_name": "LA Galaxy",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lanus",
+   "canonical_name": "Lanus",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "las-palmas",
+   "canonical_name": "Las Palmas",
+   "aliases": [
+    "UD Las Palmas"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "las-vegas-quicksilvers",
+   "canonical_name": "Las Vegas Quicksilvers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lausannesport",
+   "canonical_name": "Lausanne-Sport",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lazio",
+   "canonical_name": "Lazio",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "le-havre",
+   "canonical_name": "Le Havre",
+   "aliases": [
+    "Le Havre Athletic Club"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "le-mans",
+   "canonical_name": "Le Mans",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lech-poznan",
+   "canonical_name": "Lech Poznan",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "leeds-united",
+   "canonical_name": "Leeds United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "leeds-united-association-football-club",
+   "canonical_name": "Leeds United Association Football Club",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "leganes",
+   "canonical_name": "Leganes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "leicester-city",
+   "canonical_name": "Leicester City",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "lens",
+   "canonical_name": "Lens",
+   "aliases": [
+    "Racing Club de Lens"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "leon",
+   "canonical_name": "Leon",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "leopard-douala",
+   "canonical_name": "Leopard Douala",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "levante",
+   "canonical_name": "Levante",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "levante-union-deportiva-sad",
+   "canonical_name": "Levante Unión Deportiva S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "leyton-orient",
+   "canonical_name": "Leyton Orient",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "liefering",
+   "canonical_name": "Liefering",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lille",
+   "canonical_name": "Lille",
+   "aliases": [
+    "Lille Olympique Sporting Club"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "lincoln-city",
+   "canonical_name": "Lincoln City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "liverpool",
+   "canonical_name": "Liverpool",
+   "aliases": [
+    "Liverpool Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "livorno",
+   "canonical_name": "Livorno",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lokomotiv-moscow",
+   "canonical_name": "Lokomotiv Moscow",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "lorient",
+   "canonical_name": "Lorient",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "los-angeles-fc",
+   "canonical_name": "Los Angeles FC",
+   "aliases": [
+    "LAFC"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "luton-town",
+   "canonical_name": "Luton Town",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "maidenhead-united",
+   "canonical_name": "Maidenhead United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "malaga",
+   "canonical_name": "Malaga",
+   "aliases": [
+    "Málaga CF"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "mallorca",
+   "canonical_name": "Mallorca",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "malmo",
+   "canonical_name": "Malmo",
+   "aliases": [
+    "Malmo FF"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "manchester-city",
+   "canonical_name": "Manchester City",
+   "aliases": [
+    "Manchester City Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "manchester-united",
+   "canonical_name": "Manchester United",
+   "aliases": [
+    "Manchester United Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "maribor",
+   "canonical_name": "Maribor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "maritimo",
+   "canonical_name": "Maritimo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "marsala",
+   "canonical_name": "Marsala",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "marsonia",
+   "canonical_name": "Marsonia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "martigues",
+   "canonical_name": "Martigues",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "melbourne-city",
+   "canonical_name": "Melbourne City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "melbourne-victory",
+   "canonical_name": "Melbourne Victory",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "metalurh-donetsk",
+   "canonical_name": "Metalurh Donetsk",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "metz",
+   "canonical_name": "Metz",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "middlesbrough",
+   "canonical_name": "Middlesbrough",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "middlesbrough-fc",
+   "canonical_name": "Middlesbrough FC",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "midtjylland",
+   "canonical_name": "Midtjylland",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "millonarios",
+   "canonical_name": "Millonarios",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "millwall",
+   "canonical_name": "Millwall",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "mogi-mirim",
+   "canonical_name": "Mogi Mirim",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "molde",
+   "canonical_name": "Molde",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "montpellier",
+   "canonical_name": "Montpellier",
+   "aliases": [
+    "Montpellier HSC"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "montreal-impact",
+   "canonical_name": "Montreal Impact",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "monza",
+   "canonical_name": "Monza",
+   "aliases": [
+    "AC Monza"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "muangthong-united",
+   "canonical_name": "Muangthong United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "mulhouse",
+   "canonical_name": "Mulhouse",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "mumbai-city",
+   "canonical_name": "Mumbai City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nacional",
+   "canonical_name": "Nacional",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nagoya-grampus",
+   "canonical_name": "Nagoya Grampus",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nancy",
+   "canonical_name": "Nancy",
+   "aliases": [
+    "AS Nancy-Lorraine"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "nantes",
+   "canonical_name": "Nantes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "napoli",
+   "canonical_name": "Napoli",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "new-england-revolution",
+   "canonical_name": "New England Revolution",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "new-york-city-fc",
+   "canonical_name": "New York City FC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "new-york-cosmos",
+   "canonical_name": "New York Cosmos",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "new-york-red-bulls",
+   "canonical_name": "New York Red Bulls",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "newcastle-united",
+   "canonical_name": "Newcastle United",
+   "aliases": [
+    "Newcastle United Football Club",
+    "Newcastle"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "newells-old-boys",
+   "canonical_name": "Newell's Old Boys",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nice",
+   "canonical_name": "Nice",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nimes",
+   "canonical_name": "Nimes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nimes-olympique",
+   "canonical_name": "Nîmes Olympique",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "nk-zagreb",
+   "canonical_name": "NK Zagreb",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nordsjaelland",
+   "canonical_name": "Nordsjaelland",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "north-queensland-fury",
+   "canonical_name": "North Queensland Fury",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "northampton-town",
+   "canonical_name": "Northampton Town",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "norwich-city",
+   "canonical_name": "Norwich City",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "nottingham-forest",
+   "canonical_name": "Nottingham Forest",
+   "aliases": [
+    "Nottingham Forest Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "notts-county",
+   "canonical_name": "Notts County",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nuorese",
+   "canonical_name": "Nuorese",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "nuremberg",
+   "canonical_name": "Nuremberg",
+   "aliases": [
+    "1.FC Nuremberg"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "nurnberg",
+   "canonical_name": "Nurnberg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "olimpia",
+   "canonical_name": "Olimpia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "olimpija-ljubljana",
+   "canonical_name": "Olimpija Ljubljana",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "olympiacos",
+   "canonical_name": "Olympiacos",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "olympique-gymnaste-club-nice-cote-dazur",
+   "canonical_name": "Olympique Gymnaste Club Nice Côte d'Azur",
+   "aliases": [
+    "Nice"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "olympique-lyon",
+   "canonical_name": "Olympique Lyon",
+   "aliases": [
+    "Lyon",
+    "Olympique Lyonnais"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "olympique-marseille",
+   "canonical_name": "Olympique Marseille",
+   "aliases": [
+    "Marseille",
+    "Olympique de Marseille"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "orlando-city",
+   "canonical_name": "Orlando City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "orleans",
+   "canonical_name": "Orleans",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "osasuna",
+   "canonical_name": "Osasuna",
+   "aliases": [
+    "Club Atlético Osasuna"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "osijek",
+   "canonical_name": "Osijek",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "oxford-united",
+   "canonical_name": "Oxford United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pachuca",
+   "canonical_name": "Pachuca",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pacos-de-ferreira",
+   "canonical_name": "Pacos de Ferreira",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "paderborn",
+   "canonical_name": "Paderborn",
+   "aliases": [
+    "SC Paderborn 07"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "padova",
+   "canonical_name": "Padova",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "palermo",
+   "canonical_name": "Palermo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "palermo-fc",
+   "canonical_name": "Palermo FC",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "palmeiras",
+   "canonical_name": "Palmeiras",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "panathinaikos",
+   "canonical_name": "Panathinaikos",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "paok",
+   "canonical_name": "PAOK",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "paris-fc",
+   "canonical_name": "Paris FC",
+   "aliases": [
+    "Paris Football Club"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "paris-saintgermain",
+   "canonical_name": "Paris Saint-Germain",
+   "aliases": [
+    "Paris Saint-Germain Football Club"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "parma",
+   "canonical_name": "Parma",
+   "aliases": [
+    "Parma Calcio 1913"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "partizan",
+   "canonical_name": "Partizan",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "penarol",
+   "canonical_name": "Penarol",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "persepolis",
+   "canonical_name": "Persepolis",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "persib-bandung",
+   "canonical_name": "Persib Bandung",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "perth-glory",
+   "canonical_name": "Perth Glory",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "perugia",
+   "canonical_name": "Perugia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pescara",
+   "canonical_name": "Pescara",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "peterborough-united",
+   "canonical_name": "Peterborough United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "phoenix-rising",
+   "canonical_name": "Phoenix Rising",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "piacenza",
+   "canonical_name": "Piacenza",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pisa",
+   "canonical_name": "Pisa",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pisa-sporting-club",
+   "canonical_name": "Pisa Sporting Club",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "platense",
+   "canonical_name": "Platense",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pohang-steelers",
+   "canonical_name": "Pohang Steelers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "porto",
+   "canonical_name": "Porto",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "portsmouth",
+   "canonical_name": "Portsmouth",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "preston-north-end",
+   "canonical_name": "Preston North End",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "proyecto-crecer",
+   "canonical_name": "Proyecto Crecer",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "psv-eindhoven",
+   "canonical_name": "PSV Eindhoven",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pune-city",
+   "canonical_name": "Pune City",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "pyunik",
+   "canonical_name": "Pyunik",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "qatar-sc",
+   "canonical_name": "Qatar SC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "queens-park",
+   "canonical_name": "Queen's Park",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "queens-park-rangers",
+   "canonical_name": "Queens Park Rangers",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "racing-club",
+   "canonical_name": "Racing Club",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "racing-club-de-strasbourg-alsace",
+   "canonical_name": "Racing Club de Strasbourg Alsace",
+   "aliases": [
+    "Strasbourg"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "rangers",
+   "canonical_name": "Rangers",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rayo-vallecano",
+   "canonical_name": "Rayo Vallecano",
+   "aliases": [
+    "Rayo Vallecano de Madrid S. A. D."
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "rb-leipzig",
+   "canonical_name": "RB Leipzig",
+   "aliases": [
+    "RasenBallsport Leipzig"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "reading",
+   "canonical_name": "Reading",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "reading-fc",
+   "canonical_name": "Reading FC",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "real-betis",
+   "canonical_name": "Real Betis",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "real-betis-balompie-sad",
+   "canonical_name": "Real Betis Balompié S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-club-celta-de-vigo-s-a-d",
+   "canonical_name": "Real Club Celta de Vigo S. A. D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-club-deportivo-mallorca-sad",
+   "canonical_name": "Real Club Deportivo Mallorca S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-madrid",
+   "canonical_name": "Real Madrid",
+   "aliases": [
+    "Real Madrid Club de Fútbol"
+   ],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-madrid-castilla",
+   "canonical_name": "Real Madrid Castilla",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "real-oviedo-sad",
+   "canonical_name": "Real Oviedo S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-sociedad",
+   "canonical_name": "Real Sociedad",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "real-sociedad-de-futbol-sad",
+   "canonical_name": "Real Sociedad de Fútbol S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-tamale-united",
+   "canonical_name": "Real Tamale United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "real-valladolid",
+   "canonical_name": "Real Valladolid",
+   "aliases": [
+    "Valladolid"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "real-valladolid-cf",
+   "canonical_name": "Real Valladolid CF",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "real-zaragoza",
+   "canonical_name": "Real Zaragoza",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "recreativo",
+   "canonical_name": "Recreativo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "red-bull-salzburg",
+   "canonical_name": "Red Bull Salzburg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "red-star-belgrade",
+   "canonical_name": "Red Star Belgrade",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "reims",
+   "canonical_name": "Reims",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rennes",
+   "canonical_name": "Rennes",
+   "aliases": [
+    "Stade Rennais Football Club"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "ribeirao",
+   "canonical_name": "Ribeirao",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "right-to-dream",
+   "canonical_name": "Right to Dream",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rio-ave",
+   "canonical_name": "Rio Ave",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "river-plate",
+   "canonical_name": "River Plate",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rnk-split",
+   "canonical_name": "RNK Split",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "roeselare",
+   "canonical_name": "Roeselare",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rosario-central",
+   "canonical_name": "Rosario Central",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rostov",
+   "canonical_name": "Rostov",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rotherham-united",
+   "canonical_name": "Rotherham United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rubin-kazan",
+   "canonical_name": "Rubin Kazan",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "rustavi",
+   "canonical_name": "Rustavi",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sabah-fa",
+   "canonical_name": "Sabah FA",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sagan-tosu",
+   "canonical_name": "Sagan Tosu",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "saintetienne",
+   "canonical_name": "Saint-Etienne",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "salernitana",
+   "canonical_name": "Salernitana",
+   "aliases": [
+    "US Salernitana 1919"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "salitas",
+   "canonical_name": "Salitas",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sampdoria",
+   "canonical_name": "Sampdoria",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "santos",
+   "canonical_name": "Santos",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sao-paulo",
+   "canonical_name": "Sao Paulo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "saprissa",
+   "canonical_name": "Saprissa",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sassuolo",
+   "canonical_name": "Sassuolo",
+   "aliases": [
+    "Unione Sportiva Sassuolo Calcio"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "sc-bastia",
+   "canonical_name": "SC Bastia",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "sc-freiburg",
+   "canonical_name": "SC Freiburg",
+   "aliases": [
+    "Sport-Club Freiburg"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "schalke",
+   "canonical_name": "Schalke 04",
+   "aliases": [
+    "FC Schalke 04"
+   ],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "scunthorpe-united",
+   "canonical_name": "Scunthorpe United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sd-eibar",
+   "canonical_name": "SD Eibar",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "sd-huesca",
+   "canonical_name": "SD Huesca",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "seattle-sounders",
+   "canonical_name": "Seattle Sounders",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "seoul-eland",
+   "canonical_name": "Seoul E-Land",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sepahan",
+   "canonical_name": "Sepahan",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sevilla",
+   "canonical_name": "Sevilla",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sevilla-futbol-club-sad",
+   "canonical_name": "Sevilla Fútbol Club S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "shakhtar-donetsk",
+   "canonical_name": "Shakhtar Donetsk",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "shanghai-port",
+   "canonical_name": "Shanghai Port",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "shanghai-shenhua",
+   "canonical_name": "Shanghai Shenhua",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sheffield-united",
+   "canonical_name": "Sheffield United",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "sheffield-wednesday",
+   "canonical_name": "Sheffield Wednesday",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "shonan-bellmare",
+   "canonical_name": "Shonan Bellmare",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "shooting-stars",
+   "canonical_name": "Shooting Stars",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "shrewsbury-town",
+   "canonical_name": "Shrewsbury Town",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "siena",
+   "canonical_name": "Siena",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "siena-fc",
+   "canonical_name": "Siena FC",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "sinttruiden",
+   "canonical_name": "Sint-Truiden",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sion",
+   "canonical_name": "Sion",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sivasspor",
+   "canonical_name": "Sivasspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "slavia-prague",
+   "canonical_name": "Slavia Prague",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sochaux",
+   "canonical_name": "Sochaux",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "societa-sportiva-calcio-napoli",
+   "canonical_name": "Società Sportiva Calcio Napoli",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "societa-sportiva-lazio-spa",
+   "canonical_name": "Società Sportiva Lazio S.p.A.",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "southampton",
+   "canonical_name": "Southampton",
+   "aliases": [
+    "Southampton FC"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "spal",
+   "canonical_name": "SPAL",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "sparta-prague",
+   "canonical_name": "Sparta Prague",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "spartak-moscow",
+   "canonical_name": "Spartak Moscow",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "spezia",
+   "canonical_name": "Spezia",
+   "aliases": [
+    "Spezia Calcio"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "sporting-cp",
+   "canonical_name": "Sporting CP",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sporting-gijon",
+   "canonical_name": "Sporting Gijon",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sporting-gijon",
+   "canonical_name": "Sporting Gijón",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "sportul-studentesc",
+   "canonical_name": "Sportul Studentesc",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sportverein-werder-bremen-von",
+   "canonical_name": "Sportverein Werder Bremen von 1899",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "spvgg-greuther-furth",
+   "canonical_name": "SpVgg Greuther Fürth",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "st-pauli",
+   "canonical_name": "St. Pauli",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "stade-brestois",
+   "canonical_name": "Stade Brestois",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "stade-reims",
+   "canonical_name": "Stade Reims",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "steaua-bucharest",
+   "canonical_name": "Steaua Bucharest",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "stockport-county",
+   "canonical_name": "Stockport County",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "stocksbridge-park-steels",
+   "canonical_name": "Stocksbridge Park Steels",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "stoke-city",
+   "canonical_name": "Stoke City",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "strasbourg",
+   "canonical_name": "Strasbourg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "stromsgodset",
+   "canonical_name": "Stromsgodset",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sturm-graz",
+   "canonical_name": "Sturm Graz",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sunderland",
+   "canonical_name": "Sunderland",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sunderland-association-football-club",
+   "canonical_name": "Sunderland Association Football Club",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "swansea-city",
+   "canonical_name": "Swansea City",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "sydney-fc",
+   "canonical_name": "Sydney FC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "sydney-united",
+   "canonical_name": "Sydney United",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "talleres",
+   "canonical_name": "Talleres",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "tersana",
+   "canonical_name": "Tersana",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "thonon-evian-grand-geneve-fc",
+   "canonical_name": "Thonon Évian Grand Genève FC",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "tigres-uanl",
+   "canonical_name": "Tigres UANL",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "tonnerre-yaounde",
+   "canonical_name": "Tonnerre Yaounde",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "torino",
+   "canonical_name": "Torino",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "torino-calcio",
+   "canonical_name": "Torino Calcio",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "toronto-fc",
+   "canonical_name": "Toronto FC",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "toronto-metros",
+   "canonical_name": "Toronto Metros",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "torres",
+   "canonical_name": "Torres",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "tottenham-hotspur",
+   "canonical_name": "Tottenham Hotspur",
+   "aliases": [
+    "Tottenham Hotspur Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "toulouse",
+   "canonical_name": "Toulouse",
+   "aliases": [
+    "Toulouse Football Club"
+   ],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "tours",
+   "canonical_name": "Tours",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "trabzonspor",
+   "canonical_name": "Trabzonspor",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "treviso",
+   "canonical_name": "Treviso",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "troyes",
+   "canonical_name": "Troyes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "tsg-hoffenheim",
+   "canonical_name": "TSG Hoffenheim",
+   "aliases": [
+    "Hoffenheim"
+   ],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "turn-und-sportgemeinschaft-hoffenheim-fuballspielbetriebs",
+   "canonical_name": "Turn- und Sportgemeinschaft 1899 Hoffenheim Fußball-Spielbetriebs",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "uc-sampdoria",
+   "canonical_name": "UC Sampdoria",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "udinese",
+   "canonical_name": "Udinese",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "udinese-calcio",
+   "canonical_name": "Udinese Calcio",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "unam",
+   "canonical_name": "UNAM",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "union-berlin",
+   "canonical_name": "Union Berlin",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "union-saintgilloise",
+   "canonical_name": "Union Saint-Gilloise",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "unione-sportiva-cremonese-spa",
+   "canonical_name": "Unione Sportiva Cremonese S.p.A.",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "unione-sportiva-lecce",
+   "canonical_name": "Unione Sportiva Lecce",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "urawa-red-diamonds",
+   "canonical_name": "Urawa Red Diamonds",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "us-livorno",
+   "canonical_name": "US Livorno 1915",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "utrecht",
+   "canonical_name": "Utrecht",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "valence",
+   "canonical_name": "Valence",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "valencia",
+   "canonical_name": "Valencia",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "valencia-club-de-futbol-s-a-d",
+   "canonical_name": "Valencia Club de Fútbol S. A. D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "valenciennes",
+   "canonical_name": "Valenciennes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "valenciennes-fc",
+   "canonical_name": "Valenciennes FC",
+   "aliases": [],
+   "league": "Ligue 1",
+   "country": "France"
+  },
+  {
+   "global_club_id": "vancouver-whitecaps",
+   "canonical_name": "Vancouver Whitecaps",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vasco-da-gama",
+   "canonical_name": "Vasco da Gama",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "venezia",
+   "canonical_name": "Venezia",
+   "aliases": [
+    "Venezia FC"
+   ],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "verein-fur-bewegungsspiele-stuttgart",
+   "canonical_name": "Verein für Bewegungsspiele Stuttgart 1893",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "verein-fur-leibesubungen-wolfsburg",
+   "canonical_name": "Verein für Leibesübungen Wolfsburg",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "verona-hellas-football-club",
+   "canonical_name": "Verona Hellas Football Club",
+   "aliases": [],
+   "league": "Serie A",
+   "country": "Italy"
+  },
+  {
+   "global_club_id": "vfb-stuttgart",
+   "canonical_name": "VfB Stuttgart",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vfl-bochum",
+   "canonical_name": "VfL Bochum",
+   "aliases": [],
+   "league": "Bundesliga",
+   "country": "Germany"
+  },
+  {
+   "global_club_id": "vfl-wolfsburg",
+   "canonical_name": "VfL Wolfsburg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vicenza",
+   "canonical_name": "Vicenza",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "villarreal",
+   "canonical_name": "Villarreal",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "villarreal-club-de-futbol-sad",
+   "canonical_name": "Villarreal Club de Fútbol S.A.D.",
+   "aliases": [],
+   "league": "La Liga",
+   "country": "Spain"
+  },
+  {
+   "global_club_id": "vissel-kobe",
+   "canonical_name": "Vissel Kobe",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vitesse",
+   "canonical_name": "Vitesse",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vitoria",
+   "canonical_name": "Vitoria",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vitoria-guimaraes",
+   "canonical_name": "Vitoria Guimaraes",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vitoria-setubal",
+   "canonical_name": "Vitoria Setubal",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vojvodina",
+   "canonical_name": "Vojvodina",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "vvvvenlo",
+   "canonical_name": "VVV-Venlo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "washington-diplomats",
+   "canonical_name": "Washington Diplomats",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "watford",
+   "canonical_name": "Watford",
+   "aliases": [
+    "Watford FC"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "werder-bremen",
+   "canonical_name": "Werder Bremen",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "west-bromwich-albion",
+   "canonical_name": "West Bromwich Albion",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "west-ham-united",
+   "canonical_name": "West Ham United",
+   "aliases": [
+    "West Ham United Football Club"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "westerlo",
+   "canonical_name": "Westerlo",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "wigan-athletic",
+   "canonical_name": "Wigan Athletic",
+   "aliases": [],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "willem-ii",
+   "canonical_name": "Willem II",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "wolverhampton",
+   "canonical_name": "Wolverhampton",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "wolverhampton-wanderers",
+   "canonical_name": "Wolverhampton Wanderers",
+   "aliases": [
+    "Wolverhampton Wanderers Football Club",
+    "Wolves"
+   ],
+   "league": "Premier League",
+   "country": "England"
+  },
+  {
+   "global_club_id": "wrexham",
+   "canonical_name": "Wrexham",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "zenit-saint-petersburg",
+   "canonical_name": "Zenit Saint Petersburg",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "znicz-pruszkow",
+   "canonical_name": "Znicz Pruszkow",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "global_club_id": "zurich",
+   "canonical_name": "Zurich",
+   "aliases": [],
+   "league": "",
+   "country": ""
+  },
+  {
+   "canonical_name": "1.Fsv Mainz 05",
+   "aliases": [
+    "Mainz 05"
+   ]
+  },
+  {
+   "canonical_name": "Unam Pumas",
+   "aliases": [
+    "Pumas UNAM"
+   ]
+  },
+  {
+   "canonical_name": "Sk Slavia Prague",
+   "aliases": [
+    "Slavia Prague"
+   ]
+  },
+  {
+   "canonical_name": "Gnk Dinamo Zagreb",
+   "aliases": [
+    "Dinamo Zagreb"
+   ]
+  },
+  {
+   "canonical_name": "RB Salzburg",
+   "aliases": [
+    "Red Bull Salzburg"
+   ]
+  },
+  {
+   "canonical_name": "Al-Diraiyah Fc",
+   "aliases": [
+    "Al-Diriyah"
+   ]
   }
+ ],
+ "stats": {
+  "total_clubs": 566,
+  "total_aliases": 638
+ }
 }

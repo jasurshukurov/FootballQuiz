@@ -1,0 +1,4655 @@
+[
+ {
+  "id": 8198,
+  "name": "Cristiano Ronaldo",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 28003,
+  "name": "Lionel Messi",
+  "status": "active",
+  "current_team": "Inter Miami",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 68290,
+  "name": "Neymar",
+  "status": "active",
+  "current_team": "Santos",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 38253,
+  "name": "Robert Lewandowski",
+  "status": "active",
+  "current_team": "Chicago Fire",
+  "league": null,
+  "market_value_eur": 4000000,
+  "retired_year": null
+ },
+ {
+  "id": 148455,
+  "name": "Mohamed Salah",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 48280,
+  "name": "Edinson Cavani",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 1000000,
+  "retired_year": null
+ },
+ {
+  "id": 18922,
+  "name": "Karim Benzema",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 25557,
+  "name": "Sergio Ramos",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 2000000,
+  "retired_year": null
+ },
+ {
+  "id": 44352,
+  "name": "Luis Suárez",
+  "status": "active",
+  "current_team": "Inter Miami",
+  "league": null,
+  "market_value_eur": 3000000,
+  "retired_year": null
+ },
+ {
+  "id": 125781,
+  "name": "Antoine Griezmann",
+  "status": "active",
+  "current_team": "Orlando City",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 58358,
+  "name": "Thomas Müller",
+  "status": "active",
+  "current_team": "Vancouver Whitecaps",
+  "league": null,
+  "market_value_eur": 3000000,
+  "retired_year": null
+ },
+ {
+  "id": 200512,
+  "name": "Sadio Mané",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 91845,
+  "name": "Heung-min Son",
+  "status": "active",
+  "current_team": "Los Angeles FC",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 16306,
+  "name": "Casemiro",
+  "status": "active",
+  "current_team": "Inter Miami",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 52920,
+  "name": "Marcelo",
+  "status": "retired",
+  "current_team": "Fluminense",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2025
+ },
+ {
+  "id": 164770,
+  "name": "Raphaël Varane",
+  "status": "retired",
+  "current_team": "Como",
+  "league": "Serie A",
+  "market_value_eur": 0,
+  "retired_year": 2024
+ },
+ {
+  "id": 1600024,
+  "name": "Raheem Sterling",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 7980,
+  "name": "David Villa",
+  "status": "retired",
+  "current_team": "Vissel Kobe",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2019
+ },
+ {
+  "id": 39153,
+  "name": "Gonzalo Higuaín",
+  "status": "retired",
+  "current_team": "Inter Miami",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2022
+ },
+ {
+  "id": 2514,
+  "name": "Bastian Schweinsteiger",
+  "status": "retired",
+  "current_team": "Chicago Fire",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2019
+ },
+ {
+  "id": 69633,
+  "name": "Christian Eriksen",
+  "status": "active",
+  "current_team": "Wolfsburg",
+  "league": null,
+  "market_value_eur": 4000000,
+  "retired_year": null
+ },
+ {
+  "id": 1600030,
+  "name": "Ilkay Gundogan",
+  "status": "active",
+  "current_team": "Galatasaray",
+  "league": null,
+  "market_value_eur": 5000000,
+  "retired_year": null
+ },
+ {
+  "id": 8806,
+  "name": "Cesc Fàbregas",
+  "status": "retired",
+  "current_team": "Como",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2023
+ },
+ {
+  "id": 3160,
+  "name": "John Terry",
+  "status": "retired",
+  "current_team": "Aston Villa",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2018
+ },
+ {
+  "id": 40433,
+  "name": "Alexis Sánchez",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 1000000,
+  "retired_year": null
+ },
+ {
+  "id": 39152,
+  "name": "Radamel Falcao",
+  "status": "active",
+  "current_team": "Millonarios",
+  "league": null,
+  "market_value_eur": 300000,
+  "retired_year": null
+ },
+ {
+  "id": 69751,
+  "name": "Jordi Alba",
+  "status": "retired",
+  "current_team": "Inter Miami",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2025
+ },
+ {
+  "id": 35207,
+  "name": "Marco Reus",
+  "status": "active",
+  "current_team": "LA Galaxy",
+  "league": null,
+  "market_value_eur": 4000000,
+  "retired_year": null
+ },
+ {
+  "id": 29035,
+  "name": "Ederson",
+  "status": "active",
+  "current_team": "Fenerbahce",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 17965,
+  "name": "Hugo Lloris",
+  "status": "active",
+  "current_team": "LAFC",
+  "league": null,
+  "market_value_eur": 1000000,
+  "retired_year": null
+ },
+ {
+  "id": 171424,
+  "name": "Riyad Mahrez",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 182712,
+  "name": "João Cancelo",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 37666,
+  "name": "Arturo Vidal",
+  "status": "active",
+  "current_team": "Colo-Colo",
+  "league": null,
+  "market_value_eur": 700000,
+  "retired_year": null
+ },
+ {
+  "id": 462250,
+  "name": "João Félix",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 32000000,
+  "retired_year": null
+ },
+ {
+  "id": 1600038,
+  "name": "Yaya Toure",
+  "status": "retired",
+  "current_team": "Qingdao Huanghai",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2020
+ },
+ {
+  "id": 3182,
+  "name": "Ashley Cole",
+  "status": "retired",
+  "current_team": "Derby County",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2019
+ },
+ {
+  "id": 4673,
+  "name": "Wesley Sneijder",
+  "status": "retired",
+  "current_team": "Al-Gharafa",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2019
+ },
+ {
+  "id": 444523,
+  "name": "Lucas Paquetá",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 19981,
+  "name": "Javier Mascherano",
+  "status": "retired",
+  "current_team": "Estudiantes",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2020
+ },
+ {
+  "id": 546543,
+  "name": "Darwin Núñez",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 79422,
+  "name": "Keylor Navas",
+  "status": "active",
+  "current_team": "Pumas UNAM",
+  "league": null,
+  "market_value_eur": 750000,
+  "retired_year": null
+ },
+ {
+  "id": 167850,
+  "name": "Memphis Depay",
+  "status": "active",
+  "current_team": "Corinthians",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 197838,
+  "name": "Jamie Vardy",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 300000,
+  "retired_year": null
+ },
+ {
+  "id": 914562,
+  "name": "Désiré Doué",
+  "status": "active",
+  "current_team": "Paris Saint-Germain",
+  "league": "Ligue 1",
+  "market_value_eur": 90000000,
+  "retired_year": null
+ },
+ {
+  "id": 198008,
+  "name": "André Silva",
+  "status": "active",
+  "current_team": "FC Porto",
+  "league": "Primeira Liga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 225693,
+  "name": "Fabinho",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 44779,
+  "name": "Diego Costa",
+  "status": "retired",
+  "current_team": "Gremio",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2026
+ },
+ {
+  "id": 735570,
+  "name": "João Gomes",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 140206,
+  "name": "Ladislav Krejci",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 525247,
+  "name": "Maximilian Kilman",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 1111589,
+  "name": "El Hadji Malick Diouf",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 26485,
+  "name": "Jérôme Boateng",
+  "status": "retired",
+  "current_team": "LASK",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2025
+ },
+ {
+  "id": 1600067,
+  "name": "Andre Onana",
+  "status": "active",
+  "current_team": "Trabzonspor",
+  "league": null,
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 75615,
+  "name": "Douglas Costa",
+  "status": "active",
+  "current_team": "Chievo Verona",
+  "league": null,
+  "market_value_eur": 400000,
+  "retired_year": null
+ },
+ {
+  "id": 146854,
+  "name": "Wissam Ben Yedder",
+  "status": "active",
+  "current_team": "Wydad AC",
+  "league": null,
+  "market_value_eur": 1200000,
+  "retired_year": null
+ },
+ {
+  "id": 1600072,
+  "name": "Tim Cahill",
+  "status": "retired",
+  "current_team": "Jamshedpur FC",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2019
+ },
+ {
+  "id": 670681,
+  "name": "João Neves",
+  "status": "active",
+  "current_team": "Paris Saint-Germain",
+  "league": "Ligue 1",
+  "market_value_eur": 90000000,
+  "retired_year": null
+ },
+ {
+  "id": 80351,
+  "name": "Josip Ilicic",
+  "status": "active",
+  "current_team": "FC Koper",
+  "league": null,
+  "market_value_eur": 250000,
+  "retired_year": null
+ },
+ {
+  "id": 3966,
+  "name": "Djibril Cissé",
+  "status": "retired",
+  "current_team": "Yverdon Sport",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2018
+ },
+ {
+  "id": 357498,
+  "name": "Dušan Vlahović",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 45000000,
+  "retired_year": null
+ },
+ {
+  "id": 357162,
+  "name": "Florentino",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 943837,
+  "name": "Vitor Roque",
+  "status": "active",
+  "current_team": "Palmeiras",
+  "league": null,
+  "market_value_eur": 50000000,
+  "retired_year": null
+ },
+ {
+  "id": 46741,
+  "name": "David Luiz",
+  "status": "active",
+  "current_team": "Pafos FC",
+  "league": null,
+  "market_value_eur": 500000,
+  "retired_year": null
+ },
+ {
+  "id": 93128,
+  "name": "Kalidou Koulibaly",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 474701,
+  "name": "Crysencio Summerville",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 15799,
+  "name": "Santi Cazorla",
+  "status": "retired",
+  "current_team": "Real Oviedo",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2026
+ },
+ {
+  "id": 842341,
+  "name": "Maxime Estève",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 32000000,
+  "retired_year": null
+ },
+ {
+  "id": 51152,
+  "name": "Aleksandar Mitrović",
+  "status": "active",
+  "current_team": "Al-Rayyan",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 215,
+  "name": "Roque Santa Cruz",
+  "status": "active",
+  "current_team": "Club Nacional",
+  "league": null,
+  "market_value_eur": 100000,
+  "retired_year": null
+ },
+ {
+  "id": 401173,
+  "name": "Jadon Sancho",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 13000000,
+  "retired_year": null
+ },
+ {
+  "id": 808509,
+  "name": "Danilo",
+  "status": "active",
+  "current_team": "Botafogo",
+  "league": null,
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 131789,
+  "name": "Roberto Firmino",
+  "status": "active",
+  "current_team": "Al-Sadd",
+  "league": null,
+  "market_value_eur": 4000000,
+  "retired_year": null
+ },
+ {
+  "id": 569366,
+  "name": "Enzo Millot",
+  "status": "active",
+  "current_team": "Al-Ahli",
+  "league": null,
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 5285,
+  "name": "Patrice Evra",
+  "status": "retired",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2019
+ },
+ {
+  "id": 746910,
+  "name": "Mohamed Amoura",
+  "status": "active",
+  "current_team": "VfL Wolfsburg",
+  "league": null,
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 80444,
+  "name": "Philippe Coutinho",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 2500000,
+  "retired_year": null
+ },
+ {
+  "id": 418543,
+  "name": "Perr Schuurs",
+  "status": "active",
+  "current_team": "NEC Nijmegen",
+  "league": null,
+  "market_value_eur": 5000000,
+  "retired_year": null
+ },
+ {
+  "id": 133964,
+  "name": "Lorenzo Insigne",
+  "status": "active",
+  "current_team": "Sampdoria",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 845654,
+  "name": "Kenan Yıldız",
+  "status": "active",
+  "current_team": "Juventus",
+  "league": "Serie A",
+  "market_value_eur": 75000000,
+  "retired_year": null
+ },
+ {
+  "id": 461883,
+  "name": "Calvin Bassey",
+  "status": "active",
+  "current_team": "Fulham",
+  "league": "Premier League",
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 867688,
+  "name": "Jack Hinshelwood",
+  "status": "active",
+  "current_team": "Brighton and Hove Albion",
+  "league": "Premier League",
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 574671,
+  "name": "Strahinja Pavlović",
+  "status": "active",
+  "current_team": "AC Milan",
+  "league": "Serie A",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 578392,
+  "name": "Maximilian Beier",
+  "status": "active",
+  "current_team": "Borussia Dortmund",
+  "league": "Bundesliga",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 353892,
+  "name": "Hiroki Ito",
+  "status": "active",
+  "current_team": "Bayern Munich",
+  "league": "Bundesliga",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 349701,
+  "name": "Antonee Robinson",
+  "status": "active",
+  "current_team": "Fulham",
+  "league": "Premier League",
+  "market_value_eur": 30000000,
+  "retired_year": null
+ },
+ {
+  "id": 623570,
+  "name": "Iliman Ndiaye",
+  "status": "active",
+  "current_team": "Everton",
+  "league": "Premier League",
+  "market_value_eur": 45000000,
+  "retired_year": null
+ },
+ {
+  "id": 763079,
+  "name": "Abdukodir Khusanov",
+  "status": "active",
+  "current_team": "Manchester City",
+  "league": "Premier League",
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 541231,
+  "name": "Sepp van den Berg",
+  "status": "active",
+  "current_team": "Brentford",
+  "league": "Premier League",
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 403151,
+  "name": "Robert Sánchez",
+  "status": "active",
+  "current_team": "Chelsea",
+  "league": "Premier League",
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 745200,
+  "name": "Maghnes Akliouche",
+  "status": "active",
+  "current_team": "Monaco",
+  "league": "Ligue 1",
+  "market_value_eur": 45000000,
+  "retired_year": null
+ },
+ {
+  "id": 557149,
+  "name": "Kang-in Lee",
+  "status": "active",
+  "current_team": "Paris Saint-Germain",
+  "league": "Ligue 1",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 646750,
+  "name": "Cristhian Mosquera",
+  "status": "active",
+  "current_team": "Arsenal",
+  "league": "Premier League",
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 153084,
+  "name": "Leon Goretzka",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 157509,
+  "name": "Kurt Zouma",
+  "status": "active",
+  "current_team": "Palm City FC",
+  "league": null,
+  "market_value_eur": 2000000,
+  "retired_year": null
+ },
+ {
+  "id": 776890,
+  "name": "Nicolas Jackson",
+  "status": "active",
+  "current_team": "Chelsea",
+  "league": "Premier League",
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 132,
+  "name": "Tomas Rosicky",
+  "status": "retired",
+  "current_team": "Sparta Prague",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2017
+ },
+ {
+  "id": 469781,
+  "name": "Marcos Senesi",
+  "status": "active",
+  "current_team": "Tottenham Hotspur",
+  "league": "Premier League",
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 43907,
+  "name": "André-Pierre Gignac",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 1200000,
+  "retired_year": null
+ },
+ {
+  "id": 666234,
+  "name": "Mohamed Simakan",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 606718,
+  "name": "Toti",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 537860,
+  "name": "Mykhaylo Mudryk",
+  "status": "active",
+  "current_team": "Chelsea",
+  "league": "Premier League",
+  "market_value_eur": 5000000,
+  "retired_year": null
+ },
+ {
+  "id": 4276,
+  "name": "Carlos Tevez",
+  "status": "retired",
+  "current_team": "Boca Juniors",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2021
+ },
+ {
+  "id": 225161,
+  "name": "Rúben Neves",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 513245,
+  "name": "Jesper Lindstrøm",
+  "status": "active",
+  "current_team": "Napoli",
+  "league": "Serie A",
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 659543,
+  "name": "Matthis Abline",
+  "status": "active",
+  "current_team": "Nantes",
+  "league": null,
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 559328,
+  "name": "Emmanuel Emegha",
+  "status": "active",
+  "current_team": "Chelsea",
+  "league": "Premier League",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 500689,
+  "name": "Evann Guessand",
+  "status": "active",
+  "current_team": "Aston Villa",
+  "league": "Premier League",
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 95424,
+  "name": "Kyle Walker",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 2500000,
+  "retired_year": null
+ },
+ {
+  "id": 187492,
+  "name": "Julian Brandt",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 32467,
+  "name": "Ivan Rakitic",
+  "status": "retired",
+  "current_team": "Hajduk Split",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2025
+ },
+ {
+  "id": 503977,
+  "name": "Taylor Harwood-Bellis",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 800176,
+  "name": "André",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 691892,
+  "name": "Nathaniel Brown",
+  "status": "active",
+  "current_team": "Bayern Munich",
+  "league": "Bundesliga",
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 524481,
+  "name": "Roger Ibañez",
+  "status": "active",
+  "current_team": "Al-Ahli",
+  "league": null,
+  "market_value_eur": 28000000,
+  "retired_year": null
+ },
+ {
+  "id": 694928,
+  "name": "Samuel Lino",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 30000000,
+  "retired_year": null
+ },
+ {
+  "id": 532826,
+  "name": "Mason Greenwood",
+  "status": "active",
+  "current_team": "Fenerbahce",
+  "league": null,
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 52769,
+  "name": "Willian",
+  "status": "active",
+  "current_team": "Gremio",
+  "league": null,
+  "market_value_eur": 3000000,
+  "retired_year": null
+ },
+ {
+  "id": 85314,
+  "name": "Oscar",
+  "status": "retired",
+  "current_team": "São Paulo",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2026
+ },
+ {
+  "id": 487969,
+  "name": "Randal Kolo Muani",
+  "status": "active",
+  "current_team": "Paris Saint-Germain",
+  "league": "Ligue 1",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 203496,
+  "name": "Nabil Fekir",
+  "status": "active",
+  "current_team": "Al-Jazira",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 572265,
+  "name": "Lorenzo Lucca",
+  "status": "active",
+  "current_team": "Napoli",
+  "league": "Serie A",
+  "market_value_eur": 30000000,
+  "retired_year": null
+ },
+ {
+  "id": 605184,
+  "name": "Jean-Clair Todibo",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 23000000,
+  "retired_year": null
+ },
+ {
+  "id": 102558,
+  "name": "Marco Verratti",
+  "status": "active",
+  "current_team": "Al-Duhail",
+  "league": null,
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 711999,
+  "name": "Lesley Ugochukwu",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 432895,
+  "name": "Pedro",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 22000000,
+  "retired_year": null
+ },
+ {
+  "id": 648046,
+  "name": "Evan Ferguson",
+  "status": "active",
+  "current_team": "Brighton",
+  "league": "Premier League",
+  "market_value_eur": 45000000,
+  "retired_year": null
+ },
+ {
+  "id": 357119,
+  "name": "Ibrahima Konaté",
+  "status": "active",
+  "current_team": "Real Madrid",
+  "league": "La Liga",
+  "market_value_eur": 50000000,
+  "retired_year": null
+ },
+ {
+  "id": 205562,
+  "name": "Thomas Lemar",
+  "status": "active",
+  "current_team": "Atlético Madrid",
+  "league": "La Liga",
+  "market_value_eur": 2000000,
+  "retired_year": null
+ },
+ {
+  "id": 745181,
+  "name": "Soungoutou Magassa",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 17000000,
+  "retired_year": null
+ },
+ {
+  "id": 144028,
+  "name": "Leandro Trossard",
+  "status": "active",
+  "current_team": "Besiktas",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 243714,
+  "name": "Kingsley Coman",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 50000000,
+  "retired_year": null
+ },
+ {
+  "id": 170986,
+  "name": "Raphaël Guerreiro",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 339808,
+  "name": "Theo Hernández",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 60000000,
+  "retired_year": null
+ },
+ {
+  "id": 329145,
+  "name": "Diego Carlos",
+  "status": "active",
+  "current_team": "Fenerbahce",
+  "league": null,
+  "market_value_eur": 16000000,
+  "retired_year": null
+ },
+ {
+  "id": 617060,
+  "name": "Mika Mármol",
+  "status": "active",
+  "current_team": "Feyenoord",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 266807,
+  "name": "Ángel Correa",
+  "status": "active",
+  "current_team": "Tigres UANL",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 467623,
+  "name": "Lyle Foster",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 207834,
+  "name": "Bono",
+  "status": "active",
+  "current_team": "Al-Hilal",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 266359,
+  "name": "Benjamin Bourigeaud",
+  "status": "active",
+  "current_team": "Al-Duhail",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 466801,
+  "name": "Sergi Altimira",
+  "status": "active",
+  "current_team": "Sporting CP",
+  "league": "Primeira Liga",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 500054,
+  "name": "David Jurásek",
+  "status": "active",
+  "current_team": "Slavia Prague",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 1064471,
+  "name": "Fer López",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 16000000,
+  "retired_year": null
+ },
+ {
+  "id": 475410,
+  "name": "Matteo Tramoni",
+  "status": "active",
+  "current_team": "Pisa",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 392770,
+  "name": "Angel Gomes",
+  "status": "active",
+  "current_team": "Marseille",
+  "league": "Ligue 1",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 203394,
+  "name": "Andreas Pereira",
+  "status": "active",
+  "current_team": "Palmeiras",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 255906,
+  "name": "Scott McKenna",
+  "status": "active",
+  "current_team": "Dinamo Zagreb",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 834397,
+  "name": "Mike Penders",
+  "status": "active",
+  "current_team": "Chelsea",
+  "league": "Premier League",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 400536,
+  "name": "Mads Hermansen",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 307924,
+  "name": "Mergim Berisha",
+  "status": "active",
+  "current_team": "1. FC Kaiserslautern",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 331511,
+  "name": "Riqui Puig",
+  "status": "active",
+  "current_team": "LA Galaxy",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 457673,
+  "name": "Gabriel Strefezza",
+  "status": "active",
+  "current_team": "Olympiacos",
+  "league": "Super League Greece",
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 564529,
+  "name": "Victor Kristiansen",
+  "status": "active",
+  "current_team": "Panathinaikos",
+  "league": "Super League Greece",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 1004834,
+  "name": "George Ilenikhena",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 449592,
+  "name": "Cameron Puertas",
+  "status": "active",
+  "current_team": "Al-Qadsiah",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 684210,
+  "name": "Jaidon Anthony",
+  "status": "active",
+  "current_team": "Brentford",
+  "league": "Premier League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 251664,
+  "name": "Ivan Toney",
+  "status": "active",
+  "current_team": "Al-Ahli",
+  "league": null,
+  "market_value_eur": 50000000,
+  "retired_year": null
+ },
+ {
+  "id": 671649,
+  "name": "Álvaro Djaló",
+  "status": "active",
+  "current_team": "Athletic Bilbao",
+  "league": "La Liga",
+  "market_value_eur": 4500000,
+  "retired_year": null
+ },
+ {
+  "id": 293569,
+  "name": "Josh Brownhill",
+  "status": "active",
+  "current_team": "Al Shabab",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 398402,
+  "name": "Sam Surridge",
+  "status": "active",
+  "current_team": "Nashville SC",
+  "league": null,
+  "market_value_eur": 5500000,
+  "retired_year": null
+ },
+ {
+  "id": 417346,
+  "name": "Jack Harrison",
+  "status": "active",
+  "current_team": "Leeds United",
+  "league": "Premier League",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 272642,
+  "name": "Allan Saint-Maximin",
+  "status": "active",
+  "current_team": "Charlotte FC",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 159372,
+  "name": "Felipe Anderson",
+  "status": "active",
+  "current_team": "Palmeiras",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 181378,
+  "name": "Gaëtan Laborde",
+  "status": "active",
+  "current_team": "Al-Diriyah",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 282429,
+  "name": "Sergio Reguilón",
+  "status": "active",
+  "current_team": "Inter Miami",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 1067904,
+  "name": "Bazoumana Touré",
+  "status": "active",
+  "current_team": "Newcastle United",
+  "league": "Premier League",
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 353366,
+  "name": "Benjamin Pavard",
+  "status": "active",
+  "current_team": "Inter Milan",
+  "league": "Serie A",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 426192,
+  "name": "Ben Brereton Díaz",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 59016,
+  "name": "David Alaba",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 410708,
+  "name": "Pascal Struijk",
+  "status": "active",
+  "current_team": "Brighton",
+  "league": "Premier League",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 1004301,
+  "name": "Jérémy Jacquet",
+  "status": "active",
+  "current_team": "Liverpool",
+  "league": "Premier League",
+  "market_value_eur": 40000000,
+  "retired_year": null
+ },
+ {
+  "id": 395693,
+  "name": "Houssem Aouar",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 533662,
+  "name": "Cameron Archer",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 13000000,
+  "retired_year": null
+ },
+ {
+  "id": 255450,
+  "name": "Aleksey Miranchuk",
+  "status": "active",
+  "current_team": "Atlanta United",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 716276,
+  "name": "Yerson Mosquera",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 935231,
+  "name": "Víctor Muñoz",
+  "status": "active",
+  "current_team": "Liverpool",
+  "league": "Premier League",
+  "market_value_eur": 25000000,
+  "retired_year": null
+ },
+ {
+  "id": 415912,
+  "name": "Konstantinos Mavropanos",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 466268,
+  "name": "Juan Brunetta",
+  "status": "active",
+  "current_team": "Tigres UANL",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 514285,
+  "name": "Quilindschy Hartman",
+  "status": "active",
+  "current_team": "Espanyol",
+  "league": "La Liga",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 1061282,
+  "name": "Assane Diao",
+  "status": "active",
+  "current_team": "Como",
+  "league": "Serie A",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 645774,
+  "name": "Eren Dinkçi",
+  "status": "active",
+  "current_team": "SC Freiburg",
+  "league": "Bundesliga",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 272999,
+  "name": "Miguel Almirón",
+  "status": "active",
+  "current_team": "Atlanta United",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 442531,
+  "name": "Edouard Mendy",
+  "status": "active",
+  "current_team": "Al-Ahli",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 140776,
+  "name": "Yannick Carrasco",
+  "status": "active",
+  "current_team": "Al Shabab",
+  "league": null,
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 414908,
+  "name": "Marshall Munetsi",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 120629,
+  "name": "Alphonse Areola",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 229005,
+  "name": "Abdou Diallo",
+  "status": "active",
+  "current_team": "Umm Salal",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 849520,
+  "name": "Santiago Castro",
+  "status": "active",
+  "current_team": "Bologna",
+  "league": "Serie A",
+  "market_value_eur": 30000000,
+  "retired_year": null
+ },
+ {
+  "id": 433049,
+  "name": "Youssef En-Nesyri",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 255744,
+  "name": "Samir Caetano",
+  "status": "active",
+  "current_team": "Al-Najma",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 125103,
+  "name": "Marvin Ducksch",
+  "status": "active",
+  "current_team": "Birmingham City",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 242606,
+  "name": "Josh Cullen",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 631821,
+  "name": "Vladyslav Vanat",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 607224,
+  "name": "Hannibal",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 197747,
+  "name": "Alessio Romagnoli",
+  "status": "active",
+  "current_team": "Al-Sadd",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 303116,
+  "name": "Gaetano Castrovilli",
+  "status": "active",
+  "current_team": "Cesena",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 537762,
+  "name": "Sergio Arribas",
+  "status": "active",
+  "current_team": "Almería",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 709372,
+  "name": "Carlos Romero",
+  "status": "active",
+  "current_team": "Villarreal",
+  "league": "La Liga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 892160,
+  "name": "Luka Vuskovic",
+  "status": "active",
+  "current_team": "Brighton & Hove Albion",
+  "league": "Premier League",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 340325,
+  "name": "Reiss Nelson",
+  "status": "active",
+  "current_team": "Arsenal",
+  "league": "Premier League",
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 548650,
+  "name": "Osman Bukari",
+  "status": "active",
+  "current_team": "Widzew Lodz",
+  "league": null,
+  "market_value_eur": 6500000,
+  "retired_year": null
+ },
+ {
+  "id": 522784,
+  "name": "Taty Castellanos",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 400489,
+  "name": "Eljif Elmas",
+  "status": "active",
+  "current_team": "RB Leipzig",
+  "league": "Bundesliga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 81999,
+  "name": "Joselu",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 5000000,
+  "retired_year": null
+ },
+ {
+  "id": 246963,
+  "name": "Carlton Morris",
+  "status": "active",
+  "current_team": "Derby County",
+  "league": null,
+  "market_value_eur": 13000000,
+  "retired_year": null
+ },
+ {
+  "id": 423436,
+  "name": "Santiago Ascacíbar",
+  "status": "active",
+  "current_team": "Boca Juniors",
+  "league": null,
+  "market_value_eur": 5500000,
+  "retired_year": null
+ },
+ {
+  "id": 542586,
+  "name": "Illan Meslier",
+  "status": "active",
+  "current_team": "Arsenal",
+  "league": "Premier League",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 698678,
+  "name": "Hugo Bueno",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 292818,
+  "name": "Jonathan Bamba",
+  "status": "active",
+  "current_team": "Chicago Fire",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 747951,
+  "name": "Shea Charles",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 413032,
+  "name": "Ibrahima Diallo",
+  "status": "active",
+  "current_team": "Al-Khor SC",
+  "league": null,
+  "market_value_eur": 6500000,
+  "retired_year": null
+ },
+ {
+  "id": 212847,
+  "name": "Adam Webster",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 357156,
+  "name": "Diogo Leite",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 17000000,
+  "retired_year": null
+ },
+ {
+  "id": 548729,
+  "name": "Zeki Amdouni",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 282041,
+  "name": "Presnel Kimpembe",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 428791,
+  "name": "Paulinho",
+  "status": "active",
+  "current_team": "Palmeiras",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 537602,
+  "name": "João Mário",
+  "status": "active",
+  "current_team": "Juventus",
+  "league": "Serie A",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 568006,
+  "name": "Dennis Cirkin",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 283170,
+  "name": "Iñaki Peña",
+  "status": "active",
+  "current_team": "Panathinaikos",
+  "league": "Super League Greece",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 134294,
+  "name": "Danny Ings",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 365172,
+  "name": "Patson Daka",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 420210,
+  "name": "Lutsharel Geertruida",
+  "status": "active",
+  "current_team": "RB Leipzig",
+  "league": "Bundesliga",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 683571,
+  "name": "Tolu Arokodare",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 183318,
+  "name": "Jamaal Lascelles",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 166237,
+  "name": "Leandro Paredes",
+  "status": "active",
+  "current_team": "Boca Juniors",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 287579,
+  "name": "Sofyan Amrabat",
+  "status": "active",
+  "current_team": "Fenerbahce",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 127156,
+  "name": "Téji Savanier",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 249730,
+  "name": "Guillermo Maripán",
+  "status": "active",
+  "current_team": "Internacional",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 309110,
+  "name": "Brais Méndez",
+  "status": "active",
+  "current_team": "Columbus Crew",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 743598,
+  "name": "Ângelo",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 620313,
+  "name": "Lucas Gourna-Douath",
+  "status": "active",
+  "current_team": "Red Bull Salzburg",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 234523,
+  "name": "Antonio Sanabria",
+  "status": "active",
+  "current_team": "Cremonese",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 249126,
+  "name": "Harry Winks",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 264372,
+  "name": "Viktor Tsygankov",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 571743,
+  "name": "Armando Broja",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 319900,
+  "name": "Elijah Adebayo",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 787618,
+  "name": "Valentín Carboni",
+  "status": "active",
+  "current_team": "Racing Club",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 552549,
+  "name": "Matheus Henrique",
+  "status": "active",
+  "current_team": "Cruzeiro",
+  "league": null,
+  "market_value_eur": 8500000,
+  "retired_year": null
+ },
+ {
+  "id": 386455,
+  "name": "Riccardo Sottil",
+  "status": "active",
+  "current_team": "Fiorentina",
+  "league": "Serie A",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 467563,
+  "name": "Armel Bella-Kotchap",
+  "status": "active",
+  "current_team": "Hellas Verona",
+  "league": null,
+  "market_value_eur": 7500000,
+  "retired_year": null
+ },
+ {
+  "id": 860992,
+  "name": "Nicolás Valentini",
+  "status": "active",
+  "current_team": "Hellas Verona",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 477758,
+  "name": "Aaron Wan-Bissaka",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 507344,
+  "name": "Becir Omeragic",
+  "status": "active",
+  "current_team": "FC Basel",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 537598,
+  "name": "Fábio Vieira",
+  "status": "active",
+  "current_team": "Arsenal",
+  "league": "Premier League",
+  "market_value_eur": 17000000,
+  "retired_year": null
+ },
+ {
+  "id": 234781,
+  "name": "Maxwel Cornet",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 433183,
+  "name": "Tommy Doyle",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 410425,
+  "name": "Yves Bissouma",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 290532,
+  "name": "Saïd Benrahma",
+  "status": "active",
+  "current_team": "Neom SC",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 919515,
+  "name": "Jeanuël Belocian",
+  "status": "active",
+  "current_team": "Bayer Leverkusen",
+  "league": "Bundesliga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 406638,
+  "name": "Oliver Skipp",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 181579,
+  "name": "James Ward-Prowse",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 340328,
+  "name": "Stephy Mavididi",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 666547,
+  "name": "Zito Luvumbo",
+  "status": "active",
+  "current_team": "Cagliari",
+  "league": "Serie A",
+  "market_value_eur": 7500000,
+  "retired_year": null
+ },
+ {
+  "id": 826224,
+  "name": "Arnau Martínez",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 562049,
+  "name": "Edoardo Bove",
+  "status": "active",
+  "current_team": "Watford",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 660860,
+  "name": "Diego Coppola",
+  "status": "active",
+  "current_team": "Paris FC",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 146310,
+  "name": "Wataru Endo",
+  "status": "active",
+  "current_team": "Liverpool",
+  "league": "Premier League",
+  "market_value_eur": 5000000,
+  "retired_year": null
+ },
+ {
+  "id": 170527,
+  "name": "Timo Werner",
+  "status": "active",
+  "current_team": "San Jose Earthquakes",
+  "league": null,
+  "market_value_eur": 17000000,
+  "retired_year": null
+ },
+ {
+  "id": 552057,
+  "name": "Adam Hlozek",
+  "status": "active",
+  "current_team": "Hoffenheim",
+  "league": "Bundesliga",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 707274,
+  "name": "César Tárrega",
+  "status": "active",
+  "current_team": "Valencia",
+  "league": "La Liga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 696589,
+  "name": "Tim Iroegbunam",
+  "status": "active",
+  "current_team": "Everton",
+  "league": "Premier League",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 698164,
+  "name": "Freddie Potts",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": "Premier League",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 1185888,
+  "name": "Ibrahim Mbaye",
+  "status": "active",
+  "current_team": "Paris Saint-Germain",
+  "league": "Ligue 1",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 331505,
+  "name": "Óscar Mingueza",
+  "status": "active",
+  "current_team": "Crystal Palace",
+  "league": "Premier League",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 485960,
+  "name": "Lilian Brassier",
+  "status": "active",
+  "current_team": "Rennes",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 655217,
+  "name": "Samson Baidoo",
+  "status": "active",
+  "current_team": "Lens",
+  "league": "Ligue 1",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 125714,
+  "name": "Mark Flekken",
+  "status": "active",
+  "current_team": "Bayer Leverkusen",
+  "league": "Bundesliga",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 361093,
+  "name": "Sven Botman",
+  "status": "active",
+  "current_team": "Newcastle United",
+  "league": "Premier League",
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 552425,
+  "name": "Jon Moncayola",
+  "status": "active",
+  "current_team": "Osasuna",
+  "league": "La Liga",
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 705395,
+  "name": "Gerard Martín",
+  "status": "active",
+  "current_team": "Barcelona",
+  "league": "La Liga",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 596122,
+  "name": "Pep Chavarría",
+  "status": "active",
+  "current_team": "Rayo Vallecano",
+  "league": "La Liga",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 1127730,
+  "name": "Thiago Fernández",
+  "status": "active",
+  "current_team": "Villarreal",
+  "league": "La Liga",
+  "market_value_eur": 6500000,
+  "retired_year": null
+ },
+ {
+  "id": 221025,
+  "name": "André Gomes",
+  "status": "active",
+  "current_team": "Columbus Crew",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 288225,
+  "name": "Ludovic Blas",
+  "status": "active",
+  "current_team": "Rennes",
+  "league": "Ligue 1",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 504148,
+  "name": "Tariq Lamptey",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 511550,
+  "name": "Ellis Simms",
+  "status": "active",
+  "current_team": "Coventry City",
+  "league": "Premier League",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 608175,
+  "name": "Alfie Doughty",
+  "status": "active",
+  "current_team": "Millwall",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 843286,
+  "name": "Felipe Loyola",
+  "status": "active",
+  "current_team": "Pisa",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 404950,
+  "name": "Nicolas Seiwald",
+  "status": "active",
+  "current_team": "RB Leipzig",
+  "league": "Bundesliga",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 564545,
+  "name": "Edmond Tapsoba",
+  "status": "active",
+  "current_team": "Bayer Leverkusen",
+  "league": "Bundesliga",
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 570421,
+  "name": "Nico Melamed",
+  "status": "active",
+  "current_team": "Almeria",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 391004,
+  "name": "Jonas Wind",
+  "status": "active",
+  "current_team": "Braga",
+  "league": "Primeira Liga",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 563963,
+  "name": "Mohammed Salisu",
+  "status": "active",
+  "current_team": "Monaco",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 377042,
+  "name": "Michael Folorunsho",
+  "status": "active",
+  "current_team": "Napoli",
+  "league": "Serie A",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 128901,
+  "name": "Conor Coady",
+  "status": "active",
+  "current_team": "Wrexham",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 197929,
+  "name": "Ivan Provedel",
+  "status": "active",
+  "current_team": "Inter Milan",
+  "league": "Serie A",
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 455181,
+  "name": "Jorge de Frutos",
+  "status": "active",
+  "current_team": "Rayo Vallecano",
+  "league": "La Liga",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 616631,
+  "name": "Matteo Ruggeri",
+  "status": "active",
+  "current_team": "Atletico Madrid",
+  "league": "La Liga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 618341,
+  "name": "Mario Gila",
+  "status": "active",
+  "current_team": "AC Milan",
+  "league": "Serie A",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 108725,
+  "name": "Chris Wood",
+  "status": "active",
+  "current_team": "Nottingham Forest",
+  "league": "Premier League",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 435485,
+  "name": "Luiz Araújo",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 370683,
+  "name": "Andreas Hanche-Olsen",
+  "status": "active",
+  "current_team": "Mainz 05",
+  "league": "Bundesliga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 487843,
+  "name": "Lorenzo Colombo",
+  "status": "active",
+  "current_team": "Genoa",
+  "league": "Serie A",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 609556,
+  "name": "William Osula",
+  "status": "active",
+  "current_team": "Newcastle United",
+  "league": "Premier League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 673492,
+  "name": "Morato",
+  "status": "active",
+  "current_team": "Nottingham Forest",
+  "league": "Premier League",
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 185077,
+  "name": "Vincenzo Grifo",
+  "status": "active",
+  "current_team": "Freiburg",
+  "league": "Bundesliga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 392538,
+  "name": "Tommaso Pobega",
+  "status": "active",
+  "current_team": "Bologna",
+  "league": "Serie A",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 490384,
+  "name": "Koni De Winter",
+  "status": "active",
+  "current_team": "AC Milan",
+  "league": "Serie A",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 332889,
+  "name": "Valentin Rongier",
+  "status": "active",
+  "current_team": "Rennes",
+  "league": "Ligue 1",
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 465717,
+  "name": "Jayden Bogle",
+  "status": "active",
+  "current_team": "Leeds United",
+  "league": "Premier League",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 892221,
+  "name": "Hugo Sotelo",
+  "status": "active",
+  "current_team": "Celta Vigo",
+  "league": "La Liga",
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 358003,
+  "name": "Simone Canestrelli",
+  "status": "active",
+  "current_team": "Pisa",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 588426,
+  "name": "Saúl Coco",
+  "status": "active",
+  "current_team": "Torino",
+  "league": "Serie A",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 713644,
+  "name": "Bryan Zaragoza",
+  "status": "active",
+  "current_team": "Bayern Munich",
+  "league": "Bundesliga",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 652054,
+  "name": "Martin Vitík",
+  "status": "active",
+  "current_team": "Bologna",
+  "league": "Serie A",
+  "market_value_eur": 13000000,
+  "retired_year": null
+ },
+ {
+  "id": 358032,
+  "name": "Cyril Ngonge",
+  "status": "active",
+  "current_team": "Napoli",
+  "league": "Serie A",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 543382,
+  "name": "Mohamed Camara",
+  "status": "active",
+  "current_team": "Al-Sadd",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 816585,
+  "name": "Can Uzun",
+  "status": "active",
+  "current_team": "Eintracht Frankfurt",
+  "league": "Bundesliga",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 223974,
+  "name": "Stefan Posch",
+  "status": "active",
+  "current_team": "Como",
+  "league": "Serie A",
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 308279,
+  "name": "Rolando Mandragora",
+  "status": "active",
+  "current_team": "Fiorentina",
+  "league": "Serie A",
+  "market_value_eur": 8500000,
+  "retired_year": null
+ },
+ {
+  "id": 357885,
+  "name": "Pablo Fornals",
+  "status": "active",
+  "current_team": "Real Betis",
+  "league": "La Liga",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 579930,
+  "name": "Armand Laurienté",
+  "status": "active",
+  "current_team": "Sassuolo",
+  "league": "Serie A",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 362842,
+  "name": "Arthur Melo",
+  "status": "active",
+  "current_team": "Gremio",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 820241,
+  "name": "Damion Downs",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 236981,
+  "name": "Timo Hübers",
+  "status": "active",
+  "current_team": "FC Köln",
+  "league": "Bundesliga",
+  "market_value_eur": 7500000,
+  "retired_year": null
+ },
+ {
+  "id": 571607,
+  "name": "Fabio Miretti",
+  "status": "active",
+  "current_team": "Juventus",
+  "league": "Serie A",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 481675,
+  "name": "Christos Mandas",
+  "status": "active",
+  "current_team": "Lazio",
+  "league": "Serie A",
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 607226,
+  "name": "Loum Tchaouna",
+  "status": "active",
+  "current_team": "Coventry City",
+  "league": "Premier League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 355627,
+  "name": "Sergio Akieme",
+  "status": "active",
+  "current_team": "Reims",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 85789,
+  "name": "Martin Hinteregger",
+  "status": "retired",
+  "current_team": "SGA Sirnitz",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2022
+ },
+ {
+  "id": 167799,
+  "name": "Pierre-Emile Højbjerg",
+  "status": "active",
+  "current_team": "Marseille",
+  "league": "Ligue 1",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 415035,
+  "name": "Koki Machida",
+  "status": "active",
+  "current_team": "Hoffenheim",
+  "league": "Bundesliga",
+  "market_value_eur": 11000000,
+  "retired_year": null
+ },
+ {
+  "id": 503871,
+  "name": "Morten Frendrup",
+  "status": "active",
+  "current_team": "Genoa",
+  "league": "Serie A",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 532937,
+  "name": "Johan Vásquez",
+  "status": "active",
+  "current_team": "Genoa",
+  "league": "Serie A",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 183334,
+  "name": "Patrick Bamford",
+  "status": "active",
+  "current_team": "Sheffield United",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 239743,
+  "name": "Przemyslaw Frankowski",
+  "status": "active",
+  "current_team": "Rennes",
+  "league": "Ligue 1",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 164771,
+  "name": "Jordan Veretout",
+  "status": "active",
+  "current_team": "Al-Arabi",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 507486,
+  "name": "Simon Sohm",
+  "status": "active",
+  "current_team": "Fiorentina",
+  "league": "Serie A",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 540333,
+  "name": "Tomas Suslov",
+  "status": "active",
+  "current_team": "Hellas Verona",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 1009030,
+  "name": "Lorran",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 11000000,
+  "retired_year": null
+ },
+ {
+  "id": 322985,
+  "name": "Gustavo Hamer",
+  "status": "active",
+  "current_team": "Sheffield United",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 453376,
+  "name": "Joseph Okumu",
+  "status": "active",
+  "current_team": "Reims",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 864121,
+  "name": "Abdul Fatawu",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 373373,
+  "name": "Lucas Martínez Quarta",
+  "status": "active",
+  "current_team": "River Plate",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 250013,
+  "name": "Angelo Fulgini",
+  "status": "active",
+  "current_team": "Al-Taawoun",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 649033,
+  "name": "Dion Lopy",
+  "status": "active",
+  "current_team": "Almería",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 875334,
+  "name": "Semih Kılıçsoy",
+  "status": "active",
+  "current_team": "Besiktas",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 377641,
+  "name": "Moatasem Al-Musrati",
+  "status": "active",
+  "current_team": "Besiktas",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 533295,
+  "name": "Patrick Wimmer",
+  "status": "active",
+  "current_team": "Hoffenheim",
+  "league": "Bundesliga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 292417,
+  "name": "Demarai Gray",
+  "status": "active",
+  "current_team": "Birmingham City",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 818495,
+  "name": "Otávio",
+  "status": "active",
+  "current_team": "Paris FC",
+  "league": "Ligue 1",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 711517,
+  "name": "Kevin Paredes",
+  "status": "active",
+  "current_team": "FC Utrecht",
+  "league": null,
+  "market_value_eur": 7500000,
+  "retired_year": null
+ },
+ {
+  "id": 341278,
+  "name": "Iván Martín",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 450050,
+  "name": "Jean-Ricner Bellegarde",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 16000000,
+  "retired_year": null
+ },
+ {
+  "id": 550829,
+  "name": "Matej Kovar",
+  "status": "active",
+  "current_team": "PSV Eindhoven",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 344596,
+  "name": "Malang Sarr",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 294873,
+  "name": "Thiago Maia",
+  "status": "active",
+  "current_team": "Internacional",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 314367,
+  "name": "Marcus Edwards",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 387047,
+  "name": "Danilho Doekhi",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 13000000,
+  "retired_year": null
+ },
+ {
+  "id": 186590,
+  "name": "John Stones",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 279455,
+  "name": "Harry Wilson",
+  "status": "active",
+  "current_team": "Leeds United",
+  "league": "Premier League",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 457221,
+  "name": "Lucas Robertone",
+  "status": "active",
+  "current_team": "Velez Sarsfield",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 848509,
+  "name": "Jackson Tchatchoua",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 195778,
+  "name": "Alexander Nübel",
+  "status": "active",
+  "current_team": "Besiktas",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 935760,
+  "name": "Rafiu Durosinmi",
+  "status": "active",
+  "current_team": "Pisa",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 911736,
+  "name": "Sverre Nypan",
+  "status": "active",
+  "current_team": "Lommel",
+  "league": "Belgian Pro League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 225984,
+  "name": "Matheus Pereira",
+  "status": "active",
+  "current_team": "Cruzeiro",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 346766,
+  "name": "Guilherme Arana",
+  "status": "active",
+  "current_team": "Fluminense",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 691482,
+  "name": "Jacopo Fazzini",
+  "status": "active",
+  "current_team": "Cagliari",
+  "league": "Serie A",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 392179,
+  "name": "Hjalmar Ekdal",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 263482,
+  "name": "Michael Olunga",
+  "status": "active",
+  "current_team": "Al-Arabi",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 569845,
+  "name": "Charles Vanhoutte",
+  "status": "active",
+  "current_team": "Feyenoord",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 180337,
+  "name": "Sardar Azmoun",
+  "status": "active",
+  "current_team": "Shabab Al-Ahli",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 386047,
+  "name": "Axel Disasi",
+  "status": "active",
+  "current_team": "Chelsea",
+  "league": "Premier League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 467599,
+  "name": "Ben Wilmot",
+  "status": "active",
+  "current_team": "Stoke City",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 610335,
+  "name": "Iván Jaime",
+  "status": "active",
+  "current_team": "FC Porto",
+  "league": "Primeira Liga",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 298589,
+  "name": "David García",
+  "status": "active",
+  "current_team": "Al-Rayyan",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 402733,
+  "name": "Gonzalo Montiel",
+  "status": "active",
+  "current_team": "River Plate",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 102017,
+  "name": "Jorginho",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 341264,
+  "name": "Fran García",
+  "status": "active",
+  "current_team": "Real Betis",
+  "league": "La Liga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 332179,
+  "name": "Matteo Pessina",
+  "status": "active",
+  "current_team": "AC Monza",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 395516,
+  "name": "Moussa Diaby",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 55000000,
+  "retired_year": null
+ },
+ {
+  "id": 536482,
+  "name": "Junior Dina Ebimbe",
+  "status": "active",
+  "current_team": "Eintracht Frankfurt",
+  "league": "Bundesliga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 138927,
+  "name": "Daniel Carvajal",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 340879,
+  "name": "Merih Demiral",
+  "status": "active",
+  "current_team": "Al-Ahli",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 341051,
+  "name": "Kyle Walker-Peters",
+  "status": "active",
+  "current_team": "West Ham United",
+  "league": null,
+  "market_value_eur": 13000000,
+  "retired_year": null
+ },
+ {
+  "id": 233782,
+  "name": "Aïssa Laïdouni",
+  "status": "active",
+  "current_team": "Al-Wakrah",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 559979,
+  "name": "Abdel Abqar",
+  "status": "active",
+  "current_team": "Getafe",
+  "league": "La Liga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 461833,
+  "name": "Caleb Okoli",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 848682,
+  "name": "Kosta Nedeljkovic",
+  "status": "active",
+  "current_team": "Aston Villa",
+  "league": "Premier League",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 420064,
+  "name": "Caio Henrique",
+  "status": "active",
+  "current_team": "Ajax",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 947360,
+  "name": "Kassoum Ouattara",
+  "status": "active",
+  "current_team": "Besiktas",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 214775,
+  "name": "Óliver Torres",
+  "status": "active",
+  "current_team": "Monterrey",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 294808,
+  "name": "Franck Kessié",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 628366,
+  "name": "Lucas Beltrán",
+  "status": "active",
+  "current_team": "River Plate",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 548470,
+  "name": "Teden Mengi",
+  "status": "active",
+  "current_team": "Luton Town",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 659520,
+  "name": "Bilal Nadir",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 652061,
+  "name": "Adam Karabec",
+  "status": "active",
+  "current_team": "Sparta Prague",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 215616,
+  "name": "Erick Pulgar",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 425306,
+  "name": "Matt Turner",
+  "status": "active",
+  "current_team": "New England Revolution",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 292246,
+  "name": "Hee-chan Hwang",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 566574,
+  "name": "Kirian Rodríguez",
+  "status": "active",
+  "current_team": "Las Palmas",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 446106,
+  "name": "Juan Manuel Sanabria",
+  "status": "active",
+  "current_team": "Real Salt Lake",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 190263,
+  "name": "Predrag Rajković",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 574385,
+  "name": "Mohamed Daramy",
+  "status": "active",
+  "current_team": "Reims",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 646738,
+  "name": "Juan Larios",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 486624,
+  "name": "Musa Barrow",
+  "status": "active",
+  "current_team": "Free Agent",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 344888,
+  "name": "Habib Diallo",
+  "status": "active",
+  "current_team": "Metz",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 215390,
+  "name": "Gustavo Gómez",
+  "status": "active",
+  "current_team": "Palmeiras",
+  "league": null,
+  "market_value_eur": 8500000,
+  "retired_year": null
+ },
+ {
+  "id": 244275,
+  "name": "Gabriel Barbosa",
+  "status": "active",
+  "current_team": "Santos",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 127187,
+  "name": "Abdoulaye Doucouré",
+  "status": "active",
+  "current_team": "Neom SC",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 166677,
+  "name": "Brian Oliván",
+  "status": "active",
+  "current_team": "Sporting Gijón",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 382478,
+  "name": "Cédric Zesiger",
+  "status": "active",
+  "current_team": "Young Boys",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 1058368,
+  "name": "Francesco Camarda",
+  "status": "active",
+  "current_team": "AC Milan",
+  "league": "Serie A",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 467434,
+  "name": "Rocco Reitz",
+  "status": "active",
+  "current_team": "RB Leipzig",
+  "league": "Bundesliga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 512385,
+  "name": "Luis Sinisterra",
+  "status": "active",
+  "current_team": "Cruzeiro",
+  "league": null,
+  "market_value_eur": 17000000,
+  "retired_year": null
+ },
+ {
+  "id": 277,
+  "name": "Sérgio da Silva Pinto",
+  "status": "retired",
+  "current_team": "Fortuna Düsseldorf",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2016
+ },
+ {
+  "id": 983989,
+  "name": "Facundo Buonanotte",
+  "status": "active",
+  "current_team": "Brighton & Hove Albion",
+  "league": "Premier League",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 344830,
+  "name": "Tahith Chong",
+  "status": "active",
+  "current_team": "Sheffield United",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 659513,
+  "name": "Soumaïla Coulibaly",
+  "status": "active",
+  "current_team": "Strasbourg",
+  "league": "Ligue 1",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 577486,
+  "name": "Gastón Álvarez",
+  "status": "active",
+  "current_team": "Al-Qadsiah",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 653610,
+  "name": "Igor Paixão",
+  "status": "active",
+  "current_team": "Marseille",
+  "league": "Ligue 1",
+  "market_value_eur": 35000000,
+  "retired_year": null
+ },
+ {
+  "id": 255755,
+  "name": "Alex Telles",
+  "status": "active",
+  "current_team": "Botafogo",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 189441,
+  "name": "Lucas Ocampos",
+  "status": "active",
+  "current_team": "Monterrey",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 480987,
+  "name": "Chris Mepham",
+  "status": "active",
+  "current_team": "West Bromwich Albion",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 422380,
+  "name": "Bernard Tekpetey",
+  "status": "active",
+  "current_team": "Ludogorets Razgrad",
+  "league": null,
+  "market_value_eur": 5500000,
+  "retired_year": null
+ },
+ {
+  "id": 505194,
+  "name": "Luke Thomas",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 298091,
+  "name": "Harry Souttar",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 468198,
+  "name": "Joe Aribo",
+  "status": "active",
+  "current_team": null,
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 506189,
+  "name": "Flynn Downes",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 182904,
+  "name": "Clément Lenglet",
+  "status": "active",
+  "current_team": "Benfica",
+  "league": "Primeira Liga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 268429,
+  "name": "Sandi Lovrić",
+  "status": "active",
+  "current_team": "Udinese",
+  "league": "Serie A",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 951579,
+  "name": "Saël Kumbedi",
+  "status": "active",
+  "current_team": "Wolfsburg",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 663244,
+  "name": "Jota Silva",
+  "status": "active",
+  "current_team": "Olympiacos",
+  "league": "Super League Greece",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 667121,
+  "name": "Rodrigo Gomes",
+  "status": "active",
+  "current_team": "Wolverhampton Wanderers",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 423444,
+  "name": "Fran Beltrán",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 593482,
+  "name": "Azzedine Ounahi",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 537382,
+  "name": "Bryan Gil",
+  "status": "active",
+  "current_team": "Girona",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 962555,
+  "name": "Abakar Sylla",
+  "status": "active",
+  "current_team": "Strasbourg",
+  "league": "Ligue 1",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 724520,
+  "name": "Abde Ezzalzouli",
+  "status": "active",
+  "current_team": "Real Betis",
+  "league": "La Liga",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 926978,
+  "name": "Lucas Høgsberg",
+  "status": "active",
+  "current_team": "Strasbourg",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 939964,
+  "name": "Jean-Mattéo Bahoya",
+  "status": "active",
+  "current_team": "Eintracht Frankfurt",
+  "league": "Bundesliga",
+  "market_value_eur": 17000000,
+  "retired_year": null
+ },
+ {
+  "id": 148252,
+  "name": "Remo Freuler",
+  "status": "active",
+  "current_team": "Bologna",
+  "league": null,
+  "market_value_eur": 6500000,
+  "retired_year": null
+ },
+ {
+  "id": 626953,
+  "name": "Álvaro Núñez",
+  "status": "active",
+  "current_team": "Celta Vigo",
+  "league": "La Liga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 182913,
+  "name": "Adrien Rabiot",
+  "status": "active",
+  "current_team": "AC Milan",
+  "league": "Serie A",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 338070,
+  "name": "Konstantinos Tsimikas",
+  "status": "active",
+  "current_team": "Liverpool",
+  "league": "Premier League",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 314288,
+  "name": "Lukas Nmecha",
+  "status": "active",
+  "current_team": "Leeds United",
+  "league": "Premier League",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 1108466,
+  "name": "Rio Ngumoha",
+  "status": "active",
+  "current_team": "Liverpool",
+  "league": "Premier League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 546213,
+  "name": "Tuta",
+  "status": "active",
+  "current_team": "Al-Duhail",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 411537,
+  "name": "Zian Flemming",
+  "status": "active",
+  "current_team": "Burnley",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 354814,
+  "name": "M'Bala Nzola",
+  "status": "active",
+  "current_team": "Fiorentina",
+  "league": "Serie A",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 764859,
+  "name": "Williot Swedberg",
+  "status": "active",
+  "current_team": "Celta Vigo",
+  "league": "La Liga",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 263361,
+  "name": "Maximilian Wöber",
+  "status": "active",
+  "current_team": "Leeds United",
+  "league": "Premier League",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 707242,
+  "name": "Badredine Bouanani",
+  "status": "active",
+  "current_team": "VfB Stuttgart",
+  "league": "Bundesliga",
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 719442,
+  "name": "David Da Costa",
+  "status": "active",
+  "current_team": "Portland Timbers",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 392959,
+  "name": "Andrea Colpani",
+  "status": "active",
+  "current_team": "Monza",
+  "league": null,
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 443331,
+  "name": "Patrick Osterhage",
+  "status": "active",
+  "current_team": "SC Freiburg",
+  "league": "Bundesliga",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 323831,
+  "name": "Rafael Borré",
+  "status": "active",
+  "current_team": "Internacional",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 405397,
+  "name": "Keito Nakamura",
+  "status": "active",
+  "current_team": "Reims",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 977464,
+  "name": "Arthur",
+  "status": "active",
+  "current_team": "Bayer Leverkusen",
+  "league": "Bundesliga",
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 439072,
+  "name": "Matías Viña",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 611426,
+  "name": "Matías Arezo",
+  "status": "active",
+  "current_team": "Peñarol",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 663581,
+  "name": "Vini Souza",
+  "status": "active",
+  "current_team": "VfL Wolfsburg",
+  "league": null,
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 463620,
+  "name": "Willem Geubbels",
+  "status": "active",
+  "current_team": "Paris FC",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 907813,
+  "name": "Pablo Marín",
+  "status": "active",
+  "current_team": "Real Sociedad",
+  "league": "La Liga",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 282660,
+  "name": "Maximilian Mittelstädt",
+  "status": "active",
+  "current_team": "VfB Stuttgart",
+  "league": "Bundesliga",
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 646991,
+  "name": "Robin Roefs",
+  "status": "active",
+  "current_team": "Sunderland",
+  "league": "Premier League",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 855308,
+  "name": "Arthur Atta",
+  "status": "active",
+  "current_team": "Fiorentina",
+  "league": "Serie A",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 122797,
+  "name": "Andy Delort",
+  "status": "active",
+  "current_team": "AC Ajaccio",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 463613,
+  "name": "Yann Gboho",
+  "status": "active",
+  "current_team": "Toulouse",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 621993,
+  "name": "Andrew Omobamidele",
+  "status": "active",
+  "current_team": "Strasbourg",
+  "league": "Ligue 1",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 635645,
+  "name": "Aurèle Amenda",
+  "status": "active",
+  "current_team": "Eintracht Frankfurt",
+  "league": "Bundesliga",
+  "market_value_eur": 7500000,
+  "retired_year": null
+ },
+ {
+  "id": 225122,
+  "name": "Gonçalo Guedes",
+  "status": "active",
+  "current_team": "Real Sociedad",
+  "league": "La Liga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 341227,
+  "name": "Juan Miranda",
+  "status": "active",
+  "current_team": "Bologna",
+  "league": "Serie A",
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 709969,
+  "name": "Ilias Akhomach",
+  "status": "active",
+  "current_team": "Villarreal",
+  "league": "La Liga",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 169880,
+  "name": "Giovanni Di Lorenzo",
+  "status": "active",
+  "current_team": "Napoli",
+  "league": "Serie A",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 289835,
+  "name": "Jens Stage",
+  "status": "active",
+  "current_team": "Werder Bremen",
+  "league": "Bundesliga",
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 450936,
+  "name": "Tanguy Ndombélé",
+  "status": "active",
+  "current_team": "Nice",
+  "league": null,
+  "market_value_eur": 4000000,
+  "retired_year": null
+ },
+ {
+  "id": 215876,
+  "name": "Ricardo Pereira",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 229604,
+  "name": "Gerónimo Rulli",
+  "status": "active",
+  "current_team": "Marseille",
+  "league": "Ligue 1",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 617074,
+  "name": "Ilaix Moriba",
+  "status": "active",
+  "current_team": "Celta Vigo",
+  "league": "La Liga",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 292808,
+  "name": "Wout Faes",
+  "status": "active",
+  "current_team": "Leicester City",
+  "league": null,
+  "market_value_eur": 14000000,
+  "retired_year": null
+ },
+ {
+  "id": 921655,
+  "name": "Ismaël Koné",
+  "status": "active",
+  "current_team": "Sassuolo",
+  "league": "Serie A",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 409344,
+  "name": "Calvin Stengs",
+  "status": "active",
+  "current_team": "Pisa",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 478573,
+  "name": "Ryan Gravenberch",
+  "status": "active",
+  "current_team": "Liverpool",
+  "league": "Premier League",
+  "market_value_eur": 90000000,
+  "retired_year": null
+ },
+ {
+  "id": 361256,
+  "name": "Berke Özer",
+  "status": "active",
+  "current_team": "Lille",
+  "league": "Ligue 1",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 503866,
+  "name": "Albert Grønbaek",
+  "status": "active",
+  "current_team": "Hamburger SV",
+  "league": "Bundesliga",
+  "market_value_eur": 9500000,
+  "retired_year": null
+ },
+ {
+  "id": 711544,
+  "name": "Jake O'Brien",
+  "status": "active",
+  "current_team": "Everton",
+  "league": "Premier League",
+  "market_value_eur": 16000000,
+  "retired_year": null
+ },
+ {
+  "id": 433984,
+  "name": "Sam Beukema",
+  "status": "active",
+  "current_team": "Napoli",
+  "league": "Serie A",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 148928,
+  "name": "Saúl Ñíguez",
+  "status": "active",
+  "current_team": "Flamengo",
+  "league": null,
+  "market_value_eur": 7500000,
+  "retired_year": null
+ },
+ {
+  "id": 202591,
+  "name": "Benjamin Henrichs",
+  "status": "active",
+  "current_team": "RB Leipzig",
+  "league": "Bundesliga",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 277179,
+  "name": "Angeliño",
+  "status": "active",
+  "current_team": "Roma",
+  "league": "Serie A",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 972465,
+  "name": "Tani Oluwaseyi",
+  "status": "active",
+  "current_team": "Villarreal",
+  "league": "La Liga",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 93720,
+  "name": "Alexandre Lacazette",
+  "status": "active",
+  "current_team": "Neom SC",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 128220,
+  "name": "Luis Alberto",
+  "status": "active",
+  "current_team": "Al-Wakrah",
+  "league": null,
+  "market_value_eur": 11000000,
+  "retired_year": null
+ },
+ {
+  "id": 156617,
+  "name": "Marcelo Brozovic",
+  "status": "active",
+  "current_team": "Al-Nassr",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 237662,
+  "name": "Breel Embolo",
+  "status": "active",
+  "current_team": "Rennes",
+  "league": "Ligue 1",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 273132,
+  "name": "Robin Gosens",
+  "status": "active",
+  "current_team": "Fiorentina",
+  "league": "Serie A",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 324690,
+  "name": "Jonathan Ikoné",
+  "status": "active",
+  "current_team": "Paris FC",
+  "league": "Ligue 1",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 435796,
+  "name": "Kilian Fischer",
+  "status": "active",
+  "current_team": "VfL Wolfsburg",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 141050,
+  "name": "Danilo Pereira",
+  "status": "active",
+  "current_team": "Al-Ittihad",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 324278,
+  "name": "Christoph Baumgartner",
+  "status": "active",
+  "current_team": "RB Leipzig",
+  "league": "Bundesliga",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 193116,
+  "name": "John McGinn",
+  "status": "active",
+  "current_team": "Aston Villa",
+  "league": "Premier League",
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 250779,
+  "name": "Brendan Chardonnet",
+  "status": "active",
+  "current_team": "Brest",
+  "league": "Ligue 1",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 652275,
+  "name": "Hákon Arnar Haraldsson",
+  "status": "active",
+  "current_team": "Lille",
+  "league": "Ligue 1",
+  "market_value_eur": 18000000,
+  "retired_year": null
+ },
+ {
+  "id": 412045,
+  "name": "Pol Lozano",
+  "status": "active",
+  "current_team": "Espanyol",
+  "league": "La Liga",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 417913,
+  "name": "Álvaro Valles",
+  "status": "active",
+  "current_team": "Real Betis",
+  "league": "La Liga",
+  "market_value_eur": 12000000,
+  "retired_year": null
+ },
+ {
+  "id": 377393,
+  "name": "Pierre Lees-Melou",
+  "status": "active",
+  "current_team": "Paris FC",
+  "league": "Ligue 1",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 1005583,
+  "name": "Alysson",
+  "status": "active",
+  "current_team": "Aston Villa",
+  "league": "Premier League",
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 323954,
+  "name": "Walace",
+  "status": "active",
+  "current_team": "Vitória",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 1119456,
+  "name": "Louis Leroux",
+  "status": "active",
+  "current_team": "Nantes",
+  "league": null,
+  "market_value_eur": 9000000,
+  "retired_year": null
+ },
+ {
+  "id": 465955,
+  "name": "Marcin Bulka",
+  "status": "active",
+  "current_team": "Neom SC",
+  "league": null,
+  "market_value_eur": 20000000,
+  "retired_year": null
+ },
+ {
+  "id": 503881,
+  "name": "Aster Vranckx",
+  "status": "active",
+  "current_team": "VfL Wolfsburg",
+  "league": null,
+  "market_value_eur": 7000000,
+  "retired_year": null
+ },
+ {
+  "id": 58884,
+  "name": "Nacho Fernández",
+  "status": "active",
+  "current_team": "Al-Qadsiah",
+  "league": null,
+  "market_value_eur": 3000000,
+  "retired_year": null
+ },
+ {
+  "id": 319745,
+  "name": "Dani Ceballos",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 554903,
+  "name": "Mateo Retegui",
+  "status": "active",
+  "current_team": "Al-Qadsiah",
+  "league": null,
+  "market_value_eur": 16000000,
+  "retired_year": null
+ },
+ {
+  "id": 207877,
+  "name": "Ruslan Malinovskyi",
+  "status": "active",
+  "current_team": "Trabzonspor",
+  "league": null,
+  "market_value_eur": 8000000,
+  "retired_year": null
+ },
+ {
+  "id": 250478,
+  "name": "Matt Targett",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 223979,
+  "name": "Xaver Schlager",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 585550,
+  "name": "Gavin Bazunu",
+  "status": "active",
+  "current_team": "Southampton",
+  "league": null,
+  "market_value_eur": 15000000,
+  "retired_year": null
+ },
+ {
+  "id": 581672,
+  "name": "Samuel Iling-Junior",
+  "status": "active",
+  "current_team": "Aston Villa",
+  "league": "Premier League",
+  "market_value_eur": 10000000,
+  "retired_year": null
+ },
+ {
+  "id": 659516,
+  "name": "Warren Bondo",
+  "status": "active",
+  "current_team": "AC Milan",
+  "league": "Serie A",
+  "market_value_eur": 8500000,
+  "retired_year": null
+ },
+ {
+  "id": 227081,
+  "name": "Joaquín Correa",
+  "status": "active",
+  "current_team": "Botafogo",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 49499,
+  "name": "Georginio Wijnaldum",
+  "status": "active",
+  "current_team": "Free agent",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 518644,
+  "name": "Largie Ramazani",
+  "status": "active",
+  "current_team": "Leeds United",
+  "league": "Premier League",
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 126716,
+  "name": "Paco Alcácer",
+  "status": "retired",
+  "current_team": "Emirates Club",
+  "league": null,
+  "market_value_eur": 0,
+  "retired_year": 2026
+ },
+ {
+  "id": 419648,
+  "name": "Veljko Birmancevic",
+  "status": "active",
+  "current_team": "Sparta Prague",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ },
+ {
+  "id": 585973,
+  "name": "Johann Lepenant",
+  "status": "active",
+  "current_team": "Nantes",
+  "league": null,
+  "market_value_eur": 6000000,
+  "retired_year": null
+ }
+]
