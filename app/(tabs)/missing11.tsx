@@ -8,7 +8,6 @@ import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { shortenClubName } from '@/lib/clubNames';
 import Tappable from '@/components/ui/Tappable';
 import SoccerPitch from '@/components/games/SoccerPitch';
-import GlassCard from '@/components/ui/GlassCard';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
 import RetroButton from '@/components/ui/RetroButton';
 import TeamCrest from '@/components/ui/TeamCrest';
@@ -41,8 +40,7 @@ import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import { useProStore } from '@/hooks/useProStore';
 import { showRewardedAd, loadRewardedAd } from '@/lib/ads';
 import ShareableMissing11Result from '@/components/ShareableMissing11Result';
-import GameOverActions from '@/components/ui/GameOverActions';
-import GameOverExtras from '@/components/ui/GameOverExtras';
+import GameOverSheet from '@/components/ui/GameOverSheet';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/career/GiveUpButton';
 import { buildShareText } from '@/lib/sharing';
@@ -401,47 +399,23 @@ export default function Missing11Screen() {
         </View>
       )}
 
-      {/* Game over overlay — translucent scrim keeps the revealed XI dimly
-          visible; "View pitch" hides the card entirely so it can be studied,
-          and a floating pill brings the results back. Gentle fades only. */}
-      {gameState !== 'playing' && !pitchView && (
-        <Animated.View entering={FadeIn.duration(motion.base)} style={styles.gameOverOverlay}>
-          <Animated.View
-            entering={FadeIn.delay(100).duration(motion.base)}
-            style={styles.gameOverCardWrap}>
-            <GlassCard style={styles.gameOverCard}>
-              <View style={styles.gameOverContent}>
-                <Text
-                  style={[
-                    styles.gameOverTitle,
-                    gameState === 'won' ? styles.gameOverTitleWon : styles.gameOverTitleLost,
-                  ]}>
-                  {gameState === 'won' ? 'COMPLETE!' : 'FULL TIME'}
-                </Text>
-                <Text style={styles.gameOverScore}>{foundCount}/11 players named</Text>
-                <RankBadge rank={getRank(foundCount, 11)} unit="players" />
-                <SolveTimeResult mode="missing11" />
-                <GameOverActions
-                  shareRef={shareRef}
-                  shareText={shareText}
-                  win={gameState === 'won'}
-                  onPlayAgain={handleNewGame}
-                  playAgainLabel="PLAY AGAIN"
-                  includeExtras={false}
-                />
-              </View>
-            </GlassCard>
-            <Tappable
-              haptic="none"
-              onPress={() => setPitchView(true)}
-              accessibilityLabel="View pitch"
-              style={styles.viewPitchButton}>
-              <Text style={styles.viewPitchText}>View pitch</Text>
-            </Tappable>
-          </Animated.View>
-          <GameOverExtras win={gameState === 'won'} />
-        </Animated.View>
-      )}
+      {/* Game over sheet — the scrim keeps the revealed XI dimly visible;
+          dismissing (scrim / grab handle) hides it so the pitch can be
+          studied, and the floating pill brings the results back. */}
+      <GameOverSheet
+        visible={gameState !== 'playing' && !pitchView}
+        win={gameState === 'won'}
+        verdict={gameState === 'won' ? 'COMPLETE!' : 'FULL TIME'}
+        subtitle={`${foundCount}/11 players named`}
+        shareRef={shareRef}
+        shareText={shareText}
+        onPlayAgain={handleNewGame}
+        playAgainLabel="PLAY AGAIN"
+        onDismiss={() => setPitchView(true)}
+        currentModeKey="missing11">
+        <RankBadge rank={getRank(foundCount, 11)} unit="players" />
+        <SolveTimeResult mode="missing11" />
+      </GameOverSheet>
       {gameState !== 'playing' && pitchView && (
         <Animated.View
           entering={FadeIn.duration(motion.base)}
@@ -579,58 +553,6 @@ const createStyles = (c: ThemeColors) =>
     hintTextValue: {
       ...type.bodyBold,
       color: c.streak,
-    },
-    gameOverOverlay: {
-      ...StyleSheet.absoluteFillObject,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: c.scrim,
-      zIndex: 10,
-    },
-    gameOverCardWrap: {
-      width: '80%',
-    },
-    gameOverCard: {
-      width: '100%',
-    },
-    gameOverContent: {
-      padding: spacing.xl,
-      alignItems: 'center',
-      gap: spacing.lg,
-    },
-    gameOverTitle: {
-      ...type.h1,
-      textTransform: 'uppercase',
-    },
-    gameOverTitleWon: {
-      color: c.accent,
-    },
-    gameOverTitleLost: {
-      color: c.danger,
-    },
-    gameOverScore: {
-      ...type.h3,
-      color: c.textPrimary,
-    },
-    viewPitchButton: {
-      alignSelf: 'center',
-      marginTop: spacing.md,
-      minHeight: touch.min,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: spacing.lg,
-      paddingVertical: spacing.sm,
-      borderRadius: borderRadius.full,
-      borderWidth: 1,
-      borderColor: c.border,
-      backgroundColor: c.bgElevated,
-    },
-    viewPitchText: {
-      ...type.captionBold,
-      color: c.textSecondary,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-      userSelect: 'none',
     },
     showResultsWrap: {
       ...StyleSheet.absoluteFillObject,
