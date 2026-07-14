@@ -48,7 +48,8 @@ map to the new palette, but migrated files must use the semantic names.
 
 **3 visible tabs** (was 4): 
 - **Today** (`index.tsx`) — the hub. Greeting + date + daily progress meter
-  ("7/12 played"), then a vertical feed of 12 state-aware game cards grouped:
+  ("7/11 played"), then a vertical feed of state-aware game cards (one per
+  registry mode — never hardcode the count) grouped:
   "Up next" (unplayed, full-size cards) → "Done today" (compact rows with result
   glyph). Each card: mode icon, name, one-line tease, state (unplayed CTA arrow /
   completed result glyph + score). Tapping a completed card re-opens its result.
