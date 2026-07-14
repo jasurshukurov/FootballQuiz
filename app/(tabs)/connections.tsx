@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, Text, View, Modal } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { NotificationFeedbackType } from 'expo-haptics';
 import RankBadge from '@/components/ui/RankBadge';
@@ -18,7 +18,6 @@ import {
 } from '@/lib/dailySeed';
 import { getDailyNumber } from '@/lib/dailyPuzzle';
 import { triggerNotification } from '@/lib/haptics';
-import { FEATURES } from '@/lib/featureFlags';
 import { getRank } from '@/lib/rankLadder';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyResultsStore } from '@/hooks/useDailyResultsStore';
@@ -28,20 +27,18 @@ import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import ConnectionsBoard, { TileData, SolvedCategory } from '@/components/games/ConnectionsBoard';
 import { connectionsGroupColor } from '@/components/games/ConnectionsTile';
 import RetroButton from '@/components/ui/RetroButton';
-import CopyResultButton from '@/components/ui/CopyResultButton';
-import GameOverExtras from '@/components/ui/GameOverExtras';
+import GameOverSheet from '@/components/ui/GameOverSheet';
 import PopInView from '@/components/ui/PopInView';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
-import Tappable from '@/components/ui/Tappable';
 import LivesIndicator from '@/components/ui/LivesIndicator';
-import { spacing, borderRadius, type, touch } from '@/constants/theme';
+import { spacing, borderRadius, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import ShareableConnectionsResult from '@/components/ShareableConnectionsResult';
 import PracticePill from '@/components/ui/PracticePill';
-import { captureAndShare, buildShareText } from '@/lib/sharing';
+import { buildShareText } from '@/lib/sharing';
 import { playCheer } from '@/lib/sounds';
 
 const MAX_MISTAKES = 4;
@@ -378,86 +375,59 @@ export default function ConnectionsScreen() {
         </View>
       )}
 
-      {/* Result Modal */}
-      <Modal visible={showModal} transparent animationType="fade">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={[styles.modalTitle, won ? styles.modalTitleWon : styles.modalTitleLost]}>
-              {restoredUnknown ? 'ALREADY PLAYED' : won ? 'WELL PLAYED!' : 'FULL TIME'}
-            </Text>
-            <Text style={styles.modalSubtitle}>
-              {restoredUnknown
-                ? 'Come back tomorrow for a new board'
-                : won
-                  ? `You solved it with ${mistakes} mistake${mistakes !== 1 ? 's' : ''}!`
-                  : 'Better luck next time'}
-            </Text>
+      {/* Result sheet — over the finished board */}
+      <GameOverSheet
+        visible={showModal}
+        win={won && !restoredUnknown}
+        verdict={restoredUnknown ? 'ALREADY PLAYED' : won ? 'WELL PLAYED!' : 'FULL TIME'}
+        subtitle={
+          restoredUnknown
+            ? 'Come back tomorrow for a new board'
+            : won
+              ? `You solved it with ${mistakes} mistake${mistakes !== 1 ? 's' : ''}!`
+              : 'Better luck next time'
+        }
+        glyphs={
+          restoredUnknown
+            ? undefined
+            : [
+                ...solvedCategories.map(() => 'correct' as const),
+                ...Array.from({ length: mistakes }, () => 'wrong' as const),
+              ]
+        }
+        shareRef={shareRef}
+        shareText={shareText}
+        onPlayAgain={initPuzzle}
+        onDismiss={() => setShowModal(false)}
+        currentModeKey="connections">
+        <PopInView delay={150}>
+          {restoredUnknown ? (
+            // End state unknown (pre-blob completion): rank the recorded score.
+            <RankBadge
+              rank={getRank(useDailyProgressStore.getState().scoresByMode['connections'] ?? 0, 4)}
+              unit="groups"
+            />
+          ) : (
+            <RankBadge rank={connectionsRank(solvedCategories.length, mistakes)} unit="groups" />
+          )}
+        </PopInView>
+        {!isPractice && <SolveTimeResult mode="connections" />}
 
-            <PopInView delay={150}>
-              {restoredUnknown ? (
-                // End state unknown (pre-blob completion): rank the recorded score.
-                <RankBadge
-                  rank={getRank(
-                    useDailyProgressStore.getState().scoresByMode['connections'] ?? 0,
-                    4,
-                  )}
-                  unit="groups"
-                />
-              ) : (
-                <RankBadge
-                  rank={connectionsRank(solvedCategories.length, mistakes)}
-                  unit="groups"
-                />
-              )}
-            </PopInView>
-            {!isPractice && <SolveTimeResult mode="connections" />}
-
-            {/* Show all categories */}
-            <View style={styles.modalCategories}>
-              {puzzle.categories.map((cat) => {
-                const group = connectionsGroupColor(cat.difficulty, theme.dark);
-                return (
-                  <View key={cat.name} style={[styles.modalCatRow, { backgroundColor: group.bg }]}>
-                    <Text style={[styles.modalCatName, { color: group.text }]}>{cat.name}</Text>
-                    <Text style={[styles.modalCatPlayers, { color: group.text }]}>
-                      {cat.playerNames.join(', ')}
-                    </Text>
-                  </View>
-                );
-              })}
-            </View>
-
-            {/* Share/copy hidden behind the sharing flag (plumbing stays wired). */}
-            {FEATURES.sharing && (
-              <Tappable
-                style={styles.shareBtn}
-                hoverStyle={{ backgroundColor: colors.accentDim }}
-                haptic="success"
-                onPress={() => captureAndShare(shareRef, shareText)}>
-                <Text style={styles.shareBtnText}>Share Result</Text>
-              </Tappable>
-            )}
-            {FEATURES.sharing && (
-              <View style={styles.copyBtnWrap}>
-                <CopyResultButton text={shareText} />
+        {/* Show all categories */}
+        <View style={styles.modalCategories}>
+          {puzzle.categories.map((cat) => {
+            const group = connectionsGroupColor(cat.difficulty, theme.dark);
+            return (
+              <View key={cat.name} style={[styles.modalCatRow, { backgroundColor: group.bg }]}>
+                <Text style={[styles.modalCatName, { color: group.text }]}>{cat.name}</Text>
+                <Text style={[styles.modalCatPlayers, { color: group.text }]}>
+                  {cat.playerNames.join(', ')}
+                </Text>
               </View>
-            )}
-            <Tappable
-              style={styles.playAgainBtn}
-              hoverStyle={{ backgroundColor: colors.accentDim }}
-              onPress={initPuzzle}>
-              <Text style={styles.playAgainBtnText}>Play Again</Text>
-            </Tappable>
-            <Tappable
-              style={styles.modalCloseBtn}
-              hoverStyle={{ backgroundColor: colors.bgCardPressed }}
-              onPress={() => setShowModal(false)}>
-              <Text style={styles.modalCloseText}>Close</Text>
-            </Tappable>
-          </View>
-          <GameOverExtras win={won} />
+            );
+          })}
         </View>
-      </Modal>
+      </GameOverSheet>
 
       {/* Offscreen shareable view */}
       <View style={styles.offscreen}>
@@ -523,40 +493,11 @@ const createStyles = (c: ThemeColors) =>
     buttonWrapper: {
       flex: 1,
     },
-    modalOverlay: {
-      flex: 1,
-      backgroundColor: c.scrim,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: spacing.lg,
-    },
-    modalContent: {
-      width: '85%',
-      backgroundColor: c.bgElevated,
-      borderRadius: borderRadius.xl,
-      borderWidth: 1,
-      borderColor: c.accentBorder,
-      padding: spacing.xl,
-      alignItems: 'center',
-    },
-    modalTitle: {
-      ...type.h1,
-    },
-    modalTitleWon: {
-      color: c.accent,
-    },
-    modalTitleLost: {
-      color: c.danger,
-    },
-    modalSubtitle: {
-      ...type.captionBold,
-      color: c.textPrimary,
-      marginTop: spacing.sm,
-      marginBottom: spacing.lg,
-    },
     modalCategories: {
       width: '100%',
       gap: spacing.sm,
+      marginTop: spacing.md,
+      marginBottom: spacing.sm,
     },
     modalCatRow: {
       borderRadius: borderRadius.sm,
@@ -575,52 +516,6 @@ const createStyles = (c: ThemeColors) =>
       ...type.micro,
       marginTop: 2,
       textAlign: 'center',
-    },
-    shareBtn: {
-      marginTop: spacing.lg,
-      minHeight: touch.cta,
-      paddingHorizontal: spacing.xxl,
-      justifyContent: 'center',
-      borderRadius: borderRadius.sm,
-      backgroundColor: c.accent,
-    },
-    shareBtnText: {
-      ...type.h3,
-      color: c.textOnAccent,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-    },
-    copyBtnWrap: {
-      marginTop: spacing.md,
-    },
-    playAgainBtn: {
-      marginTop: spacing.md,
-      minHeight: touch.cta,
-      paddingHorizontal: spacing.xxl,
-      justifyContent: 'center',
-      borderRadius: borderRadius.sm,
-      backgroundColor: c.accent,
-    },
-    playAgainBtnText: {
-      ...type.h3,
-      color: c.textOnAccent,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-    },
-    modalCloseBtn: {
-      marginTop: spacing.md,
-      minHeight: touch.min,
-      paddingHorizontal: spacing.xxl,
-      justifyContent: 'center',
-      borderRadius: borderRadius.sm,
-      borderWidth: 1,
-      borderColor: c.accentBorder,
-    },
-    modalCloseText: {
-      ...type.h3,
-      color: c.accent,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
     },
     offscreen: {
       position: 'absolute',

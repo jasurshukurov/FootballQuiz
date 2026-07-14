@@ -142,7 +142,7 @@ export default function GameOverSheet({
               <StreakBadge streak={streak} />
             </View>
 
-            {children}
+            {children != null && <View style={layout.childrenWrap}>{children}</View>}
 
             <GameOverActions
               shareRef={shareRef}
@@ -190,6 +190,11 @@ const layout = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.md,
     marginBottom: spacing.sm,
+  },
+  // Full-width children (reveal lists) still stretch via width:'100%'.
+  childrenWrap: {
+    alignItems: 'center',
+    gap: spacing.sm,
   },
   offscreen: {
     position: 'absolute',
