@@ -68,7 +68,14 @@ export type ShareResultInput = ShareMeta &
       }
     | { mode: 'grid'; score: number; correctCells: boolean[][] }
     | { mode: 'missing11'; found: number; total: number; teamName: string }
-    | { mode: 'connections'; mistakes: number; maxMistakes: number; solvedDifficulties: number[] }
+    | {
+        mode: 'connections';
+        mistakes: number;
+        maxMistakes: number;
+        solvedDifficulties: number[];
+        /** Hints used this game (additive/optional — absent reads as 0). */
+        hintsUsed?: number;
+      }
     | {
         mode: 'toplists';
         found: number;
@@ -141,10 +148,16 @@ function buildBody(input: ShareResultInput): string[] {
     }
     case 'connections': {
       const rows = input.solvedDifficulties.map((d) => (DIFFICULTY_SQUARES[d] ?? '').repeat(4));
-      const summary =
+      const hints = input.hintsUsed ?? 0;
+      // "Flawless!" is reserved for a clean, unaided solve. A hint-assisted
+      // solve reads "Solved" and carries a 💡 count, so the two stay distinct.
+      const base =
         input.mistakes === 0
-          ? 'Flawless!'
+          ? hints === 0
+            ? 'Flawless!'
+            : 'Solved'
           : `${input.mistakes} mistake${input.mistakes !== 1 ? 's' : ''}`;
+      const summary = hints > 0 ? `${base} · 💡${hints}` : base;
       return [summary, ...rows];
     }
     case 'toplists': {

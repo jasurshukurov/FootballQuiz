@@ -7,7 +7,7 @@ export const meta = { key: 'connections', title: 'Connections', route: '/connect
 
 async function readTiles(page) {
   return (await leafTexts(page, 85, 360))
-    .filter((x) => x.x >= 0 && x.x < 420 && x.t.length > 2 && !/Mistake|remaining|Shuffle|Deselect|Submit|Find 4|CONNECTIONS/i.test(x.t));
+    .filter((x) => x.x >= 0 && x.x < 420 && x.t.length > 2 && !/Mistake|remaining|Shuffle|Deselect|Submit|Hint|Find 4|CONNECTIONS/i.test(x.t));
 }
 
 async function isOver(page) {

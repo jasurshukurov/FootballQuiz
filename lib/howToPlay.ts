@@ -25,9 +25,10 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'A mystery player’s career appears: clubs shuffled, years hidden.',
       'Search and pick a name to guess. You get 3 attempts.',
       'Stuck? Hints sort the timeline or reveal nationality, position and years. The first two are free.',
+      'Endless mode: press Next after every reveal for a fresh player, as many as you like.',
     ],
     footer:
-      'The tier badge shows how deep a cut today’s player is. Fewer attempts and hints mean a higher rank.',
+      'The tier badge shows how deep a cut the player is. Build your win streak, it only breaks on a miss.',
   },
   'who-are-ya': {
     title: 'Who Are Ya?',
@@ -65,10 +66,11 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Sixteen players hide four secret groups of four.',
       'Select four you think belong together, then submit.',
       '“One away…” means exactly three of your four were right.',
+      'Stuck? Hint names a group’s theme; press it again to pre-select two of its players. Two hints per game.',
       'Four mistakes end the game.',
     ],
     footer:
-      'Groups run yellow (easy) to purple (devious). A no-mistake solve earns a flawless bonus. Hold Give Up to reveal the groups.',
+      'Groups run yellow (easy) to purple (devious). A flawless bonus needs no mistakes and no hints. Hold Give Up to reveal the groups.',
   },
   toplists: {
     steps: [

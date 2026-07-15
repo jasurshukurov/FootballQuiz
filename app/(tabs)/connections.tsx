@@ -44,6 +44,8 @@ import { buildShareText } from '@/lib/sharing';
 import { playCheer } from '@/lib/sounds';
 
 const MAX_MISTAKES = 4;
+/** Hints per game. Hint 1 reveals a group's theme; hint 2 also seeds 2 members. */
+const MAX_HINTS = 2;
 
 /** Parse a YYYY-MM-DD practice date to a local Date for puzzle-number display. */
 function practiceDateToDate(dateStr?: string): Date | undefined {
@@ -69,6 +71,10 @@ export default function ConnectionsScreen() {
   // belonged together. null = plain miss.
   const [nearMiss, setNearMiss] = useState<2 | 3 | null>(null);
   const [flashingDotIdx, setFlashingDotIdx] = useState<number | null>(null);
+  // Hints used this game (0..MAX_HINTS). hintTheme is the revealed group title —
+  // it stays pinned as a banner chip for the rest of the game once shown.
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [hintTheme, setHintTheme] = useState<string | null>(null);
   const shareRef = useRef<View>(null);
   const isFirstGame = useRef(true);
   /** True while the current run IS the official daily (blob writes gate on it). */
@@ -107,6 +113,8 @@ export default function ConnectionsScreen() {
     setGameOver(false);
     setNearMiss(null);
     setFlashingDotIdx(null);
+    setHintsUsed(0);
+    setHintTheme(null);
   }, [practiceDate]);
 
   useEffect(() => {
@@ -123,7 +131,7 @@ export default function ConnectionsScreen() {
       setTileNames(p.shuffledNames);
       const blob = useDailyResultsStore
         .getState()
-        .getResult<{ mistakes: number; solvedOrder: string[] }>('connections');
+        .getResult<{ mistakes: number; solvedOrder: string[]; hintsUsed?: number }>('connections');
       if (blob) {
         const solved: SolvedCategory[] = blob.solvedOrder
           .map((name) => p.categories.find((c) => c.name === name))
@@ -132,6 +140,8 @@ export default function ConnectionsScreen() {
         setSolvedCategories(solved);
         setSolvedNames(new Set(solved.flatMap((s) => s.playerNames)));
         setMistakes(blob.mistakes);
+        // hintsUsed is additive on the blob — older completions read as 0.
+        setHintsUsed(blob.hintsUsed ?? 0);
       } else {
         setRestoredUnknown(true);
       }
@@ -193,9 +203,11 @@ export default function ConnectionsScreen() {
         playCheer();
         // Practice/archive runs never touch progress, XP or streak.
         if (!isPractice) {
+          // The flawless bonus requires BOTH a clean sheet and no hints, so a
+          // no-hint solve stays worth more than a hint-assisted one.
           useManagerStore
             .getState()
-            .awardDailyXp('connections', 4 * 25 + (mistakes === 0 ? 50 : 0));
+            .awardDailyXp('connections', 4 * 25 + (mistakes === 0 && hintsUsed === 0 ? 50 : 0));
           useDailyProgressStore.getState().markCompleted('connections', 4 - mistakes);
           // Wins can set a time PB.
           useSolveTimeStore.getState().markCompleted('connections', { countsForBest: true });
@@ -204,6 +216,7 @@ export default function ConnectionsScreen() {
             useDailyResultsStore.getState().setResult('connections', {
               mistakes,
               solvedOrder: updatedSolved.map((s) => s.name),
+              hintsUsed,
             });
           }
         }
@@ -250,13 +263,14 @@ export default function ConnectionsScreen() {
             useDailyResultsStore.getState().setResult('connections', {
               mistakes: newMistakes,
               solvedOrder: solvedCategories.map((s) => s.name),
+              hintsUsed,
             });
           }
         }
         setTimeout(() => setShowModal(true), 600);
       }
     }
-  }, [puzzle, selected, solvedCategories, mistakes, isPractice]);
+  }, [puzzle, selected, solvedCategories, mistakes, isPractice, hintsUsed]);
 
   const handleDeselectAll = useCallback(() => {
     setSelected(new Set());
@@ -272,6 +286,31 @@ export default function ConnectionsScreen() {
       return [...solved, ...shuffled];
     });
   }, [solvedNames]);
+
+  // Hint: reveal the easiest still-unsolved group's theme (hint 1), and on the
+  // second press also pre-select two of its members so the player finishes the
+  // other two. The target is the lowest-difficulty unsolved category, so it is
+  // deterministic for the day and free of Math.random.
+  const handleHint = useCallback(() => {
+    if (gameOver || hintsUsed >= MAX_HINTS || !puzzle) return;
+    const solvedNameSet = new Set(solvedCategories.map((s) => s.name));
+    const target = puzzle.categories
+      .filter((c) => !solvedNameSet.has(c.name))
+      .sort((a, b) => a.difficulty - b.difficulty)[0];
+    if (!target) return;
+    // A hint is a meaningful first interaction — start the daily stopwatch too.
+    if (!isPractice) useSolveTimeStore.getState().markStarted('connections');
+    triggerNotification(NotificationFeedbackType.Success);
+    const next = hintsUsed + 1;
+    setHintsUsed(next);
+    setHintTheme(target.name);
+    if (next >= MAX_HINTS) {
+      // Seed two still-available members (deterministic tile order) so the user
+      // completes the group. Clears any current selection first.
+      const seed = target.playerNames.filter((n) => !solvedNames.has(n)).slice(0, 2);
+      setSelected(new Set(seed));
+    }
+  }, [gameOver, hintsUsed, puzzle, solvedCategories, solvedNames, isPractice]);
 
   // Give up: end today's game as a loss and reveal every remaining group — the
   // same path as running out of mistakes. Solved groups stay, unsolved
@@ -289,11 +328,12 @@ export default function ConnectionsScreen() {
         useDailyResultsStore.getState().setResult('connections', {
           mistakes,
           solvedOrder: solvedCategories.map((s) => s.name),
+          hintsUsed,
         });
       }
     }
     setTimeout(() => setShowModal(true), 600);
-  }, [gameOver, isPractice, solvedCategories, mistakes]);
+  }, [gameOver, isPractice, solvedCategories, mistakes, hintsUsed]);
 
   const tiles: TileData[] = useMemo(() => {
     return tileNames.map((name) => ({
@@ -319,11 +359,21 @@ export default function ConnectionsScreen() {
             solvedDifficulties: solvedCategories.map(
               (s) => puzzle.categories.find((c) => c.name === s.name)?.difficulty ?? 0,
             ),
+            hintsUsed,
             // Practice shares never carry the daily's solve time.
             solveTimeMs: isPractice ? null : solveTimeMs,
           })
         : '',
-    [puzzle, dailyStreak, mistakes, solvedCategories, practiceDate, isPractice, solveTimeMs],
+    [
+      puzzle,
+      dailyStreak,
+      mistakes,
+      solvedCategories,
+      practiceDate,
+      isPractice,
+      solveTimeMs,
+      hintsUsed,
+    ],
   );
 
   if (!puzzle) {
@@ -357,6 +407,13 @@ export default function ConnectionsScreen() {
         disabled={gameOver}
       />
 
+      {/* Hint theme chip — pinned once revealed, names one group but not who's in it. */}
+      {hintTheme !== null && !gameOver && (
+        <View style={styles.hintBanner}>
+          <Text style={styles.hintText}>{`Hint: one group is “${hintTheme}”`}</Text>
+        </View>
+      )}
+
       {/* One-away near-miss banner (non-spoiler) */}
       {nearMiss !== null && !gameOver && (
         <View style={styles.oneAwayBanner}>
@@ -380,6 +437,18 @@ export default function ConnectionsScreen() {
 
       {/* Push controls to the bottom of the screen */}
       <View style={styles.spacer} />
+
+      {/* Hint — up to MAX_HINTS per game; label shows how many remain. */}
+      {!gameOver && (
+        <View style={styles.hintRow}>
+          <RetroButton
+            title={hintsUsed === 0 ? 'Hint' : `Hint (${MAX_HINTS - hintsUsed} left)`}
+            onPress={handleHint}
+            variant="secondary"
+            disabled={hintsUsed >= MAX_HINTS}
+          />
+        </View>
+      )}
 
       {/* Action buttons */}
       {!gameOver && (
@@ -507,6 +576,25 @@ const createStyles = (c: ThemeColors) =>
       color: c.streakBright,
       letterSpacing: 1,
       textTransform: 'uppercase',
+    },
+    hintBanner: {
+      alignSelf: 'center',
+      marginTop: spacing.lg,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.sm,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accentSoft,
+      borderWidth: 1,
+      borderColor: c.accent,
+    },
+    hintText: {
+      ...type.captionBold,
+      color: c.accentBright,
+      textAlign: 'center',
+    },
+    hintRow: {
+      alignItems: 'center',
+      marginBottom: spacing.sm,
     },
     mistakesRow: {
       flexDirection: 'row',
