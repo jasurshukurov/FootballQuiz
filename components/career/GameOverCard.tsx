@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, Linking, StyleSheet, Text } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -10,10 +10,14 @@ import GlassCard from '@/components/ui/GlassCard';
 import { type, spacing, borderRadius, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
+import { PhotoCredit } from '@/lib/photoCredits';
 
 interface GameOverCardProps {
   playerName: string;
   playerImage?: string;
+  /** CC attribution for the photo (required by the license when set); tapping
+   *  the credit line opens the license deed. */
+  photoCredit?: PhotoCredit | null;
   /** Answer meta shown as "nationality · position"; each part omitted if empty. */
   nationality?: string;
   position?: string;
@@ -23,6 +27,7 @@ interface GameOverCardProps {
 function GameOverCard({
   playerName,
   playerImage,
+  photoCredit,
   nationality,
   position,
   isWin,
@@ -60,6 +65,15 @@ function GameOverCard({
         <Text style={styles.playerName}>{playerName}</Text>
 
         {meta.length > 0 ? <Text style={styles.meta}>{meta}</Text> : null}
+
+        {playerImage && photoCredit ? (
+          <Text
+            style={styles.photoCredit}
+            onPress={() => Linking.openURL(photoCredit.url).catch(() => {})}
+            accessibilityRole="link">
+            {photoCredit.label}
+          </Text>
+        ) : null}
       </GlassCard>
     </Animated.View>
   );
@@ -97,6 +111,11 @@ const createStyles = (c: ThemeColors) =>
     meta: {
       ...type.caption,
       color: c.textSecondary,
+      textAlign: 'center',
+    },
+    photoCredit: {
+      ...type.micro,
+      color: c.textMuted,
       textAlign: 'center',
     },
   });

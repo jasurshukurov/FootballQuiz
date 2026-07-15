@@ -30,6 +30,7 @@ import { TierBadge } from '@/components/career/TierBadge';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
 import GameOverCard from '@/components/career/GameOverCard';
+import { getPhotoCredit } from '@/lib/photoCredits';
 import CareerResultSummary from '@/components/career/CareerResultSummary';
 import LastChanceHint from '@/components/ui/LastChanceHint';
 import GameOverActions from '@/components/ui/GameOverActions';
@@ -298,6 +299,7 @@ export default function CareerScreen() {
           <GameOverCard
             playerName={currentPlayer?.name ?? ''}
             playerImage={currentPlayer?.image_url}
+            photoCredit={getPhotoCredit(currentPlayer?.id)}
             nationality={currentPlayer?.nationality}
             position={currentPlayer?.position}
             isWin={isWon}

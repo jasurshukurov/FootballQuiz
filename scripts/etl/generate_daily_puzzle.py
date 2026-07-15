@@ -144,7 +144,6 @@ def gen_who_are_ya(players, rng, tracker, difficulty):
             "league": target.get("league", ""),
             "pos": target["position"],
             "mv": target.get("market_value", 0),
-            "img": target.get("image_url", ""),
         }
     }
 
@@ -264,7 +263,6 @@ def gen_career_path(players, rng, tracker, difficulty):
             "name": target["name"],
             "nat": target["nationality"],
             "pos": target["position"],
-            "img": target.get("image_url", ""),
             "career": [{"club": c["club"], "from": c["from"], "to": c["to"]}
                        for c in target["career"]],
         }
@@ -428,7 +426,6 @@ def gen_higherlower(players, rng, tracker, difficulty):
             "team": p.get("current_team", ""),
             "nat": p.get("nationality", ""),
             "mv": p.get("market_value", 0),
-            "img": p.get("image_url", ""),
         } for p in queue]
     }
 
