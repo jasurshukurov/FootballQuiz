@@ -8,7 +8,9 @@ import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { shortenClubName } from '@/lib/clubNames';
 import Tappable from '@/components/ui/Tappable';
 import SoccerPitch from '@/components/games/SoccerPitch';
-import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
+import PlayerSearchAutocomplete, {
+  PlayerSearchAutocompleteHandle,
+} from '@/components/ui/PlayerSearchAutocomplete';
 import RetroButton from '@/components/ui/RetroButton';
 import TeamCrest from '@/components/ui/TeamCrest';
 import Screen from '@/components/ui/Screen';
@@ -25,6 +27,7 @@ import {
   buildGuessPool,
   buildSlotIndex,
   resolveGuess,
+  foldName,
 } from '@/lib/matchData';
 import { Match } from '@/types/match';
 import { spacing, borderRadius, type, motion, touch } from '@/constants/theme';
@@ -42,7 +45,7 @@ import { showRewardedAd, loadRewardedAd } from '@/lib/ads';
 import ShareableMissing11Result from '@/components/ShareableMissing11Result';
 import GameOverSheet from '@/components/ui/GameOverSheet';
 import LivesIndicator from '@/components/ui/LivesIndicator';
-import GiveUpButton from '@/components/career/GiveUpButton';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import { buildShareText } from '@/lib/sharing';
 import { playWhistle, playCheer, playCrossbar } from '@/lib/sounds';
 
@@ -82,6 +85,8 @@ export default function Missing11Screen() {
   // be studied; a floating pill brings the card back.
   const [pitchView, setPitchView] = useState(false);
   const shareRef = useRef<View>(null);
+  // Clears the guess box after a typed name auto-fills its slot.
+  const searchRef = useRef<PlayerSearchAutocompleteHandle>(null);
   const [hintUsed, setHintUsed] = useState(false);
   const [hintText, setHintText] = useState('');
   // Seeded RNG for the current game: set to the daily mode seed on first play so
@@ -162,6 +167,20 @@ export default function Missing11Screen() {
     () => buildSlotIndex(lineupNames, match?.match_id),
     [lineupNames, match],
   );
+  // Folded surname (last word) -> slots, so typing just "kelleher" can auto-fill.
+  // A surname shared by two starters maps to two slots and never auto-fires.
+  const surnameSlots = useMemo(() => {
+    const map = new Map<string, number[]>();
+    lineupNames.forEach((name, i) => {
+      const parts = foldName(name).split(/\s+/).filter(Boolean);
+      const surname = parts[parts.length - 1];
+      if (!surname) return;
+      const slots = map.get(surname);
+      if (slots) slots.push(i);
+      else map.set(surname, [i]);
+    });
+    return map;
+  }, [lineupNames]);
 
   const finishGame = useCallback((won: boolean, found: number) => {
     setFinalFound(found);
@@ -222,6 +241,41 @@ export default function Missing11Screen() {
       }
     },
     [gameState, slotIndex, revealedSlots, lives, finishGame],
+  );
+
+  // Auto-fill from typing alone: on every keystroke, if the typed text names a
+  // hidden starter, that slot fills as a correct answer with no suggestion tap.
+  // Typing is ALWAYS free — a non-match does nothing, and never costs a life
+  // (wrong guesses only happen when a suggestion is explicitly picked).
+  const handleQueryChange = useCallback(
+    (text: string) => {
+      if (gameState !== 'playing') return;
+      const folded = foldName(text);
+      if (folded.length < 2) return;
+
+      // Full-name match first; then the surname of EXACTLY one still-hidden
+      // starter (an ambiguous shared surname stays inert until fully typed).
+      let slot = slotIndex.byName.get(folded);
+      if (slot === undefined) {
+        const hidden = (surnameSlots.get(folded) ?? []).filter((i) => !revealedSlots.has(i));
+        if (hidden.length === 1) slot = hidden[0];
+      }
+      if (slot === undefined) return; // no match: typing costs nothing
+      if (revealedSlots.has(slot)) return; // already placed: silent no-op
+
+      // Correct — same fill path as an explicit suggestion pick.
+      useSolveTimeStore.getState().markStarted('missing11');
+      triggerNotification(NotificationFeedbackType.Success);
+      const newRevealed = new Set(revealedSlots);
+      newRevealed.add(slot);
+      setRevealedSlots(newRevealed);
+      setFocusedSlot(null);
+      searchRef.current?.clear();
+      if (newRevealed.size === 11) {
+        finishGame(true, 11);
+      }
+    },
+    [gameState, slotIndex, surnameSlots, revealedSlots, finishGame],
   );
 
   // Tapping a slot reveals its position (a free recall nudge), never a guess.
@@ -371,9 +425,11 @@ export default function Missing11Screen() {
             </Animated.View>
           )}
           <PlayerSearchAutocomplete
+            ref={searchRef}
             players={guessPool}
             onSelectPlayer={handleGuessPlayer}
-            placeholder="Name any player from this XI..."
+            onQueryChange={handleQueryChange}
+            placeholder="Type a starter's name..."
             dropDirection="up"
           />
           <View style={styles.guessMeta}>

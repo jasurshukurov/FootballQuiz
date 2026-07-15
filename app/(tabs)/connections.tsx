@@ -32,6 +32,7 @@ import PopInView from '@/components/ui/PopInView';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import LivesIndicator from '@/components/ui/LivesIndicator';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import { spacing, borderRadius, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -267,6 +268,28 @@ export default function ConnectionsScreen() {
     });
   }, [solvedNames]);
 
+  // Give up: end today's game as a loss and reveal every remaining group — the
+  // same path as running out of mistakes. Solved groups stay, unsolved
+  // categories reveal in the sheet, and the score is the groups solved so far.
+  const handleGiveUp = useCallback(() => {
+    if (gameOver) return;
+    setGameOver(true);
+    // Practice/archive runs never touch progress, XP or streak.
+    if (!isPractice) {
+      useManagerStore.getState().awardDailyXp('connections', solvedCategories.length * 25);
+      useDailyProgressStore.getState().markCompleted('connections', solvedCategories.length);
+      // Losses never set a time PB.
+      useSolveTimeStore.getState().markCompleted('connections', { countsForBest: false });
+      if (isDailyRun.current) {
+        useDailyResultsStore.getState().setResult('connections', {
+          mistakes,
+          solvedOrder: solvedCategories.map((s) => s.name),
+        });
+      }
+    }
+    setTimeout(() => setShowModal(true), 600);
+  }, [gameOver, isPractice, solvedCategories, mistakes]);
+
   const tiles: TileData[] = useMemo(() => {
     return tileNames.map((name) => ({
       name,
@@ -372,6 +395,13 @@ export default function ConnectionsScreen() {
               disabled={selected.size !== 4}
             />
           </View>
+        </View>
+      )}
+
+      {/* Hold-to-confirm give up — ends the daily as a loss, reveals the groups. */}
+      {!gameOver && (
+        <View style={styles.giveUpRow}>
+          <GiveUpButton onGiveUp={handleGiveUp} />
         </View>
       )}
 
@@ -492,6 +522,10 @@ const createStyles = (c: ThemeColors) =>
     },
     buttonWrapper: {
       flex: 1,
+    },
+    giveUpRow: {
+      alignItems: 'center',
+      marginTop: spacing.md,
     },
     modalCategories: {
       width: '100%',

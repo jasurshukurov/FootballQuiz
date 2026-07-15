@@ -111,6 +111,13 @@ mode's previous modal (baseline tag `v2.0-floodlit`).
 
 ## Component notes
 
+- `GiveUpButton` (`components/ui/GiveUpButton.tsx`) → the one give-up control,
+  present in EVERY mode during active play (never on game over or a restored
+  daily). Hold-to-confirm: a danger-tinted fill sweeps the pill for 700ms and
+  fires on completion; early release drains it back. The fill is functional
+  progress feedback, so it does not gate on reduced motion. Give-up routes into
+  the mode's existing loss/finish path (graceful reveal, score-so-far, daily
+  completion recorded) — never a bespoke end state.
 - `RetroButton` → the single button primitive: variants primary (green fill,
   `textOnAccent` label), secondary (bgCard + border), danger, ghost. 56pt primary,
   16pt radius (`borderRadius.lg`, per the design system buttons spec).

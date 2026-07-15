@@ -32,7 +32,7 @@ import RetroButton from '@/components/ui/RetroButton';
 import BannerAd from '@/components/ui/BannerAd';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer, playCrossbar } from '@/lib/sounds';
-import GiveUpButton from '@/components/career/GiveUpButton';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import { TierBadge } from '@/components/career/TierBadge';
 import { getPlayerDifficultyTier } from '@/lib/dailyPuzzle';
 

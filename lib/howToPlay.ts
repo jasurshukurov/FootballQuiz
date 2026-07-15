@@ -46,13 +46,14 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Every guess, right or wrong, spends one of your 9. A wrong guess leaves the square open, so try it again with someone else.',
       'Each player fills only one square; 3 hints can suggest a valid pick.',
     ],
-    footer: 'Correct squares score 10 points. Obscure answers add a deep-cut bonus of up to +30.',
+    footer:
+      'Correct squares score 10 points. Obscure answers add a deep-cut bonus of up to +30. Hold Give Up to end the board early.',
   },
   missing11: {
     steps: [
       'A real match’s starting XI is on the pitch, names hidden.',
-      'Type any player you think started; a correct guess drops into their shirt.',
-      'Wrong names cost one of your 3 lives.',
+      'Just type a starter’s name and it drops into their shirt, no tapping needed.',
+      'Picking a name that never started costs one of your 3 lives.',
       'One hint per game reveals a slot’s position and first initial.',
     ],
     footer:
@@ -66,7 +67,7 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Four mistakes end the game.',
     ],
     footer:
-      'Groups run yellow (easy) to purple (devious). A no-mistake solve earns a flawless bonus.',
+      'Groups run yellow (easy) to purple (devious). A no-mistake solve earns a flawless bonus. Hold Give Up to reveal the groups.',
   },
   toplists: {
     steps: [
@@ -84,7 +85,8 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Every correct call grows your streak and brings the next player.',
       'Sudden death: one wrong call ends the run.',
     ],
-    footer: 'Early pairs are kind; later ones get tight. Your streak is your score.',
+    footer:
+      'Early pairs are kind; later ones get tight. Your streak is your score. Hold Give Up to bank it and stop.',
   },
   agent: {
     steps: [
@@ -93,16 +95,18 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Ten rounds, no lives. Every correct call banks a point.',
       '3 hints per game can show a deal’s clubs (one per round).',
     ],
-    footer: 'Six of ten wins the day; a perfect window tops the ladder.',
+    footer:
+      'Six of ten wins the day; a perfect window tops the ladder. Hold Give Up to close the window early.',
   },
   blindranking: {
     steps: [
       'Five players arrive ONE at a time for today’s category.',
-      'Place each into a rank slot. No peeking at who’s next.',
-      'Slots lock once filled, so weigh every choice.',
+      'Rank #1 is the top — most valuable, highest rated, most caps — down to #5 at the bottom.',
+      'Place each into a slot before the next arrives. Slots lock once filled, so weigh every choice.',
       'Exact spot scores 2 points, one place off scores 1.',
     ],
-    footer: 'Ten is a perfect board. Score 7 or more to win the day.',
+    footer:
+      'Ten is a perfect board. Score 7 or more to win the day. Hold Give Up to see the true order.',
   },
   careertimeline: {
     steps: [

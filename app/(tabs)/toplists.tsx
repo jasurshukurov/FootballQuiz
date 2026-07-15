@@ -28,7 +28,7 @@ import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import ShakeView from '@/components/ui/ShakeView';
 import LivesIndicator from '@/components/ui/LivesIndicator';
-import GiveUpButton from '@/components/career/GiveUpButton';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import GameOverActions from '@/components/ui/GameOverActions';
 import NextPuzzleCountdown from '@/components/ui/NextPuzzleCountdown';
 import ShareableTopListsResult from '@/components/ShareableTopListsResult';

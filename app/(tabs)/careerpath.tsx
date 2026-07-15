@@ -26,7 +26,7 @@ import { HintPanel } from '@/components/career/HintPanel';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
 import { TierBadge } from '@/components/career/TierBadge';
 import LivesIndicator from '@/components/ui/LivesIndicator';
-import GiveUpButton from '@/components/career/GiveUpButton';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import GameOverCard from '@/components/career/GameOverCard';
 import CareerResultSummary from '@/components/career/CareerResultSummary';
 import LastChanceHint from '@/components/ui/LastChanceHint';

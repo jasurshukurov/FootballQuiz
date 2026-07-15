@@ -50,6 +50,9 @@ interface GridGameActions {
   recordCorrect: (cellKey: string, placement: GridPlacement, pointsEarned: number) => void;
   recordWrong: (cellKey: string, playerId: number) => void;
   recordHint: () => void;
+  /** Give up: spend every remaining guess so re-entry restores the finished
+   *  board. Answers/points/hints already recorded stay untouched. */
+  giveUp: (totalGuesses: number) => void;
 }
 
 type GridGameStore = GridGameState & GridGameActions;
@@ -105,6 +108,8 @@ export const useGridGameStore = create<GridGameStore>()(
       },
 
       recordHint: () => set({ hintsUsed: get().hintsUsed + 1 }),
+
+      giveUp: (totalGuesses) => set({ guessesUsed: totalGuesses }),
     }),
     {
       name: 'grid-game-storage',

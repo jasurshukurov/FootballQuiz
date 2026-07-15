@@ -36,6 +36,7 @@ import RankBadge from '@/components/ui/RankBadge';
 import Tappable from '@/components/ui/Tappable';
 import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
 import GameOverActions from '@/components/ui/GameOverActions';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import ShareableGridResult from '@/components/ShareableGridResult';
 import { buildShareText } from '@/lib/sharing';
 import { playCheer } from '@/lib/sounds';
@@ -255,6 +256,22 @@ export default function ExploreScreen() {
     if (isDailyRun) useGridGameStore.getState().recordHint();
   }, [activeCell, grid, hintsUsed, usedIds, isDailyRun]);
 
+  // Give up: end the run now with the squares filled so far, taking the exact
+  // same finish path as running out of guesses — spend every remaining guess
+  // (which flips gameOver and lets the XP effect fire once), and for the daily
+  // run record completion + persist so re-entry restores the finished board.
+  const handleGiveUp = useCallback(() => {
+    if (gameOver) return;
+    closeSheet();
+    setGuessesUsed(TOTAL_GUESSES);
+    if (isDailyRun) {
+      useGridGameStore.getState().giveUp(TOTAL_GUESSES);
+      useDailyProgressStore.getState().markCompleted('grid', score);
+      // A given-up grid is never perfect, so it can't set a solve-time best.
+      useSolveTimeStore.getState().markCompleted('grid', { countsForBest: false });
+    }
+  }, [gameOver, isDailyRun, score, closeSheet]);
+
   const handleNewGame = useCallback(() => {
     // Practice keeps replaying the same past-day puzzle deterministically (the
     // grid stays; only the board resets); daily "Play Again" deals a fresh
@@ -368,6 +385,13 @@ export default function ExploreScreen() {
       {/* One-guess-left tension: a nudge, never guilt. */}
       {!gameOver && guessesLeft === 1 && (
         <Text style={styles.tensionLine}>Last guess. Make it count.</Text>
+      )}
+
+      {/* Give up — active play only, hidden while the search sheet is open. */}
+      {!gameOver && !activeCell && (
+        <View style={layoutStyles.giveUpRow}>
+          <GiveUpButton onGiveUp={handleGiveUp} />
+        </View>
       )}
 
       {/* Game over */}
@@ -500,6 +524,10 @@ const layoutStyles = StyleSheet.create({
     alignItems: 'center',
   },
   gameOverSection: {
+    marginTop: spacing.lg,
+  },
+  giveUpRow: {
+    alignItems: 'center',
     marginTop: spacing.lg,
   },
   sheetAvoider: {

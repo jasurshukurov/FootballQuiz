@@ -20,7 +20,8 @@ import GameOverActions from '@/components/ui/GameOverActions';
 import RetroButton from '@/components/ui/RetroButton';
 import Tappable from '@/components/ui/Tappable';
 import LivesIndicator from '@/components/ui/LivesIndicator';
-import GiveUpButton from '@/components/career/GiveUpButton';
+import GiveUpButton from '@/components/ui/GiveUpButton';
+import TeamCrest from '@/components/ui/TeamCrest';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import ShareableMatchGuessResult from '@/components/ShareableMatchGuessResult';
@@ -241,9 +242,20 @@ export default function GuessMatchScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Guess the Match"
         modeKey="guessmatch"
-        subtitle={`${puzzle.teamName}'s starting XI`}
         right={<LivesIndicator total={MAX_WRONG} remaining={MAX_WRONG - wrongPicks} />}
       />
+
+      {/* The GIVEN, made unmistakable: the team whose XI is being revealed is the
+          focal card — crest + condensed name + one-line framing of the task. */}
+      <View style={styles.teamBanner}>
+        <TeamCrest teamName={puzzle.teamName} size={44} />
+        <View style={layoutStyles.teamText}>
+          <Text style={styles.teamName} numberOfLines={2}>
+            {puzzle.teamName.toUpperCase()}
+          </Text>
+          <Text style={styles.teamCaption}>Their starting XI, one player at a time</Text>
+        </View>
+      </View>
 
       {/* Consolidated status: how far you have revealed and what a guess is worth
           right now — replaces the old scattered pill + caption + hearts. */}
@@ -324,6 +336,9 @@ export default function GuessMatchScreen() {
 
 // Layout-only styles stay module-scope.
 const layoutStyles = StyleSheet.create({
+  teamText: {
+    flex: 1,
+  },
   statusRow: {
     flexDirection: 'row',
     gap: spacing.sm,
@@ -379,6 +394,27 @@ const createStyles = (c: ThemeColors) =>
       color: c.textPrimary,
       textAlign: 'center',
       marginTop: 100,
+    },
+    teamBanner: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.bgElevated,
+      marginBottom: spacing.md,
+    },
+    teamName: {
+      ...type.h2,
+      color: c.textPrimary,
+    },
+    teamCaption: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: 2,
     },
     statusChip: {
       flex: 1,

@@ -30,6 +30,7 @@ import { getModeSeed } from '@/lib/dailySeed';
 import { getStreakRank, STREAK_MILESTONES } from '@/lib/rankLadder';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import StatCard from '@/components/games/StatCard';
 import GameOverActions from '@/components/ui/GameOverActions';
 import RankBadge from '@/components/ui/RankBadge';
@@ -256,6 +257,21 @@ export default function HigherLowerScreen() {
     ],
   );
 
+  // Give up: end today's run now, banking the streak scored so far. Runs the
+  // exact same finish path as a miss (daily completion + XP + solve-time), then
+  // drops to the game-over screen, which reveals the current pair's values.
+  const handleGiveUp = useCallback(() => {
+    if (gameState !== 'playing') return;
+    saveHighScore(streak);
+    // Daily XP only — awardDailyXp no-ops on same-day replays.
+    useManagerStore.getState().awardDailyXp('higher-lower', streak * 10);
+    useDailyProgressStore.getState().markCompleted('higherlower', streak);
+    // Streak mode: a fast run isn't a "best", so never record a time PB.
+    useSolveTimeStore.getState().markCompleted('higherlower', { countsForBest: false });
+    playCrossbar();
+    setGameState('gameover');
+  }, [gameState, streak, saveHighScore]);
+
   const slideStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: slideX.value }],
   }));
@@ -458,6 +474,11 @@ export default function HigherLowerScreen() {
           <Text style={styles.lowerText}>LOWER</Text>
         </Tappable>
       </View>
+      {gameState === 'playing' && (
+        <View style={styles.giveUpRow}>
+          <GiveUpButton onGiveUp={handleGiveUp} />
+        </View>
+      )}
       {celebration && <Confetti intensity={celebration} />}
     </Screen>
   );
@@ -553,6 +574,10 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
     },
     bigButtonDisabled: {
       opacity: 0.4,
+    },
+    giveUpRow: {
+      alignItems: 'center',
+      marginTop: spacing.md,
     },
     higherArrow: {
       ...type.h1,

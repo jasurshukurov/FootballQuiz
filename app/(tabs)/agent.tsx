@@ -23,6 +23,7 @@ import GameOverExtras from '@/components/ui/GameOverExtras';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import Tappable from '@/components/ui/Tappable';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer } from '@/lib/sounds';
 import ShareableAgentResult from '@/components/ShareableAgentResult';
@@ -179,6 +180,30 @@ export default function AgentScreen() {
     setHintsRemaining(MAX_HINTS);
     setCombo(0);
   }, []);
+
+  // Give up: end the run now with the score so far and drop through the normal
+  // finish path (same daily completion, XP award and result blob as a played-out
+  // game). The current unanswered deal is recorded as a miss so its correct
+  // answer shows on the game-over solve list.
+  const handleGiveUp = useCallback(() => {
+    if (gameOver || answered) return;
+    const finalResults: RoundResult[] = round
+      ? [...results, { round, selectedId: -1, correct: false }]
+      : results;
+    setResults(finalResults);
+    useManagerStore.getState().awardDailyXp('agent', score * 15);
+    setGameOver(true);
+    useDailyProgressStore.getState().markCompleted('agent', score);
+    // Giving up never wins the time PB — an early exit is always a shorter
+    // clock than a played-out run, so it could farm fast times.
+    useSolveTimeStore.getState().markCompleted('agent', { countsForBest: false });
+    // Persist the pick pattern on the DAILY run only, so re-entry restores it.
+    if (gameKey === dailyGameKey) {
+      useDailyResultsStore.getState().setResult('agent', {
+        correct: finalResults.map((r) => r.correct),
+      });
+    }
+  }, [gameOver, answered, round, results, score, gameKey, dailyGameKey]);
 
   if (rounds.length === 0) {
     return (
@@ -397,6 +422,13 @@ export default function AgentScreen() {
           </Text>
         </Tappable>
       )}
+
+      {/* Give up — only during active play, below the hint control. */}
+      {!answered && (
+        <View style={layoutStyles.giveUpRow}>
+          <GiveUpButton onGiveUp={handleGiveUp} />
+        </View>
+      )}
     </Screen>
   );
 }
@@ -421,6 +453,10 @@ const layoutStyles = StyleSheet.create({
   },
   hintButtonDisabled: {
     opacity: 0.3,
+  },
+  giveUpRow: {
+    alignItems: 'center',
+    marginTop: spacing.md,
   },
   optionsList: {
     gap: spacing.md,

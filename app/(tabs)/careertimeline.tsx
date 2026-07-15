@@ -18,7 +18,7 @@ import {
 import CareerTimeline from '@/components/games/CareerTimeline';
 import ClubSearchAutocomplete from '@/components/ui/ClubSearchAutocomplete';
 import GameOverActions from '@/components/ui/GameOverActions';
-import GiveUpButton from '@/components/career/GiveUpButton';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import ShakeView from '@/components/ui/ShakeView';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
