@@ -32,7 +32,7 @@ export default function ShareScreen() {
     <Screen scroll={false} withTabBar={false} contentStyle={layout.content}>
       <View style={layout.body}>
         <Text style={layout.emoji}>{'⚽'}</Text>
-        <Text style={styles.title}>Football Daily #{isNaN(id) ? '?' : id}</Text>
+        <Text style={styles.title}>Football Trivia #{isNaN(id) ? '?' : id}</Text>
         <Text style={styles.subtitle}>
           This was a past puzzle. Play today&apos;s puzzle instead!
         </Text>

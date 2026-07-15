@@ -356,7 +356,7 @@ export default function TodayScreen() {
         <FontAwesome name="chevron-right" size={13} color={colors.textMuted} />
       </Tappable>
 
-      <Text style={styles.footerNote}>Football Daily #{dailyNumber}</Text>
+      <Text style={styles.footerNote}>Football Trivia #{dailyNumber}</Text>
     </Screen>
   );
 }

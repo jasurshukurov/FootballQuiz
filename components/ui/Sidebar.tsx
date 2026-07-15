@@ -57,7 +57,7 @@ export default function Sidebar() {
       {/* ── Wordmark ── */}
       <View style={styles.brand}>
         <FontAwesome name="futbol-o" size={22} color={colors.accent} />
-        <Text style={styles.wordmark}>FOOTBALL DAILY</Text>
+        <Text style={styles.wordmark}>FOOTBALL TRIVIA</Text>
       </View>
 
       {/* ── Vertical nav ── */}

@@ -10,7 +10,7 @@ import { useProStore } from '@/hooks/useProStore';
  */
 export async function deleteUserAccount(): Promise<void> {
   // In production, call backend API to delete server-side data:
-  // await fetch('https://api.footballquiz.app/account', { method: 'DELETE' });
+  // await fetch('https://api.footballtrivia.app/account', { method: 'DELETE' });
 
   await AsyncStorage.clear();
 

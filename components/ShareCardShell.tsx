@@ -23,7 +23,7 @@ interface ShareCardShellProps {
 
 /**
  * The share-card chrome per the Claude Design share-card spec: card gradient
- * with an accent border, "⚽ FOOTBALL DAILY #N" badge with the streak flame
+ * with an accent border, "⚽ FOOTBALL TRIVIA #N" badge with the streak flame
  * top-right, condensed mode title, mode content, and a bordered footer with
  * the verdict + site. Spoiler-free by contract: children must never contain
  * the answer.
@@ -49,7 +49,7 @@ export default function ShareCardShell({
         <View style={styles.badge}>
           <FontAwesome name="futbol-o" size={13} color={colors.accent} />
           <Text style={styles.badgeText}>
-            FOOTBALL DAILY{dailyNumber != null ? ` #${dailyNumber}` : ''}
+            FOOTBALL TRIVIA{dailyNumber != null ? ` #${dailyNumber}` : ''}
           </Text>
         </View>
         {streak > 0 && <Text style={styles.streak}>🔥 {streak}</Text>}
@@ -60,7 +60,7 @@ export default function ShareCardShell({
         <Text style={[styles.verdict, { color: won ? colors.accentBright : colors.textSecondary }]}>
           {verdict}
         </Text>
-        <Text style={styles.site}>footballquiz.app</Text>
+        <Text style={styles.site}>footballtrivia.app</Text>
       </View>
     </LinearGradient>
   );

@@ -189,15 +189,15 @@ function buildBody(input: ShareResultInput): string[] {
 
 /**
  * Build a copyable Wordle-style result block for any mode, e.g.:
- *   Football Quiz #560 · Who Are Ya 🔍
+ *   Football Trivia #560 · Who Are Ya 🔍
  *   3/8
  *   🟥🟨⬜🟩🟩
  *   🔥 5-day streak
- *   https://footballquiz.app/share/560
+ *   https://footballtrivia.app/share/560
  */
 export function buildShareText(input: ShareResultInput): string {
   const lines: string[] = [
-    `Football Quiz #${input.dailyNumber} · ${MODE_HEADERS[input.mode]}`,
+    `Football Trivia #${input.dailyNumber} · ${MODE_HEADERS[input.mode]}`,
     ...buildBody(input),
   ];
 
@@ -244,19 +244,19 @@ export interface DailyRecapInput {
 
 /**
  * Build the "Share your day" recap, stitching a line per completed mode:
- *   Football Quiz #560 · Perfect Day! (10/10)
+ *   Football Trivia #560 · Perfect Day! (10/10)
  *   🎬 Career Path 2
  *   🔍 Who Are Ya 3
  *   ...
  *   🔥 5-day streak
- *   https://footballquiz.app/share/560
+ *   https://footballtrivia.app/share/560
  */
 export function buildDailyRecapText(input: DailyRecapInput): string {
   const completedCount = RECAP_MODES.filter((m) => input.completedModes[m.key]).length;
   const perfect = completedCount === input.totalModes;
 
   const lines: string[] = [
-    `Football Quiz #${input.dailyNumber} · ${perfect ? 'Perfect Day! ' : ''}(${completedCount}/${input.totalModes})`,
+    `Football Trivia #${input.dailyNumber} · ${perfect ? 'Perfect Day! ' : ''}(${completedCount}/${input.totalModes})`,
   ];
 
   for (const mode of RECAP_MODES) {

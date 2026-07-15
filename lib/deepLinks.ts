@@ -1,6 +1,6 @@
-// CloudFront distribution domain (we don't own a custom domain yet).
-// Unknown paths there serve the app landing page, so share links resolve.
-const BASE_URL = 'https://d295hqf6csr5wz.cloudfront.net/share';
+// footballtrivia.app fronts the content CloudFront distribution; unknown
+// paths serve the app landing page, so share links always resolve.
+const BASE_URL = 'https://footballtrivia.app/share';
 
 export function generateShareUrl(dailyNumber: number): string {
   return `${BASE_URL}/${dailyNumber}`;

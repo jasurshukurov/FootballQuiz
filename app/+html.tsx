@@ -12,7 +12,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <title>Football Quiz</title>
+        <title>Football Trivia</title>
         <meta
           name="description"
           content="Daily football trivia: guess players, careers, transfers and more with a fresh set of puzzles every day."

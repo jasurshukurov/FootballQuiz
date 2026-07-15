@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Permanent end-to-end regression gate for the Football Daily app.
+// Permanent end-to-end regression gate for the Football Trivia app.
 //
 // Plays every registered daily mode to a genuine end state (each in an isolated browser
 // context so daily-completion locks never cross-contaminate), asserts the
@@ -72,7 +72,7 @@ async function main() {
   const selected = only.length ? MODES.filter((m) => only.some((a) => matches(m, a))) : MODES;
   const runHub = !only.length || only.includes('hub');
 
-  console.log(`${C.bold}${C.cyan}Football Daily — E2E regression gate${C.reset}`);
+  console.log(`${C.bold}${C.cyan}Football Trivia — E2E regression gate${C.reset}`);
   console.log(`${C.dim}target ${BASE} · viewport 430x932 · ${selected.length} modes${runHub ? ' + hub' : ''}${C.reset}\n`);
 
   const browser = await launchBrowser();
