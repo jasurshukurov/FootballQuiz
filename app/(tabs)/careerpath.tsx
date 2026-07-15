@@ -74,27 +74,48 @@ export default function CareerScreen() {
   const dailyNumber = getDailyNumber();
 
   useEffect(() => {
-    const seed = getModeSeed('careerpath');
-    const store = useCareerGameStore.getState();
-    const dailyDone = useDailyProgressStore.getState().isCompleted('careerpath');
-    if (dailyDone && store.dailySeed !== seed) {
-      // Daily already completed and its board was replaced by a Play-Again
-      // practice run. Never re-deal the finished daily as playable: keep the
-      // in-flight practice board, or deal a fresh practice player.
-      if (store.gameStatus !== 'playing' || !store.currentPlayer) {
-        store.resetGame();
-      } else if (!store.isPractice) {
-        // Rehydrated mid-practice board: isPractice is transient (not
-        // persisted), so stamp it back — the eyebrow must read PRACTICE and
-        // this board's result must never record over the finished daily.
-        useCareerGameStore.setState({ isPractice: true });
+    const decide = () => {
+      const seed = getModeSeed('careerpath');
+      const store = useCareerGameStore.getState();
+      const dailyDone = useDailyProgressStore.getState().isCompleted('careerpath');
+      if (dailyDone && store.dailySeed !== seed) {
+        // Daily already completed and its board was replaced by a Play-Again
+        // practice run. Never re-deal the finished daily as playable: keep the
+        // in-flight practice board, or deal a fresh practice player.
+        if (store.gameStatus !== 'playing' || !store.currentPlayer) {
+          store.resetGame();
+        } else if (!store.isPractice) {
+          // Rehydrated mid-practice board: isPractice is transient (not
+          // persisted), so stamp it back — the eyebrow must read PRACTICE and
+          // this board's result must never record over the finished daily.
+          useCareerGameStore.setState({ isPractice: true });
+        }
+      } else {
+        // Deals today's daily, or restores it (finished or mid-run) via the
+        // store's dailySeed guard.
+        startDailyGame(seed);
       }
-    } else {
-      // Deals today's daily, or restores it (finished or mid-run) via the
-      // store's dailySeed guard.
-      startDailyGame(seed);
+      playWhistle();
+    };
+
+    // Both persisted stores must be rehydrated before deciding what to deal —
+    // on a cold start AsyncStorage hydration races this mount, and deciding
+    // from empty defaults would deal a fresh daily over a finished one.
+    const persists = [useCareerGameStore.persist, useDailyProgressStore.persist];
+    if (persists.every((p) => p.hasHydrated())) {
+      decide();
+      return;
     }
-    playWhistle();
+    let decided = false;
+    const unsubs = persists.map((p) =>
+      p.onFinishHydration(() => {
+        if (!decided && persists.every((q) => q.hasHydrated())) {
+          decided = true;
+          decide();
+        }
+      }),
+    );
+    return () => unsubs.forEach((u) => u());
   }, [startDailyGame]);
 
   // Record streak/XP/daily-progress once the daily puzzle ends. Practice
