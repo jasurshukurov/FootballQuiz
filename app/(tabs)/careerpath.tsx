@@ -74,12 +74,34 @@ export default function CareerScreen() {
   const dailyNumber = getDailyNumber();
 
   useEffect(() => {
-    startDailyGame(getModeSeed('careerpath'));
+    const seed = getModeSeed('careerpath');
+    const store = useCareerGameStore.getState();
+    const dailyDone = useDailyProgressStore.getState().isCompleted('careerpath');
+    if (dailyDone && store.dailySeed !== seed) {
+      // Daily already completed and its board was replaced by a Play-Again
+      // practice run. Never re-deal the finished daily as playable: keep the
+      // in-flight practice board, or deal a fresh practice player.
+      if (store.gameStatus !== 'playing' || !store.currentPlayer) {
+        store.resetGame();
+      } else if (!store.isPractice) {
+        // Rehydrated mid-practice board: isPractice is transient (not
+        // persisted), so stamp it back — the eyebrow must read PRACTICE and
+        // this board's result must never record over the finished daily.
+        useCareerGameStore.setState({ isPractice: true });
+      }
+    } else {
+      // Deals today's daily, or restores it (finished or mid-run) via the
+      // store's dailySeed guard.
+      startDailyGame(seed);
+    }
     playWhistle();
   }, [startDailyGame]);
 
-  // Record streak/XP/daily-progress once the daily puzzle ends.
+  // Record streak/XP/daily-progress once the daily puzzle ends. Practice
+  // boards (Play Again, or the post-daily re-entry deal) record nothing —
+  // otherwise a practice result would overwrite the official daily score.
   useEffect(() => {
+    if (useCareerGameStore.getState().isPractice) return;
     if (gameStatus === 'won') {
       const xp = 50 + attemptsLeft * 15;
       // Award at most once per local day; Play-Again the same day earns nothing.
@@ -195,7 +217,7 @@ export default function CareerScreen() {
   return (
     <Screen scroll={false}>
       <ScreenHeader
-        eyebrow={`Daily #${dailyNumber}`}
+        eyebrow={isPractice ? 'Practice' : `Daily #${dailyNumber}`}
         title="Career Path"
         modeKey="careerpath"
         right={currentPlayer ? <TierBadge tier={currentPlayer.tier} /> : undefined}
