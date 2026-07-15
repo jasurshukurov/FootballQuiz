@@ -7,13 +7,10 @@ import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import RetroButton from '@/components/ui/RetroButton';
 import Tappable from '@/components/ui/Tappable';
-import UsernameCard from '@/components/ui/UsernameCard';
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
 import { spacing, borderRadius, type, touch } from '@/constants/theme';
 import { useProStore } from '@/hooks/useProStore';
-import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
-import { FEATURES } from '@/lib/featureFlags';
 import { purchasePro, restorePurchases } from '@/lib/purchases';
 import { deleteUserAccount } from '@/lib/accountDeletion';
 import { isSoundEnabled, setSoundEnabled } from '@/lib/sounds';
@@ -95,8 +92,8 @@ export default function MoreScreen() {
   const router = useRouter();
   const { colors, styles } = useStyles();
   const isPro = useProStore((s) => s.isPro);
-  const leaderboardRemoteOn = useRemoteConfigStore((s) => s.config.leaderboardEnabled !== false);
-  const leaderboardOn = FEATURES.leaderboard && leaderboardRemoteOn;
+  // Leaderboard UI removed 2026-07-15 (owner call: personal scores only).
+  // Sync/identity plumbing stays behind FEATURES.leaderboard + remote config.
   const [loading, setLoading] = useState(false);
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [hapticsOn, setHapticsOn] = useState(isHapticsEnabled());
@@ -214,24 +211,6 @@ export default function MoreScreen() {
           </>
         )}
       </View>
-
-      {/* Player identity + leaderboard (hidden when the feature flag is off) */}
-      {leaderboardOn && (
-        <>
-          <SectionLabel>Player</SectionLabel>
-          <View style={styles.group}>
-            <UsernameCard compact />
-            <LinkRow
-              icon="trophy"
-              label="Leaderboard"
-              sub="See how your XP stacks up worldwide"
-              onPress={() => {
-                router.push('/(tabs)/leaderboard' as Href);
-              }}
-            />
-          </View>
-        </>
-      )}
 
       {/* Practice & Archive */}
       <SectionLabel>Practice</SectionLabel>
