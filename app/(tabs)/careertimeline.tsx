@@ -39,7 +39,7 @@ import RankBadge from '@/components/ui/RankBadge';
 import { getRank } from '@/lib/rankLadder';
 
 type GamePhase = 'playing' | 'won' | 'lost';
-type Feedback = null | 'wrong' | 'rightClubWrongYears';
+type Feedback = null | 'wrong' | 'alreadyOnBoard';
 const MAX_LIVES = 3;
 
 export default function CareerTimelineScreen() {
@@ -122,6 +122,9 @@ export default function CareerTimelineScreen() {
     initGame(seed, getDailyNumber());
   }, [initGame, restoredDaily]);
 
+  // Tapping a stint is now optional targeting, not a gate: it highlights the
+  // stint (years shown above the search box) and disambiguates when the same
+  // club fills several hidden stints. Tap again to untarget.
   const handleNodePress = useCallback(
     (index: number) => {
       if (phase !== 'playing') return;
@@ -130,7 +133,7 @@ export default function CareerTimelineScreen() {
       // Solve-time stopwatch starts on the first node pick (no-ops after).
       useSolveTimeStore.getState().markStarted('careertimeline');
       setFeedback(null);
-      setActiveIdx(index);
+      setActiveIdx((prev) => (prev === index ? null : index));
     },
     [phase, nodes],
   );
@@ -188,22 +191,28 @@ export default function CareerTimelineScreen() {
 
   const handleClubSelect = useCallback(
     (clubName: string) => {
-      if (activeIdx === null || phase !== 'playing' || !puzzle) return;
+      if (phase !== 'playing' || !puzzle) return;
+      // A picked suggestion is a meaningful first interaction (no-ops after).
+      useSolveTimeStore.getState().markStarted('careertimeline');
 
-      const targetNode = nodes[activeIdx];
-      if (!targetNode.isHidden || targetNode.isGuessed) return;
-
-      if (clubNamesMatch(clubName, targetNode.club)) {
-        // Correct guess
-        fillStint(activeIdx);
-      } else {
-        // Wrong guess. Distinguish "right club, wrong years" — the guessed club
-        // IS somewhere in this career, just not the active stint — from a plain
-        // miss, so the softer feedback rewards partial knowledge.
-        const rightClubElsewhere = nodes.some(
-          (n, i) => i !== activeIdx && clubNamesMatch(clubName, n.club),
+      // A picked club is correct if ANY still-hidden stint wears it — no stint
+      // tap required. When the same club fills several hidden stints, prefer
+      // the targeted one, else the earliest.
+      const matches = nodes
+        .map((node, index) => ({ node, index }))
+        .filter(
+          ({ node }) => node.isHidden && !node.isGuessed && clubNamesMatch(clubName, node.club),
         );
-        setFeedback(rightClubElsewhere ? 'rightClubWrongYears' : 'wrong');
+      if (matches.length > 0) {
+        const target = matches.find(({ index }) => index === activeIdx) ?? matches[0];
+        fillStint(target.index);
+      } else if (nodes.some((n) => clubNamesMatch(clubName, n.club))) {
+        // The club IS in this career but its stint is already on the board
+        // (visible from the start, or solved). Naming what's on screen adds no
+        // information, so it points there instead of costing a life.
+        setFeedback('alreadyOnBoard');
+      } else {
+        setFeedback('wrong');
         triggerNotification(NotificationFeedbackType.Error);
         playCrossbar();
         setShakeWrong(true);
@@ -238,6 +247,7 @@ export default function CareerTimelineScreen() {
   const handleQueryChange = useCallback(
     (text: string) => {
       if (phase !== 'playing' || !puzzle) return;
+      setFeedback(null); // typing again dismisses stale wrong-pick feedback
       if (text.trim().length < 2) return;
 
       // Hidden, still-unsolved stints the typed text names. clubNamesMatch is
@@ -248,12 +258,9 @@ export default function CareerTimelineScreen() {
         .filter(({ node }) => node.isHidden && !node.isGuessed && clubNamesMatch(text, node.club));
       if (matches.length === 0) return; // no match: typing costs nothing
 
-      // Unambiguous fill only: exactly one hidden stint wears this club, or the
-      // same club sits in several and one of them is the active stint (prefer
-      // it). Otherwise stay inert so we never fill the wrong repeated stint.
-      const target =
-        matches.length === 1 ? matches[0] : matches.find(({ index }) => index === activeIdx);
-      if (!target) return;
+      // Same rule as an explicit pick: prefer the targeted stint when the same
+      // club repeats, else fill the earliest matching stint.
+      const target = matches.find(({ index }) => index === activeIdx) ?? matches[0];
 
       fillStint(target.index);
     },
@@ -391,34 +398,32 @@ export default function CareerTimelineScreen() {
         </ShakeView>
       </ScrollView>
 
-      {/* Club search - appears when a hidden stint is active */}
-      {activeIdx !== null && (
-        <View style={layoutStyles.searchContainer}>
-          <Text style={styles.searchLabel}>
-            Which club? ({nodes[activeIdx].from} - {nodes[activeIdx].to})
+      {/* Club search - always available; a match fills whichever hidden stint
+          wears that club. Tapping a stint only targets it (years hint). */}
+      <View style={layoutStyles.searchContainer}>
+        <Text style={styles.searchLabel}>
+          {activeIdx !== null
+            ? `Which club? (${nodes[activeIdx].from} - ${nodes[activeIdx].to})`
+            : 'Name any hidden club'}
+        </Text>
+        {feedback && (
+          <Text
+            style={[
+              layoutStyles.feedbackText,
+              feedback === 'alreadyOnBoard' ? styles.feedbackAmber : styles.feedbackRed,
+            ]}>
+            {feedback === 'alreadyOnBoard' ? 'Already on the board' : 'Not in this career'}
           </Text>
-          {feedback && (
-            <Text
-              style={[
-                layoutStyles.feedbackText,
-                feedback === 'rightClubWrongYears' ? styles.feedbackAmber : styles.feedbackRed,
-              ]}>
-              {feedback === 'rightClubWrongYears'
-                ? 'Right club, wrong years. Try another stint'
-                : 'Not this one'}
-            </Text>
-          )}
-          <ClubSearchAutocomplete
-            ref={searchRef}
-            clubs={clubs}
-            onSelectClub={handleClubSelect}
-            onQueryChange={handleQueryChange}
-            placeholder="Search club..."
-            autoFocus
-            dropDirection="up"
-          />
-        </View>
-      )}
+        )}
+        <ClubSearchAutocomplete
+          ref={searchRef}
+          clubs={clubs}
+          onSelectClub={handleClubSelect}
+          onQueryChange={handleQueryChange}
+          placeholder="Search club..."
+          dropDirection="up"
+        />
+      </View>
 
       {/* Lives + give-up, bottom-anchored below the board (never at the top). */}
       <View style={layoutStyles.controlBar}>

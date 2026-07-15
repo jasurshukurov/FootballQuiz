@@ -111,8 +111,8 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
   careertimeline: {
     steps: [
       'A player’s career timeline is laid out with three of the middle clubs hidden.',
-      'Tap a hidden stint, then just type the club and it drops in, no tapping a suggestion needed.',
-      'Only an explicit wrong pick costs a life; typing is always free.',
+      'Just type a club: if it matches any hidden stint it drops straight in. Tap a stint only to target it when a club repeats.',
+      'Picking a club that is not in the career costs a life; typing is always free.',
       'The lightbulb on a stint reveals the club’s first letter (−5 XP each).',
     ],
     footer: 'Find all three to win; spare lives boost your XP. Hold Give Up to reveal the answer.',
