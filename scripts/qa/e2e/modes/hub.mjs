@@ -10,8 +10,18 @@ export const meta = { key: 'hub', title: 'Hub + Nav', route: '/' };
 // deprecating a mode must not break this check).
 async function progressMeter(page) {
   const texts = await allTexts(page);
-  return texts.find((s) => /\b\d+\s*\/\s*\d+\s*played/i.test(s)) ||
-         texts.find((s) => /\b\d+\s*\/\s*\d+\b/.test(s)) || null;
+  const leaf = texts.find((s) => /\b\d+\s*\/\s*\d+\s*played/i.test(s)) ||
+               texts.find((s) => /\b\d+\s*\/\s*\d+\b/.test(s));
+  if (leaf) return leaf;
+  // The meter count renders as nested Texts ("5" + muted "/11"), which are
+  // separate leaf nodes — read the composed textContent of small parents too.
+  return page.evaluate(() => {
+    for (const el of document.querySelectorAll('div,span')) {
+      const t = el.textContent?.trim() ?? '';
+      if (t.length <= 8 && /^\d+\s*\/\s*\d+$/.test(t)) return t;
+    }
+    return null;
+  });
 }
 function meterNum(s) { const m = s && s.match(/(\d+)\s*\/\s*(\d+)/); return m ? parseInt(m[1], 10) : null; }
 
