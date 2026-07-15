@@ -8,6 +8,7 @@ import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import Screen from '@/components/ui/Screen';
 import Tappable from '@/components/ui/Tappable';
 import ProgressRing from '@/components/ui/ProgressRing';
+import DifficultyBanner, { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
 import { spacing, borderRadius, type, motion, touch, fonts, opacity } from '@/constants/theme';
@@ -65,7 +66,13 @@ function FeaturedCard({
         <FontAwesome name={mode.icon} size={30} color={c.accent} />
       </View>
       <View style={styles.cardText}>
-        <Text style={styles.featuredEyebrow}>Up next</Text>
+        <View style={styles.featuredEyebrowRow}>
+          <Text style={styles.featuredEyebrow}>Up next</Text>
+          <View style={styles.difficultyChip}>
+            <View style={styles.difficultyDot} />
+            <Text style={styles.difficultyChipText}>{todayBandDisplay()}</Text>
+          </View>
+        </View>
         <Text style={styles.featuredTitle}>{mode.title}</Text>
         <Text style={styles.featuredTease} numberOfLines={2}>
           {mode.tease}
@@ -79,8 +86,9 @@ function FeaturedCard({
   );
 }
 
-/** Rich row for a mode not yet played today. */
-function UpNextRow({
+/** Two-column grid card for a mode not yet played today (Claude Design hub):
+ *  icon tile top-left, unplayed dot top-right, title + tease below. */
+function ModeGridCard({
   mode,
   onPress,
   c,
@@ -96,17 +104,19 @@ function UpNextRow({
       onPress={onPress}
       accessibilityLabel={`Play ${mode.title}`}
       hoverStyle={{ backgroundColor: c.bgCardPressed }}
-      style={styles.card}>
-      <View style={styles.iconSquare}>
-        <FontAwesome name={mode.icon} size={20} color={c.accent} />
+      style={styles.gridCard}>
+      <View style={styles.gridCardTop}>
+        <View style={styles.iconSquare}>
+          <FontAwesome name={mode.icon} size={20} color={c.accent} />
+        </View>
+        <View style={styles.unplayedDot} />
       </View>
-      <View style={styles.cardText}>
-        <Text style={styles.cardTitle}>{mode.title}</Text>
-        <Text style={styles.cardTease} numberOfLines={1}>
-          {mode.tease}
-        </Text>
-      </View>
-      <FontAwesome name="chevron-right" size={14} color={c.textMuted} />
+      <Text style={styles.cardTitle} numberOfLines={1}>
+        {mode.title}
+      </Text>
+      <Text style={styles.cardTease} numberOfLines={2}>
+        {mode.tease}
+      </Text>
     </Tappable>
   );
 }
@@ -226,7 +236,12 @@ export default function TodayScreen() {
         </ProgressRing>
       </View>
 
-      {/* ── Up next: featured hero card + rich rows ── */}
+      {/* ── Weekly difficulty ramp (shared curve, data-driven) ── */}
+      <View style={styles.bannerWrap}>
+        <DifficultyBanner />
+      </View>
+
+      {/* ── Up next: featured hero card + two-column mode grid ── */}
       {unplayed.length > 0 && (
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>Up next</Text>
@@ -242,21 +257,31 @@ export default function TodayScreen() {
                 />
               </Animated.View>
             )}
-            {rest.map((mode, i) => {
-              const idx = i + 1; // featured card is index 0
-              const row = (
-                <UpNextRow mode={mode} onPress={() => openMode(mode)} c={colors} styles={styles} />
-              );
-              return idx < STAGGER_CAP ? (
-                <Animated.View
-                  key={mode.key}
-                  entering={FadeInDown.delay(idx * 40).duration(motion.base)}>
-                  {row}
-                </Animated.View>
-              ) : (
-                <View key={mode.key}>{row}</View>
-              );
-            })}
+            <View style={styles.grid}>
+              {rest.map((mode, i) => {
+                const idx = i + 1; // featured card is index 0
+                const card = (
+                  <ModeGridCard
+                    mode={mode}
+                    onPress={() => openMode(mode)}
+                    c={colors}
+                    styles={styles}
+                  />
+                );
+                return idx < STAGGER_CAP ? (
+                  <Animated.View
+                    key={mode.key}
+                    style={styles.gridItem}
+                    entering={FadeInDown.delay(idx * 40).duration(motion.base)}>
+                    {card}
+                  </Animated.View>
+                ) : (
+                  <View key={mode.key} style={styles.gridItem}>
+                    {card}
+                  </View>
+                );
+              })}
+            </View>
           </View>
         </View>
       )}
@@ -362,6 +387,9 @@ const createStyles = (c: ThemeColors) =>
       lineHeight: type.caption.lineHeight,
       color: c.textPrimary,
     },
+    bannerWrap: {
+      marginBottom: spacing.xl,
+    },
     section: {
       marginBottom: spacing.xl,
     },
@@ -395,12 +423,37 @@ const createStyles = (c: ThemeColors) =>
       justifyContent: 'center',
       backgroundColor: c.accentSoft,
     },
+    featuredEyebrowRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginBottom: 2,
+    },
     featuredEyebrow: {
       ...type.micro,
       color: c.accent,
       letterSpacing: 1.5,
       textTransform: 'uppercase',
-      marginBottom: 2,
+    },
+    difficultyChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: 1,
+      borderRadius: borderRadius.full,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+    },
+    difficultyDot: {
+      width: 6,
+      height: 6,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accent,
+    },
+    difficultyChipText: {
+      ...type.micro,
+      color: c.accentBright,
     },
     featuredTitle: {
       ...type.h2,
@@ -426,17 +479,36 @@ const createStyles = (c: ThemeColors) =>
       ...type.captionBold,
       color: c.textOnAccent,
     },
-    // Standard unplayed row
-    card: {
+    // Two-column unplayed mode grid
+    grid: {
       flexDirection: 'row',
-      alignItems: 'center',
+      flexWrap: 'wrap',
       gap: spacing.md,
-      minHeight: touch.cta,
+    },
+    gridItem: {
+      flexBasis: '47%',
+      flexGrow: 1,
+    },
+    gridCard: {
+      minHeight: touch.cta * 2,
       padding: spacing.md,
       borderRadius: borderRadius.lg,
       borderWidth: 1,
       borderColor: c.border,
       backgroundColor: c.bgCard,
+    },
+    gridCardTop: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      marginBottom: spacing.sm,
+    },
+    unplayedDot: {
+      width: 6,
+      height: 6,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accent,
+      marginTop: spacing.xs,
     },
     iconSquare: {
       width: 44,

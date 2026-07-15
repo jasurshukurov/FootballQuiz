@@ -104,6 +104,12 @@ export function bandForDate(dateStr?: string): FameBand {
   return WEEKLY_BANDS[date.getDay()];
 }
 
+/** Band for a JS weekday index (Sunday=0 ... Saturday=6). Read-only view of
+ *  the weekly curve for UI like the hub's difficulty ramp banner. */
+export function bandForWeekday(jsDay: number): FameBand {
+  return WEEKLY_BANDS[((jsDay % 7) + 7) % 7];
+}
+
 /**
  * Filter items to the band, widening symmetrically until at least
  * `minPool` candidates remain so a narrow band can never empty a mode's
