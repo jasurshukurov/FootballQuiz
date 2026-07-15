@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
+import { shortenClubName } from '@/lib/clubNames';
 import TeamCrest from '@/components/ui/TeamCrest';
 // Portrait doesn't leak the answer (the hidden thing is the player's rank value).
 // No inline credit line — attribution lives in lib/playerPhotos.ts and the
@@ -50,9 +51,9 @@ export default function ChallengerCard({ player, visible, eyebrow }: ChallengerC
             {player.name}
           </Text>
           <View style={layoutStyles.teamRow}>
-            <TeamCrest teamName={player.current_team} size={20} />
+            <TeamCrest teamName={shortenClubName(player.current_team)} size={20} />
             <Text style={styles.teamName} numberOfLines={1}>
-              {player.current_team}
+              {shortenClubName(player.current_team)}
             </Text>
           </View>
           <Text style={styles.position}>{player.position}</Text>

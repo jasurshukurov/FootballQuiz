@@ -1,6 +1,7 @@
 import { Player } from '@/types/player';
 import { ComparisonResult, GuessResult } from '@/types/game';
 import { getPlayerAge } from '@/lib/dailyPuzzle';
+import { shortenClubName } from '@/lib/clubNames';
 
 function compareString(attribute: string, guessVal: string, targetVal: string): ComparisonResult {
   return {
@@ -64,7 +65,13 @@ export function comparePlayers(guess: Player, target: Player): GuessResult {
   const targetAge = getPlayerAge(target.id);
 
   const comparisons = {
-    team: compareString('team', guess.current_team, target.current_team),
+    // Match on the RAW names; shorten only what the cell displays ("Reial
+    // Club Deportiu Espanyol de Barcelona" would overflow the team column).
+    team: {
+      ...compareString('team', guess.current_team, target.current_team),
+      guessValue: shortenClubName(guess.current_team),
+      targetValue: shortenClubName(target.current_team),
+    },
     league: compareString('league', guess.league, target.league),
     nationality: compareString('nationality', guess.nationality, target.nationality),
     position: compareString('position', guess.position, target.position),

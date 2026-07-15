@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Player } from '@/types/player';
+import { shortenClubName } from '@/lib/clubNames';
 import { type, spacing, borderRadius } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -47,9 +48,9 @@ export default function StatCard({
         {player.name}
       </Text>
       <View style={layoutStyles.teamRow}>
-        <TeamCrest teamName={player.current_team} size={20} />
+        <TeamCrest teamName={shortenClubName(player.current_team)} size={20} />
         <Text style={styles.teamName} numberOfLines={2}>
-          {player.current_team}
+          {shortenClubName(player.current_team)}
         </Text>
       </View>
       {difficulty && diffColor && (

@@ -18,6 +18,7 @@ const HARD_SHORT_NAMES: Record<string, string> = {
   'Football Club Internazionale Milano S.p.A.': 'Inter Milan',
   'Società Sportiva Lazio S.p.A.': 'Lazio',
   'Reial Club Deportiu Espanyol de Barcelona S.A.D.': 'Espanyol',
+  'Reial Club Deportiu Espanyol de Barcelona': 'Espanyol',
   'Hamburger Sport Verein': 'Hamburg',
   '1. Fußball- und Sportverein Mainz 05': 'Mainz 05',
   '1. Fußball-Club Köln': 'FC Köln',
