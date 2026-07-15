@@ -15,6 +15,10 @@ interface ScreenHeaderProps {
   subtitle?: string;
   /** Right-aligned slot (streak badge, lives, timer). */
   right?: React.ReactNode;
+  /** Today's difficulty tier (todayBandDisplay vocabulary) — renders a small
+   *  accent chip beside the eyebrow. Omit on practice/archive runs and on
+   *  modes that already show a per-puzzle TierBadge. */
+  difficulty?: string;
   /**
    * Mode registry key. When set, the header shows a "?" how-to-play button
    * and auto-opens the rules sheet ONCE on the mode's first-ever visit
@@ -30,6 +34,7 @@ export default function ScreenHeader({
   subtitle,
   right,
   modeKey,
+  difficulty,
 }: ScreenHeaderProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -52,7 +57,17 @@ export default function ScreenHeader({
   return (
     <View style={layout.container}>
       <View style={layout.textBlock}>
-        {eyebrow ? <Text style={styles.eyebrow}>{eyebrow.toUpperCase()}</Text> : null}
+        {eyebrow || difficulty ? (
+          <View style={layout.eyebrowRow}>
+            {eyebrow ? <Text style={styles.eyebrow}>{eyebrow.toUpperCase()}</Text> : null}
+            {difficulty ? (
+              <View style={styles.difficultyChip}>
+                <View style={styles.difficultyDot} />
+                <Text style={styles.difficultyText}>{difficulty}</Text>
+              </View>
+            ) : null}
+          </View>
+        ) : null}
         <Text style={styles.title}>{title.toUpperCase()}</Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
@@ -93,6 +108,11 @@ const layout = StyleSheet.create({
   textBlock: {
     flex: 1,
   },
+  eyebrowRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
   right: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -107,6 +127,25 @@ const createStyles = (c: ThemeColors) =>
       color: c.accent,
       letterSpacing: 1.5,
       marginBottom: 2,
+    },
+    difficultyChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: 1,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accentSoft,
+    },
+    difficultyDot: {
+      width: 5,
+      height: 5,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accent,
+    },
+    difficultyText: {
+      ...type.micro,
+      color: c.accent,
     },
     title: {
       ...type.h1,

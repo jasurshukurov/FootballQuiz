@@ -31,6 +31,7 @@ import GameOverSheet from '@/components/ui/GameOverSheet';
 import PopInView from '@/components/ui/PopInView';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
 import { spacing, borderRadius, type } from '@/constants/theme';
@@ -343,6 +344,7 @@ export default function ConnectionsScreen() {
         }
         title="Connections"
         modeKey="connections"
+        difficulty={isPractice ? undefined : todayBandDisplay()}
         subtitle="Find 4 groups of 4 players"
       />
       {isPractice && <PracticePill date={practiceDate} />}

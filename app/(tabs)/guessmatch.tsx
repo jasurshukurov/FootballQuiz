@@ -24,6 +24,7 @@ import GiveUpButton from '@/components/ui/GiveUpButton';
 import TeamCrest from '@/components/ui/TeamCrest';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import ShareableMatchGuessResult from '@/components/ShareableMatchGuessResult';
 import { buildShareText } from '@/lib/sharing';
 import { playCheer, playCrossbar } from '@/lib/sounds';
@@ -183,6 +184,7 @@ export default function GuessMatchScreen() {
           eyebrow={`Daily #${getDailyNumber()}`}
           title="Guess the Match"
           modeKey="guessmatch"
+          difficulty={todayBandDisplay()}
           subtitle="Full time"
         />
         <Animated.View entering={FadeIn.duration(motion.base)} style={layoutStyles.resultContainer}>
@@ -242,6 +244,7 @@ export default function GuessMatchScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Guess the Match"
         modeKey="guessmatch"
+        difficulty={todayBandDisplay()}
         right={<LivesIndicator total={MAX_WRONG} remaining={MAX_WRONG - wrongPicks} />}
       />
 

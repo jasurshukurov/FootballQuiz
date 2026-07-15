@@ -10,9 +10,14 @@ export async function play(page, t) {
   await goto(page, '/blindranking');
   await dismissTutorial(page);
 
-  const descText = (await leafTexts(page, 40, 220)).map((x) => x.t).join(' ');
+  // The category banner shows the TITLE (uppercased) + "Rank all five · {topLabel} at #1";
+  // the old header subtitle with category.description is gone (v3 banner).
+  const descText = (await leafTexts(page, 40, 220))
+    .map((x) => x.t)
+    .join(' ')
+    .toUpperCase();
   const cands = dateWindow(3).map((d) => generateBlindRankingPuzzle(getModeSeed('blindranking', d)));
-  const puzzle = cands.find((c) => descText.includes(c.category.description)) || null;
+  const puzzle = cands.find((c) => descText.includes(c.category.title.toUpperCase())) || null;
   t.check('aligned to deterministic sim puzzle', !!puzzle, puzzle ? puzzle.category.title : `desc: ${descText.slice(0, 60)}`);
 
   for (let step = 0; step < 5; step++) {

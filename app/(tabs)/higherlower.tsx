@@ -30,6 +30,7 @@ import { getModeSeed } from '@/lib/dailySeed';
 import { getStreakRank, STREAK_MILESTONES } from '@/lib/rankLadder';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import GiveUpButton from '@/components/ui/GiveUpButton';
 import StatCard from '@/components/games/StatCard';
 import GameOverActions from '@/components/ui/GameOverActions';
@@ -401,6 +402,7 @@ export default function HigherLowerScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Higher or Lower"
         modeKey="higherlower"
+        difficulty={todayBandDisplay()}
         right={
           <View style={styles.headerStats}>
             <Text style={styles.streakValue}>{streak}</Text>

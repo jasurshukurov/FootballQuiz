@@ -30,6 +30,7 @@ import { useManagerStore } from '@/hooks/useManagerStore';
 import SolveTimeChip, { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import GridCell from '@/components/ui/GridCell';
 import GridHeaderCell, { ROW_HEADER_WIDTH } from '@/components/ui/GridHeaderCell';
 import RankBadge from '@/components/ui/RankBadge';
@@ -293,7 +294,12 @@ export default function ExploreScreen() {
   if (!grid) {
     return (
       <Screen scroll={false}>
-        <ScreenHeader eyebrow={isPractice ? 'Practice' : 'Daily'} title="The Grid" modeKey="grid" />
+        <ScreenHeader
+          eyebrow={isPractice ? 'Practice' : 'Daily'}
+          title="The Grid"
+          modeKey="grid"
+          difficulty={todayBandDisplay()}
+        />
         <View style={layoutStyles.loadingWrap}>
           <Text style={styles.loadingText}>Setting up the board…</Text>
         </View>
@@ -316,6 +322,7 @@ export default function ExploreScreen() {
         }
         title="The Grid"
         modeKey="grid"
+        difficulty={todayBandDisplay()}
         right={
           <View style={layoutStyles.headerStats}>
             <Text style={styles.scoreValue}>{score}/9</Text>

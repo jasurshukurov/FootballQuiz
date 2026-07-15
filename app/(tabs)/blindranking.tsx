@@ -31,6 +31,7 @@ import GiveUpButton from '@/components/ui/GiveUpButton';
 import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import ShareableBlindRankingResult from '@/components/ShareableBlindRankingResult';
 import { buildShareText } from '@/lib/sharing';
 import { playCheer, playCrossbar } from '@/lib/sounds';
@@ -223,6 +224,7 @@ export default function BlindRankingScreen() {
           eyebrow={`Daily #${getDailyNumber()}`}
           title="Blind Ranking"
           modeKey="blindranking"
+          difficulty={todayBandDisplay()}
           subtitle={puzzle.category.title}
         />
         <View style={layoutStyles.resultContainer}>
@@ -302,6 +304,7 @@ export default function BlindRankingScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Blind Ranking"
         modeKey="blindranking"
+        difficulty={todayBandDisplay()}
         right={
           <View style={layoutStyles.progressPill}>
             <Text style={styles.progressValue}>

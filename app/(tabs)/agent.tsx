@@ -22,6 +22,7 @@ import GameOverActions from '@/components/ui/GameOverActions';
 import GameOverExtras from '@/components/ui/GameOverExtras';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import Tappable from '@/components/ui/Tappable';
 import GiveUpButton from '@/components/ui/GiveUpButton';
 import { useManagerStore } from '@/hooks/useManagerStore';
@@ -224,6 +225,7 @@ export default function AgentScreen() {
           eyebrow={`Daily #${getDailyNumber()}`}
           title="Transfer Agent"
           modeKey="agent"
+          difficulty={todayBandDisplay()}
           subtitle={
             restoredDaily && gameKey === dailyGameKey ? 'Already played today' : 'Full time'
           }
@@ -317,6 +319,7 @@ export default function AgentScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Transfer Agent"
         modeKey="agent"
+        difficulty={todayBandDisplay()}
         subtitle={`Round ${currentRound + 1}/${totalRounds}`}
         right={
           <View style={layoutStyles.scorePill}>
