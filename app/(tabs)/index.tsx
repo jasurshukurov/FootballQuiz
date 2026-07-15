@@ -3,15 +3,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useRouter, type Href } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, {
-  FadeInDown,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import Screen from '@/components/ui/Screen';
 import Tappable from '@/components/ui/Tappable';
+import ProgressRing from '@/components/ui/ProgressRing';
+import StreakFlame from '@/components/ui/StreakFlame';
 import DifficultyBanner, { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
@@ -28,9 +25,12 @@ import { formatDuration } from '@/lib/solveTime';
 /** Cap staggered entrances — no `entering` beyond this index. */
 const STAGGER_CAP = 12;
 
-/** The design's daily meter card: mono "5/11 · played today" with a 6pt
- *  animated progress track, streak flame on the right. */
-function DailyMeter({
+/** v3 hub header: greeting/date and "X/11 played today" + streak flame on
+ *  the left, a 64pt progress ring on the right (mobile and desktop main
+ *  column alike — the desktop sidebar carries its own ring card). */
+function HubHeader({
+  greeting,
+  dateLabel,
   played,
   total,
   allDone,
@@ -38,6 +38,8 @@ function DailyMeter({
   c,
   styles,
 }: {
+  greeting: string;
+  dateLabel: string;
   played: number;
   total: number;
   allDone: boolean;
@@ -45,42 +47,33 @@ function DailyMeter({
   c: ThemeColors;
   styles: Styles;
 }) {
-  const progress = useSharedValue(0);
-
-  useEffect(() => {
-    progress.value = withTiming(total > 0 ? played / total : 0, { duration: motion.slow });
-  }, [played, total, progress]);
-
-  const fillStyle = useAnimatedStyle(() => ({
-    width: `${Math.max(progress.value * 100, played > 0 ? 3 : 0)}%`,
-  }));
-
   return (
-    <View style={styles.meterCard}>
-      <View style={styles.meterTopRow}>
-        <Text style={styles.meterCount}>
-          {played}
-          <Text style={styles.meterCountMuted}>/{total}</Text>
-        </Text>
-        <Text style={allDone ? styles.meterAllDone : styles.meterCaption}>
-          {allDone ? 'All done today' : 'played today'}
-        </Text>
-        {streak > 0 && (
-          <View style={styles.streakPill}>
-            <FontAwesome name="fire" size={12} color={c.streak} />
-            <Text style={styles.streakText}>{streak}</Text>
-          </View>
-        )}
+    <View style={styles.hero}>
+      <View style={styles.heroText}>
+        <Text style={styles.greeting}>{greeting}</Text>
+        <Text style={styles.date}>{dateLabel}</Text>
+        <View style={styles.meterRow}>
+          <Text style={allDone ? styles.allDoneLabel : styles.meterLabel}>
+            {allDone ? 'All done today' : `${played}/${total} played today`}
+          </Text>
+          {streak > 0 && (
+            <View style={styles.streakPill}>
+              <StreakFlame size={12} color={c.streak} />
+              <Text style={styles.streakText}>{streak}</Text>
+            </View>
+          )}
+        </View>
       </View>
-      <View style={styles.meterTrack}>
-        <Animated.View
-          style={[
-            styles.meterFill,
-            { backgroundColor: allDone ? c.accentBright : c.accent },
-            fillStyle,
-          ]}
-        />
-      </View>
+      <ProgressRing
+        size={64}
+        strokeWidth={5}
+        progress={total > 0 ? played / total : 0}
+        color={allDone ? c.accentBright : c.accent}
+        trackColor={c.bgCard}>
+        <Text style={styles.ringText}>
+          {played}/{total}
+        </Text>
+      </ProgressRing>
     </View>
   );
 }
@@ -261,12 +254,10 @@ export default function TodayScreen() {
 
   return (
     <Screen>
-      {/* ── Hero: greeting + date, then the design's daily meter card ── */}
-      <View style={styles.hero}>
-        <Text style={styles.greeting}>{greeting}</Text>
-        <Text style={styles.date}>{dateLabel}</Text>
-      </View>
-      <DailyMeter
+      {/* ── v3 hero: greeting + date + played/streak, ring on the right ── */}
+      <HubHeader
+        greeting={greeting}
+        dateLabel={dateLabel}
         played={playedCount}
         total={total}
         allDone={allDone}
@@ -375,7 +366,14 @@ export default function TodayScreen() {
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
     hero: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: spacing.lg,
       marginBottom: spacing.lg,
+    },
+    heroText: {
+      flex: 1,
     },
     greeting: {
       ...type.h1,
@@ -386,48 +384,25 @@ const createStyles = (c: ThemeColors) =>
       color: c.textSecondary,
       marginTop: spacing.xs,
     },
-    // The design's daily meter card: mono count + caption + animated track.
-    meterCard: {
-      padding: spacing.lg,
-      borderRadius: borderRadius.lg,
-      borderWidth: 1,
-      borderColor: c.border,
-      backgroundColor: c.bgCard,
-      marginBottom: spacing.lg,
-    },
-    meterTopRow: {
+    meterRow: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: spacing.sm,
+      marginTop: spacing.md,
     },
-    meterCount: {
-      ...type.score,
-      color: c.textPrimary,
-    },
-    meterCountMuted: {
-      ...type.score,
-      color: c.textMuted,
-    },
-    meterCaption: {
-      ...type.caption,
+    meterLabel: {
+      ...type.captionBold,
       color: c.textSecondary,
-      flex: 1,
     },
-    meterAllDone: {
+    allDoneLabel: {
       ...type.captionBold,
       color: c.accentBright,
-      flex: 1,
     },
-    meterTrack: {
-      height: 6,
-      borderRadius: borderRadius.full,
-      backgroundColor: c.borderStrong,
-      marginTop: spacing.md,
-      overflow: 'hidden',
-    },
-    meterFill: {
-      height: '100%',
-      borderRadius: borderRadius.full,
+    ringText: {
+      ...type.score,
+      fontSize: type.caption.fontSize,
+      lineHeight: type.caption.lineHeight,
+      color: c.textPrimary,
     },
     streakPill: {
       flexDirection: 'row',
@@ -545,7 +520,7 @@ const createStyles = (c: ThemeColors) =>
       flexGrow: 1,
     },
     gridCard: {
-      minHeight: touch.cta * 2,
+      minHeight: 96,
       padding: spacing.md,
       borderRadius: borderRadius.lg,
       borderWidth: 1,
@@ -566,8 +541,8 @@ const createStyles = (c: ThemeColors) =>
       marginTop: spacing.xs,
     },
     iconSquare: {
-      width: 44,
-      height: 44,
+      width: 38,
+      height: 38,
       borderRadius: borderRadius.md,
       alignItems: 'center',
       justifyContent: 'center',
@@ -581,7 +556,7 @@ const createStyles = (c: ThemeColors) =>
       color: c.textPrimary,
     },
     cardTease: {
-      ...type.caption,
+      ...type.micro,
       color: c.textSecondary,
       marginTop: 2,
     },

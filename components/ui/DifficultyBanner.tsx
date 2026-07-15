@@ -5,25 +5,22 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { spacing, borderRadius, type, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
-import { bandForWeekday, FameBand } from '@/lib/difficultyCurve';
 
-/** Player-facing names for the weekly curve's band labels. */
-const BAND_DISPLAY: Record<FameBand['label'], string> = {
-  easy: 'Easy',
-  medium: 'Standard',
-  hard: 'Hard',
-  expert: 'Expert',
-  wildcard: 'Wildcard',
-};
+/** v3 player-facing tier name per weekday (JS getDay: Sunday=0). The real
+ *  fame windows live in lib/difficultyCurve.ts and already differ per day;
+ *  these are the display names the prototype uses for each. */
+const WEEKDAY_TIERS = [
+  'Classic', // Sun — wildcard band
+  'Warm-up', // Mon
+  'Standard', // Tue
+  'Standard', // Wed
+  'Tricky', // Thu
+  'Hard', // Fri
+  'Expert', // Sat — the weekly summit
+] as const;
 
-/** Pip height per band — taller = harder, so the row reads as a ramp. */
-const BAND_HEIGHT: Record<FameBand['label'], number> = {
-  easy: 10,
-  medium: 14,
-  hard: 17,
-  expert: 20,
-  wildcard: 12,
-};
+/** Bar heights grow through the week — the ramp reads left to right. */
+const WEEKDAY_HEIGHTS = [12, 8, 10, 12, 14, 17, 20] as const;
 
 /** Display order Monday-first (JS getDay: Sunday=0). */
 const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0] as const;
@@ -40,14 +37,14 @@ const WEEKDAY_NAMES = [
 
 /** Exported so the hub hero's difficulty chip shares the same vocabulary. */
 export function todayBandDisplay(now: Date = new Date()): string {
-  return BAND_DISPLAY[bandForWeekday(now.getDay()).label];
+  return WEEKDAY_TIERS[now.getDay()];
 }
 
 /**
- * The hub's weekly difficulty ramp: seven pips (Monday-first) whose heights
- * follow the shared fame curve in lib/difficultyCurve.ts, today highlighted,
- * with "Tuesday · Standard" and a one-line explanation. Purely data-driven —
- * no fabricated difficulty.
+ * The hub's weekly difficulty ramp strip (v3): seven Monday-first mini bars
+ * growing in height through the week — past days in translucent accent,
+ * today solid accent, future days muted — with "{Day} · {Tier}" and a
+ * one-line explanation.
  */
 export default function DifficultyBanner() {
   const { colors } = useTheme();
@@ -58,7 +55,6 @@ export default function DifficultyBanner() {
     <Animated.View entering={FadeIn.duration(motion.base)} style={styles.card}>
       <View style={styles.pips}>
         {WEEK_ORDER.map((day) => {
-          const band = bandForWeekday(day);
           const isToday = day === today;
           const isPast =
             WEEK_ORDER.indexOf(day as (typeof WEEK_ORDER)[number]) <
@@ -68,7 +64,7 @@ export default function DifficultyBanner() {
               key={day}
               style={[
                 styles.pip,
-                { height: BAND_HEIGHT[band.label] },
+                { height: WEEKDAY_HEIGHTS[day] },
                 isToday ? styles.pipToday : isPast ? styles.pipPast : styles.pipFuture,
               ]}
             />
@@ -108,10 +104,12 @@ const createStyles = (c: ThemeColors) =>
       borderRadius: 3,
     },
     pipToday: {
-      backgroundColor: c.accentBright,
+      backgroundColor: c.accent,
     },
     pipPast: {
-      backgroundColor: c.accentDim,
+      backgroundColor: c.accentSoft,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
     },
     pipFuture: {
       backgroundColor: c.borderStrong,
