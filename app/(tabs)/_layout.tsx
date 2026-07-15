@@ -172,6 +172,8 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
+  // Sidebar hugs the window edge (standard dashboard rail); the game column
+  // centers itself in the remaining width via Screen's column cap.
   desktopRow: {
     flex: 1,
     flexDirection: 'row',

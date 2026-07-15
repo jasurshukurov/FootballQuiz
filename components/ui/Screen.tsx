@@ -29,8 +29,6 @@ export const WEB_CONTENT_MAX_WIDTH = 600;
  * the wide centered column (WEB_CONTENT_MAX_WIDTH) with the tab bar.
  */
 export const WEB_DESKTOP_BREAKPOINT = 920;
-/** Content column when the desktop sidebar is present (narrower than 600). */
-export const WEB_DESKTOP_CONTENT_MAX_WIDTH = 480;
 
 /** True only on web at desktop-ish widths. Safe to call on native (always false). */
 export function useIsWideWeb(): boolean {
@@ -75,12 +73,11 @@ export default function Screen({
   // give it a real top margin. Native keeps the safe-area value untouched.
   const paddingTop = Math.max(insets.top, Platform.OS === 'web' ? spacing.lg : 0) + spacing.sm;
   // Wide desktop web only: center content in a phone-ish column. undefined on
-  // native / narrow web so those style arrays stay byte-identical. With the
-  // sidebar present (>= 920px) the column tightens to 480; the 720-919 band
-  // keeps the 600 column so nothing shifts there.
+  // native / narrow web so those style arrays stay byte-identical. One 600pt
+  // column for ALL wide web (with or without the sidebar) — a narrower
+  // desktop column made the game feel cramped next to the rail.
   const isWide = useIsWideWeb();
-  const isDesktop = useIsDesktopWeb();
-  const wideColumn = isDesktop ? styles.desktopColumn : isWide ? styles.wideColumn : undefined;
+  const wideColumn = isWide ? styles.wideColumn : undefined;
 
   return (
     <ScreenBackground style={style}>
@@ -123,11 +120,6 @@ const styles = StyleSheet.create({
   wideColumn: {
     width: '100%',
     maxWidth: WEB_CONTENT_MAX_WIDTH,
-    alignSelf: 'center',
-  },
-  desktopColumn: {
-    width: '100%',
-    maxWidth: WEB_DESKTOP_CONTENT_MAX_WIDTH,
     alignSelf: 'center',
   },
 });
