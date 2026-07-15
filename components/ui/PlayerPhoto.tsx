@@ -19,11 +19,8 @@ interface PlayerPhotoProps {
   blur?: number;
 }
 
-/** Wikimedia sports photos are often full-body action shots with the face in
- *  the top fifth. The image is rendered taller than the circular frame and
- *  top-anchored, so the visible circle favors the head instead of the torso
- *  a center crop lands on. Headshots lose a sliver of chin at worst. */
-const CROP_HEIGHT_FACTOR = 1.4;
+/** Extra blur stacked on the background fill layer, beyond any clue blur. */
+const FILL_BLUR = 18;
 
 /**
  * Circular player portrait with a same-footprint initials fallback, so
@@ -68,10 +65,21 @@ export default function PlayerPhoto({ playerId, url, name, size, blur = 0 }: Pla
 
   return (
     <View style={[styles.photoFrame, frame]}>
+      {/* Blur-fill square (owner call 2026-07-15): non-square photos are never
+          cropped. A blurred, zoomed copy of the SAME image fills the frame,
+          and the sharp copy sits on top letterboxed (contain), so the whole
+          player — face included — is always visible. Square photos cover the
+          frame edge-to-edge and the fill layer is invisible behind them. */}
       <Image
         source={{ uri: photoUrl }}
-        style={{ width: size, height: size * CROP_HEIGHT_FACTOR }}
+        style={StyleSheet.absoluteFill}
         resizeMode="cover"
+        blurRadius={blur + FILL_BLUR}
+      />
+      <Image
+        source={{ uri: photoUrl }}
+        style={{ width: size, height: size }}
+        resizeMode="contain"
         blurRadius={blur}
         onError={() => setFailed(true)}
         accessibilityLabel={blur > 0 ? 'Blurred player photo' : `${name} photo`}
