@@ -52,6 +52,9 @@ export default function Screen({
 }: ScreenProps) {
   const insets = useSafeAreaInsets();
   const paddingBottom = withTabBar ? TAB_BAR_HEIGHT + insets.bottom + spacing.lg : insets.bottom;
+  // Web has no notch inset, which left content glued to the browser edge —
+  // give it a real top margin. Native keeps the safe-area value untouched.
+  const paddingTop = Math.max(insets.top, Platform.OS === 'web' ? spacing.lg : 0) + spacing.sm;
   // Wide desktop web only: center content in a phone-ish column. undefined on
   // native / narrow web so those style arrays stay byte-identical.
   const wideColumn = useIsWideWeb() ? styles.wideColumn : undefined;
@@ -63,7 +66,7 @@ export default function Screen({
           style={styles.flex}
           contentContainerStyle={[
             styles.content,
-            { paddingTop: insets.top + spacing.sm, paddingBottom },
+            { paddingTop, paddingBottom },
             wideColumn,
             contentStyle,
           ]}
@@ -76,7 +79,7 @@ export default function Screen({
           style={[
             styles.flex,
             styles.content,
-            { paddingTop: insets.top + spacing.sm, paddingBottom },
+            { paddingTop, paddingBottom },
             wideColumn,
             contentStyle,
           ]}>

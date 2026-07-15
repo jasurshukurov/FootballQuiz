@@ -22,7 +22,9 @@ interface GameOverCardProps {
 function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOverCardProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
-  const translateY = useSharedValue(50);
+  // Short settle only — this card re-mounts on every visit to a completed
+  // daily, and a long slide re-running each time reads as "jumping".
+  const translateY = useSharedValue(16);
   const opacity = useSharedValue(0);
 
   useEffect(() => {

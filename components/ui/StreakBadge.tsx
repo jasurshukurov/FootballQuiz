@@ -30,12 +30,15 @@ export default function StreakBadge({ streak }: StreakBadgeProps) {
   const isMilestone = MILESTONES.includes(streak);
   const isNewBest = useIsNewBestStreak();
   const scale = useSharedValue(1);
-  const prevStreak = useRef(0);
+  // null until the first render — the badge must NOT pulse on mount (every
+  // game-over screen mounts one; a pulse each visit reads as "jumping").
+  // Only a live increment while mounted animates.
+  const prevStreak = useRef<number | null>(null);
 
   useEffect(() => {
-    const incremented = streak > prevStreak.current;
+    const prev = prevStreak.current;
     prevStreak.current = streak;
-    if (streak <= 0 || !incremented) return;
+    if (prev === null || streak <= 0 || streak <= prev) return;
 
     // Subtle acknowledgement pulse — big bouncy scales read as "jumping".
     // A new record earns one extra, slightly larger beat.

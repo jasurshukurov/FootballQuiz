@@ -55,14 +55,15 @@ export default function ResultModal({
     solveTimeMs,
   });
 
-  // One square per guess: the winning guess is green, a miss that still hit
-  // some attribute (right team/league/...) reads "warm" amber, cold misses red.
+  // One square per guess: the winning guess is green, a miss matching 2+
+  // attributes (e.g. right team AND position) reads "warm" amber, the rest
+  // red. One shared attribute is too common among famous names to be "warm".
   const glyphs: GlyphStatus[] = useMemo(
     () =>
       guesses.map((g, i) => {
         if (isWin && i === guesses.length - 1) return 'correct';
         const row = whoAreYaStatusRows([g])[0] ?? [];
-        return row.some((s) => s === 'CORRECT') ? 'close' : 'wrong';
+        return row.filter((s) => s === 'CORRECT').length >= 2 ? 'close' : 'wrong';
       }),
     [guesses, isWin],
   );
