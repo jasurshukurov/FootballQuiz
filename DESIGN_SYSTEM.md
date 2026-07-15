@@ -114,6 +114,15 @@ mode's previous modal (baseline tag `v2.0-floodlit`).
 
 ## Component notes
 
+- `PlayerPhoto` (`components/ui/PlayerPhoto.tsx`) → the one player portrait
+  primitive (circular, initials fallback with the SAME footprint so layouts
+  never shift). Photos come exclusively from `lib/playerPhotos.ts` (Wikimedia,
+  license-allowlisted; built by `scripts/etl/build_player_photos.py`) — never
+  hotlink any other host. Attribution contract: prominent placements
+  (game-over reveals) render the photo's inline credit line; small in-game
+  avatars are covered by the More → Photo Credits screen. Who Are Ya may show
+  the target ONLY blurred (`blur={25}`) while play is live. Photos are for
+  modes where faces don't leak the answer — Connections/Top Lists stay text.
 - `GiveUpButton` (`components/ui/GiveUpButton.tsx`) → the one give-up control,
   present in EVERY mode during active play (never on game over or a restored
   daily). Hold-to-confirm: a danger-tinted fill sweeps the pill for 700ms and

@@ -1,0 +1,92 @@
+import React, { useMemo, useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+
+import { borderRadius } from '@/constants/theme';
+import { ThemeColors } from '@/constants/themes';
+import { useTheme } from '@/hooks/useTheme';
+import { getPlayerPhoto } from '@/lib/playerPhotos';
+
+interface PlayerPhotoProps {
+  /** players_db id; no photo (or a load failure) falls back to initials. */
+  playerId?: string | number | null;
+  /** Player name — drives the initials fallback. */
+  name: string;
+  size: number;
+  /** Blur strength for the Who Are Ya photo clue (0 = sharp). */
+  blur?: number;
+}
+
+/**
+ * Circular player portrait with a same-footprint initials fallback, so
+ * layouts never shift when a player has no licensed photo or the fetch
+ * fails offline. Attribution: prominent placements pair this with the
+ * photo's credit line; every photo is also listed on More -> Photo Credits.
+ */
+export default function PlayerPhoto({ playerId, name, size, blur = 0 }: PlayerPhotoProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+  const [failed, setFailed] = useState(false);
+
+  const photo = getPlayerPhoto(playerId);
+
+  const initials = useMemo(
+    () =>
+      name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((w) => w[0]?.toUpperCase() ?? '')
+        .join(''),
+    [name],
+  );
+
+  const frame = {
+    width: size,
+    height: size,
+    borderRadius: borderRadius.full,
+  };
+
+  if (!photo || failed) {
+    return (
+      <View style={[styles.fallback, frame]}>
+        {/* fontSize scales off the size prop — crest-style geometry, not type scale. */}
+        <Text style={[styles.initials, { fontSize: size * 0.36 }]} allowFontScaling={false}>
+          {initials}
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={[styles.photoFrame, frame]}>
+      <Image
+        source={{ uri: photo.url }}
+        style={{ width: size, height: size }}
+        blurRadius={blur}
+        onError={() => setFailed(true)}
+        accessibilityLabel={blur > 0 ? 'Blurred player photo' : `${name} photo`}
+      />
+    </View>
+  );
+}
+
+const createStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    fallback: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.accentSoft,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    initials: {
+      color: c.accent,
+      fontWeight: '700',
+    },
+    photoFrame: {
+      overflow: 'hidden',
+      borderWidth: 1,
+      borderColor: c.borderStrong,
+      backgroundColor: c.bgCard,
+    },
+  });

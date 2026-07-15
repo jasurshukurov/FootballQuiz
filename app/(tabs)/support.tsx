@@ -273,6 +273,14 @@ export default function MoreScreen() {
             Linking.openURL(PRIVACY_POLICY_URL).catch(() => {});
           }}
         />
+        <LinkRow
+          icon="camera"
+          label="Photo credits"
+          sub="Player photos via Wikimedia Commons"
+          onPress={() => {
+            router.push('/(tabs)/photocredits' as Href);
+          }}
+        />
       </View>
 
       {/* Account */}
