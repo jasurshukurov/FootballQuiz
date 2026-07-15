@@ -11,6 +11,8 @@ export const FEATURES = {
    * leaderboard: local-first identity + global XP leaderboard (DynamoDB).
    * Also gated remotely by config.json "leaderboardEnabled" (kill switch);
    * both must be on. See lib/dynamoSync.isLeaderboardEnabled().
+   * OFF per owner decision (2026-07-15): personal scores only for now —
+   * identity, sync and screens stay intact behind the flag.
    */
-  leaderboard: true,
+  leaderboard: false,
 } as const;

@@ -10,6 +10,13 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   },
 }));
 
+// The product flag is currently OFF (personal scores only). These tests cover
+// the sync/kill-switch machinery itself, so they run with the flag forced on;
+// the flag-off short-circuit has its own test below.
+jest.mock('@/lib/featureFlags', () => ({
+  FEATURES: { sharing: false, leaderboard: true },
+}));
+
 /* eslint-disable import/first -- the AsyncStorage mock must be registered before these imports. */
 import {
   buildLeaderboardItems,
