@@ -41,10 +41,17 @@ function isPlayableMatch(m: Match): boolean {
   return true;
 }
 
+/** Floor year for every match-based mode. The raw DB reaches back to the 1930
+ *  World Cup, and a 1947 FA Cup final once surfaced as a daily — matches that
+ *  old are unguessable for today's audience. "Classic" era = 1990-2009. */
+export const MIN_MATCH_YEAR = 1990;
+
 let cachedPlayable: Match[] | null = null;
 export function getPlayableMatches(): Match[] {
   if (!cachedPlayable) {
-    const playable = getAllMatches().filter(isPlayableMatch);
+    const playable = getAllMatches().filter(
+      (m) => isPlayableMatch(m) && matchYear(m) >= MIN_MATCH_YEAR,
+    );
     cachedPlayable = playable.length > 0 ? playable : getAllMatches();
   }
   return cachedPlayable;
@@ -216,7 +223,7 @@ export interface MatchCategory {
 
 /** Best-effort calendar year of a match: its date, else a 4-digit run in the
  *  season string, else 2000. Drives the era chip and the modern-era rotation. */
-export function matchYear(m: Match): number {
+export function matchYear(m: Pick<Match, 'date' | 'season'>): number {
   const yearStr = (m.date || '').slice(0, 4);
   if (/^\d{4}$/.test(yearStr)) return parseInt(yearStr, 10);
   return parseInt((String(m.season).match(/\d{4}/) || ['2000'])[0], 10);

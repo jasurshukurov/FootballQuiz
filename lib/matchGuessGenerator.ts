@@ -10,6 +10,7 @@
 import { getFameByName } from './playerData';
 import { getTodayDateString } from './dailySeed';
 import { bandForDate, FameBand, resolveSkillTier } from './difficultyCurve';
+import { MIN_MATCH_YEAR } from './matchData';
 
 interface RawMatch {
   match_id: string;
@@ -98,12 +99,14 @@ function seededShuffle<T>(arr: T[], rand: () => number): T[] {
   return copy;
 }
 
-/** Matches with a full 11-name lineup on at least one side. */
+/** Matches with a full 11-name lineup on at least one side, no older than the
+ *  shared MIN_MATCH_YEAR floor (pre-1990 fixtures are unguessable dailies). */
 function playableMatches(): RawMatch[] {
   return matchesData.filter(
     (m) =>
-      (Array.isArray(m.lineup_a_names) && m.lineup_a_names.length === 11) ||
-      (Array.isArray(m.lineup_b_names) && m.lineup_b_names.length === 11),
+      matchYear(m) >= MIN_MATCH_YEAR &&
+      ((Array.isArray(m.lineup_a_names) && m.lineup_a_names.length === 11) ||
+        (Array.isArray(m.lineup_b_names) && m.lineup_b_names.length === 11)),
   );
 }
 
@@ -223,9 +226,13 @@ function buildDistractors(
   };
 
   // 1) Real other matches of the given team — same competition first, then any.
+  //    Floored to MIN_MATCH_YEAR so a modern answer never sits beside a 1950s
+  //    fixture that gives itself away as filler.
   const teamMatches = matchesData.filter(
     (m) =>
-      m.match_id !== answer.match_id && (m.opponent_a === teamName || m.opponent_b === teamName),
+      m.match_id !== answer.match_id &&
+      matchYear(m) >= MIN_MATCH_YEAR &&
+      (m.opponent_a === teamName || m.opponent_b === teamName),
   );
   const ordered = [
     ...seededShuffle(
@@ -267,7 +274,7 @@ function buildDistractors(
     // Season window around the real match, never in the future.
     const maxYear = Math.min(currentYear, answerYear + 8);
     const years: number[] = [];
-    for (let y = answerYear - 8; y <= maxYear; y++) years.push(y);
+    for (let y = Math.max(MIN_MATCH_YEAR, answerYear - 8); y <= maxYear; y++) years.push(y);
     const shuffledYears = seededShuffle(years, rand);
 
     const shortComp = shortCompetition(answer.competition);
