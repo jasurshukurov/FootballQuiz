@@ -16,13 +16,16 @@ import {
   CareerTimelinePuzzle,
 } from '@/lib/careerTimelineGenerator';
 import CareerTimeline from '@/components/games/CareerTimeline';
-import ClubSearchAutocomplete from '@/components/ui/ClubSearchAutocomplete';
+import ClubSearchAutocomplete, {
+  ClubSearchAutocompleteHandle,
+} from '@/components/ui/ClubSearchAutocomplete';
 import GameOverActions from '@/components/ui/GameOverActions';
 import GiveUpButton from '@/components/ui/GiveUpButton';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import ShakeView from '@/components/ui/ShakeView';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import ShareableCareerTimelineResult from '@/components/ShareableCareerTimelineResult';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
@@ -52,6 +55,8 @@ export default function CareerTimelineScreen() {
   const [hintsUsed, setHintsUsed] = useState(0);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const shareRef = useRef<View>(null);
+  // Clears the club box after a typed name auto-fills its stint.
+  const searchRef = useRef<ClubSearchAutocompleteHandle>(null);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
   /** True while the current run IS the official daily (blob writes gate on it). */
   const isDailyRun = useRef(true);
@@ -147,6 +152,40 @@ export default function CareerTimelineScreen() {
     [phase, nodes],
   );
 
+  // Single correct-fill path — reused by an explicit suggestion pick AND by a
+  // typed name that exactly matches a hidden stint. All the scoring/win/solve-
+  // time bookkeeping lives here so both entry points stay in lockstep.
+  const fillStint = useCallback(
+    (index: number) => {
+      if (phase !== 'playing' || !puzzle) return;
+      const node = nodes[index];
+      if (!node.isHidden || node.isGuessed) return;
+
+      triggerNotification(NotificationFeedbackType.Success);
+      playCheer();
+      setFeedback(null);
+      setNodes(nodes.map((n, i) => (i === index ? { ...n, isGuessed: true } : n)));
+      const newGuessedCount = guessedCount + 1;
+      setGuessedCount(newGuessedCount);
+      setActiveIdx(null);
+      searchRef.current?.clear();
+
+      // Check win condition
+      if (newGuessedCount >= puzzle.totalHidden) {
+        setPhase('won');
+        const xp = Math.max(0, newGuessedCount * 25 + lives * 10 - hintsUsed * 5);
+        useManagerStore.getState().awardDailyXp('careertimeline', xp);
+        useDailyProgressStore.getState().markCompleted('careertimeline', newGuessedCount);
+        useSolveTimeStore.getState().markCompleted('careertimeline', { countsForBest: true });
+        // Persist lives (DAILY run only) so re-entry restores the hearts row.
+        if (isDailyRun.current) {
+          useDailyResultsStore.getState().setResult('careertimeline', { lives });
+        }
+      }
+    },
+    [phase, puzzle, nodes, guessedCount, lives, hintsUsed],
+  );
+
   const handleClubSelect = useCallback(
     (clubName: string) => {
       if (activeIdx === null || phase !== 'playing' || !puzzle) return;
@@ -156,27 +195,7 @@ export default function CareerTimelineScreen() {
 
       if (clubNamesMatch(clubName, targetNode.club)) {
         // Correct guess
-        triggerNotification(NotificationFeedbackType.Success);
-        playCheer();
-        setFeedback(null);
-        const newNodes = nodes.map((n, i) => (i === activeIdx ? { ...n, isGuessed: true } : n));
-        setNodes(newNodes);
-        const newGuessedCount = guessedCount + 1;
-        setGuessedCount(newGuessedCount);
-        setActiveIdx(null);
-
-        // Check win condition
-        if (newGuessedCount >= puzzle.totalHidden) {
-          setPhase('won');
-          const xp = Math.max(0, newGuessedCount * 25 + lives * 10 - hintsUsed * 5);
-          useManagerStore.getState().awardDailyXp('careertimeline', xp);
-          useDailyProgressStore.getState().markCompleted('careertimeline', newGuessedCount);
-          useSolveTimeStore.getState().markCompleted('careertimeline', { countsForBest: true });
-          // Persist lives (DAILY run only) so re-entry restores the hearts row.
-          if (isDailyRun.current) {
-            useDailyResultsStore.getState().setResult('careertimeline', { lives });
-          }
-        }
+        fillStint(activeIdx);
       } else {
         // Wrong guess. Distinguish "right club, wrong years" — the guessed club
         // IS somewhere in this career, just not the active stint — from a plain
@@ -209,7 +228,36 @@ export default function CareerTimelineScreen() {
         }
       }
     },
-    [activeIdx, phase, puzzle, nodes, guessedCount, lives, hintsUsed],
+    [activeIdx, phase, puzzle, nodes, guessedCount, lives, hintsUsed, fillStint],
+  );
+
+  // Type-to-fill: on every keystroke, if the folded text exactly names a still-
+  // hidden stint's club, drop it in as a correct answer with no suggestion tap.
+  // Typing is ALWAYS free — a non-match does nothing and never costs a life
+  // (wrong clubs only cost when a suggestion is explicitly picked).
+  const handleQueryChange = useCallback(
+    (text: string) => {
+      if (phase !== 'playing' || !puzzle) return;
+      if (text.trim().length < 2) return;
+
+      // Hidden, still-unsolved stints the typed text names. clubNamesMatch is
+      // the mode's own validator (canonical + alias groups), so it already
+      // accepts a club's shortened display name; no new fuzzy matcher here.
+      const matches = nodes
+        .map((node, index) => ({ node, index }))
+        .filter(({ node }) => node.isHidden && !node.isGuessed && clubNamesMatch(text, node.club));
+      if (matches.length === 0) return; // no match: typing costs nothing
+
+      // Unambiguous fill only: exactly one hidden stint wears this club, or the
+      // same club sits in several and one of them is the active stint (prefer
+      // it). Otherwise stay inert so we never fill the wrong repeated stint.
+      const target =
+        matches.length === 1 ? matches[0] : matches.find(({ index }) => index === activeIdx);
+      if (!target) return;
+
+      fillStint(target.index);
+    },
+    [phase, puzzle, nodes, activeIdx, fillStint],
   );
 
   const handleGiveUp = useCallback(() => {
@@ -254,6 +302,7 @@ export default function CareerTimelineScreen() {
           eyebrow={`Daily #${getDailyNumber()}`}
           title="Career Timeline"
           modeKey="careertimeline"
+          difficulty={todayBandDisplay()}
           subtitle={puzzle.playerName}
         />
         <View style={layoutStyles.resultContainer}>
@@ -315,6 +364,7 @@ export default function CareerTimelineScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Career Timeline"
         modeKey="careertimeline"
+        difficulty={todayBandDisplay()}
         subtitle={`${puzzle.playerName} · ${puzzle.playerNationality}`}
         right={
           <View style={layoutStyles.progressPill}>
@@ -359,8 +409,10 @@ export default function CareerTimelineScreen() {
             </Text>
           )}
           <ClubSearchAutocomplete
+            ref={searchRef}
             clubs={clubs}
             onSelectClub={handleClubSelect}
+            onQueryChange={handleQueryChange}
             placeholder="Search club..."
             autoFocus
             dropDirection="up"

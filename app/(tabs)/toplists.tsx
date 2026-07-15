@@ -26,6 +26,7 @@ import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore'
 import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import ShakeView from '@/components/ui/ShakeView';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
@@ -94,9 +95,29 @@ export default function TopListsScreen() {
     [total],
   );
 
+  // Reveal a matched entry as a correct answer — the shared success path for
+  // BOTH the explicit GUESS/suggestion submit and type-to-reveal. Never touches
+  // lives: a duplicate is a free no-op, a fresh match scores and runs the win
+  // check. Callers decide whether a duplicate should buzz (explicit submit) or
+  // stay silent (typing).
+  const revealIndex = useCallback(
+    (idx: number, { silentDuplicate = false }: { silentDuplicate?: boolean } = {}) => {
+      if (foundIndices.has(idx)) {
+        if (!silentDuplicate) triggerImpact();
+        return;
+      }
+      triggerNotification(NotificationFeedbackType.Success);
+      const nextFound = new Set(foundIndices).add(idx);
+      setFoundIndices(nextFound);
+      if (nextFound.size === total) finishRun(nextFound, lives);
+    },
+    [foundIndices, total, lives, finishRun],
+  );
+
   // One submit path for both entry modes: tapping an autocomplete suggestion
   // (canonical player name) and the raw-text GUESS button. Match semantics
-  // (matchGuess), lives and scoring are unchanged.
+  // (matchGuess), lives and scoring are unchanged. This is the DELIBERATE path
+  // where a wrong name costs a life (unlike type-to-reveal, which is free).
   const submitText = useCallback(
     (raw: string) => {
       if (revealAll) return;
@@ -123,23 +144,39 @@ export default function TopListsScreen() {
         return;
       }
 
-      // Duplicate correct guess is a free no-op.
-      if (foundIndices.has(idx)) {
-        triggerImpact();
-        return;
-      }
-
-      triggerNotification(NotificationFeedbackType.Success);
-      const nextFound = new Set(foundIndices).add(idx);
-      setFoundIndices(nextFound);
-      if (nextFound.size === total) finishRun(nextFound, lives);
+      revealIndex(idx);
     },
-    [revealAll, list, lives, foundIndices, total, finishRun],
+    [revealAll, list, lives, foundIndices, finishRun, revealIndex],
   );
 
   const submitGuess = useCallback(() => submitText(guess), [submitText, guess]);
 
   const handleSelectPlayer = useCallback((player: Player) => submitText(player.name), [submitText]);
+
+  // Type-to-reveal: on every keystroke, if the typed text already names a still
+  // hidden entry (same matchGuess as the deliberate path), fill that slot for
+  // free — no GUESS press, no life at stake. Typing is ALWAYS safe: a non-match
+  // does nothing, and an already-found match is a silent no-op. Clearing the box
+  // re-fires this with '', which the length guard below absorbs (no feedback loop).
+  const handleQueryChange = useCallback(
+    (text: string) => {
+      setGuess(text);
+      if (revealAll) return;
+      const trimmed = text.trim();
+      // matchGuess needs >= 3 chars; this also swallows the clear()'s '' callback.
+      if (trimmed.length < 3) return;
+      const idx = matchGuess(list, trimmed);
+      if (idx == null) return; // no match: typing costs nothing
+      if (foundIndices.has(idx)) return; // already revealed: silent no-op
+
+      // Fresh correct match. Start the clock and clear the box BEFORE revealing;
+      // the clear's re-entrant '' callback is guarded above.
+      useSolveTimeStore.getState().markStarted('toplists');
+      searchRef.current?.clear();
+      revealIndex(idx, { silentDuplicate: true });
+    },
+    [revealAll, list, foundIndices, revealIndex],
+  );
 
   // Give up: reveal every remaining name and finish with what was found — a
   // graceful exit for a stalled board, scored on the names already named.
@@ -175,6 +212,7 @@ export default function TopListsScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Top Lists"
         modeKey="toplists"
+        difficulty={todayBandDisplay()}
         right={
           !revealAll ? (
             <View style={styles.headerStats}>
@@ -233,7 +271,7 @@ export default function TopListsScreen() {
               ref={searchRef}
               players={allPlayers}
               onSelectPlayer={handleSelectPlayer}
-              onQueryChange={setGuess}
+              onQueryChange={handleQueryChange}
               placeholder="Name a player..."
               dropDirection="up"
             />

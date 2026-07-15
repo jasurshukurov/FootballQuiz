@@ -1,4 +1,11 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -26,21 +33,35 @@ interface ClubItem {
   normalizedName: string;
 }
 
+export interface ClubSearchAutocompleteHandle {
+  /** Clears the input (used after a typed name auto-fills its stint). */
+  clear: () => void;
+}
+
 interface ClubSearchAutocompleteProps {
   clubs: ClubItem[];
   onSelectClub: (clubName: string) => void;
+  /** Fires on every keystroke with the raw text, for type-to-fill matching. */
+  onQueryChange?: (text: string) => void;
   placeholder?: string;
   autoFocus?: boolean;
   dropDirection?: 'down' | 'up';
 }
 
-function ClubSearchAutocomplete({
-  clubs,
-  onSelectClub,
-  placeholder = 'Search club...',
-  autoFocus = false,
-  dropDirection = 'down',
-}: ClubSearchAutocompleteProps) {
+const ClubSearchAutocomplete = forwardRef<
+  ClubSearchAutocompleteHandle,
+  ClubSearchAutocompleteProps
+>(function ClubSearchAutocomplete(
+  {
+    clubs,
+    onSelectClub,
+    onQueryChange,
+    placeholder = 'Search club...',
+    autoFocus = false,
+    dropDirection = 'down',
+  },
+  ref,
+) {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -49,6 +70,18 @@ function ClubSearchAutocomplete({
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
   const debouncedQuery = useDebounce(query, 250);
+
+  useImperativeHandle(ref, () => ({ clear: () => setQuery('') }), []);
+
+  // Live text-out on every keystroke: drives type-to-fill in the parent while
+  // still feeding the (debounced) suggestion dropdown below.
+  const handleChangeText = useCallback(
+    (text: string) => {
+      setQuery(text);
+      onQueryChange?.(text);
+    },
+    [onQueryChange],
+  );
 
   const fuse = useMemo(
     () =>
@@ -116,7 +149,7 @@ function ClubSearchAutocomplete({
           ref={inputRef}
           style={[styles.input, webInputReset]}
           value={query}
-          onChangeText={setQuery}
+          onChangeText={handleChangeText}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder={placeholder}
@@ -163,7 +196,7 @@ function ClubSearchAutocomplete({
       )}
     </View>
   );
-}
+});
 
 export default React.memo(ClubSearchAutocomplete);
 

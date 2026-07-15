@@ -23,7 +23,9 @@ import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { TimelineView } from '@/components/career/TimelineView';
 import { HintPanel } from '@/components/career/HintPanel';
-import PlayerSearchAutocomplete from '@/components/ui/PlayerSearchAutocomplete';
+import PlayerSearchAutocomplete, {
+  PlayerSearchAutocompleteHandle,
+} from '@/components/ui/PlayerSearchAutocomplete';
 import { TierBadge } from '@/components/career/TierBadge';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
@@ -36,7 +38,7 @@ import FloodlightSweep from '@/components/ui/FloodlightSweep';
 import RetroButton from '@/components/ui/RetroButton';
 import ProximityChips from '@/components/career/ProximityChips';
 import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
-import { careerClueRank } from '@/lib/careerHelpers';
+import { careerClueRank, normalizeGuess } from '@/lib/careerHelpers';
 import ShareableCareerPathResult from '@/components/ShareableCareerPathResult';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
@@ -66,6 +68,8 @@ export default function CareerScreen() {
   const styles = useMemo(() => createStyles(colors), [colors]);
   const allPlayers = useMemo(() => getAllPlayersWithCareer(), []);
   const shareRef = useRef<View>(null);
+  // Clears the guess box after a typed full name auto-solves.
+  const searchRef = useRef<PlayerSearchAutocompleteHandle>(null);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
   const dailyNumber = getDailyNumber();
 
@@ -105,6 +109,25 @@ export default function CareerScreen() {
       makeGuess(player.name);
     },
     [makeGuess],
+  );
+
+  // Type-to-solve: when the typed text folds exactly to the answer's FULL name,
+  // submit it as a correct guess with no suggestion tap. Full-name only — a
+  // surname shortcut would make this single-answer mode brute-typeable. A wrong
+  // name never auto-fires here and still costs an attempt only when its
+  // suggestion is explicitly picked. Mirrors handleSelectPlayer's correct path.
+  const handleQueryChange = useCallback(
+    (text: string) => {
+      if (gameStatus !== 'playing' || !currentPlayer) return;
+      const folded = normalizeGuess(text);
+      if (folded.length < 2) return; // also swallows the clear()-fired onQueryChange('')
+      if (folded !== normalizeGuess(currentPlayer.name)) return;
+      useSolveTimeStore.getState().markStarted('careerpath');
+      triggerImpact(ImpactFeedbackStyle.Medium);
+      makeGuess(currentPlayer.name);
+      searchRef.current?.clear();
+    },
+    [gameStatus, currentPlayer, makeGuess],
   );
 
   const handleUnlockHint = useCallback(
@@ -212,8 +235,10 @@ export default function CareerScreen() {
 
           <Animated.View style={shakeStyle}>
             <PlayerSearchAutocomplete
+              ref={searchRef}
               players={allPlayers}
               onSelectPlayer={handleSelectPlayer}
+              onQueryChange={handleQueryChange}
               placeholder="Guess the player..."
               dropDirection="up"
             />
@@ -255,9 +280,11 @@ export default function CareerScreen() {
           {/* Streak now lives in the progression column, so drop the duplicate
               badge here — keep confetti + NEXT UP + countdown. */}
           <GameOverExtras win={isWon} showStreak={false} currentModeKey="careerpath" />
-          {/* Practice replay lives after the share actions (it is not the daily). */}
+          {/* Keep-playing path: deals a fresh random player. Practice only — the
+              caption keeps that honest so it never reads as a daily re-run. */}
           <View style={styles.replayButton}>
-            <RetroButton title="Replay (practice)" variant="ghost" onPress={resetGame} />
+            <RetroButton title="Play Again" variant="secondary" onPress={resetGame} />
+            <Text style={styles.replayCaption}>Practice round, no effect on your streak</Text>
           </View>
           {/* Offscreen shareable view */}
           <View style={styles.offscreen}>
@@ -312,6 +339,12 @@ const createStyles = (c: ThemeColors) =>
       width: '100%',
       maxWidth: 440,
       alignSelf: 'center',
+      gap: spacing.xs,
+    },
+    replayCaption: {
+      ...type.micro,
+      color: c.textMuted,
+      textAlign: 'center',
     },
     offscreen: {
       position: 'absolute',
