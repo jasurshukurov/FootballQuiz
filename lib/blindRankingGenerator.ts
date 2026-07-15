@@ -60,14 +60,6 @@ export interface RankingCategory {
   bottomLabel: string;
 }
 
-function formatRating(v: number): string {
-  return `${Math.round(v)} OVR`;
-}
-
-function formatExposure(v: number): string {
-  return `${Math.round(v)} caps`;
-}
-
 function formatFame(v: number): string {
   return v.toFixed(1);
 }
@@ -87,16 +79,16 @@ const CATEGORIES: RankingCategory[] = [
     topLabel: 'Most expensive',
     bottomLabel: 'Cheapest',
   },
-  {
-    id: 'highest_rating',
-    title: 'Overall Rating',
-    description: 'Rank by peak game rating · highest first',
-    sortField: 'peak_game_rating',
-    sortDirection: 'desc',
-    formatValue: formatRating,
-    topLabel: 'Highest rated',
-    bottomLabel: 'Lowest rated',
-  },
+  // REMOVED (owner call 2026-07-15): 'highest_rating' ("Overall/FIFA Rating",
+  // peak_game_rating) and 'most_elite_exposure' ("International Caps",
+  // elite_exposure). Both fields are SYNTHESIZED by
+  // scripts/etl/generate_popularity_metrics.js (randomInRange bucketed by
+  // market value/tier), not real-world data — displaying them as facts graded
+  // knowledgeable players wrong (e.g. Guehi "92 OVR"). The surviving
+  // categories rank REAL data only: market_value (players_db),
+  // peak_valuation_euros (real MV/fees — the pool's isActivePlayer + MV floor
+  // excludes the retired players whose peaks were ETL-backfilled), and
+  // fame_score (our own composite index, honestly labeled).
   {
     id: 'peak_value',
     title: 'Peak Transfer Value',
@@ -106,19 +98,6 @@ const CATEGORIES: RankingCategory[] = [
     formatValue: formatMarketValue,
     topLabel: 'Highest peak',
     bottomLabel: 'Lowest peak',
-  },
-  {
-    id: 'most_elite_exposure',
-    // elite_exposure counts international caps, not club appearances —
-    // the previous "Senior Club Appearances" label graded knowledgeable
-    // players wrong.
-    title: 'International Caps',
-    description: 'Rank by international caps · most first',
-    sortField: 'elite_exposure',
-    sortDirection: 'desc',
-    formatValue: formatExposure,
-    topLabel: 'Most caps',
-    bottomLabel: 'Fewest caps',
   },
   {
     id: 'most_famous',

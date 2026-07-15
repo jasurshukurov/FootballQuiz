@@ -102,7 +102,7 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
   blindranking: {
     steps: [
       'Five players arrive ONE at a time for today’s category.',
-      'Rank #1 is the top — most valuable, highest rated, most caps — down to #5 at the bottom.',
+      'Rank #1 is the top, most valuable or most famous, down to #5 at the bottom.',
       'Place each into a slot before the next arrives. Slots lock once filled, so weigh every choice.',
       'Exact spot scores 2 points, one place off scores 1.',
     ],
