@@ -370,7 +370,7 @@ const createStyles = (c: ThemeColors) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: spacing.lg,
-      marginBottom: spacing.lg,
+      marginBottom: spacing.md,
     },
     heroText: {
       flex: 1,
@@ -418,17 +418,17 @@ const createStyles = (c: ThemeColors) =>
       color: c.streak,
     },
     bannerWrap: {
-      marginBottom: spacing.xl,
+      marginBottom: spacing.lg,
     },
     section: {
-      marginBottom: spacing.xl,
+      marginBottom: spacing.lg,
     },
     sectionLabel: {
       ...type.micro,
       color: c.textMuted,
       letterSpacing: 1.5,
       textTransform: 'uppercase',
-      marginBottom: spacing.md,
+      marginBottom: spacing.sm,
     },
     cardList: {
       gap: spacing.md,

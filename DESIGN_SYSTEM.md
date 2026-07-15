@@ -67,6 +67,21 @@ hidden tabs (`href: null`) as today. Daily progress store mode keys DO NOT chang
 Tab bar: keep the floating pill, restyle with v2 tokens (bgElevated at 0.94 opacity,
 border `colors.border`, active = green icon + dot, inactive = textMuted).
 
+v3 (2026-07-15) additions:
+- **Desktop web >= 920px** is two-pane: `components/ui/Sidebar.tsx` (280pt — wordmark,
+  Today/Stats/More nav, ring card, NEXT DAILY IN) + 480pt game column; tab bar hidden.
+  720-919 keeps the 600pt centered column + pill. Mobile/native untouched.
+- **Weekday tier names** (ramp strip + hero chip, `DifficultyBanner.todayBandDisplay`):
+  Warm-up / Standard / Standard / Tricky / Hard / Expert, Sunday = Classic. Fame
+  windows stay in lib/difficultyCurve.ts.
+- **Motion is ease-only** — no bouncy springs anywhere; flourish (Confetti,
+  StreakFlame flicker, FloodlightSweep) must gate on `useReducedMotion()`.
+- Career Path game-over = verdict card (answer + "nation · position") then TODAY'S
+  RESULT (rank/time/clues) and YOUR PROGRESSION (+XP count-up, StreakFlame, X/N
+  played) — see `components/career/CareerResultSummary.tsx`; wins fire
+  `components/ui/FloodlightSweep.tsx` over the board. Fresh-day hub must stay
+  <= 1.5 screens at 390x844.
+
 ## Game-over checklist (every mode)
 
 Game-over must include, in order: verdict moment (win/partial/loss each designed —
