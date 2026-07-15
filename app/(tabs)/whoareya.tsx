@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, FlatList, Platform, StyleSheet, Text, UIManager, View } from 'react-native';
+import { FlatList, Platform, StyleSheet, Text, UIManager, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { useLocalSearchParams } from 'expo-router';
@@ -11,9 +11,7 @@ import { getRank } from '@/lib/rankLadder';
 import { targetHasAgeSignal } from '@/lib/comparePlayers';
 import RankBadge from '@/components/ui/RankBadge';
 import { useGuessGameStore } from '@/hooks/useGuessGameStore';
-import { useProStore } from '@/hooks/useProStore';
 import { getAllPlayers } from '@/lib/playerData';
-import { showRewardedAd, loadRewardedAd } from '@/lib/ads';
 import { spacing, borderRadius, type, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -32,7 +30,6 @@ import PracticePill from '@/components/ui/PracticePill';
 import PlayerCard from '@/components/ui/PlayerCard';
 import ResultModal from '@/components/ui/ResultModal';
 import RetroButton from '@/components/ui/RetroButton';
-import BannerAd from '@/components/ui/BannerAd';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer, playCrossbar } from '@/lib/sounds';
 import GiveUpButton from '@/components/ui/GiveUpButton';
@@ -63,8 +60,6 @@ export default function WhoAreYaScreen() {
   // "Play Again" replay (store flag). Either way it must not touch XP/streak.
   const isPractice = !!practiceDate || storeIsPractice;
 
-  const isPro = useProStore((s) => s.isPro);
-
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
@@ -82,7 +77,6 @@ export default function WhoAreYaScreen() {
     } else {
       initGame();
     }
-    loadRewardedAd();
   }, [initGame, initPracticeGame, practiceDate]);
 
   // Hint state is local to the screen; clear it whenever the puzzle target
@@ -158,27 +152,18 @@ export default function WhoAreYaScreen() {
     [gameStatus, targetPlayer, handleSelectPlayer],
   );
 
-  const handleHint = useCallback(async () => {
+  // Hints are free for launch: no ad SDK ships, so no ad gate (an "(Ad)"
+  // button that never shows an ad is an App Store rejection). Re-gate on
+  // rewarded ads only when a real SDK lands.
+  const handleHint = useCallback(() => {
     if (!targetPlayer || hintUsed) return;
 
     // A hint is a meaningful first interaction too (daily runs only).
     if (!isPractice) useSolveTimeStore.getState().markStarted('who-are-ya');
 
-    if (isPro) {
-      setHintUsed(true);
-      setHintText(`Nationality: ${targetPlayer.nationality}`);
-      return;
-    }
-
-    const rewarded = await showRewardedAd();
-    if (rewarded) {
-      setHintUsed(true);
-      setHintText(`Nationality: ${targetPlayer.nationality}`);
-      loadRewardedAd();
-    } else {
-      Alert.alert('Ad not available', 'Please try again later.');
-    }
-  }, [targetPlayer, hintUsed, isPro, isPractice]);
+    setHintUsed(true);
+    setHintText(`Nationality: ${targetPlayer.nationality}`);
+  }, [targetPlayer, hintUsed, isPractice]);
 
   const reversedGuesses = useMemo(() => [...guesses].reverse(), [guesses]);
 
@@ -253,11 +238,7 @@ export default function WhoAreYaScreen() {
 
       {isPlaying && !hintUsed && guesses.length >= 2 && (
         <View style={styles.hintButton}>
-          <RetroButton
-            title={isPro ? 'Get a Hint' : 'Get a Hint (Ad)'}
-            onPress={handleHint}
-            variant="secondary"
-          />
+          <RetroButton title="Get a Hint" onPress={handleHint} variant="secondary" />
         </View>
       )}
 
@@ -332,7 +313,6 @@ export default function WhoAreYaScreen() {
           setShowModal(false);
         }}
       />
-      <BannerAd />
     </Screen>
   );
 }

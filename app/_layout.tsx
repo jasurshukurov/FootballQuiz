@@ -18,7 +18,6 @@ import 'react-native-reanimated';
 import '../global.css';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useNotificationSetup } from '@/hooks/useNotificationSetup';
-import { requestTrackingPermission } from '@/lib/tracking';
 import { initPurchases } from '@/lib/purchases';
 import { fetchRemoteConfig, RemoteConfig } from '@/lib/remoteConfig';
 import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
@@ -99,8 +98,9 @@ function RootLayoutNav() {
     checkAndUpdateStreak();
     initPurchases();
 
-    // Request ATT permission before initializing ads
-    requestTrackingPermission();
+    // No ATT prompt: the app ships no ads and tracks nothing. Re-add the
+    // expo-tracking-transparency plugin + NSUserTrackingUsageDescription +
+    // this request TOGETHER with a real ad SDK, never before (5.1.2).
 
     fetchRemoteConfig().then((config) => {
       setRemoteConfig(config);
@@ -119,7 +119,7 @@ function RootLayoutNav() {
           +html.tsx is overridden by an empty tag unless set here). Routes can
           still override with their own <Head><title>. No-op on native. */}
       <Head>
-        <title>Football Quiz</title>
+        <title>Football Trivia</title>
       </Head>
       <StatusBar style={theme.dark ? 'light' : 'dark'} />
       <Stack>

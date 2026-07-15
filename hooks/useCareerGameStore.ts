@@ -11,7 +11,6 @@ import {
   computeProximity,
   ProximityChips,
 } from '@/lib/careerHelpers';
-import { showRewardedAd } from '@/lib/ads';
 
 const MAX_ATTEMPTS = 3;
 
@@ -176,10 +175,9 @@ export const useCareerGameStore = create<CareerGameStore>()(
           return false;
         }
 
-        if (state.unlockedHints.length >= 2) {
-          const adResult = await showRewardedAd();
-          if (!adResult) return false;
-        }
+        // Hints are free for launch: the old 3rd-hint rewarded-ad gate is gone
+        // (no ad SDK ships; a gate that shows no ad is an App Store rejection).
+        // Re-introduce together with a real ad SDK.
 
         const newHints = [...state.unlockedHints, hintId];
         const updates: Partial<CareerGameState> = { unlockedHints: newHints };

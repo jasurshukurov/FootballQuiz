@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { NotificationFeedbackType } from 'expo-haptics';
 
@@ -40,8 +40,6 @@ import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
 import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
-import { useProStore } from '@/hooks/useProStore';
-import { showRewardedAd, loadRewardedAd } from '@/lib/ads';
 import ShareableMissing11Result from '@/components/ShareableMissing11Result';
 import GameOverSheet from '@/components/ui/GameOverSheet';
 import LivesIndicator from '@/components/ui/LivesIndicator';
@@ -95,12 +93,6 @@ export default function Missing11Screen() {
   // Daily re-entry restoration: recorded result at MOUNT time restores the
   // game-over panel over the revealed XI instead of dealing the daily again.
   const [restoredDaily] = useState(() => useDailyProgressStore.getState().isCompleted('missing11'));
-
-  const isPro = useProStore((s) => s.isPro);
-
-  useEffect(() => {
-    loadRewardedAd();
-  }, []);
 
   useEffect(() => {
     if (getAllMatches().length === 0) return;
@@ -290,7 +282,10 @@ export default function Missing11Screen() {
     [gameState, revealedSlots],
   );
 
-  const handleHint = useCallback(async () => {
+  // Hints are free for launch: no ad SDK ships, so no ad gate (an "(Ad)"
+  // button that never shows an ad is an App Store rejection). Re-gate on
+  // rewarded ads only when a real SDK lands.
+  const handleHint = useCallback(() => {
     if (hintUsed || lineupNames.length === 0) return;
 
     const unrevealedIndices = lineupNames.map((_, i) => i).filter((i) => !revealedSlots.has(i));
@@ -299,30 +294,14 @@ export default function Missing11Screen() {
     // A hint is a meaningful first interaction too.
     useSolveTimeStore.getState().markStarted('missing11');
 
-    const giveHint = () => {
-      const randomIndex =
-        unrevealedIndices[Math.floor(gameRng.current() * unrevealedIndices.length)];
-      const playerName = lineupNames[randomIndex];
-      const firstLetter = playerName.charAt(0).toUpperCase();
-      setHintUsed(true);
-      setHintText(
-        `Position ${randomIndex + 1} (${POSITION_HINT[randomIndex]}) starts with '${firstLetter}'`,
-      );
-    };
-
-    if (isPro) {
-      giveHint();
-      return;
-    }
-
-    const rewarded = await showRewardedAd();
-    if (rewarded) {
-      giveHint();
-      loadRewardedAd();
-    } else {
-      Alert.alert('Ad not available', 'Please try again later.');
-    }
-  }, [hintUsed, lineupNames, revealedSlots, isPro]);
+    const randomIndex = unrevealedIndices[Math.floor(gameRng.current() * unrevealedIndices.length)];
+    const playerName = lineupNames[randomIndex];
+    const firstLetter = playerName.charAt(0).toUpperCase();
+    setHintUsed(true);
+    setHintText(
+      `Position ${randomIndex + 1} (${POSITION_HINT[randomIndex]}) starts with '${firstLetter}'`,
+    );
+  }, [hintUsed, lineupNames, revealedSlots]);
 
   // Give up: reveal the full XI and end as a loss with what was found so far —
   // a graceful "here's the answer" exit, never a shaming one (finishGame fills
@@ -450,11 +429,7 @@ export default function Missing11Screen() {
               {wrongFlash ? 'Not in this XI, life lost' : 'A wrong name costs a life'}
             </Text>
             {!hintUsed && revealedSlots.size < 11 && (
-              <RetroButton
-                title={isPro ? 'Hint' : 'Hint (Ad)'}
-                onPress={handleHint}
-                variant="secondary"
-              />
+              <RetroButton title="Hint" onPress={handleHint} variant="secondary" />
             )}
           </View>
           {hintUsed && hintText !== '' && (

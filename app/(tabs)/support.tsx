@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Linking, StyleSheet, Switch, Text, View } from 'react-native';
 import { useRouter, type Href } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+import { FEATURES } from '@/lib/featureFlags';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import RetroButton from '@/components/ui/RetroButton';
@@ -16,6 +17,9 @@ import { deleteUserAccount } from '@/lib/accountDeletion';
 import { isSoundEnabled, setSoundEnabled } from '@/lib/sounds';
 import { isHapticsEnabled, setHapticsEnabled } from '@/lib/haptics';
 import { isNotificationsEnabled, setNotificationsEnabled } from '@/lib/notifications';
+
+const PRIVACY_POLICY_URL = 'https://footballtrivia.app/privacy-policy.html';
+const SUPPORT_EMAIL = 'support@footballtrivia.app';
 
 // Only what Pro actually grants today.
 const PRO_FEATURES = [
@@ -174,43 +178,46 @@ export default function MoreScreen() {
     <Screen>
       <ScreenHeader title="More" />
 
-      {/* Support / donate */}
-      <View style={styles.supportCard}>
-        <FontAwesome name="heart" size={28} color={colors.streak} />
-        <Text style={styles.supportTitle}>
-          {isPro ? 'Thanks for your support!' : 'Support the Game'}
-        </Text>
-        <Text style={styles.supportSub}>
-          {isPro
-            ? 'You have hints on the house and an ad-free experience.'
-            : 'Football Trivia is free. Chip in to unlock perks and keep it growing.'}
-        </Text>
-        {!isPro && (
-          <>
-            <View style={styles.featureList}>
-              {PRO_FEATURES.map((f) => (
-                <View key={f.label} style={styles.featureRow}>
-                  <FontAwesome name={f.icon} size={14} color={colors.accent} />
-                  <Text style={styles.featureLabel}>{f.label}</Text>
-                </View>
-              ))}
-            </View>
-            <View style={styles.supportButtons}>
-              <RetroButton
-                title={loading ? 'Processing…' : 'Support the Game'}
-                onPress={handlePurchase}
-                disabled={loading}
-              />
-              <RetroButton
-                title="Restore Purchase"
-                onPress={handleRestore}
-                variant="secondary"
-                disabled={loading}
-              />
-            </View>
-          </>
-        )}
-      </View>
+      {/* Support / donate — OFF for launch: purchases are a stub with no
+          StoreKit behind them (see FEATURES.pro). */}
+      {FEATURES.pro && (
+        <View style={styles.supportCard}>
+          <FontAwesome name="heart" size={28} color={colors.streak} />
+          <Text style={styles.supportTitle}>
+            {isPro ? 'Thanks for your support!' : 'Support the Game'}
+          </Text>
+          <Text style={styles.supportSub}>
+            {isPro
+              ? 'You have hints on the house and an ad-free experience.'
+              : 'Football Trivia is free. Chip in to unlock perks and keep it growing.'}
+          </Text>
+          {!isPro && (
+            <>
+              <View style={styles.featureList}>
+                {PRO_FEATURES.map((f) => (
+                  <View key={f.label} style={styles.featureRow}>
+                    <FontAwesome name={f.icon} size={14} color={colors.accent} />
+                    <Text style={styles.featureLabel}>{f.label}</Text>
+                  </View>
+                ))}
+              </View>
+              <View style={styles.supportButtons}>
+                <RetroButton
+                  title={loading ? 'Processing…' : 'Support the Game'}
+                  onPress={handlePurchase}
+                  disabled={loading}
+                />
+                <RetroButton
+                  title="Restore Purchase"
+                  onPress={handleRestore}
+                  variant="secondary"
+                  disabled={loading}
+                />
+              </View>
+            </>
+          )}
+        </View>
+      )}
 
       {/* Practice & Archive */}
       <SectionLabel>Practice</SectionLabel>
@@ -251,24 +258,21 @@ export default function MoreScreen() {
       {/* About */}
       <SectionLabel>About</SectionLabel>
       <View style={styles.group}>
-        <View style={styles.row}>
-          <FontAwesome
-            name="envelope"
-            size={16}
-            color={colors.textSecondary}
-            style={styles.rowIcon}
-          />
-          <Text style={[styles.rowLabel, styles.rowText]}>support@footballtrivia.app</Text>
-        </View>
-        <View style={styles.row}>
-          <FontAwesome
-            name="question-circle"
-            size={16}
-            color={colors.textSecondary}
-            style={styles.rowIcon}
-          />
-          <Text style={[styles.rowLabel, styles.rowText]}>FAQ coming soon</Text>
-        </View>
+        <LinkRow
+          icon="envelope"
+          label="Contact support"
+          sub={SUPPORT_EMAIL}
+          onPress={() => {
+            Linking.openURL(`mailto:${SUPPORT_EMAIL}`).catch(() => {});
+          }}
+        />
+        <LinkRow
+          icon="shield"
+          label="Privacy Policy"
+          onPress={() => {
+            Linking.openURL(PRIVACY_POLICY_URL).catch(() => {});
+          }}
+        />
       </View>
 
       {/* Account */}

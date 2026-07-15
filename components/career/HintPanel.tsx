@@ -24,7 +24,9 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const unlockedSet = useMemo(() => new Set(unlockedHints), [unlockedHints]);
-  const isPremium = freeHintsRemaining <= 0;
+  // No ad SDK ships, so no hint is ever ad-gated: the play-circle "watch ad"
+  // badge is retired until real rewarded ads land.
+  const isPremium = false;
 
   const handlePress = useCallback((hintId: string) => () => onUnlockHint(hintId), [onUnlockHint]);
 
@@ -57,7 +59,7 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
       <Text style={[styles.freeText, { color: hasFreeHints ? colors.accent : colors.streak }]}>
         {hasFreeHints
           ? `${freeHintsRemaining} free hint${freeHintsRemaining !== 1 ? 's' : ''} left`
-          : 'Watch ad to unlock hints'}
+          : 'Hints are on the house'}
       </Text>
       <View style={styles.separator} />
       <View style={styles.row}>

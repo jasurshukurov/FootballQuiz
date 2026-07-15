@@ -15,4 +15,12 @@ export const FEATURES = {
    * identity, sync and screens stay intact behind the flag.
    */
   leaderboard: false,
+  /**
+   * pro: the "Support the Game" purchase card (More screen) and Pro perks.
+   * OFF for the store launch (2026-07-15): lib/purchases.ts is a stub with
+   * no StoreKit behind it — a visible purchase/restore flow that completes
+   * without a transaction is a guaranteed App Store rejection (3.1.1/2.1).
+   * Flip on only once real IAP (StoreKit/RevenueCat) is wired.
+   */
+  pro: false,
 } as const;
