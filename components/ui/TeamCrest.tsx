@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { getTeamColors } from '@/data/teamColors';
+import { getFlagEmoji } from '@/lib/countryFlags';
 import { useThemeColors } from '@/hooks/useTheme';
 
 interface TeamCrestProps {
@@ -12,6 +13,23 @@ export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
   const colors = useThemeColors();
   // primary/secondary are real-world club colors (data, not theme).
   const { primary, secondary, pattern = 'circle' } = getTeamColors(teamName);
+
+  // National teams show their actual flag (Unicode emoji, IP-free) instead of
+  // the generic club shield. fontSize here is crest geometry scaled off the
+  // size prop, like the shield dims below — not typography.
+  const flag = getFlagEmoji(teamName);
+  if (flag) {
+    return (
+      <View style={[styles.flagBox, { width: size, height: size * 1.15 }]}>
+        <Text
+          style={{ fontSize: size * 0.82, lineHeight: size * 1.15 }}
+          allowFontScaling={false}
+          accessibilityLabel={`${teamName} flag`}>
+          {flag}
+        </Text>
+      </View>
+    );
+  }
 
   const shieldStyle = {
     width: size,
@@ -84,6 +102,10 @@ export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
 }
 
 const styles = StyleSheet.create({
+  flagBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   shield: {
     overflow: 'hidden',
     borderWidth: 1,
