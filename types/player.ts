@@ -7,7 +7,9 @@ export interface Player {
   league: string;
   position: string;
   market_value: number;
-  image_url: string;
+  /** Optional since 2026-07-15: stripped from players_db_v1 (nothing renders
+   *  it; Career Path photos come from career_paths.json instead). */
+  image_url?: string;
   last_season?: number;
   status?: 'active' | 'retired';
   retired_year?: number;
