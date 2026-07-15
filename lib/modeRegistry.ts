@@ -24,14 +24,21 @@ export interface GameMode {
  *    Agent). Screen + generator remain compilable for possible revival:
  *    app/(tabs)/marketmovers.tsx, lib/feeHigherLowerGenerator.ts.
  */
+/**
+ * Career Path is ENDLESS since 2026-07-15 (owner call): not part of the daily
+ * set, pinned at the top of the hub, deals a new player on demand. It keeps
+ * its route/screen and store keys; it just no longer counts toward daily
+ * progress, NEXT UP chains, or perfect days.
+ */
+export const ENDLESS_MODE: GameMode = {
+  key: 'careerpath',
+  title: 'Career Path',
+  tease: 'Endless. Name the player from their club history',
+  route: '/(tabs)/careerpath',
+  icon: 'road',
+};
+
 export const GAME_MODES: GameMode[] = [
-  {
-    key: 'careerpath',
-    title: 'Career Path',
-    tease: 'Name the player from their club history',
-    route: '/(tabs)/careerpath',
-    icon: 'road',
-  },
   {
     key: 'who-are-ya',
     title: 'My Name Is…',

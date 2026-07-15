@@ -12,7 +12,7 @@ import DifficultyBanner, { todayBandDisplay } from '@/components/ui/DifficultyBa
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
 import { spacing, borderRadius, type, motion, touch, opacity } from '@/constants/theme';
-import { getActiveModes, type GameMode } from '@/lib/modeRegistry';
+import { getActiveModes, ENDLESS_MODE, type GameMode } from '@/lib/modeRegistry';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useSolveTimeStore } from '@/hooks/useSolveTimeStore';
@@ -269,6 +269,38 @@ export default function TodayScreen() {
         <DifficultyBanner />
       </View>
 
+      {/* ── Endless mode: Career Path, pinned on top, always playable ── */}
+      <View style={styles.section}>
+        <Animated.View entering={FadeInDown.duration(motion.base)}>
+          <Tappable
+            onPress={() => openMode(ENDLESS_MODE)}
+            accessibilityLabel={`Play ${ENDLESS_MODE.title}, endless`}
+            hoverStyle={{ backgroundColor: colors.bgCardPressed }}
+            style={styles.featuredCard}>
+            <View style={styles.featuredIcon}>
+              <FontAwesome name={ENDLESS_MODE.icon} size={30} color={colors.accent} />
+            </View>
+            <View style={styles.cardText}>
+              <View style={styles.featuredEyebrowRow}>
+                <Text style={styles.featuredEyebrow}>Endless</Text>
+                <View style={styles.endlessChip}>
+                  <FontAwesome name="refresh" size={9} color={colors.accent} />
+                  <Text style={styles.endlessChipText}>No daily limit</Text>
+                </View>
+              </View>
+              <Text style={styles.featuredTitle}>{ENDLESS_MODE.title}</Text>
+              <Text style={styles.featuredTease} numberOfLines={2}>
+                Name the player from their club history. A new one every round.
+              </Text>
+              <View style={styles.playPill}>
+                <FontAwesome name="play" size={10} color={colors.textOnAccent} />
+                <Text style={styles.playPillText}>Play</Text>
+              </View>
+            </View>
+          </Tappable>
+        </Animated.View>
+      </View>
+
       {/* ── Up next: featured hero card + two-column mode grid ── */}
       {unplayed.length > 0 && (
         <View style={styles.section}>
@@ -462,6 +494,19 @@ const createStyles = (c: ThemeColors) =>
       color: c.accent,
       letterSpacing: 1.5,
       textTransform: 'uppercase',
+    },
+    endlessChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: 1,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.accentSoft,
+    },
+    endlessChipText: {
+      ...type.micro,
+      color: c.accent,
     },
     difficultyChip: {
       flexDirection: 'row',

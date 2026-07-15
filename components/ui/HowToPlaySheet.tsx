@@ -6,7 +6,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import GlassCard from '@/components/ui/GlassCard';
 import RetroButton from '@/components/ui/RetroButton';
 import { getHowToPlay } from '@/lib/howToPlay';
-import { GAME_MODES } from '@/lib/modeRegistry';
+import { GAME_MODES, ENDLESS_MODE } from '@/lib/modeRegistry';
 import { borderRadius, motion, spacing, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -29,7 +29,11 @@ export default function HowToPlaySheet({ modeKey, visible, onClose }: HowToPlayS
   const styles = useMemo(() => createStyles(colors), [colors]);
 
   const content = getHowToPlay(modeKey);
-  const mode = GAME_MODES.find((m) => m.key === modeKey);
+  // The endless mode (Career Path) lives outside the daily GAME_MODES list
+  // but still has rules to show.
+  const mode =
+    GAME_MODES.find((m) => m.key === modeKey) ??
+    (ENDLESS_MODE.key === modeKey ? ENDLESS_MODE : undefined);
   if (!content || !mode) return null;
 
   return (

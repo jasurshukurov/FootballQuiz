@@ -12,7 +12,6 @@ import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
 import { Player } from '@/types/player';
 import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { getAllPlayersWithCareer } from '@/lib/playerData';
-import { getModeSeed } from '@/lib/dailySeed';
 import { getDailyNumber } from '@/lib/dailyPuzzle';
 import { spacing, type, borderRadius, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
@@ -38,7 +37,7 @@ import GameOverExtras from '@/components/ui/GameOverExtras';
 import FloodlightSweep from '@/components/ui/FloodlightSweep';
 import RetroButton from '@/components/ui/RetroButton';
 import ProximityChips from '@/components/career/ProximityChips';
-import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
+import { useTodaySolveTime } from '@/hooks/useSolveTimeStore';
 import { careerClueRank, normalizeGuess } from '@/lib/careerHelpers';
 import ShareableCareerPathResult from '@/components/ShareableCareerPathResult';
 import Screen from '@/components/ui/Screen';
@@ -57,8 +56,6 @@ export default function CareerScreen() {
     attemptsLeft,
     guessResult,
     lastProximity,
-    isPractice,
-    startDailyGame,
     makeGuess,
     attemptUnlockHint,
     resetGame,
@@ -72,69 +69,43 @@ export default function CareerScreen() {
   // Clears the guess box after a typed full name auto-solves.
   const searchRef = useRef<PlayerSearchAutocompleteHandle>(null);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
-  const dailyNumber = getDailyNumber();
+  // Endless summary shows the mode's own consecutive-wins streak, not the daily streak.
+  const careerWinStreak = useCareerGameStore((s) => s.currentStreak);
 
+  // ENDLESS mode (owner call 2026-07-15): Career Path left the daily set. On
+  // entry, keep an in-flight board, else deal a fresh random player; a
+  // finished board deals fresh too — the run is continuous, "Next" is the loop.
   useEffect(() => {
     const decide = () => {
-      const seed = getModeSeed('careerpath');
       const store = useCareerGameStore.getState();
-      const dailyDone = useDailyProgressStore.getState().isCompleted('careerpath');
-      if (dailyDone && store.dailySeed !== seed) {
-        // Daily already completed and its board was replaced by a Play-Again
-        // practice run. Never re-deal the finished daily as playable: keep the
-        // in-flight practice board, or deal a fresh practice player.
-        if (store.gameStatus !== 'playing' || !store.currentPlayer) {
-          store.resetGame();
-        } else if (!store.isPractice) {
-          // Rehydrated mid-practice board: isPractice is transient (not
-          // persisted), so stamp it back — the eyebrow must read PRACTICE and
-          // this board's result must never record over the finished daily.
-          useCareerGameStore.setState({ isPractice: true });
-        }
-      } else {
-        // Deals today's daily, or restores it (finished or mid-run) via the
-        // store's dailySeed guard.
-        startDailyGame(seed);
+      if (store.gameStatus !== 'playing' || !store.currentPlayer) {
+        store.resetGame();
+      } else if (!store.isPractice) {
+        // Rehydrated board from before the endless switch: stamp it so
+        // nothing downstream treats it as an official daily.
+        useCareerGameStore.setState({ isPractice: true });
       }
       playWhistle();
     };
 
-    // Both persisted stores must be rehydrated before deciding what to deal —
-    // on a cold start AsyncStorage hydration races this mount, and deciding
-    // from empty defaults would deal a fresh daily over a finished one.
-    const persists = [useCareerGameStore.persist, useDailyProgressStore.persist];
-    if (persists.every((p) => p.hasHydrated())) {
+    // Wait for rehydration — deciding from empty defaults on a cold start
+    // would discard a mid-run board.
+    const p = useCareerGameStore.persist;
+    if (p.hasHydrated()) {
       decide();
       return;
     }
-    let decided = false;
-    const unsubs = persists.map((p) =>
-      p.onFinishHydration(() => {
-        if (!decided && persists.every((q) => q.hasHydrated())) {
-          decided = true;
-          decide();
-        }
-      }),
-    );
-    return () => unsubs.forEach((u) => u());
-  }, [startDailyGame]);
+    return p.onFinishHydration(decide);
+  }, []);
 
-  // Record streak/XP/daily-progress once the daily puzzle ends. Practice
-  // boards (Play Again, or the post-daily re-entry deal) record nothing —
-  // otherwise a practice result would overwrite the official daily score.
+  // Endless rounds never touch daily progress, streaks or solve times. XP
+  // still rewards play — awardDailyXp is internally capped at once per mode
+  // per local day, so grinding rounds can't inflate it.
   useEffect(() => {
-    if (useCareerGameStore.getState().isPractice) return;
     if (gameStatus === 'won') {
-      const xp = 50 + attemptsLeft * 15;
-      // Award at most once per local day; Play-Again the same day earns nothing.
-      useManagerStore.getState().awardDailyXp('careerpath', xp);
-      useDailyProgressStore.getState().markCompleted('careerpath', attemptsLeft);
-      useSolveTimeStore.getState().markCompleted('careerpath', { countsForBest: true });
+      useManagerStore.getState().awardDailyXp('careerpath', 50 + attemptsLeft * 15);
     } else if (gameStatus === 'lost') {
       useManagerStore.getState().awardDailyXp('careerpath', 10);
-      useDailyProgressStore.getState().markCompleted('careerpath', 0);
-      // Losses never set a time PB.
-      useSolveTimeStore.getState().markCompleted('careerpath', { countsForBest: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameStatus]);
@@ -147,8 +118,6 @@ export default function CareerScreen() {
 
   const handleSelectPlayer = useCallback(
     (player: Player) => {
-      // Solve-time stopwatch starts on the first real guess (no-ops after).
-      useSolveTimeStore.getState().markStarted('careerpath');
       triggerImpact(ImpactFeedbackStyle.Medium);
       makeGuess(player.name);
     },
@@ -166,7 +135,6 @@ export default function CareerScreen() {
       const folded = normalizeGuess(text);
       if (folded.length < 2) return; // also swallows the clear()-fired onQueryChange('')
       if (folded !== normalizeGuess(currentPlayer.name)) return;
-      useSolveTimeStore.getState().markStarted('careerpath');
       triggerImpact(ImpactFeedbackStyle.Medium);
       makeGuess(currentPlayer.name);
       searchRef.current?.clear();
@@ -177,7 +145,6 @@ export default function CareerScreen() {
   const handleUnlockHint = useCallback(
     (hintId: string) => {
       // A hint unlock is a meaningful first interaction too.
-      useSolveTimeStore.getState().markStarted('careerpath');
       attemptUnlockHint(hintId);
     },
     [attemptUnlockHint],
@@ -239,7 +206,7 @@ export default function CareerScreen() {
   return (
     <Screen scroll={false}>
       <ScreenHeader
-        eyebrow={isPractice ? 'Practice' : `Daily #${dailyNumber}`}
+        eyebrow="Endless"
         title="Career Path"
         modeKey="careerpath"
         right={currentPlayer ? <TierBadge tier={currentPlayer.tier} /> : undefined}
@@ -309,8 +276,8 @@ export default function CareerScreen() {
               clueRank={clueRank}
               cluesUsed={cluesUsed}
               xpEarned={xpEarned}
-              animateXp={!isPractice}
-              streak={dailyStreak}
+              animateXp={true}
+              streak={careerWinStreak}
               playedCount={playedCount}
               totalCount={totalCount}
             />
@@ -325,11 +292,9 @@ export default function CareerScreen() {
           {/* Streak now lives in the progression column, so drop the duplicate
               badge here — keep confetti + NEXT UP + countdown. */}
           <GameOverExtras win={isWon} showStreak={false} currentModeKey="careerpath" />
-          {/* Keep-playing path: deals a fresh random player. Practice only — the
-              caption keeps that honest so it never reads as a daily re-run. */}
+          {/* The endless loop: deal the next player. */}
           <View style={styles.replayButton}>
-            <RetroButton title="Play Again" variant="secondary" onPress={resetGame} />
-            <Text style={styles.replayCaption}>Practice round, no effect on your streak</Text>
+            <RetroButton title="Next" onPress={resetGame} />
           </View>
           {/* Offscreen shareable view */}
           <View style={styles.offscreen}>
