@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, {
+  Easing,
   useSharedValue,
   useAnimatedStyle,
   withTiming,
@@ -36,21 +37,30 @@ export default function TimelineNode({
 }: TimelineNodeProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
-  const pulseScale = useSharedValue(1);
+  const pulseOpacity = useSharedValue(1);
   const flipProgress = useSharedValue(node.isGuessed ? 1 : 0);
   const reducedMotion = useReducedMotion();
 
   const isRevealed = !node.isHidden || node.isGuessed;
   const lineColor = isRevealed ? colors.accent : colors.textMuted;
 
-  // Pulse animation for hidden nodes
+  // Hidden-stint attention cue: breathe the "?" glyph's opacity (matches
+  // JerseySlot). NOT a whole-card scale — the old 1.15 grow/shrink made every
+  // hidden card, including the active one, read as "jumping". Loop gates on
+  // reduced motion (falls back to a statically dimmed glyph).
   useEffect(() => {
-    if (node.isHidden && !node.isGuessed && !reducedMotion) {
-      pulseScale.value = withRepeat(withTiming(1.15, { duration: motion.slow }), -1, true);
+    if (!node.isHidden || node.isGuessed) {
+      pulseOpacity.value = 1;
+    } else if (reducedMotion) {
+      pulseOpacity.value = 0.7;
     } else {
-      pulseScale.value = 1;
+      pulseOpacity.value = withRepeat(
+        withTiming(0.4, { duration: motion.slow, easing: Easing.inOut(Easing.ease) }),
+        -1,
+        true,
+      );
     }
-  }, [node.isHidden, node.isGuessed, pulseScale, reducedMotion]);
+  }, [node.isHidden, node.isGuessed, pulseOpacity, reducedMotion]);
 
   // Flip animation when guessed
   useEffect(() => {
@@ -60,7 +70,7 @@ export default function TimelineNode({
   }, [node.isGuessed, flipProgress]);
 
   const pulseStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: pulseScale.value }],
+    opacity: pulseOpacity.value,
   }));
 
   const flipStyle = useAnimatedStyle(() => ({
@@ -122,20 +132,14 @@ export default function TimelineNode({
               onPress={onPress}
               disabled={!canPress}
               hoverStyle={{ backgroundColor: colors.bgCardPressed, borderRadius: borderRadius.md }}>
-              <Animated.View
-                style={[
-                  layoutStyles.card,
-                  styles.cardHidden,
-                  isActive && styles.cardActive,
-                  pulseStyle,
-                ]}>
-                <Text style={styles.questionMark}>?</Text>
+              <View style={[layoutStyles.card, styles.cardHidden, isActive && styles.cardActive]}>
+                <Animated.Text style={[styles.questionMark, pulseStyle]}>?</Animated.Text>
                 {node.hintRevealed ? (
                   <Text style={styles.hintText}>{getClubHint(node.club)}</Text>
                 ) : (
                   <Text style={styles.hiddenText}>???</Text>
                 )}
-              </Animated.View>
+              </View>
             </Tappable>
             {!node.hintRevealed && onHintPress && (
               <Tappable
