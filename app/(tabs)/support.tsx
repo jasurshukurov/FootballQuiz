@@ -283,6 +283,12 @@ export default function MoreScreen() {
           <Text style={[styles.rowLabel, styles.rowText, styles.dangerLabel]}>Delete Account</Text>
         </Tappable>
       </View>
+
+      {/* Credits */}
+      <Text style={styles.credits}>
+        This game was developed by Jasur Shukurov while playing it with his college friends Georgi,
+        Alex and Ismail.
+      </Text>
     </Screen>
   );
 }
@@ -373,5 +379,12 @@ const createStyles = (c: ThemeColors) =>
     },
     dangerLabel: {
       color: c.danger,
+    },
+    credits: {
+      ...type.caption,
+      color: c.textMuted,
+      textAlign: 'center',
+      paddingHorizontal: spacing.lg,
+      marginBottom: spacing.xl,
     },
   });
