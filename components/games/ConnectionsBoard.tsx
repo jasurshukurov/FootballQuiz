@@ -75,31 +75,35 @@ function ConnectionsBoard({
 
       {/* Unsolved tile grid */}
       <ShakeView shake={shaking}>
-        {rows.map((row, rowIdx) => (
-          <View key={rowIdx} style={styles.row}>
-            {row.map((tile, colIdx) => {
-              const idx = rowIdx * 4 + colIdx;
-              return (
-                <Animated.View
-                  key={tile.name}
-                  style={styles.tileWrapper}
-                  entering={
-                    animateEntrance && idx < MAX_ENTRANCE
-                      ? FadeIn.delay(idx * 40).duration(motion.base)
-                      : undefined
-                  }>
-                  <ConnectionsTile
-                    name={tile.name}
-                    selected={tile.selected}
-                    solved={false}
-                    onPress={() => onTilePress(tile.name)}
-                    disabled={disabled || tile.solved}
-                  />
-                </Animated.View>
-              );
-            })}
-          </View>
-        ))}
+        {/* Rows live INSIDE ShakeView, out of reach of the container's gap —
+            this wrapper gives the vertical gap so both axes match. */}
+        <View style={styles.rowsWrap}>
+          {rows.map((row, rowIdx) => (
+            <View key={rowIdx} style={styles.row}>
+              {row.map((tile, colIdx) => {
+                const idx = rowIdx * 4 + colIdx;
+                return (
+                  <Animated.View
+                    key={tile.name}
+                    style={styles.tileWrapper}
+                    entering={
+                      animateEntrance && idx < MAX_ENTRANCE
+                        ? FadeIn.delay(idx * 40).duration(motion.base)
+                        : undefined
+                    }>
+                    <ConnectionsTile
+                      name={tile.name}
+                      selected={tile.selected}
+                      solved={false}
+                      onPress={() => onTilePress(tile.name)}
+                      disabled={disabled || tile.solved}
+                    />
+                  </Animated.View>
+                );
+              })}
+            </View>
+          ))}
+        </View>
       </ShakeView>
     </View>
   );
@@ -131,6 +135,9 @@ const styles = StyleSheet.create({
     ...type.micro,
     marginTop: spacing.xs / 2,
     textAlign: 'center',
+  },
+  rowsWrap: {
+    gap: spacing.sm,
   },
   row: {
     flexDirection: 'row',
