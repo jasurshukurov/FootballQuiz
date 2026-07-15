@@ -520,6 +520,9 @@ const createStyles = (c: ThemeColors) =>
       flexGrow: 1,
     },
     gridCard: {
+      // Fill the stretched grid item so both cards in a row render the same
+      // height even when one tease wraps to a second line.
+      flex: 1,
       minHeight: 96,
       padding: spacing.md,
       borderRadius: borderRadius.lg,

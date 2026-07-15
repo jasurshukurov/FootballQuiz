@@ -19,11 +19,11 @@ const WEEKDAY_TIERS = [
   'Expert', // Sat — the weekly summit
 ] as const;
 
-/** Bar heights grow through the week — the ramp reads left to right. */
-const WEEKDAY_HEIGHTS = [12, 8, 10, 12, 14, 17, 20] as const;
-
 /** Display order Monday-first (JS getDay: Sunday=0). */
 const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0] as const;
+
+/** Single letters under the segments, Monday-first. */
+const DAY_LETTERS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'] as const;
 
 const WEEKDAY_NAMES = [
   'Sunday',
@@ -41,41 +41,40 @@ export function todayBandDisplay(now: Date = new Date()): string {
 }
 
 /**
- * The hub's weekly difficulty ramp strip (v3): seven Monday-first mini bars
- * growing in height through the week — past days in translucent accent,
- * today solid accent, future days muted — with "{Day} · {Tier}" and a
- * one-line explanation.
+ * The hub's weekly difficulty strip: "{Day} · {Tier}" headline, a one-line
+ * explanation, and a full-width segmented week bar (Monday-first) with day
+ * letters — days gone by in soft accent, today solid accent, days ahead muted.
  */
 export default function DifficultyBanner() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const today = new Date().getDay();
+  const todayIdx = WEEK_ORDER.indexOf(today as (typeof WEEK_ORDER)[number]);
 
   return (
     <Animated.View entering={FadeIn.duration(motion.base)} style={styles.card}>
-      <View style={styles.pips}>
-        {WEEK_ORDER.map((day) => {
-          const isToday = day === today;
-          const isPast =
-            WEEK_ORDER.indexOf(day as (typeof WEEK_ORDER)[number]) <
-            WEEK_ORDER.indexOf(today as (typeof WEEK_ORDER)[number]);
+      <Text style={styles.title}>
+        {WEEKDAY_NAMES[today]} · {todayBandDisplay()}
+      </Text>
+      <Text style={styles.sub}>Puzzles ramp up through the week. Saturday is expert day.</Text>
+      <View style={styles.track}>
+        {WEEK_ORDER.map((day, i) => {
+          const isToday = i === todayIdx;
+          const isPast = i < todayIdx;
           return (
-            <View
-              key={day}
-              style={[
-                styles.pip,
-                { height: WEEKDAY_HEIGHTS[day] },
-                isToday ? styles.pipToday : isPast ? styles.pipPast : styles.pipFuture,
-              ]}
-            />
+            <View key={day} style={styles.dayCol}>
+              <View
+                style={[
+                  styles.segment,
+                  isToday ? styles.segmentToday : isPast ? styles.segmentPast : null,
+                ]}
+              />
+              <Text style={isToday ? styles.dayLetterToday : styles.dayLetter}>
+                {DAY_LETTERS[i]}
+              </Text>
+            </View>
           );
         })}
-      </View>
-      <View style={styles.textCol}>
-        <Text style={styles.title}>
-          {WEEKDAY_NAMES[today]} · {todayBandDisplay()}
-        </Text>
-        <Text style={styles.sub}>Puzzles ramp up through the week. Saturday is expert day.</Text>
       </View>
     </Animated.View>
   );
@@ -84,38 +83,11 @@ export default function DifficultyBanner() {
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
     card: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: spacing.lg,
       padding: spacing.lg,
       borderRadius: borderRadius.lg,
       borderWidth: 1,
       borderColor: c.border,
       backgroundColor: c.bgCard,
-    },
-    pips: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      gap: spacing.xs,
-      height: 20,
-    },
-    pip: {
-      width: 8,
-      borderRadius: 3,
-    },
-    pipToday: {
-      backgroundColor: c.accent,
-    },
-    pipPast: {
-      backgroundColor: c.accentSoft,
-      borderWidth: 1,
-      borderColor: c.accentBorder,
-    },
-    pipFuture: {
-      backgroundColor: c.borderStrong,
-    },
-    textCol: {
-      flex: 1,
     },
     title: {
       ...type.bodyBold,
@@ -125,5 +97,35 @@ const createStyles = (c: ThemeColors) =>
       ...type.caption,
       color: c.textSecondary,
       marginTop: 1,
+    },
+    track: {
+      flexDirection: 'row',
+      gap: spacing.xs,
+      marginTop: spacing.md,
+    },
+    dayCol: {
+      flex: 1,
+      alignItems: 'center',
+      gap: spacing.xs,
+    },
+    segment: {
+      alignSelf: 'stretch',
+      height: 6,
+      borderRadius: borderRadius.full,
+      backgroundColor: c.borderStrong,
+    },
+    segmentPast: {
+      backgroundColor: c.accentSoft,
+    },
+    segmentToday: {
+      backgroundColor: c.accent,
+    },
+    dayLetter: {
+      ...type.micro,
+      color: c.textMuted,
+    },
+    dayLetterToday: {
+      ...type.micro,
+      color: c.accent,
     },
   });
