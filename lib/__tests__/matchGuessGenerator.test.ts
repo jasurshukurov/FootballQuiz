@@ -28,6 +28,28 @@ describe('matchGuessGenerator', () => {
     }
   });
 
+  it('every option features the given team (banner never leaks the answer)', () => {
+    for (const seed of [3, 18, 99, 512, 8080, 1, 42, 777]) {
+      const puzzle = generateMatchGuessPuzzle(seed, '2026-07-13');
+      for (const option of puzzle.options) {
+        expect(option).toContain(puzzle.teamName);
+      }
+    }
+  });
+
+  it('distractors never reproduce the answer fixture and stay non-future', () => {
+    for (const seed of [3, 18, 99, 512, 8080, 1, 42, 777]) {
+      const puzzle = generateMatchGuessPuzzle(seed, '2026-07-13');
+      const distractors = puzzle.options.filter((o) => o !== puzzle.answer);
+      expect(distractors).toHaveLength(3);
+      for (const d of distractors) {
+        expect(d).not.toBe(puzzle.answer);
+        const year = parseInt(d.slice(0, 4), 10);
+        expect(year).toBeLessThanOrEqual(2026);
+      }
+    }
+  });
+
   it('formats the answer label as "YYYY Competition · A vs B"', () => {
     const puzzle = generateMatchGuessPuzzle(1);
     expect(puzzle.answer).toMatch(/^\d{4} .+ · .+ vs .+$/);

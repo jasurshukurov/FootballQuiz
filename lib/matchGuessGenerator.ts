@@ -178,30 +178,110 @@ function weightedPick<T>(items: T[], weights: number[], rand: () => number): T {
   return items[items.length - 1];
 }
 
-/** Build 3 plausible distractor labels: prefer same competition, then same era. */
-function buildDistractors(answer: RawMatch, answerLabel: string, rand: () => number): string[] {
-  const year = matchYear(answer);
-  const others = matchesData.filter((m) => m.match_id !== answer.match_id);
+/** Canonical key for a fixture so side-swapped duplicates (A vs B == B vs A) and
+ *  the answer's own (year, competition, teams) triple are deduped as one. */
+function fixtureKey(year: number, competition: string, a: string, b: string): string {
+  return `${year}|${competition}|${[a, b].sort().join('~')}`;
+}
 
-  const sameCompetition = others.filter((m) => m.competition === answer.competition);
-  const sameEra = others.filter((m) => Math.abs(matchYear(m) - year) <= 8);
+/**
+ * Build 3 plausible distractor labels that ALL feature the given team, so the
+ * team banner never leaks the answer (an option is only right because of WHICH
+ * fixture it is, not because it is the only one mentioning the team).
+ *
+ * Two sources, in order of preference:
+ *   1. REAL other matches of the given team from the dataset (same competition
+ *      first, then any other) — genuine fixtures the player might confuse.
+ *   2. PLAUSIBLE invented fixtures — the given team in the SAME competition, a
+ *      different (never future) season, against a real club drawn from that
+ *      competition's actual dataset pool. Never reproduces the real answer
+ *      fixture, and no two options describe the same fixture.
+ */
+function buildDistractors(
+  answer: RawMatch,
+  answerLabel: string,
+  teamName: string,
+  currentYear: number,
+  rand: () => number,
+): string[] {
+  const answerYear = matchYear(answer);
+  const answerOpponent = answer.opponent_a === teamName ? answer.opponent_b : answer.opponent_a;
 
   const distractors: string[] = [];
   const usedLabels = new Set<string>([answerLabel]);
+  const usedFixtures = new Set<string>([
+    fixtureKey(answerYear, answer.competition, teamName, answerOpponent),
+  ]);
 
-  const addFrom = (pool: RawMatch[]) => {
-    for (const m of seededShuffle(pool, rand)) {
-      if (distractors.length >= 3) break;
-      const label = matchLabel(m);
-      if (usedLabels.has(label)) continue;
-      usedLabels.add(label);
-      distractors.push(label);
-    }
+  const push = (label: string, fixture: string): boolean => {
+    if (distractors.length >= 3) return false;
+    if (usedLabels.has(label) || usedFixtures.has(fixture)) return false;
+    usedLabels.add(label);
+    usedFixtures.add(fixture);
+    distractors.push(label);
+    return true;
   };
 
-  addFrom(sameCompetition);
-  if (distractors.length < 3) addFrom(sameEra);
-  if (distractors.length < 3) addFrom(others);
+  // 1) Real other matches of the given team — same competition first, then any.
+  const teamMatches = matchesData.filter(
+    (m) =>
+      m.match_id !== answer.match_id && (m.opponent_a === teamName || m.opponent_b === teamName),
+  );
+  const ordered = [
+    ...seededShuffle(
+      teamMatches.filter((m) => m.competition === answer.competition),
+      rand,
+    ),
+    ...seededShuffle(
+      teamMatches.filter((m) => m.competition !== answer.competition),
+      rand,
+    ),
+  ];
+  for (const m of ordered) {
+    if (distractors.length >= 3) break;
+    push(matchLabel(m), fixtureKey(matchYear(m), m.competition, m.opponent_a, m.opponent_b));
+  }
+
+  // 2) Plausible invented fixtures: given team, same competition, real opponent
+  //    from that competition's club pool, a different non-future season.
+  if (distractors.length < 3) {
+    const compClubs = new Set<string>();
+    for (const m of matchesData) {
+      if (m.competition !== answer.competition) continue;
+      if (m.opponent_a && m.opponent_a !== teamName) compClubs.add(m.opponent_a);
+      if (m.opponent_b && m.opponent_b !== teamName) compClubs.add(m.opponent_b);
+    }
+    let opponentPool = [...compClubs];
+    if (opponentPool.length === 0) {
+      // Competition too thin in the dataset: any real club the team could plausibly
+      // meet, falling back to the real opponent if the whole pool is empty.
+      const allClubs = new Set<string>();
+      for (const m of matchesData) {
+        if (m.opponent_a && m.opponent_a !== teamName) allClubs.add(m.opponent_a);
+        if (m.opponent_b && m.opponent_b !== teamName) allClubs.add(m.opponent_b);
+      }
+      opponentPool = allClubs.size > 0 ? [...allClubs] : [answerOpponent];
+    }
+    opponentPool = seededShuffle(opponentPool, rand);
+
+    // Season window around the real match, never in the future.
+    const maxYear = Math.min(currentYear, answerYear + 8);
+    const years: number[] = [];
+    for (let y = answerYear - 8; y <= maxYear; y++) years.push(y);
+    const shuffledYears = seededShuffle(years, rand);
+
+    const shortComp = shortCompetition(answer.competition);
+    outer: for (const opponent of opponentPool) {
+      for (const y of shuffledYears) {
+        if (distractors.length >= 3) break outer;
+        const teamFirst = rand() < 0.5;
+        const label = teamFirst
+          ? `${y} ${shortComp} · ${teamName} vs ${opponent}`
+          : `${y} ${shortComp} · ${opponent} vs ${teamName}`;
+        push(label, fixtureKey(y, answer.competition, teamName, opponent));
+      }
+    }
+  }
 
   return distractors;
 }
@@ -255,7 +335,10 @@ export function generateMatchGuessPuzzle(
   });
 
   const answer = matchLabel(match);
-  const distractors = buildDistractors(match, answer, rand);
+  // Ceiling year for invented fixtures: derive from the puzzle date so the "never
+  // in the future" clamp stays deterministic (independent of wall-clock time).
+  const currentYear = parseInt(dateStr.slice(0, 4), 10) || matchYear(match);
+  const distractors = buildDistractors(match, answer, teamName, currentYear, rand);
   const options = seededShuffle([answer, ...distractors], rand);
 
   return {
