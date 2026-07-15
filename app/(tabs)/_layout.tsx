@@ -4,7 +4,14 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { borderRadius, type, spacing } from '@/constants/theme';
 import { useTheme, useThemeColors } from '@/hooks/useTheme';
-import { TAB_BAR_HEIGHT, WEB_CONTENT_MAX_WIDTH, useIsWideWeb } from '@/components/ui/Screen';
+import {
+  TAB_BAR_HEIGHT,
+  WEB_CONTENT_MAX_WIDTH,
+  useIsWideWeb,
+  useIsDesktopWeb,
+} from '@/components/ui/Screen';
+import ScreenBackground from '@/components/ui/ScreenBackground';
+import Sidebar from '@/components/ui/Sidebar';
 import { triggerImpact } from '@/lib/haptics';
 
 // On wide desktop web the floating pill is capped to the same centered column
@@ -33,6 +40,7 @@ function TabBarIcon({
 export default function TabLayout() {
   const theme = useTheme();
   const isWideWeb = useIsWideWeb();
+  const isDesktopWeb = useIsDesktopWeb();
 
   const screenOptions = useMemo(
     () =>
@@ -53,6 +61,8 @@ export default function TabLayout() {
           paddingTop: spacing.xs,
         },
         tabBarStyle: {
+          // Desktop web hides the floating pill entirely — the sidebar navigates.
+          ...(isDesktopWeb ? { display: 'none' as const } : {}),
           position: 'absolute' as const,
           bottom: Platform.OS === 'ios' ? spacing.xl : spacing.lg,
           // Wide web: fixed-width pill centered under the content column.
@@ -83,10 +93,10 @@ export default function TabLayout() {
           elevation: 12,
         },
       }) as const,
-    [theme, isWideWeb],
+    [theme, isWideWeb, isDesktopWeb],
   );
 
-  return (
+  const tabs = (
     <Tabs
       screenListeners={{
         tabPress: () => {
@@ -143,9 +153,32 @@ export default function TabLayout() {
       <Tabs.Screen name="leaderboard" options={{ href: null, title: 'Leaderboard' }} />
     </Tabs>
   );
+
+  // Desktop web (>= 920px): two-pane layout — persistent sidebar + content
+  // column. The shared gradient sits behind both so the transparent sidebar
+  // blends with the content. Mobile + all native fall through to the tab bar.
+  if (isDesktopWeb) {
+    return (
+      <ScreenBackground>
+        <View style={styles.desktopRow}>
+          <Sidebar />
+          <View style={styles.desktopMain}>{tabs}</View>
+        </View>
+      </ScreenBackground>
+    );
+  }
+
+  return tabs;
 }
 
 const styles = StyleSheet.create({
+  desktopRow: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  desktopMain: {
+    flex: 1,
+  },
   iconContainer: {
     width: 40,
     height: 24,

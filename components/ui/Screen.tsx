@@ -22,10 +22,29 @@ export const TAB_BAR_HEIGHT = 64;
 export const WEB_WIDE_BREAKPOINT = 720;
 export const WEB_CONTENT_MAX_WIDTH = 600;
 
+/**
+ * At/above this width the web app switches to the two-pane desktop layout
+ * (persistent sidebar + narrower content column); below it, and on ALL native,
+ * the single-column + floating-tab-bar layout stands. The 720-919 band keeps
+ * the wide centered column (WEB_CONTENT_MAX_WIDTH) with the tab bar.
+ */
+export const WEB_DESKTOP_BREAKPOINT = 920;
+/** Content column when the desktop sidebar is present (narrower than 600). */
+export const WEB_DESKTOP_CONTENT_MAX_WIDTH = 480;
+
 /** True only on web at desktop-ish widths. Safe to call on native (always false). */
 export function useIsWideWeb(): boolean {
   const { width } = useWindowDimensions();
   return Platform.OS === 'web' && width >= WEB_WIDE_BREAKPOINT;
+}
+
+/**
+ * True only on web wide enough for the two-pane sidebar layout (>= 920px).
+ * Safe to call on native (always false). Implies useIsWideWeb().
+ */
+export function useIsDesktopWeb(): boolean {
+  const { width } = useWindowDimensions();
+  return Platform.OS === 'web' && width >= WEB_DESKTOP_BREAKPOINT;
 }
 
 interface ScreenProps {
@@ -56,8 +75,12 @@ export default function Screen({
   // give it a real top margin. Native keeps the safe-area value untouched.
   const paddingTop = Math.max(insets.top, Platform.OS === 'web' ? spacing.lg : 0) + spacing.sm;
   // Wide desktop web only: center content in a phone-ish column. undefined on
-  // native / narrow web so those style arrays stay byte-identical.
-  const wideColumn = useIsWideWeb() ? styles.wideColumn : undefined;
+  // native / narrow web so those style arrays stay byte-identical. With the
+  // sidebar present (>= 920px) the column tightens to 480; the 720-919 band
+  // keeps the 600 column so nothing shifts there.
+  const isWide = useIsWideWeb();
+  const isDesktop = useIsDesktopWeb();
+  const wideColumn = isDesktop ? styles.desktopColumn : isWide ? styles.wideColumn : undefined;
 
   return (
     <ScreenBackground style={style}>
@@ -100,6 +123,11 @@ const styles = StyleSheet.create({
   wideColumn: {
     width: '100%',
     maxWidth: WEB_CONTENT_MAX_WIDTH,
+    alignSelf: 'center',
+  },
+  desktopColumn: {
+    width: '100%',
+    maxWidth: WEB_DESKTOP_CONTENT_MAX_WIDTH,
     alignSelf: 'center',
   },
 });
