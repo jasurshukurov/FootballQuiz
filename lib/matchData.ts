@@ -58,19 +58,53 @@ export function getPlayableMatches(): Match[] {
 }
 
 // ---------------------------------------------------------------------------
-// Match notability (difficulty axis for the daily rotation)
+// Match notability (fame score for a match — the difficulty axis)
 // ---------------------------------------------------------------------------
-// A match's "notability" is how instantly recognizable it is, on the same 0-100
-// scale as player fame so it slots straight into the shared weekly difficulty
-// bands (difficultyCurve.ts). Two ingredients, blended 55/45:
-//   - Competition importance: a World Cup / Champions League final is iconic;
-//     a league group-stage game is a deep cut. Matched by keyword on the
-//     competition string, most-specific first.
-//   - Mean fame of the more-famous XI: a lineup of household names is easier to
-//     recall than one of journeymen. We take the higher-fame side so a marquee
-//     team carries the match even against weaker opposition.
-// Early-week bands select high-notability iconic matches; the weekend summit
-// pulls the obscure cup runs and deep league fixtures.
+// A match's "notability" is how instantly a casual, modern-era fan recognizes
+// it, on the same 0-100 scale as player fame so it slots straight into the
+// shared weekly difficulty bands (difficultyCurve.ts). It is a multi-factor
+// blend of FOUR signals, weighted so RECENCY and STAR POWER dominate — a
+// prestigious-but-forgotten final (e.g. a 1996 AFCON final whose XI nobody can
+// name) must land as a deep cut, while any recent Champions League / World Cup
+// final full of household names sits at the top:
+//
+//   recency (0.34)  — strong monotonic boost for recent matches; the last ~8
+//                     years get near-full credit, decaying to a floor for old
+//                     fixtures. A 2019 CL final comfortably outranks a 1996
+//                     AFCON final on this axis alone.
+//   star power (0.30) — how famous the more-famous XI is (top-4 stars blended
+//                     with the whole-XI mean via getFameByName). A lineup of
+//                     superstars is recognizable regardless of the stage.
+//   competition (0.20) — keyword prestige ladder (World Cup final > CL final >
+//                     continental/league deciders > cup finals > group/league
+//                     games). AFCON/Copa América finals are prestigious but are
+//                     capped BELOW the household band so prestige alone can't
+//                     carry an unrecognizable match.
+//   team prominence (0.16) — stature of the two teams, derived from DATA (the
+//                     mean fame of every player each club/nation has fielded
+//                     across the whole match DB), not a hardcoded big-club list.
+//                     Rewards famous clubs even in an off lineup, and keeps
+//                     minnows (whose all-time XIs resolve little fame) low.
+//
+// Early-week difficulty bands select high-notability matches (recent, starry,
+// prestigious); the weekend summit pulls the obscure deep cuts.
+
+// The notability blend reads competition + lineups + dates, so it accepts any
+// structurally-compatible row (the full Match, or matchGuessGenerator's names-
+// only RawMatch — ids are never used here).
+export type NotabilityInput = Pick<
+  Match,
+  | 'competition'
+  | 'date'
+  | 'season'
+  | 'opponent_a'
+  | 'opponent_b'
+  | 'lineup_a_names'
+  | 'lineup_b_names'
+>;
+
+/** Blend weights — recency + star power dominate (0.64 of the total). */
+const NOTABILITY_WEIGHTS = { recency: 0.34, star: 0.3, comp: 0.2, prom: 0.16 } as const;
 
 const COMPETITION_WEIGHTS: { keyword: string; weight: number }[] = [
   // most-specific first — 'club world cup' must never hit 'world cup final'
@@ -84,7 +118,11 @@ const COMPETITION_WEIGHTS: { keyword: string; weight: number }[] = [
   { keyword: 'euro final', weight: 92 },
   { keyword: 'european championship final', weight: 92 },
   { keyword: 'world cup semi', weight: 88 },
-  { keyword: 'copa america final', weight: 84 },
+  { keyword: 'copa america final', weight: 82 },
+  // Continental finals below the big-three: prestigious, but capped under the
+  // household band (their XIs rarely read as globally famous).
+  { keyword: 'africa cup of nations final', weight: 72 },
+  { keyword: 'asian cup final', weight: 66 },
   { keyword: 'champions league semi', weight: 82 },
   { keyword: 'world cup', weight: 80 }, // remaining WC rounds
   { keyword: 'champions league', weight: 74 }, // remaining CL rounds
@@ -97,7 +135,7 @@ const COMPETITION_WEIGHTS: { keyword: string; weight: number }[] = [
   { keyword: 'libertadores', weight: 60 },
   { keyword: 'copa america', weight: 60 },
   { keyword: 'asian cup', weight: 52 },
-  { keyword: 'africa cup', weight: 52 },
+  { keyword: 'africa cup', weight: 54 },
   { keyword: 'fa cup', weight: 58 },
   { keyword: 'league cup', weight: 50 },
   { keyword: 'super cup', weight: 55 },
@@ -120,6 +158,43 @@ function competitionWeight(competition: string): number {
   return 45; // unknown competition: middling
 }
 
+// Recency anchor: the most recent match year in the DB. Deriving it from the
+// data (not the wall clock) keeps the score deterministic and stable across
+// test runs, yet self-advances as newer matches are ingested — no manual bump.
+let cachedAnchorYear: number | null = null;
+function recencyAnchorYear(): number {
+  if (cachedAnchorYear === null) {
+    let max = MIN_MATCH_YEAR;
+    for (const m of getAllMatches()) max = Math.max(max, matchYear(m));
+    cachedAnchorYear = max;
+  }
+  return cachedAnchorYear;
+}
+
+// Recency curve: piecewise-linear decay in `age` (= anchor − matchYear), so the
+// most recent ~8 years keep near-full credit and older fixtures fall away
+// smoothly to a floor. Knots are [age, score]; monotonically non-increasing.
+const RECENCY_KNOTS: [number, number][] = [
+  [0, 100],
+  [8, 90],
+  [16, 70],
+  [26, 45],
+  [36, 25],
+  [60, 10],
+];
+
+/** Recency score (0-100) for a match year, relative to the DB's newest match. */
+function recencyScore(year: number): number {
+  const age = recencyAnchorYear() - year;
+  if (age <= 0) return 100;
+  for (let i = 1; i < RECENCY_KNOTS.length; i++) {
+    const [a0, s0] = RECENCY_KNOTS[i - 1];
+    const [a1, s1] = RECENCY_KNOTS[i];
+    if (age <= a1) return s0 + ((s1 - s0) * (age - a0)) / (a1 - a0);
+  }
+  return RECENCY_KNOTS[RECENCY_KNOTS.length - 1][1];
+}
+
 /** Mean fame of a lineup (names → getFameByName), 0 when nothing resolves. */
 function meanLineupFame(names: string[]): number {
   let sum = 0;
@@ -134,31 +209,89 @@ function meanLineupFame(names: string[]): number {
   return n === 0 ? 0 : sum / n;
 }
 
-/**
- * Notability weight (0-100) for a match: competition importance blended with the
- * mean fame of its more-famous XI. Higher = more iconic / easier to recall.
- */
-export function matchNotability(m: Match): number {
-  const comp = competitionWeight(m.competition);
-  const teamFame = Math.max(meanLineupFame(m.lineup_a_names), meanLineupFame(m.lineup_b_names));
-  return Math.round(comp * 0.55 + teamFame * 0.45);
+/** Mean fame of the top-`k` most-famous resolvable names in a lineup, 0 if none. */
+function topKLineupFame(names: string[], k: number): number {
+  const fames = names
+    .map((n) => getFameByName(n)?.fame_score)
+    .filter((f): f is number => f !== undefined)
+    .sort((a, b) => b - a);
+  if (fames.length === 0) return 0;
+  const kk = Math.min(k, fames.length);
+  return fames.slice(0, kk).reduce((a, b) => a + b, 0) / kk;
+}
+
+/** Star power of one XI: a few marquee names (top-4) blended with whole-XI depth. */
+function sideStarPower(names: string[]): number {
+  return 0.6 * topKLineupFame(names, 4) + 0.4 * meanLineupFame(names);
+}
+
+// Team prominence: the all-time stature of a club/nation, derived from the DATA
+// as the mean fame of every player it has ever fielded across the whole match
+// DB. A big club scores high even when a specific lineup is off; a minnow whose
+// XIs resolve little fame stays low. Built lazily and cached; keyed by the
+// opponent_a / opponent_b team strings the matches carry.
+let cachedTeamProminence: Map<string, number> | null = null;
+function teamProminence(team: string): number {
+  if (!cachedTeamProminence) {
+    const agg = new Map<string, { sum: number; n: number }>();
+    for (const m of getAllMatches()) {
+      for (const [name, lineup] of [
+        [m.opponent_a, m.lineup_a_names],
+        [m.opponent_b, m.lineup_b_names],
+      ] as const) {
+        if (!name || !lineup) continue;
+        let a = agg.get(name);
+        if (!a) {
+          a = { sum: 0, n: 0 };
+          agg.set(name, a);
+        }
+        for (const nm of lineup) {
+          const f = getFameByName(nm)?.fame_score;
+          if (f !== undefined) {
+            a.sum += f;
+            a.n += 1;
+          }
+        }
+      }
+    }
+    cachedTeamProminence = new Map();
+    for (const [t, a] of agg) cachedTeamProminence.set(t, a.n === 0 ? 0 : a.sum / a.n);
+  }
+  return cachedTeamProminence.get(team) ?? 0;
 }
 
 /**
- * Difficulty tier for a match, on the app's shared tier vocabulary (the same
- * one Career Path / Who Are Ya surface via TierBadge): 'legendary' = an iconic
- * final everyone can recall, 'beginner' = a deep cut. Fixed notability
- * thresholds (not percentiles) so a match's badge never shifts when the pool
- * grows, and it matches the fame-band semantics of difficultyCurve.ts.
+ * Notability (0-100) for a match: recency + star power + competition prestige +
+ * team prominence, blended per NOTABILITY_WEIGHTS (recency & star power dominate).
+ * Higher = more recognizable to a casual modern fan / easier to recall.
  */
-export function getMatchTier(m: Match): DifficultyTier {
+export function matchNotability(m: NotabilityInput): number {
+  const recency = recencyScore(matchYear(m));
+  const star = Math.max(sideStarPower(m.lineup_a_names), sideStarPower(m.lineup_b_names));
+  const comp = competitionWeight(m.competition);
+  const prom = (teamProminence(m.opponent_a) + teamProminence(m.opponent_b)) / 2;
+  const w = NOTABILITY_WEIGHTS;
+  return Math.round(w.recency * recency + w.star * star + w.comp * comp + w.prom * prom);
+}
+
+/**
+ * Difficulty tier for a match, on the app's shared TierBadge vocabulary. The
+ * badge reads as DIFFICULTY, matching the player-fame convention everywhere
+ * else (fame 87 player = 'beginner' = anyone can get it; a deep cut =
+ * 'legendary' = only football historians will): an iconic modern final full
+ * of household names is a BEGINNER puzzle, an obscure old fixture is a
+ * LEGENDARY one. (The old mapping ran the other way, which is how a 1996
+ * AFCON final ever wore a "Beginner" badge.) Fixed notability thresholds
+ * (not percentiles) so a match's badge never shifts as the pool grows.
+ */
+export function getMatchTier(m: NotabilityInput): DifficultyTier {
   const n = matchNotability(m);
-  if (n >= 85) return 'legendary';
-  if (n >= 75) return 'world_class';
-  if (n >= 65) return 'professional';
-  if (n >= 55) return 'semi_pro';
-  if (n >= 45) return 'amateur';
-  return 'beginner';
+  if (n >= 84) return 'beginner';
+  if (n >= 74) return 'amateur';
+  if (n >= 64) return 'semi_pro';
+  if (n >= 54) return 'professional';
+  if (n >= 44) return 'world_class';
+  return 'legendary';
 }
 
 // ---------------------------------------------------------------------------
@@ -259,9 +392,10 @@ export function getMatchCategory(m: Match): MatchCategory {
 //   2. NO REPEATS. The rotation must never repeat a match within the dedup
 //      window (the QA sim flags ANY repeat across a 60-day window as a hard
 //      failure). We keep the notability weekday-tier backbone, but PER ERA: each
-//      era bucket is notability-ranked and split into 7 contiguous weekday tiers
-//      (top slice → most-iconic weekdays, bottom → Saturday's deep cuts). For a
-//      given day we take its era's weekday tier and index into it by how many
+//      era bucket is notability-ranked and split into 7 contiguous weekday tiers,
+//      FRONT-LOADED — small top slices feed Mon/Tue/Wed (only the era's most
+//      recognizable matches), larger tiers pile the deep cuts onto the weekend.
+//      For a given day we take its era's weekday tier and index into it by how many
 //      earlier days shared that same (era, weekday). Because era buckets are
 //      disjoint and each is partitioned by weekday, two days can only collide if
 //      they share BOTH era and weekday AND land on the same within-tier slot;
@@ -311,25 +445,58 @@ function eraOf(m: Match): EraKey {
   return 'classic';
 }
 
-// Notability-ranked, weekday-split tiers for one era bucket: top slice → the
-// most-iconic weekdays, bottom → Saturday's deep cuts (same structure the whole
-// pool used before, now applied per era so each era keeps a Mon→Sun ramp).
-function buildWeekdayTiers(pool: Match[]): Match[][] {
-  const L = pool.length;
+// Minimum matches per weekday tier, by era. Each (era, weekday) pair recurs on a
+// fixed cadence, and the occurrence counter (below) must not wrap inside the
+// dedup window or a match repeats. Over a 200-day window a recent-cadence pair
+// recurs at most ~15 times, a mid/classic pair ~8 (recent fires twice per 4-day
+// cadence, mid/classic once), so these floors sit just above those bounds. The
+// 200-day no-repeat QA test is the hard gate; buckets (recent≈214, mid≈74,
+// classic≈289) all exceed 7×floor so every weekday tier stays non-empty.
+const WEEKDAY_TIER_MIN: Record<EraKey, number> = { recent: 16, mid: 9, classic: 9 };
+
+// Front-loaded weekday split (preference order: most-notable slice first ...
+// deepest last). Early-week tiers are SMALL — only the top of the era's ranking
+// — so Mon/Tue/Wed serve matches a casual modern fan recognizes; later tiers
+// grow, piling the obscure deep cuts onto the weekend. Ratios only; scaled to
+// the bucket and floored at WEEKDAY_TIER_MIN[era] in weekdayTierSizes.
+const WEEKDAY_TIER_RAMP = [1, 1.5, 2, 2.5, 3, 3.5, 4] as const;
+
+/** Per-weekday tier sizes (preference order) for a bucket of `total` matches:
+ *  the front-loaded ramp scaled to `total`, each floored at `minSize`, with any
+ *  rounding remainder settled on the deepest tiers so early tiers stay small. */
+function weekdayTierSizes(total: number, minSize: number): number[] {
+  const sumW = WEEKDAY_TIER_RAMP.reduce((a, b) => a + b, 0);
+  const sizes = WEEKDAY_TIER_RAMP.map((w) => Math.max(minSize, Math.floor((total * w) / sumW)));
+  let diff = total - sizes.reduce((a, b) => a + b, 0);
+  for (let i = sizes.length - 1; i >= 0 && diff !== 0; i--) {
+    if (diff > 0) {
+      sizes[i] += diff;
+      diff = 0;
+    } else {
+      const take = Math.min(-diff, sizes[i] - minSize);
+      sizes[i] -= take;
+      diff += take;
+    }
+  }
+  return sizes;
+}
+
+// Notability-ranked, weekday-split tiers for one era bucket: the top of the
+// ranking feeds the early-week weekdays in SMALL slices (recognizable picks),
+// the tail piles onto the weekend deep-cut days — each era keeps a Mon→Sun ramp.
+function buildWeekdayTiers(pool: Match[], minSize: number): Match[][] {
   // Fixed salted shuffle as a deterministic tie-break, then notability desc.
   const ranked = seededShuffle(pool, ROTATION_SALT.missing11)
     .map((m) => ({ m, n: matchNotability(m) }))
     .sort((a, b) => b.n - a.n)
     .map((x) => x.m);
 
-  const base = Math.floor(L / 7);
-  const extra = L % 7; // the first `extra` (most-iconic) weekdays get one more
+  const sizes = weekdayTierSizes(ranked.length, minSize);
   const tiers: Match[][] = new Array(7);
   let idx = 0;
   WEEKDAY_BY_PREFERENCE.forEach((wd, i) => {
-    const size = base + (i < extra ? 1 : 0);
-    tiers[wd] = ranked.slice(idx, idx + size);
-    idx += size;
+    tiers[wd] = ranked.slice(idx, idx + sizes[i]);
+    idx += sizes[i];
   });
   return tiers;
 }
@@ -341,9 +508,9 @@ function getEraTiers(): Record<EraKey, Match[][]> {
     const buckets: Record<EraKey, Match[]> = { recent: [], mid: [], classic: [] };
     for (const m of getPlayableMatches()) buckets[eraOf(m)].push(m);
     cachedEraTiers = {
-      recent: buildWeekdayTiers(buckets.recent),
-      mid: buildWeekdayTiers(buckets.mid),
-      classic: buildWeekdayTiers(buckets.classic),
+      recent: buildWeekdayTiers(buckets.recent, WEEKDAY_TIER_MIN.recent),
+      mid: buildWeekdayTiers(buckets.mid, WEEKDAY_TIER_MIN.mid),
+      classic: buildWeekdayTiers(buckets.classic, WEEKDAY_TIER_MIN.classic),
     };
   }
   return cachedEraTiers;

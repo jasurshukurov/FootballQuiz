@@ -187,13 +187,22 @@ describe('matchNotability', () => {
 });
 
 describe('getMatchTier (difficulty badge)', () => {
-  it('rates a star-studded World Cup final as legendary', () => {
-    expect(getMatchTier(makeMatch('FIFA World Cup Final', LINEUP))).toBe('legendary');
+  // TierBadge reads as DIFFICULTY (player convention): 'beginner' = famous,
+  // anyone can name the XI; 'legendary' = deep cut for football historians.
+  it('rates a recent star-studded final as the easiest puzzle', () => {
+    expect(getMatchTier(getMatchById('wc-final-2022')!)).toBe('beginner');
+    // The SAME stars in a decades-old fixture rank strictly HARDER — recency
+    // (and team prominence), not competition prestige alone, drive the badge.
+    const modern = getMatchTier(makeMatch('FIFA World Cup Final', LINEUP, '2026-06-01'));
+    const ancient = getMatchTier(makeMatch('FIFA World Cup Final', LINEUP, '1994-06-01'));
+    expect(['beginner', 'amateur']).toContain(modern);
+    const ladder = ['beginner', 'amateur', 'semi_pro', 'professional', 'world_class', 'legendary'];
+    expect(ladder.indexOf(modern)).toBeLessThan(ladder.indexOf(ancient));
   });
 
-  it('rates an obscure fixture near the bottom of the ladder', () => {
+  it('rates an obscure fixture near the hard end of the ladder', () => {
     const tier = getMatchTier(makeMatch('Ligue 1'));
-    expect(['beginner', 'amateur']).toContain(tier);
+    expect(['world_class', 'legendary']).toContain(tier);
   });
 
   it('assigns a valid tier to every playable match', () => {

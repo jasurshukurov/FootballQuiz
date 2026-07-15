@@ -10,7 +10,7 @@
 import { getFameByName } from './playerData';
 import { getTodayDateString } from './dailySeed';
 import { bandForDate, FameBand, resolveSkillTier } from './difficultyCurve';
-import { MIN_MATCH_YEAR } from './matchData';
+import { MIN_MATCH_YEAR, matchNotability } from './matchData';
 
 interface RawMatch {
   match_id: string;
@@ -114,44 +114,15 @@ function playableMatches(): RawMatch[] {
 // Notability (difficulty axis)
 // ---------------------------------------------------------------------------
 // Uniform-random match selection made a World Cup final as likely as an obscure
-// group-stage tie. Instead we score each match's notability — competition
-// prestige + how famous its XI is — and let the weekly band bias selection:
-// early week favors iconic finals, the weekend favors deep cuts.
+// group-stage tie. Instead we score each match's notability — recency + star
+// power + competition prestige + team prominence — and let the weekly band bias
+// selection: early week favors recent, starry, iconic matches; the weekend
+// favors deep cuts. The score lives in ONE place (lib/matchData.ts) so this mode
+// and Missing XI rank matches identically; here we read it on a 0..1 scale.
 
-const COMPETITION_WEIGHT: [RegExp, number][] = [
-  [/FIFA World Cup/i, 1.0],
-  [/UEFA Champions League/i, 0.95],
-  [/UEFA European Championship|UEFA Euro/i, 0.9],
-  [/Copa America/i, 0.85],
-  [/Copa Libertadores/i, 0.85],
-  [/FIFA Club World Cup/i, 0.8],
-  [/UEFA Europa League/i, 0.7],
-  [/Africa Cup of Nations/i, 0.7],
-  [/AFC Asian Cup/i, 0.6],
-  [/UEFA Conference League/i, 0.55],
-  [/UEFA Nations League/i, 0.55],
-  [/Copa del Rey|DFB-Pokal|Supercopa/i, 0.5],
-];
-
-function competitionWeight(competition: string): number {
-  for (const [re, w] of COMPETITION_WEIGHT) {
-    if (re.test(competition)) return w;
-  }
-  return 0.4;
-}
-
-/** Mean fame of a full XI, 0..~1. Unknown fame counts as 0 (obscure). */
-function sideMeanFame(names: string[]): number {
-  if (names.length === 0) return 0;
-  const sum = names.reduce((acc, n) => acc + Math.max(0, fameOf(n)), 0);
-  return sum / names.length / 100;
-}
-
-/** Notability 0..1: 60% competition prestige, 40% the most-famous available XI. */
-function matchNotability(m: RawMatch): number {
-  const fa = m.lineup_a_names?.length === 11 ? sideMeanFame(m.lineup_a_names) : 0;
-  const fb = m.lineup_b_names?.length === 11 ? sideMeanFame(m.lineup_b_names) : 0;
-  return 0.6 * competitionWeight(m.competition) + 0.4 * Math.max(fa, fb);
+/** Shared notability (0..100 in matchData) rescaled to 0..1 for the weighting. */
+function notability01(m: RawMatch): number {
+  return matchNotability(m) / 100;
 }
 
 /** How far the band pulls selection toward obscure matches (0 = iconic, 1 = deep cut). */
@@ -316,7 +287,7 @@ export function generateMatchGuessPuzzle(
   const d0 = bandDifficulty(bandForDate(dateStr));
   const d = skillTier === 0 ? d0 : Math.min(1, Math.max(0, d0 + skillTier * 0.15));
   const weights = pool.map((m) => {
-    const n = matchNotability(m);
+    const n = notability01(m);
     // easy day -> favor high notability; expert day -> favor low. Epsilon keeps
     // every match reachable so no seed can dead-end.
     return Math.max(0.001, (1 - d) * n + d * (1 - n));
