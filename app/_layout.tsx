@@ -8,7 +8,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import Head from 'expo-router/head';
+import RouteSeo from '@/components/ui/RouteSeo';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useMemo, useState } from 'react';
@@ -115,12 +115,9 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={navTheme}>
-      {/* Web: default document title (helmet-managed, so the static <title> in
-          +html.tsx is overridden by an empty tag unless set here). Routes can
-          still override with their own <Head><title>. No-op on native. */}
-      <Head>
-        <title>Football Trivia</title>
-      </Head>
+      {/* Web: pathname-keyed title/description/canonical/social tags on every
+          statically exported page (lib/seo.ts map). No-op on native. */}
+      <RouteSeo />
       <StatusBar style={theme.dark ? 'light' : 'dark'} />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

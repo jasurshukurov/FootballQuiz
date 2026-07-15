@@ -17,6 +17,26 @@ export default function Root({ children }: { children: React.ReactNode }) {
           name="description"
           content="Daily football trivia: guess players, careers, transfers and more with a fresh set of puzzles every day."
         />
+        {/* Per-route title/description/canonical/OG come from RouteSeo (helmet,
+            app/_layout.tsx). Below: the route-independent structured data. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebApplication',
+              name: 'Football Trivia',
+              url: 'https://footballtrivia.app/',
+              applicationCategory: 'GameApplication',
+              genre: 'Trivia',
+              operatingSystem: 'Web, iOS, Android',
+              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+              description:
+                'Play 11 free daily football trivia games: guess the player, name famous starting XIs, solve the grid, rank stars and more. New puzzles every day.',
+              image: 'https://footballtrivia.app/og-image.png',
+            }),
+          }}
+        />
         {/* Matches the default theme's bgBase (Floodlit Night). The app theme is
             user-selected and defaults to dark regardless of OS scheme, so the
             pre-JS fallback stays dark to avoid a light flash; app/_layout.tsx
