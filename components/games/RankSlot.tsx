@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, {
+  Easing,
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
   withTiming,
   withSequence,
 } from 'react-native-reanimated';
@@ -12,7 +12,7 @@ import TeamCrest from '@/components/ui/TeamCrest';
 import Tappable from '@/components/ui/Tappable';
 import { Player } from '@/types/player';
 import { SlotStatus } from '@/lib/blindRankingGenerator';
-import { type, spacing, borderRadius } from '@/constants/theme';
+import { type, spacing, borderRadius, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -42,14 +42,9 @@ export default function RankSlot({
 
   useEffect(() => {
     if (player) {
-      scale.value = withSpring(1, { damping: 12, stiffness: 150, mass: 0.8 });
-    }
-  }, [player, scale]);
-
-  useEffect(() => {
-    if (player) {
-      scale.value = 0.9;
-      scale.value = withSpring(1, { damping: 12, stiffness: 150 });
+      // v3 motion: eased settle, no bouncy overshoot.
+      scale.value = 0.94;
+      scale.value = withTiming(1, { duration: motion.base, easing: Easing.out(Easing.cubic) });
     }
     // Keyed on the id, not the object: the pop must replay only when a
     // different player fills the slot, not on re-renders with a fresh ref.

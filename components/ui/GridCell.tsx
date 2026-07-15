@@ -100,7 +100,7 @@ function GridCell({
   ) : (
     <View style={layout.inner}>
       <View style={styles.emptyCircle}>
-        <Text style={styles.questionMark}>?</Text>
+        <Text style={styles.questionMark}>+</Text>
       </View>
     </View>
   );
@@ -169,6 +169,7 @@ const createStyles = (c: ThemeColors) =>
       ...type.micro,
       color: c.textOnAccent,
     },
+    // v3: a "+" in a dashed accent circle invites the tap.
     emptyCircle: {
       height: 28,
       width: 28,
@@ -176,6 +177,7 @@ const createStyles = (c: ThemeColors) =>
       justifyContent: 'center',
       borderRadius: borderRadius.full,
       borderWidth: 1,
+      borderStyle: 'dashed',
       borderColor: c.accentBorder,
     },
     questionMark: {
