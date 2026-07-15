@@ -7,7 +7,7 @@ import RankBadge from '@/components/ui/RankBadge';
 import {
   generateConnectionsPuzzle,
   ConnectionsPuzzle,
-  isOneAway,
+  bestGroupOverlap,
   connectionsRank,
 } from '@/lib/connectionsGenerator';
 import {
@@ -64,7 +64,9 @@ export default function ConnectionsScreen() {
   const [shaking, setShaking] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [gameOver, setGameOver] = useState(false);
-  const [oneAway, setOneAway] = useState(false);
+  // Near-miss ladder on a wrong submit: 3 = classic "One away…", 2 = a pair
+  // belonged together. null = plain miss.
+  const [nearMiss, setNearMiss] = useState<2 | 3 | null>(null);
   const [flashingDotIdx, setFlashingDotIdx] = useState<number | null>(null);
   const shareRef = useRef<View>(null);
   const isFirstGame = useRef(true);
@@ -102,7 +104,7 @@ export default function ConnectionsScreen() {
     setShaking(false);
     setShowModal(false);
     setGameOver(false);
-    setOneAway(false);
+    setNearMiss(null);
     setFlashingDotIdx(null);
   }, [practiceDate]);
 
@@ -210,15 +212,17 @@ export default function ConnectionsScreen() {
       // "One away!" — exactly 3 of the 4 selected belong to one unsolved group.
       // Distinct near-miss feedback (Warning haptic + non-spoiler banner) is the
       // single highest feel-per-effort mechanic in NYT Connections.
-      const near = isOneAway(
+      const overlap = bestGroupOverlap(
         selectedArr,
         puzzle.categories,
         solvedCategories.map((s) => s.name),
       );
-      triggerNotification(near ? NotificationFeedbackType.Warning : NotificationFeedbackType.Error);
-      if (near) {
-        setOneAway(true);
-        setTimeout(() => setOneAway(false), 1800);
+      triggerNotification(
+        overlap === 3 ? NotificationFeedbackType.Warning : NotificationFeedbackType.Error,
+      );
+      if (overlap >= 2) {
+        setNearMiss(overlap as 2 | 3);
+        setTimeout(() => setNearMiss(null), 1800);
       }
       setShaking(true);
       const newMistakes = mistakes + 1;
@@ -352,9 +356,11 @@ export default function ConnectionsScreen() {
       />
 
       {/* One-away near-miss banner (non-spoiler) */}
-      {oneAway && !gameOver && (
+      {nearMiss !== null && !gameOver && (
         <View style={styles.oneAwayBanner}>
-          <Text style={styles.oneAwayText}>One away…</Text>
+          <Text style={styles.oneAwayText}>
+            {nearMiss === 3 ? 'One away…' : 'Two of these belong together'}
+          </Text>
         </View>
       )}
 

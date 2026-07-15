@@ -1127,19 +1127,29 @@ export function specMatchersForIdentity(
  * selected tiles belong to a single (unsolved) category. Non-spoiler — it says
  * only that the group is close, never which category.
  */
+/** Max number of selected names sharing one unsolved group (0-3 on a wrong
+ *  guess; 4 would have been a solve). Powers the near-miss banner ladder. */
+export function bestGroupOverlap(
+  selectedNames: string[],
+  categories: ConnectionsCategory[],
+  solvedCategoryNames: string[] = [],
+): number {
+  if (selectedNames.length !== 4) return 0;
+  const selected = new Set(selectedNames);
+  const solved = new Set(solvedCategoryNames);
+  return categories.reduce((best, c) => {
+    if (solved.has(c.name)) return best;
+    const overlap = c.playerNames.filter((n) => selected.has(n)).length;
+    return Math.max(best, overlap);
+  }, 0);
+}
+
 export function isOneAway(
   selectedNames: string[],
   categories: ConnectionsCategory[],
   solvedCategoryNames: string[] = [],
 ): boolean {
-  if (selectedNames.length !== 4) return false;
-  const selected = new Set(selectedNames);
-  const solved = new Set(solvedCategoryNames);
-  return categories.some((c) => {
-    if (solved.has(c.name)) return false;
-    const overlap = c.playerNames.filter((n) => selected.has(n)).length;
-    return overlap === 3;
-  });
+  return bestGroupOverlap(selectedNames, categories, solvedCategoryNames) === 3;
 }
 
 const CONNECTIONS_MAX_MISTAKES = 4;
