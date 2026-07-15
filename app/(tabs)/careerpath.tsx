@@ -28,11 +28,13 @@ import { TierBadge } from '@/components/career/TierBadge';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/career/GiveUpButton';
 import GameOverCard from '@/components/career/GameOverCard';
+import CareerResultSummary from '@/components/career/CareerResultSummary';
 import LastChanceHint from '@/components/ui/LastChanceHint';
 import GameOverActions from '@/components/ui/GameOverActions';
+import GameOverExtras from '@/components/ui/GameOverExtras';
+import FloodlightSweep from '@/components/ui/FloodlightSweep';
+import RetroButton from '@/components/ui/RetroButton';
 import ProximityChips from '@/components/career/ProximityChips';
-import RankBadge from '@/components/ui/RankBadge';
-import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore';
 import { careerClueRank } from '@/lib/careerHelpers';
 import ShareableCareerPathResult from '@/components/ShareableCareerPathResult';
@@ -52,6 +54,7 @@ export default function CareerScreen() {
     attemptsLeft,
     guessResult,
     lastProximity,
+    isPractice,
     startDailyGame,
     makeGuess,
     attemptUnlockHint,
@@ -145,6 +148,12 @@ export default function CareerScreen() {
 
   const solveTimeMs = useTodaySolveTime('careerpath');
 
+  // Progression stats for the game-over summary.
+  const cluesUsed = MAX_ATTEMPTS - attemptsLeft + unlockedHints.length;
+  const xpEarned = isWon ? 50 + attemptsLeft * 15 : 10;
+  const playedCount = useDailyProgressStore((s) => s.getCompletedCount());
+  const totalCount = useDailyProgressStore((s) => s.getTotalModes());
+
   const shareText = useMemo(
     () =>
       buildShareText({
@@ -184,7 +193,10 @@ export default function CareerScreen() {
         </View>
       )}
 
-      <TimelineView career={scrambledCareer} showYears={showYears} isSorted={isSorted} />
+      <View style={styles.timelineWrap}>
+        <TimelineView career={scrambledCareer} showYears={showYears} isSorted={isSorted} />
+        {isWon && <FloodlightSweep />}
+      </View>
 
       {isPlaying && (
         <View style={styles.bottomSection}>
@@ -218,19 +230,35 @@ export default function CareerScreen() {
           <GameOverCard
             playerName={currentPlayer?.name ?? ''}
             playerImage={currentPlayer?.image_url}
+            nationality={currentPlayer?.nationality}
+            position={currentPlayer?.position}
             isWin={isWon}
-            onNextPlayer={resetGame}
           />
           <Animated.View entering={FadeIn.delay(150).duration(motion.base)}>
-            <RankBadge rank={clueRank} unit="clues" />
+            <CareerResultSummary
+              clueRank={clueRank}
+              cluesUsed={cluesUsed}
+              xpEarned={xpEarned}
+              animateXp={!isPractice}
+              streak={dailyStreak}
+              playedCount={playedCount}
+              totalCount={totalCount}
+            />
           </Animated.View>
-          <SolveTimeResult mode="careerpath" />
           <GameOverActions
             shareRef={shareRef}
             shareText={shareText}
             win={isWon}
             shareVariant="secondary"
+            includeExtras={false}
           />
+          {/* Streak now lives in the progression column, so drop the duplicate
+              badge here — keep confetti + NEXT UP + countdown. */}
+          <GameOverExtras win={isWon} showStreak={false} currentModeKey="careerpath" />
+          {/* Practice replay lives after the share actions (it is not the daily). */}
+          <View style={styles.replayButton}>
+            <RetroButton title="Replay (practice)" variant="ghost" onPress={resetGame} />
+          </View>
           {/* Offscreen shareable view */}
           <View style={styles.offscreen}>
             <View ref={shareRef} collapsable={false}>
@@ -275,6 +303,15 @@ const createStyles = (c: ThemeColors) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       marginTop: spacing.md,
+    },
+    timelineWrap: {
+      flex: 1,
+      position: 'relative',
+    },
+    replayButton: {
+      width: '100%',
+      maxWidth: 440,
+      alignSelf: 'center',
     },
     offscreen: {
       position: 'absolute',

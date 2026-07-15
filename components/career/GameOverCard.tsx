@@ -7,7 +7,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
-import RetroButton from '@/components/ui/RetroButton';
 import { type, spacing, borderRadius, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -15,11 +14,19 @@ import { useTheme } from '@/hooks/useTheme';
 interface GameOverCardProps {
   playerName: string;
   playerImage?: string;
+  /** Answer meta shown as "nationality · position"; each part omitted if empty. */
+  nationality?: string;
+  position?: string;
   isWin: boolean;
-  onNextPlayer: () => void;
 }
 
-function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOverCardProps) {
+function GameOverCard({
+  playerName,
+  playerImage,
+  nationality,
+  position,
+  isWin,
+}: GameOverCardProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   // Short settle only — this card re-mounts on every visit to a completed
@@ -38,18 +45,21 @@ function GameOverCard({ playerName, playerImage, isWin, onNextPlayer }: GameOver
     opacity: opacity.value,
   }));
 
+  // Loss keeps a neutral, non-shaming verdict; the answer reveal is the payoff.
+  const meta = [nationality, position].filter((p) => p && p.trim().length > 0).join('  ·  ');
+
   return (
     <Animated.View style={animatedStyle}>
       <GlassCard style={styles.card}>
-        <Text style={[styles.result, { color: isWin ? colors.accent : colors.danger }]}>
-          {isWin ? 'Correct!' : 'Game Over'}
+        <Text style={[styles.verdict, { color: isWin ? colors.accent : colors.textPrimary }]}>
+          {isWin ? 'CORRECT!' : 'FULL TIME'}
         </Text>
 
         {playerImage ? <Image source={{ uri: playerImage }} style={styles.image} /> : null}
 
         <Text style={styles.playerName}>{playerName}</Text>
 
-        <RetroButton title="Next Player" onPress={onNextPlayer} />
+        {meta.length > 0 ? <Text style={styles.meta}>{meta}</Text> : null}
       </GlassCard>
     </Animated.View>
   );
@@ -62,11 +72,11 @@ const createStyles = (c: ThemeColors) =>
     card: {
       paddingVertical: spacing.xl,
       paddingHorizontal: spacing.lg,
-      gap: spacing.md,
+      gap: spacing.sm,
       alignItems: 'center',
     },
-    result: {
-      ...type.h1,
+    verdict: {
+      ...type.h2,
       textTransform: 'uppercase',
       letterSpacing: 2,
     },
@@ -76,10 +86,17 @@ const createStyles = (c: ThemeColors) =>
       borderRadius: borderRadius.full,
       borderWidth: 2,
       borderColor: c.borderStrong,
+      marginTop: spacing.xs,
     },
     playerName: {
-      ...type.h2,
+      ...type.h1,
       color: c.textPrimary,
+      textAlign: 'center',
+      marginTop: spacing.xs,
+    },
+    meta: {
+      ...type.caption,
+      color: c.textSecondary,
       textAlign: 'center',
     },
   });

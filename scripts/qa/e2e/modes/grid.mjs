@@ -12,8 +12,9 @@ export const meta = { key: 'grid', title: 'The Grid', route: '/explore' };
 /** Centres of the still-empty "?" cells (robust to restyle + fills). The
  *  header's how-to-play button is ALSO a "?" leaf — exclude it by testID. */
 async function emptyCells(page) {
+  // v3 empty cells show a "+" in a dashed circle (was "?").
   return page.evaluate(() => [...document.querySelectorAll('div,span')]
-    .filter((e) => e.children.length === 0 && e.innerText?.trim() === '?' &&
+    .filter((e) => e.children.length === 0 && ['+', '?'].includes(e.innerText?.trim()) &&
       !e.closest('[data-testid="how-to-play-button"]'))
     .map((e) => { const b = e.getBoundingClientRect(); return { x: Math.round(b.x + b.width / 2), y: Math.round(b.y + b.height / 2) }; }));
 }
