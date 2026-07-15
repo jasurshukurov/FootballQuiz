@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Player } from '@/types/player';
-import { spacing, type, motion } from '@/constants/theme';
+import { spacing, borderRadius, type, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import {
@@ -301,7 +302,6 @@ export default function BlindRankingScreen() {
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Blind Ranking"
         modeKey="blindranking"
-        subtitle={puzzle.category.description}
         right={
           <View style={layoutStyles.progressPill}>
             <Text style={styles.progressValue}>
@@ -311,6 +311,22 @@ export default function BlindRankingScreen() {
           </View>
         }
       />
+
+      {/* The GIVEN, made unmistakable (mirrors Guess the Match's team banner):
+          today's category is the focal card, with the direction spelled out. */}
+      <View style={styles.categoryBanner}>
+        <View style={styles.categoryIconSquare}>
+          <FontAwesome name="sort-amount-desc" size={20} color={colors.accent} />
+        </View>
+        <View style={layoutStyles.categoryText}>
+          <Text style={styles.categoryTitle} numberOfLines={2}>
+            {puzzle.category.title.toUpperCase()}
+          </Text>
+          <Text style={styles.categoryCaption}>
+            Rank all five · {puzzle.category.topLabel.toLowerCase()} at #1
+          </Text>
+        </View>
+      </View>
 
       {/* Current player card */}
       {currentPlayer && phase === 'placing' && (
@@ -359,6 +375,9 @@ const layoutStyles = StyleSheet.create({
   progressPill: {
     alignItems: 'center',
   },
+  categoryText: {
+    flex: 1,
+  },
   slotsContainer: {
     marginTop: spacing.lg,
   },
@@ -395,6 +414,34 @@ const createStyles = (c: ThemeColors) =>
       color: c.textPrimary,
       textAlign: 'center',
       marginTop: 100,
+    },
+    categoryBanner: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+      padding: spacing.md,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.bgElevated,
+      marginBottom: spacing.md,
+    },
+    categoryIconSquare: {
+      width: 44,
+      height: 44,
+      borderRadius: borderRadius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: c.accentSoft,
+    },
+    categoryTitle: {
+      ...type.h2,
+      color: c.textPrimary,
+    },
+    categoryCaption: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: 2,
     },
     progressValue: {
       ...type.score,
