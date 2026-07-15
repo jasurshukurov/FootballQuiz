@@ -3,6 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
 import TeamCrest from '@/components/ui/TeamCrest';
+// Portrait doesn't leak the answer (the hidden thing is the player's rank value).
+// No inline credit line — attribution lives in lib/playerPhotos.ts and the
+// Photo Credits screen.
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
 import { Player } from '@/types/player';
 import { type, spacing, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
@@ -41,6 +45,7 @@ export default function ChallengerCard({ player, visible, eyebrow }: ChallengerC
       <GlassCard style={layoutStyles.card}>
         <View style={layoutStyles.content}>
           <Text style={styles.categoryLabel}>{eyebrow}</Text>
+          <PlayerPhoto playerId={player.id} name={player.name} size={48} />
           <Text style={styles.playerName} numberOfLines={1}>
             {player.name}
           </Text>

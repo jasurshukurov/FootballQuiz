@@ -7,6 +7,9 @@ import { useTheme } from '@/hooks/useTheme';
 import GlassCard from '@/components/ui/GlassCard';
 import TeamCrest from '@/components/ui/TeamCrest';
 import PopInView from '@/components/ui/PopInView';
+// Portrait is safe here: the hidden stat is market value, not identity. No inline
+// credit line — attribution lives in lib/playerPhotos.ts and the Photo Credits screen.
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
 
 interface StatCardProps {
   player: Player;
@@ -37,6 +40,9 @@ export default function StatCard({
 
   return (
     <GlassCard style={layoutStyles.card}>
+      <View style={layoutStyles.photoWrap}>
+        <PlayerPhoto playerId={player.id} name={player.name} size={56} />
+      </View>
       <Text style={styles.playerName} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={2}>
         {player.name}
       </Text>
@@ -70,6 +76,9 @@ const layoutStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 180,
+  },
+  photoWrap: {
+    marginBottom: spacing.sm,
   },
   teamRow: {
     flexDirection: 'row',

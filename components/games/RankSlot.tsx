@@ -10,6 +10,10 @@ import Animated, {
 import GlassCard from '@/components/ui/GlassCard';
 import TeamCrest from '@/components/ui/TeamCrest';
 import Tappable from '@/components/ui/Tappable';
+// Portrait is safe on a filled slot (identity is already committed here). No
+// inline credit line — attribution lives in lib/playerPhotos.ts and the Photo
+// Credits screen.
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
 import { Player } from '@/types/player';
 import { SlotStatus } from '@/lib/blindRankingGenerator';
 import { type, spacing, borderRadius, motion } from '@/constants/theme';
@@ -110,6 +114,7 @@ export default function RankSlot({
           <GlassCard style={layoutStyles.innerCard}>
             <View style={layoutStyles.content}>
               <Text style={styles.rankBadge}>#{rank}</Text>
+              <PlayerPhoto playerId={player.id} name={player.name} size={32} />
               <TeamCrest teamName={player.current_team} size={18} />
               <Text style={styles.playerName} numberOfLines={1}>
                 {player.name}
