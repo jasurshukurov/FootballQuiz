@@ -363,7 +363,14 @@ export default function Missing11Screen() {
   }
 
   const matchTitle = `${match.competition} ${match.season}`;
-  const matchSubtitle = `${shortenClubName(match.opponent_a)} ${match.score} ${shortenClubName(match.opponent_b)}`;
+  const opponentName = teamSide === 'a' ? match.opponent_b : match.opponent_a;
+  // Score is stored side-a first; flip it when the named team is side b so
+  // "vs Lazio · 3-0" always reads from the named team's perspective.
+  const scoreParts = match.score.match(/^(\d+)\s*-\s*(\d+)(.*)$/);
+  const teamScore =
+    teamSide === 'b' && scoreParts
+      ? `${scoreParts[2]}-${scoreParts[1]}${scoreParts[3]}`
+      : match.score;
   // Difficulty tier (shared vocabulary with Career Path / Who Are Ya) and the
   // category · era chip. Both are derived from data the header already shows —
   // structure, not extra reveals.
@@ -386,7 +393,8 @@ export default function Missing11Screen() {
         }
       />
 
-      {/* Match header (club names shortened for display only) */}
+      {/* Match header, guessmatch-style: the team whose XI you must name is
+          the focal element (big crest + name), the fixture is context below. */}
       <View style={styles.header}>
         <View style={styles.badgeRow}>
           <TierBadge tier={matchTier} />
@@ -396,13 +404,18 @@ export default function Missing11Screen() {
             </Text>
           </View>
         </View>
-        <Text style={styles.matchTitle}>{matchTitle}</Text>
-        <View style={styles.matchTeams}>
-          <TeamCrest teamName={match.opponent_a} size={18} />
-          <Text style={styles.matchSubtitle}>{matchSubtitle}</Text>
-          <TeamCrest teamName={match.opponent_b} size={18} />
+        <View style={styles.teamBanner}>
+          <TeamCrest teamName={teamName} size={44} />
+          <View style={styles.teamText}>
+            <Text style={styles.teamName} numberOfLines={2}>
+              {shortenClubName(teamName).toUpperCase()}
+            </Text>
+            <Text style={styles.teamCaption}>Name their starting XI</Text>
+            <Text style={styles.teamContext}>
+              {matchTitle} · vs {shortenClubName(opponentName)} · {teamScore}
+            </Text>
+          </View>
         </View>
-        <Text style={styles.guessTeamLabel}>Name the {shortenClubName(teamName)} starting XI</Text>
       </View>
 
       {/* Pitch */}
@@ -530,12 +543,14 @@ const createStyles = (c: ThemeColors) =>
       marginTop: spacing.xs,
     },
     header: {
-      alignItems: 'center',
+      // Banner stretches full width; the badge row centers itself above it.
+      alignItems: 'stretch',
       marginBottom: spacing.sm,
     },
     badgeRow: {
       flexDirection: 'row',
       alignItems: 'center',
+      alignSelf: 'center',
       gap: spacing.sm,
       marginBottom: spacing.xs,
     },
@@ -553,26 +568,33 @@ const createStyles = (c: ThemeColors) =>
       textTransform: 'uppercase',
       letterSpacing: 0.5,
     },
-    matchTitle: {
-      ...type.captionBold,
-      color: c.textSecondary,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-    },
-    matchTeams: {
+    teamBanner: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: spacing.sm,
-      marginTop: spacing.xs,
+      gap: spacing.md,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
+      backgroundColor: c.bgElevated,
     },
-    matchSubtitle: {
-      ...type.h3,
+    teamText: {
+      flex: 1,
+    },
+    teamName: {
+      ...type.h2,
       color: c.textPrimary,
     },
-    guessTeamLabel: {
-      marginTop: spacing.xs,
+    teamCaption: {
       ...type.captionBold,
       color: c.accent,
+      marginTop: 2,
+    },
+    teamContext: {
+      ...type.caption,
+      color: c.textSecondary,
+      marginTop: 2,
     },
     guessSection: {
       marginTop: spacing.md,
