@@ -79,7 +79,14 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
+  aliases = var.enable_custom_domain ? [var.domain_name, "www.${var.domain_name}"] : []
+
+  # Default CloudFront cert until the footballtrivia.app cert is issued
+  # (phase 2 of domain.tf); then SNI with the ACM cert.
   viewer_certificate {
-    cloudfront_default_certificate = true
+    cloudfront_default_certificate = var.enable_custom_domain ? false : true
+    acm_certificate_arn            = var.enable_custom_domain ? aws_acm_certificate_validation.site[0].certificate_arn : null
+    ssl_support_method             = var.enable_custom_domain ? "sni-only" : null
+    minimum_protocol_version       = var.enable_custom_domain ? "TLSv1.2_2021" : null
   }
 }

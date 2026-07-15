@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appIDs": ["TEAM_ID.com.footballquiz.app"],
+        "appIDs": ["TEAM_ID.com.footballtrivia.app"],
         "paths": ["/share/*"]
       }
     ]
