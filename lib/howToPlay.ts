@@ -73,7 +73,7 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
     steps: [
       'Today’s famous ranking is hidden. Only ranks and numbers show.',
       'Type names to reveal their slots, in any order.',
-      'Wrong guesses cost one of your 4 lives.',
+      'Wrong guesses cost one of your 5 lives.',
     ],
     footer:
       'Your rank badge climbs live with every name found. Full marks for naming everyone. One attempt per day, or hold Give Up to reveal the rest.',

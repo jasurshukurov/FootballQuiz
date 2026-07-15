@@ -35,7 +35,7 @@ import ShareableTopListsResult from '@/components/ShareableTopListsResult';
 import { buildShareText } from '@/lib/sharing';
 import { playCheer, playCrossbar } from '@/lib/sounds';
 
-const MAX_LIVES = 4;
+const MAX_LIVES = 5;
 
 export default function TopListsScreen() {
   const { colors } = useTheme();
