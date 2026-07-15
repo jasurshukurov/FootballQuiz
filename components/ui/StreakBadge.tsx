@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import Animated, {
+  Easing,
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
   withSequence,
-  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import { NotificationFeedbackType } from 'expo-haptics';
 
@@ -29,6 +31,7 @@ export default function StreakBadge({ streak }: StreakBadgeProps) {
   const styles = useMemo(() => createStyles(colors), [colors]);
   const isMilestone = MILESTONES.includes(streak);
   const isNewBest = useIsNewBestStreak();
+  const reduceMotion = useReducedMotion();
   const scale = useSharedValue(1);
   // null until the first render — the badge must NOT pulse on mount (every
   // game-over screen mounts one; a pulse each visit reads as "jumping").
@@ -40,20 +43,19 @@ export default function StreakBadge({ streak }: StreakBadgeProps) {
     prevStreak.current = streak;
     if (prev === null || streak <= 0 || streak <= prev) return;
 
-    // Subtle acknowledgement pulse — big bouncy scales read as "jumping".
+    // Subtle acknowledgement pulse, ease curves only (v3: no bounce).
     // A new record earns one extra, slightly larger beat.
-    scale.value = isNewBest
-      ? withSequence(
-          withSpring(1.1, motion.spring),
-          withSpring(1, motion.spring),
-          withSpring(1.06, motion.spring),
-          withSpring(1, motion.spring),
-        )
-      : withSequence(withSpring(1.06, motion.spring), withSpring(1, motion.spring));
+    if (!reduceMotion) {
+      const beat = (to: number) =>
+        withTiming(to, { duration: motion.fast, easing: Easing.inOut(Easing.quad) });
+      scale.value = isNewBest
+        ? withSequence(beat(1.1), beat(1), beat(1.06), beat(1))
+        : withSequence(beat(1.06), beat(1));
+    }
     if (isMilestone || isNewBest) {
       triggerNotification(NotificationFeedbackType.Success);
     }
-  }, [streak, isMilestone, isNewBest, scale]);
+  }, [streak, isMilestone, isNewBest, scale, reduceMotion]);
 
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 

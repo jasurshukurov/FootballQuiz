@@ -1,6 +1,6 @@
 import React, { RefObject, useMemo } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeIn, FadeInDown, SlideInDown } from 'react-native-reanimated';
+import Animated, { Easing, FadeIn, FadeInDown, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { borderRadius, motion, spacing, type } from '@/constants/theme';
@@ -92,9 +92,7 @@ export default function GameOverSheet({
         {win && <Confetti intensity="high" />}
 
         <Animated.View
-          entering={SlideInDown.springify()
-            .damping(motion.springBouncy.damping)
-            .stiffness(motion.springBouncy.stiffness)}
+          entering={SlideInDown.duration(motion.slow).easing(Easing.out(Easing.cubic))}
           style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, spacing.lg) }]}>
           <Pressable
             onPress={onDismiss}
@@ -129,9 +127,8 @@ export default function GameOverSheet({
                   <Animated.View
                     key={i}
                     entering={FadeInDown.delay(180 + i * 60)
-                      .springify()
-                      .damping(motion.springBouncy.damping)
-                      .stiffness(motion.springBouncy.stiffness)}
+                      .duration(motion.base)
+                      .easing(Easing.out(Easing.quad))}
                     style={[styles.glyph, { backgroundColor: glyphColor[g] }]}
                   />
                 ))}
