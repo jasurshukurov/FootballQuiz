@@ -5,7 +5,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
 import AnimatedBar from '@/components/ui/AnimatedBar';
-import LeaderboardPreview from '@/components/ui/LeaderboardPreview';
 import ThemePicker from '@/components/ui/ThemePicker';
 import NotificationSettings from '@/components/ui/NotificationSettings';
 import { spacing, borderRadius, type } from '@/constants/theme';
@@ -79,8 +78,9 @@ export default function StatsScreen() {
         <HeadlineStat value={String(totalXp)} label="XP" styles={styles} />
       </View>
 
-      {/* Global leaderboard teaser (hidden when the feature flag is off) */}
-      <LeaderboardPreview />
+      {/* Leaderboard teaser removed 2026-07-14 (user call: personal scores only
+          for now) — LeaderboardPreview and the /leaderboard route still exist
+          if it comes back. */}
 
       {/* Per-mode stat cards */}
       {playedModes.length > 0 && (
