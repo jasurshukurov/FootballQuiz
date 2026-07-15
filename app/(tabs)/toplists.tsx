@@ -17,7 +17,7 @@ import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { getRank } from '@/lib/rankLadder';
 import RankBadge from '@/components/ui/RankBadge';
 import { getDailyNumber } from '@/lib/dailyPuzzle';
-import { getDailyTopList, matchGuess } from '@/lib/topListsGenerator';
+import { getAllTopLists, getDailyTopList, matchGuess, type TopList } from '@/lib/topListsGenerator';
 import { useDailyProgressStore } from '@/hooks/useDailyProgressStore';
 import { useDailyResultsStore } from '@/hooks/useDailyResultsStore';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
@@ -41,7 +41,12 @@ const MAX_LIVES = 5;
 export default function TopListsScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
-  const list = useMemo(() => getDailyTopList(), []);
+  const dailyList = useMemo(() => getDailyTopList(), []);
+  // Practice replay (owner call 2026-07-15): after the daily is done, Play
+  // Again deals a random OTHER list. Practice runs record nothing.
+  const [practiceList, setPracticeList] = useState<TopList | null>(null);
+  const isPractice = practiceList !== null;
+  const list = practiceList ?? dailyList;
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
   const shareRef = useRef<View>(null);
   const searchRef = useRef<PlayerSearchAutocompleteHandle>(null);
@@ -71,13 +76,19 @@ export default function TopListsScreen() {
 
   const total = list.entries.length;
   const allFound = foundIndices.size === total;
-  const revealAll = alreadyPlayed || finished;
+  const revealAll = (alreadyPlayed && !isPractice) || finished;
 
   const finishRun = useCallback(
     (found: Set<number>, livesLeft: number) => {
       setFinished(true);
       const foundCount = found.size;
       const won = foundCount === total;
+      if (isPractice) {
+        // Practice rounds: sounds only, no XP/progress/solve-time/blob.
+        if (won) playCheer();
+        else playCrossbar();
+        return;
+      }
       // Award at most once per local day (Top Lists has no replay, but keep the
       // guard consistent with the other daily modes).
       useManagerStore.getState().awardDailyXp('toplists', foundCount * 10 + (won ? 50 : 0));
@@ -92,7 +103,7 @@ export default function TopListsScreen() {
       if (won) playCheer();
       else playCrossbar();
     },
-    [total],
+    [total, isPractice],
   );
 
   // Reveal a matched entry as a correct answer — the shared success path for
@@ -124,8 +135,9 @@ export default function TopListsScreen() {
       const text = raw.trim();
       if (!text) return;
 
-      // Solve-time stopwatch starts on the first real guess (no-ops after).
-      useSolveTimeStore.getState().markStarted('toplists');
+      // Solve-time stopwatch starts on the first real guess (no-ops after);
+      // practice rounds never touch the daily clock.
+      if (!isPractice) useSolveTimeStore.getState().markStarted('toplists');
 
       const idx = matchGuess(list, text);
       setGuess('');
@@ -146,7 +158,7 @@ export default function TopListsScreen() {
 
       revealIndex(idx);
     },
-    [revealAll, list, lives, foundIndices, finishRun, revealIndex],
+    [revealAll, isPractice, list, lives, foundIndices, finishRun, revealIndex],
   );
 
   const submitGuess = useCallback(() => submitText(guess), [submitText, guess]);
@@ -171,11 +183,11 @@ export default function TopListsScreen() {
 
       // Fresh correct match. Start the clock and clear the box BEFORE revealing;
       // the clear's re-entrant '' callback is guarded above.
-      useSolveTimeStore.getState().markStarted('toplists');
+      if (!isPractice) useSolveTimeStore.getState().markStarted('toplists');
       searchRef.current?.clear();
       revealIndex(idx, { silentDuplicate: true });
     },
-    [revealAll, list, foundIndices, revealIndex],
+    [revealAll, isPractice, list, foundIndices, revealIndex],
   );
 
   // Give up: reveal every remaining name and finish with what was found — a
@@ -184,6 +196,17 @@ export default function TopListsScreen() {
     if (revealAll) return;
     finishRun(foundIndices, lives);
   }, [revealAll, finishRun, foundIndices, lives]);
+
+  // Deal a random non-daily list and reset the board for a free practice run.
+  const startPractice = useCallback(() => {
+    const pool = getAllTopLists().filter((l) => l.id !== dailyList.id);
+    const next = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : dailyList;
+    setPracticeList(next);
+    setFoundIndices(new Set());
+    setLives(MAX_LIVES);
+    setFinished(false);
+    setGuess('');
+  }, [dailyList]);
 
   const solveTimeMs = useTodaySolveTime('toplists');
 
@@ -209,10 +232,10 @@ export default function TopListsScreen() {
   return (
     <Screen>
       <ScreenHeader
-        eyebrow={`Daily #${getDailyNumber()}`}
+        eyebrow={isPractice ? 'Practice' : `Daily #${getDailyNumber()}`}
         title="Top Lists"
         modeKey="toplists"
-        difficulty={todayBandDisplay()}
+        difficulty={isPractice ? undefined : todayBandDisplay()}
         right={
           !revealAll ? (
             <View style={styles.headerStats}>
@@ -296,7 +319,7 @@ export default function TopListsScreen() {
       {revealAll && (
         <Animated.View entering={FadeIn.duration(motion.base)} style={styles.resultBlock}>
           <Text style={[styles.resultTitle, resultScore === total ? styles.won : styles.lost]}>
-            {alreadyPlayed && !finished
+            {alreadyPlayed && !finished && !isPractice
               ? 'ALREADY PLAYED TODAY'
               : allFound
                 ? 'FULL MARKS!'
@@ -311,11 +334,14 @@ export default function TopListsScreen() {
           <SolveTimeResult mode="toplists" />
           {finished || restoredResult ? (
             // Live game-over AND blob-restored re-entries get the full action
-            // stack (no Play Again — Top Lists is strictly once per day).
+            // stack. Play Again deals a practice list (daily stays once per day).
             <GameOverActions
               shareRef={shareRef}
               shareText={shareText}
               win={resultScore === total}
+              onPlayAgain={startPractice}
+              playAgainLabel="PLAY AGAIN"
+              currentModeKey="toplists"
             />
           ) : (
             // Pre-blob restored fallback: score-only panel with the countdown.
