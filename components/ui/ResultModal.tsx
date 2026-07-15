@@ -1,12 +1,14 @@
 import React, { useMemo, useRef } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Linking } from 'react-native';
 
 import { GameStatus, GuessResult } from '@/types/game';
 import { buildShareText, whoAreYaStatusRows } from '@/lib/sharing';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
-import { type } from '@/constants/theme';
+import { spacing, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
+import { getPlayerPhoto } from '@/lib/playerPhotos';
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
 import ShareableResult from '@/components/ShareableResult';
 import GameOverSheet, { GlyphStatus } from './GameOverSheet';
 
@@ -14,6 +16,8 @@ interface ResultModalProps {
   visible: boolean;
   status: GameStatus;
   targetName: string;
+  /** players_db id of the answer — reveals the sharp portrait + CC credit. */
+  targetPlayerId?: string | number | null;
   guessCount: number;
   maxGuesses: number;
   dailyNumber: number;
@@ -31,6 +35,7 @@ export default function ResultModal({
   visible,
   status,
   targetName,
+  targetPlayerId,
   guessCount,
   maxGuesses,
   dailyNumber,
@@ -44,6 +49,7 @@ export default function ResultModal({
   const isWin = status === 'won';
   const shareRef = useRef<View>(null);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
+  const photo = getPlayerPhoto(targetPlayerId);
 
   const shareText = buildShareText({
     mode: 'who-are-ya',
@@ -74,9 +80,22 @@ export default function ResultModal({
       win={isWin}
       verdict={isWin ? `GOT IT IN ${guessCount}` : 'FULL TIME'}
       subtitle={
-        <Text style={styles.subtitle}>
-          The answer was <Text style={styles.targetName}>{targetName}</Text>
-        </Text>
+        <View style={styles.reveal}>
+          {targetPlayerId != null && (
+            <PlayerPhoto playerId={targetPlayerId} name={targetName} size={96} />
+          )}
+          <Text style={styles.subtitle}>
+            The answer was <Text style={styles.targetName}>{targetName}</Text>
+          </Text>
+          {photo?.credit != null && (
+            <Text
+              style={styles.photoCredit}
+              onPress={() => Linking.openURL(photo.credit!.url).catch(() => {})}
+              accessibilityRole="link">
+              {photo.credit.label}
+            </Text>
+          )}
+        </View>
       }
       glyphs={glyphs}
       shareRef={shareRef}
@@ -101,6 +120,10 @@ export default function ResultModal({
 
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
+    reveal: {
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
     subtitle: {
       ...type.body,
       textAlign: 'center',
@@ -109,5 +132,10 @@ const createStyles = (c: ThemeColors) =>
     targetName: {
       ...type.bodyBold,
       color: c.accent,
+    },
+    photoCredit: {
+      ...type.micro,
+      color: c.textMuted,
+      textAlign: 'center',
     },
   });

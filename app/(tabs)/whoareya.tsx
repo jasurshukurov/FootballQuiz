@@ -28,6 +28,8 @@ import { foldName } from '@/lib/matchData';
 import LastChanceHint from '@/components/ui/LastChanceHint';
 import PracticePill from '@/components/ui/PracticePill';
 import PlayerCard from '@/components/ui/PlayerCard';
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
+import { getPlayerPhoto } from '@/lib/playerPhotos';
 import ResultModal from '@/components/ui/ResultModal';
 import RetroButton from '@/components/ui/RetroButton';
 import { useManagerStore } from '@/hooks/useManagerStore';
@@ -66,6 +68,11 @@ export default function WhoAreYaScreen() {
   const [showModal, setShowModal] = useState(false);
   const [hintUsed, setHintUsed] = useState(false);
   const [hintText, setHintText] = useState('');
+  // Free blurred-photo clue toggle; local to the screen like the hint state.
+  const [showPhoto, setShowPhoto] = useState(false);
+
+  // Hide the toggle entirely for players we have no licensed photo for.
+  const hasPhoto = useMemo(() => getPlayerPhoto(targetPlayer?.id) != null, [targetPlayer?.id]);
 
   const allPlayers = useMemo(() => getAllPlayers(), []);
   // Clears the search box after a typed full name auto-solves.
@@ -85,6 +92,7 @@ export default function WhoAreYaScreen() {
   useEffect(() => {
     setHintUsed(false);
     setHintText('');
+    setShowPhoto(false);
   }, [targetPlayer?.id]);
 
   useEffect(() => {
@@ -223,6 +231,27 @@ export default function WhoAreYaScreen() {
 
       {isLastChance && <LastChanceHint />}
 
+      {isPlaying && targetPlayer && hasPhoto && (
+        <View style={styles.photoClue}>
+          {/* Blur is the whole point: never render this sharp while playing. */}
+          {showPhoto && (
+            <Animated.View entering={FadeIn.duration(motion.base)} style={styles.photoClueImage}>
+              <PlayerPhoto
+                playerId={targetPlayer.id}
+                name={targetPlayer.name}
+                size={120}
+                blur={25}
+              />
+            </Animated.View>
+          )}
+          <RetroButton
+            title={showPhoto ? 'Hide Photo' : 'Show Photo'}
+            onPress={() => setShowPhoto((v) => !v)}
+            variant="secondary"
+          />
+        </View>
+      )}
+
       {isPlaying && (
         <View style={styles.searchContainer}>
           <PlayerSearchAutocomplete
@@ -302,6 +331,7 @@ export default function WhoAreYaScreen() {
         visible={showModal}
         status={gameStatus}
         targetName={targetPlayer?.name ?? ''}
+        targetPlayerId={targetPlayer?.id}
         guessCount={guesses.length}
         maxGuesses={maxGuesses}
         dailyNumber={dailyNumber}
@@ -331,6 +361,14 @@ const createStyles = (c: ThemeColors) =>
       position: 'relative',
       zIndex: 10,
       marginBottom: spacing.md,
+    },
+    photoClue: {
+      marginBottom: spacing.md,
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    photoClueImage: {
+      alignItems: 'center',
     },
     hintButton: {
       marginBottom: spacing.md,

@@ -35,6 +35,7 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Search any player to make a guess. You have 8.',
       'Every guess grades five columns: team, league, nation, position and age.',
       'Green is a match; the age cell points HIGHER or LOWER toward the target.',
+      'Tap Show Photo any time for a free, blurred picture of the mystery player.',
       'After two guesses you can reveal the nationality as a hint.',
     ],
     footer: 'Solve in fewer guesses for a higher rank on the daily ladder.',
