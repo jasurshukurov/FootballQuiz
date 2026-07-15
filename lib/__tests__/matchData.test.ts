@@ -283,6 +283,41 @@ describe('getDailyMatch', () => {
     expect(ids.size).toBe(200);
   });
 
+  const dailyYear = (day: number): number => {
+    const m = getDailyMatch(day);
+    const y = (m.date || '').slice(0, 4);
+    return /^\d{4}$/.test(y) ? parseInt(y, 10) : parseInt(String(m.season).slice(0, 4), 10);
+  };
+
+  it('lands ~75% of days on modern matches (2010+), 2015+ the plurality', () => {
+    // The pool skews old, so the schedule interleaves eras by a fixed cadence to
+    // bias the daily match modern. Lock the mix over a 60-day window.
+    const WINDOW = 60;
+    let modern = 0; // 2010+
+    let recent = 0; // 2015+
+    let classic = 0; // pre-2010
+    for (let day = 0; day < WINDOW; day++) {
+      const y = dailyYear(day);
+      if (y >= 2015) recent++;
+      if (y >= 2010) modern++;
+      else classic++;
+    }
+    // ~75% modern target; assert a safe floor of 70%.
+    expect(modern / WINDOW).toBeGreaterThanOrEqual(0.7);
+    // Classic throwbacks stay present but the minority.
+    expect(classic / WINDOW).toBeLessThanOrEqual(0.3);
+    // 2015+ is the single biggest slice (cadence gives it ~50% of days).
+    expect(recent).toBeGreaterThan(modern - recent); // recent > mid
+    expect(recent).toBeGreaterThan(classic); // recent > classic
+  });
+
+  it('holds the modern bias across a long horizon (not just the first window)', () => {
+    let modern = 0;
+    const N = 224;
+    for (let day = 0; day < N; day++) if (dailyYear(day) >= 2010) modern++;
+    expect(modern / N).toBeGreaterThanOrEqual(0.7);
+  });
+
   it('ramps smoothly through the calendar week (Mon easiest -> Sun hardest)', () => {
     // Replicate the scheduler's timezone-invariant weekday derivation so the
     // assertion tracks REAL calendar weekdays, not relative cycles.

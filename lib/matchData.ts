@@ -214,6 +214,14 @@ export interface MatchCategory {
   era: string;
 }
 
+/** Best-effort calendar year of a match: its date, else a 4-digit run in the
+ *  season string, else 2000. Drives the era chip and the modern-era rotation. */
+export function matchYear(m: Match): number {
+  const yearStr = (m.date || '').slice(0, 4);
+  if (/^\d{4}$/.test(yearStr)) return parseInt(yearStr, 10);
+  return parseInt((String(m.season).match(/\d{4}/) || ['2000'])[0], 10);
+}
+
 /** Category + era for a match, derived from its competition string and date. */
 export function getMatchCategory(m: Match): MatchCategory {
   const c = m.competition.toLowerCase();
@@ -225,32 +233,34 @@ export function getMatchCategory(m: Match): MatchCategory {
     stage && family !== 'League Classic' && family !== 'Classic Match'
       ? `${family} ${stage}`
       : family;
-  const yearStr = (m.date || '').slice(0, 4);
-  const year = /^\d{4}$/.test(yearStr)
-    ? parseInt(yearStr, 10)
-    : parseInt((String(m.season).match(/\d{4}/) || ['2000'])[0], 10);
-  return { label, era: `${Math.floor(year / 10) * 10}s` };
+  return { label, era: `${Math.floor(matchYear(m) / 10) * 10}s` };
 }
 
 // ---------------------------------------------------------------------------
-// Daily match schedule (no-repeat backbone + weekly notability cadence)
+// Daily match schedule (era interleave + no-repeat backbone + weekly cadence)
 // ---------------------------------------------------------------------------
-// The rotation must never repeat a match within the whole cycle (the QA sim
-// flags ANY repeat across a 60-day window as a hard failure). An earlier version
-// hard-FILTERED the playable pool by the day's difficulty band, which shrank the
-// pool below the window and forced repeats. Instead the band is only a SOFT
-// ordering preference: iconic finals land early in the week, deep cuts on the
-// weekend — but every playable match stays in the rotation.
+// Two goals stacked on one deterministic schedule:
 //
-// Construction: the weekday of an absolute day index is fixed — weekday =
-// (dayIndex + WEEKDAY_OFFSET) mod 7. We split the notability-ranked pool into 7
-// contiguous tiers (top slice → the most-iconic weekdays, bottom → Saturday's
-// deep cuts) and, for a given day, index into its weekday's tier by how many
-// times that weekday has occurred (dayIndex / 7). Two days collide only if they
-// share a weekday AND land on the same tier slot; within any window shorter than
-// 7 × tierSize (~224 days) the per-weekday occurrence counter can't wrap, so
-// there are ZERO repeats. Unlike a static full-pool permutation, the weekday↔
-// tier alignment is exact for every cycle (no drift).
+//   1. ERA MIX. The raw pool skews old (≈37% pre-1990, only ≈31% from 2010 on),
+//      so a uniform rotation felt like "mostly old games". We instead route each
+//      day to an era bucket by a fixed 4-day cadence (ERA_CADENCE): ~50% of days
+//      land on 2015+ matches ("recent"), ~25% on 2010-2014 ("mid") and ~25% on
+//      pre-2010 throwbacks ("classic") — ~75% modern, with 2015+ the plurality.
+//      The era is a pure function of dayIndex, so every player sees the same
+//      match on the same day. No old matches are deleted; they just surface less.
+//
+//   2. NO REPEATS. The rotation must never repeat a match within the dedup
+//      window (the QA sim flags ANY repeat across a 60-day window as a hard
+//      failure). We keep the notability weekday-tier backbone, but PER ERA: each
+//      era bucket is notability-ranked and split into 7 contiguous weekday tiers
+//      (top slice → most-iconic weekdays, bottom → Saturday's deep cuts). For a
+//      given day we take its era's weekday tier and index into it by how many
+//      earlier days shared that same (era, weekday). Because era buckets are
+//      disjoint and each is partitioned by weekday, two days can only collide if
+//      they share BOTH era and weekday AND land on the same within-tier slot;
+//      the (era, weekday) occurrence counter can't wrap for well beyond the dedup
+//      window, so there are ZERO repeats. Difficulty gating survives: Saturday
+//      still serves each era's deep cuts, just deep-cut MODERN most of the time.
 
 /** weekday(dayIndex) = (dayIndex + WEEKDAY_OFFSET) mod 7. Timezone-invariant:
  *  (localWeekday - dayIndex) mod 7 is the same for every calendar date. */
@@ -266,13 +276,40 @@ const WEEKDAY_OFFSET = (() => {
 // order parked Sunday mid-week, which read as random difficulty in play.)
 const WEEKDAY_BY_PREFERENCE = [1, 2, 3, 4, 5, 6, 0];
 
-// tierByWeekday[w] = the notability slice served on weekday w.
-let cachedTiers: Match[][] | null = null;
+// Era buckets for the interleave. Boundaries are fixed years (not percentiles)
+// so a match's era never shifts as the pool grows.
+const MODERN_ERA_START = 2010;
+const RECENT_ERA_START = 2015;
 
-function buildWeekdayTiers(): Match[][] {
-  const pool = getPlayableMatches();
+type EraKey = 'recent' | 'mid' | 'classic';
+
+// Deterministic era for each day, keyed by dayIndex mod 4. gcd(4, 7) = 1, so
+// over any 28-day span every weekday draws this exact mix (see occurrence math
+// below): ~50% recent (2015+), ~25% mid (2010-2014), ~25% classic (pre-2010) —
+// i.e. ~75% modern days with 2015+ the plurality. Reorder/resize to retune the
+// blend; CADENCE_CYCLE recomputes from its length.
+const ERA_CADENCE: readonly EraKey[] = ['recent', 'mid', 'recent', 'classic'];
+
+/** Least common multiple of the era cadence period and the 7-day week. */
+const CADENCE_CYCLE = (() => {
+  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+  const p = ERA_CADENCE.length;
+  return (p * 7) / gcd(p, 7);
+})();
+
+function eraOf(m: Match): EraKey {
+  const y = matchYear(m);
+  if (y >= RECENT_ERA_START) return 'recent';
+  if (y >= MODERN_ERA_START) return 'mid';
+  return 'classic';
+}
+
+// Notability-ranked, weekday-split tiers for one era bucket: top slice → the
+// most-iconic weekdays, bottom → Saturday's deep cuts (same structure the whole
+// pool used before, now applied per era so each era keeps a Mon→Sun ramp).
+function buildWeekdayTiers(pool: Match[]): Match[][] {
   const L = pool.length;
-  // Notability-ranked (desc), fixed salted shuffle as a deterministic tie-break.
+  // Fixed salted shuffle as a deterministic tie-break, then notability desc.
   const ranked = seededShuffle(pool, ROTATION_SALT.missing11)
     .map((m) => ({ m, n: matchNotability(m) }))
     .sort((a, b) => b.n - a.n)
@@ -290,31 +327,72 @@ function buildWeekdayTiers(): Match[][] {
   return tiers;
 }
 
+let cachedEraTiers: Record<EraKey, Match[][]> | null = null;
+
+function getEraTiers(): Record<EraKey, Match[][]> {
+  if (!cachedEraTiers) {
+    const buckets: Record<EraKey, Match[]> = { recent: [], mid: [], classic: [] };
+    for (const m of getPlayableMatches()) buckets[eraOf(m)].push(m);
+    cachedEraTiers = {
+      recent: buildWeekdayTiers(buckets.recent),
+      mid: buildWeekdayTiers(buckets.mid),
+      classic: buildWeekdayTiers(buckets.classic),
+    };
+  }
+  return cachedEraTiers;
+}
+
 /**
- * Deterministic daily match for an absolute day index. Serves the day's weekday
- * notability tier (iconic early week, deep cuts on the weekend) and rotates
- * within that tier by weekday occurrence, so no match repeats for well beyond
- * the dedup window while every playable match stays in the pool.
+ * How many days in [0, d) shared this day's (era, weekday) — i.e. the 0-based
+ * position of day d within its era's weekday tier. A day's (era, weekday) pair
+ * repeats every CADENCE_CYCLE days, so we sum, over each residue in one cycle
+ * that matches, how many multiples of CADENCE_CYCLE have elapsed. O(cycle),
+ * closed-form, so the schedule is stable across app restarts.
+ */
+function eraWeekdayOccurrence(d: number, era: EraKey, weekday: number): number {
+  let count = 0;
+  for (let rho = 0; rho < CADENCE_CYCLE; rho++) {
+    if (ERA_CADENCE[rho % ERA_CADENCE.length] !== era) continue;
+    if ((((rho + WEEKDAY_OFFSET) % 7) + 7) % 7 !== weekday) continue;
+    const c = Math.ceil((d - rho) / CADENCE_CYCLE); // days ≡ rho (mod cycle) in [0, d)
+    if (c > 0) count += c;
+  }
+  return count;
+}
+
+/**
+ * Deterministic daily match for an absolute day index. The day's era comes from
+ * the fixed cadence (≈75% modern), then within that era's weekday notability
+ * tier (iconic early week, deep cuts on the weekend) we rotate by (era, weekday)
+ * occurrence — so no match repeats for well beyond the dedup window while every
+ * playable match stays in the rotation.
  */
 export function getDailyMatch(dayIndex: number): Match {
-  if (!cachedTiers) cachedTiers = buildWeekdayTiers();
   const d = Math.trunc(dayIndex);
   const weekday = (((d + WEEKDAY_OFFSET) % 7) + 7) % 7;
-  const tier = cachedTiers[weekday];
-  if (!tier || tier.length === 0) {
-    // Degenerate pool (fewer than 7 matches): fall back to the full rotation.
+  const eraTiers = getEraTiers();
+
+  // Preferred era for the day, then graceful fallback if that bucket has nothing
+  // on this weekday (only possible for a degenerate/tiny pool): recent → mid →
+  // classic, or classic → mid → recent when a throwback day can't be served.
+  const wanted = ERA_CADENCE[((d % ERA_CADENCE.length) + ERA_CADENCE.length) % ERA_CADENCE.length];
+  const order: EraKey[] =
+    wanted === 'classic' ? ['classic', 'mid', 'recent'] : [wanted, 'recent', 'mid', 'classic'];
+  const era = order.find((e) => (eraTiers[e][weekday]?.length ?? 0) > 0);
+  if (!era) {
+    // Nothing on this weekday in any era: full-pool fallback keeps this total.
     const pool = getPlayableMatches();
     if (pool.length === 0) throw new Error('getDailyMatch: no playable matches');
     return pool[((d % pool.length) + pool.length) % pool.length];
   }
-  const occurrence = Math.floor(d / 7); // stable per weekday (d shares d mod 7)
+
+  const tier = eraTiers[era][weekday];
+  const occurrence = eraWeekdayOccurrence(d, era, weekday);
   const base = ((occurrence % tier.length) + tier.length) % tier.length;
-  // Skill nudge — SOFT ordering only, the pool is never shrunk. Within the
-  // weekday's tier (notability-desc), +1 skill indexes from the deep-cut end
-  // (a bijection per weekday, so the no-repeat guarantee is preserved: two
-  // days still collide only on same weekday + same occurrence slot). Tier 0 is
-  // the exact current index; -1 keeps the iconic-first neutral ordering, which
-  // is already the easiest ordering that stays repeat-free.
+  // Skill nudge — SOFT ordering only, the tier is never shrunk. Within the
+  // weekday tier (notability-desc), +1 skill indexes from the deep-cut end (a
+  // bijection per (era, weekday), so no-repeat is preserved). Tier 0 is the exact
+  // current index; -1 keeps the iconic-first neutral ordering.
   const i = resolveSkillTier('missing11') === 1 ? tier.length - 1 - base : base;
   return tier[i];
 }
