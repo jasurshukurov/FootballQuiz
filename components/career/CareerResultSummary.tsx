@@ -8,7 +8,6 @@ import { useTheme } from '@/hooks/useTheme';
 import { Rank } from '@/lib/rankLadder';
 import RankBadge from '@/components/ui/RankBadge';
 import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
-import StreakFlame from '@/components/ui/StreakFlame';
 
 // Number rolls up over roughly this long — a beat of anticipation, no more.
 const XP_COUNT_MS = 900;
@@ -91,8 +90,7 @@ export default function CareerResultSummary({
         <Text style={styles.sectionLabel}>Your progression</Text>
         <Text style={styles.xp}>+{xp} XP</Text>
         <View style={styles.streakRow}>
-          <StreakFlame size={18} color={colors.streak} />
-          <Text style={styles.streakText}>{streak}</Text>
+          <Text style={styles.streakText}>🔥 Streak {streak}</Text>
         </View>
         <Text style={styles.caption}>
           {playedCount}/{totalCount} played

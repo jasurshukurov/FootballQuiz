@@ -5,7 +5,6 @@ import { usePathname, useRouter, type Href } from 'expo-router';
 
 import Tappable from '@/components/ui/Tappable';
 import ProgressRing from '@/components/ui/ProgressRing';
-import StreakFlame from '@/components/ui/StreakFlame';
 import NextPuzzleCountdown from '@/components/ui/NextPuzzleCountdown';
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
@@ -104,8 +103,7 @@ export default function Sidebar() {
           </Text>
           {currentStreak > 0 && (
             <View style={styles.streakPill}>
-              <StreakFlame size={12} color={colors.streak} />
-              <Text style={styles.streakText}>{currentStreak}</Text>
+              <Text style={styles.streakText}>🔥 Streak {currentStreak}</Text>
             </View>
           )}
         </View>

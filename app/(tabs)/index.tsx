@@ -8,7 +8,6 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import Screen from '@/components/ui/Screen';
 import Tappable from '@/components/ui/Tappable';
 import ProgressRing from '@/components/ui/ProgressRing';
-import StreakFlame from '@/components/ui/StreakFlame';
 import DifficultyBanner, { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import { useTheme } from '@/hooks/useTheme';
 import { type ThemeColors } from '@/constants/themes';
@@ -58,8 +57,7 @@ function HubHeader({
           </Text>
           {streak > 0 && (
             <View style={styles.streakPill}>
-              <StreakFlame size={12} color={c.streak} />
-              <Text style={styles.streakText}>{streak}</Text>
+              <Text style={styles.streakText}>🔥 Streak {streak}</Text>
             </View>
           )}
         </View>

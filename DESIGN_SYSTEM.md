@@ -75,9 +75,12 @@ v3 (2026-07-15) additions:
   Warm-up / Standard / Standard / Tricky / Hard / Expert, Sunday = Classic. Fame
   windows stay in lib/difficultyCurve.ts.
 - **Motion is ease-only** — no bouncy springs anywhere; flourish (Confetti,
-  StreakFlame flicker, FloodlightSweep) must gate on `useReducedMotion()`.
+  FloodlightSweep) must gate on `useReducedMotion()`.
+- **Streak affordance is text, not an icon**: "🔥 Streak N" (hub/sidebar pills,
+  CareerResultSummary) and StreakBadge's "🔥 N-day streak". The animated
+  StreakFlame icon was removed by owner decision — don't reintroduce it.
 - Career Path game-over = verdict card (answer + "nation · position") then TODAY'S
-  RESULT (rank/time/clues) and YOUR PROGRESSION (+XP count-up, StreakFlame, X/N
+  RESULT (rank/time/clues) and YOUR PROGRESSION (+XP count-up, "🔥 Streak N", X/N
   played) — see `components/career/CareerResultSummary.tsx`; wins fire
   `components/ui/FloodlightSweep.tsx` over the board. Fresh-day hub must stay
   <= 1.5 screens at 390x844.

@@ -14,7 +14,7 @@ import { useTheme } from '@/hooks/useTheme';
 
 // A single stadium-floodlight pass — long enough to read as a sweep of light,
 // short enough not to delay the result. Bespoke flourish timing (outside the
-// shared motion vocabulary, like StreakFlame's flicker).
+// shared motion vocabulary).
 const SWEEP_MS = 1100;
 
 interface FloodlightSweepProps {
