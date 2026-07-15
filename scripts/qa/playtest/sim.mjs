@@ -59,7 +59,7 @@ function seededRandom(seed) {
 // old ascending "Cheapest First" category was removed.
 const CATEGORIES = [
   { id: 'most_expensive', title: 'Most Expensive', description: 'Rank by market value · priciest first', sortField: 'market_value', dir: 'desc' },
-  { id: 'highest_rating', title: 'FIFA Rating', description: 'Rank by peak game rating · highest first', sortField: 'peak_game_rating', dir: 'desc' },
+  { id: 'highest_rating', title: 'Overall Rating', description: 'Rank by peak game rating · highest first', sortField: 'peak_game_rating', dir: 'desc' },
   { id: 'peak_value', title: 'Peak Transfer Value', description: 'Rank by career peak value · highest first', sortField: 'peak_valuation_euros', dir: 'desc' },
   { id: 'most_elite_exposure', title: 'International Caps', description: 'Rank by international caps · most first', sortField: 'elite_exposure', dir: 'desc' },
   { id: 'most_famous', title: 'Most Famous', description: 'Rank by fame · most famous first', sortField: 'fame_score', dir: 'desc' },

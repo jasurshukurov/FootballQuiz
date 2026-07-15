@@ -89,7 +89,7 @@ const CATEGORIES: RankingCategory[] = [
   },
   {
     id: 'highest_rating',
-    title: 'FIFA Rating',
+    title: 'Overall Rating',
     description: 'Rank by peak game rating · highest first',
     sortField: 'peak_game_rating',
     sortDirection: 'desc',
