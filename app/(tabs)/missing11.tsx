@@ -46,6 +46,7 @@ import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
 import { buildShareText } from '@/lib/sharing';
 import { playWhistle, playCheer, playCrossbar } from '@/lib/sounds';
+import { getPlayerPhoto } from '@/lib/playerPhotos';
 
 type GameState = 'playing' | 'won' | 'lost';
 
@@ -173,6 +174,34 @@ export default function Missing11Screen() {
     });
     return map;
   }, [lineupNames]);
+
+  // players_db id per slot, for the revealed player's portrait. Resolution
+  // reuses the same identity paths as guessing: the alias layer (slotIndex.byId,
+  // inverted to slot -> ids, so a team-sheet "Aguero" portrait pulls the DB's
+  // "Sergio Aguero") plus a folded-name match against the full guess pool. Among
+  // candidate ids we prefer one that actually has a licensed photo; if none does,
+  // any candidate id is fine (PlayerPhoto shows same-footprint initials). Legends
+  // absent from players_db resolve only to a synthetic id (no photo) → initials.
+  const slotPhotoIds = useMemo<(number | undefined)[]>(() => {
+    const nameToId = new Map<string, number>();
+    for (const p of guessPool) {
+      const folded = foldName(p.name);
+      if (!nameToId.has(folded)) nameToId.set(folded, p.id);
+    }
+    const slotToAliasIds = new Map<number, number[]>();
+    slotIndex.byId.forEach((slot, id) => {
+      const arr = slotToAliasIds.get(slot);
+      if (arr) arr.push(id);
+      else slotToAliasIds.set(slot, [id]);
+    });
+    return lineupNames.map((name, i) => {
+      const candidates: number[] = [];
+      const direct = nameToId.get(foldName(name));
+      if (direct !== undefined) candidates.push(direct);
+      for (const id of slotToAliasIds.get(i) ?? []) candidates.push(id);
+      return candidates.find((id) => getPlayerPhoto(id)) ?? candidates[0];
+    });
+  }, [lineupNames, guessPool, slotIndex]);
 
   const finishGame = useCallback((won: boolean, found: number) => {
     setFinalFound(found);
@@ -404,6 +433,7 @@ export default function Missing11Screen() {
         revealedSlots={revealedSlots}
         shakingSlot={null}
         onSlotPress={handleSlotPress}
+        slotPhotoIds={slotPhotoIds}
       />
 
       {/* Guess bar (auto-places into the matching slot) + hints */}

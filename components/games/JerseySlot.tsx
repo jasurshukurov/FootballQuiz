@@ -12,12 +12,15 @@ import Animated, {
 import PopInView from '@/components/ui/PopInView';
 import ShakeView from '@/components/ui/ShakeView';
 import Tappable from '@/components/ui/Tappable';
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
 import { type, spacing, borderRadius } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 
 interface JerseySlotProps {
   playerName?: string;
+  /** players_db id for the revealed player's portrait; initials fallback when absent. */
+  playerId?: string | number | null;
   revealed: boolean;
   shaking: boolean;
   position: string;
@@ -52,6 +55,7 @@ function PulsingQuestion() {
 
 export default function JerseySlot({
   playerName,
+  playerId,
   revealed,
   shaking,
   position,
@@ -66,8 +70,12 @@ export default function JerseySlot({
       <Tappable onPress={onPress} disabled={revealed} style={layoutStyles.slotWrapper}>
         {revealed && playerName ? (
           <PopInView>
-            {/* jerseyColor is real-world club color DATA, not theme. */}
-            <View style={[styles.revealedCircle, { backgroundColor: jerseyColor }]} />
+            {/* Revealed player's portrait, ringed in the club color (jerseyColor
+                is real-world club color DATA, not theme). PlayerPhoto falls back
+                to same-footprint initials when there's no licensed photo. */}
+            <View style={[styles.photoRing, { borderColor: jerseyColor }]}>
+              <PlayerPhoto playerId={playerId} name={playerName} size={40} />
+            </View>
             <Text style={styles.playerName} numberOfLines={2} adjustsFontSizeToFit>
               {playerName}
             </Text>
@@ -103,12 +111,12 @@ const createStyles = (c: ThemeColors) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
-    revealedCircle: {
-      width: 48,
-      height: 48,
+    photoRing: {
+      // 40pt portrait + 2pt padding + 2pt ring on each side = 48pt, matching the
+      // unrevealed circle's footprint so the pitch never shifts on reveal.
+      padding: 2,
       borderRadius: borderRadius.full,
       borderWidth: 2,
-      borderColor: c.borderStrong,
       alignSelf: 'center',
     },
     questionMark: {

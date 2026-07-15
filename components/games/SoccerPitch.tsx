@@ -14,6 +14,8 @@ interface SoccerPitchProps {
   revealedSlots: Set<number>;
   shakingSlot: number | null;
   onSlotPress: (index: number) => void;
+  /** players_db id per slot index, for the revealed player's portrait. */
+  slotPhotoIds?: (string | number | null | undefined)[];
 }
 
 // 4-4-2 formation positions by row (top = strikers, bottom = GK)
@@ -30,6 +32,7 @@ export default function SoccerPitch({
   revealedSlots,
   shakingSlot,
   onSlotPress,
+  slotPhotoIds,
 }: SoccerPitchProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -71,6 +74,7 @@ export default function SoccerPitch({
               <JerseySlot
                 key={playerIdx}
                 playerName={lineupNames[playerIdx]}
+                playerId={slotPhotoIds?.[playerIdx]}
                 revealed={revealedSlots.has(playerIdx)}
                 shaking={shakingSlot === playerIdx}
                 position={row.positions[i]}
