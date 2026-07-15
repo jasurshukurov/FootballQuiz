@@ -32,6 +32,10 @@ describe('generateBlindRankingPuzzle', () => {
         const a = orderedValues[i - 1];
         const b = orderedValues[i];
         expect(a).not.toBe(b); // distinct-value rule
+        // Ranking is always top-value-first: #1 (earlier index) is the highest
+        // value, descending to #5. The old ascending "cheapest first" category
+        // was removed, so every category must sort strictly descending.
+        expect(a).toBeGreaterThan(b);
         const gap = Math.abs(a - b) / Math.max(a, b);
         // On a healthy pool the guard achieves at least a 1% separation between
         // neighbours (it prefers 5% and only relaxes toward distinct-only when a

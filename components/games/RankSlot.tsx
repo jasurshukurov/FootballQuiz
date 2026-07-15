@@ -24,6 +24,8 @@ interface RankSlotProps {
   isRevealing: boolean;
   /** Reveal outcome for this slot: exact (green), adjacent (amber), wrong (red). */
   status?: SlotStatus;
+  /** Muted end-anchor tag (e.g. "Most expensive" on #1, "Cheapest" on #5). */
+  endLabel?: string;
 }
 
 export default function RankSlot({
@@ -33,6 +35,7 @@ export default function RankSlot({
   disabled,
   isRevealing,
   status,
+  endLabel,
 }: RankSlotProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -92,6 +95,9 @@ export default function RankSlot({
         <Animated.View style={[styles.emptySlot, borderStyle]}>
           <Text style={styles.rankNumber}>#{rank}</Text>
           <Text style={styles.tapText}>Tap to place</Text>
+          {endLabel ? (
+            <Text style={[styles.endLabel, styles.endLabelAbsolute]}>{endLabel}</Text>
+          ) : null}
         </Animated.View>
       </Tappable>
     );
@@ -108,11 +114,13 @@ export default function RankSlot({
               <Text style={styles.playerName} numberOfLines={1}>
                 {player.name}
               </Text>
-              {isRevealing && status !== undefined && (
+              {isRevealing && status !== undefined ? (
                 <Text style={[styles.resultIcon, { color: revealColor }]}>
                   {status === 'exact' ? '✓' : status === 'adjacent' ? '≈' : '✗'}
                 </Text>
-              )}
+              ) : endLabel ? (
+                <Text style={styles.endLabel}>{endLabel}</Text>
+              ) : null}
             </View>
           </GlassCard>
         </Animated.View>
@@ -177,5 +185,18 @@ const createStyles = (c: ThemeColors) =>
     },
     resultIcon: {
       ...type.h3,
+    },
+    // Muted micro end-anchor ("Most expensive" / "Cheapest"). In the filled row
+    // it sits inline at the trailing edge; in the empty row it is pinned right
+    // so the "#N · Tap to place" content stays centered.
+    endLabel: {
+      ...type.micro,
+      color: c.textMuted,
+      letterSpacing: 1,
+      textTransform: 'uppercase',
+    },
+    endLabelAbsolute: {
+      position: 'absolute',
+      right: spacing.md,
     },
   });

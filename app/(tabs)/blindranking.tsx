@@ -26,6 +26,7 @@ import { useSolveTimeStore, useTodaySolveTime } from '@/hooks/useSolveTimeStore'
 import ChallengerCard from '@/components/games/ChallengerCard';
 import RankSlot from '@/components/games/RankSlot';
 import GameOverActions from '@/components/ui/GameOverActions';
+import GiveUpButton from '@/components/ui/GiveUpButton';
 import { SolveTimeResult } from '@/components/ui/SolveTimeChip';
 import Screen, { TAB_BAR_HEIGHT } from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
@@ -121,6 +122,40 @@ export default function BlindRankingScreen() {
     startGame();
   }, [startGame, restoredDaily]);
 
+  // Shared finish bookkeeping: sound, XP, daily completion, solve-time PB, and
+  // the persisted breakdown blob (DAILY run only). Called by both the staggered
+  // full-reveal and the give-up path, so the two can never drift apart.
+  const recordCompletion = useCallback((points: number, exact: number, adjacent: number) => {
+    if (points >= MAX_RANKING_POINTS * 0.7) {
+      playCheer();
+    } else {
+      playCrossbar();
+    }
+    useManagerStore.getState().awardDailyXp('blindranking', points * 10);
+    useDailyProgressStore.getState().markCompleted('blindranking', points);
+    // Time PB only counts on a winning ranking (>= 70% of points).
+    useSolveTimeStore.getState().markCompleted('blindranking', {
+      countsForBest: points >= MAX_RANKING_POINTS * 0.7,
+    });
+    if (isDailyRun.current) {
+      useDailyResultsStore.getState().setResult('blindranking', { exact, adjacent });
+    }
+  }, []);
+
+  // Give up: end today's game now, scoring only the slots placed so far. Unplaced
+  // slots score nothing (scoreRanking tolerates the null ids) and the game-over
+  // surface reveals the true order. No staggered board reveal — we jump straight
+  // to the result. Only reachable during active placing (button is placing-only).
+  const handleGiveUp = useCallback(() => {
+    if (phase !== 'placing' || !puzzle) return;
+    const userRanking = slots.map((p) => p?.id ?? null);
+    const { points, exact, adjacent } = scoreRanking(userRanking, puzzle.correctOrder);
+    setScore(points);
+    setBreakdown({ exact, adjacent });
+    setPhase('complete');
+    recordCompletion(points, exact, adjacent);
+  }, [phase, puzzle, slots, recordCompletion]);
+
   // Placement haptic fires inside RankSlot's Tappable — no extra impact here.
   const handleSlotPress = useCallback(
     (slotIndex: number) => {
@@ -161,22 +196,7 @@ export default function BlindRankingScreen() {
                 // All revealed
                 setTimeout(() => {
                   setPhase('complete');
-                  if (points >= MAX_RANKING_POINTS * 0.7) {
-                    playCheer();
-                  } else {
-                    playCrossbar();
-                  }
-                  useManagerStore.getState().awardDailyXp('blindranking', points * 10);
-                  useDailyProgressStore.getState().markCompleted('blindranking', points);
-                  // Time PB only counts on a winning ranking (>= 70% of points).
-                  useSolveTimeStore.getState().markCompleted('blindranking', {
-                    countsForBest: points >= MAX_RANKING_POINTS * 0.7,
-                  });
-                  // Persist the breakdown (DAILY run only) so re-entry can
-                  // restore the full reveal panel.
-                  if (isDailyRun.current) {
-                    useDailyResultsStore.getState().setResult('blindranking', { exact, adjacent });
-                  }
+                  recordCompletion(points, exact, adjacent);
                 }, 400);
               }
             }, i * 400);
@@ -184,7 +204,7 @@ export default function BlindRankingScreen() {
         }, 500);
       }
     },
-    [phase, puzzle, currentIdx, slots],
+    [phase, puzzle, currentIdx, slots, recordCompletion],
   );
 
   if (!puzzle) {
@@ -294,17 +314,13 @@ export default function BlindRankingScreen() {
 
       {/* Current player card */}
       {currentPlayer && phase === 'placing' && (
-        <ChallengerCard
-          player={currentPlayer}
-          visible={true}
-          categoryTitle={puzzle.category.title}
-        />
+        <ChallengerCard player={currentPlayer} visible={true} eyebrow="Where do they rank?" />
       )}
 
       {/* Rank slots */}
       <View style={layoutStyles.slotsContainer}>
         <Text style={styles.slotsLabel}>
-          {phase === 'placing' ? 'PLACE IN RANK' : 'YOUR RANKING'}
+          {phase === 'placing' ? 'TAP A SLOT TO PLACE' : 'YOUR RANKING'}
         </Text>
         {slots.map((player, i) => (
           <Animated.View key={i} entering={FadeIn.delay(i * 40).duration(motion.base)}>
@@ -315,10 +331,25 @@ export default function BlindRankingScreen() {
               disabled={phase !== 'placing' || player !== null}
               isRevealing={phase === 'revealing'}
               status={correctSlots[i]}
+              endLabel={
+                i === 0
+                  ? puzzle.category.topLabel
+                  : i === slots.length - 1
+                    ? puzzle.category.bottomLabel
+                    : undefined
+              }
             />
           </Animated.View>
         ))}
       </View>
+
+      {/* Give up during active placing: ends the game now, scoring the slots
+          filled so far and revealing the true order on the game-over surface. */}
+      {phase === 'placing' && (
+        <View style={layoutStyles.giveUpRow}>
+          <GiveUpButton onGiveUp={handleGiveUp} />
+        </View>
+      )}
     </Screen>
   );
 }
@@ -329,6 +360,10 @@ const layoutStyles = StyleSheet.create({
     alignItems: 'center',
   },
   slotsContainer: {
+    marginTop: spacing.lg,
+  },
+  giveUpRow: {
+    alignItems: 'center',
     marginTop: spacing.lg,
   },
   resultContainer: {

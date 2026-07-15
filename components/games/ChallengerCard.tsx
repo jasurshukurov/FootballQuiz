@@ -11,10 +11,11 @@ import { useTheme } from '@/hooks/useTheme';
 interface ChallengerCardProps {
   player: Player;
   visible: boolean;
-  categoryTitle: string;
+  /** Accent eyebrow above the name — an instruction ("Where do they rank?"). */
+  eyebrow: string;
 }
 
-export default function ChallengerCard({ player, visible, categoryTitle }: ChallengerCardProps) {
+export default function ChallengerCard({ player, visible, eyebrow }: ChallengerCardProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const translateX = useSharedValue(visible ? 0 : 80);
@@ -39,7 +40,7 @@ export default function ChallengerCard({ player, visible, categoryTitle }: Chall
     <Animated.View style={animatedStyle}>
       <GlassCard style={layoutStyles.card}>
         <View style={layoutStyles.content}>
-          <Text style={styles.categoryLabel}>{categoryTitle}</Text>
+          <Text style={styles.categoryLabel}>{eyebrow}</Text>
           <Text style={styles.playerName} numberOfLines={1}>
             {player.name}
           </Text>

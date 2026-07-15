@@ -54,13 +54,15 @@ function seededRandom(seed) {
   };
 }
 
+// Mirror of lib/blindRankingGenerator.ts CATEGORIES (kept in lockstep so the
+// e2e probe aligns on description). Every category ranks top-value-first; the
+// old ascending "Cheapest First" category was removed.
 const CATEGORIES = [
-  { id: 'most_expensive', title: 'Most Expensive', description: 'Rank by current market value (highest first)', sortField: 'market_value', dir: 'desc' },
-  { id: 'cheapest', title: 'Cheapest First', description: 'Rank by current market value (lowest first)', sortField: 'market_value', dir: 'asc' },
-  { id: 'highest_rating', title: 'FIFA Rating', description: 'Rank by peak FIFA/EAFC rating (highest first)', sortField: 'peak_game_rating', dir: 'desc' },
-  { id: 'peak_value', title: 'Peak Transfer Value', description: 'Rank by career peak valuation (highest first)', sortField: 'peak_valuation_euros', dir: 'desc' },
-  { id: 'most_elite_exposure', title: 'International Caps', description: 'Rank by international caps (most first)', sortField: 'elite_exposure', dir: 'desc' },
-  { id: 'most_famous', title: 'Most Famous', description: 'Rank by overall fame score (highest first)', sortField: 'fame_score', dir: 'desc' },
+  { id: 'most_expensive', title: 'Most Expensive', description: 'Rank by market value · priciest first', sortField: 'market_value', dir: 'desc' },
+  { id: 'highest_rating', title: 'FIFA Rating', description: 'Rank by peak game rating · highest first', sortField: 'peak_game_rating', dir: 'desc' },
+  { id: 'peak_value', title: 'Peak Transfer Value', description: 'Rank by career peak value · highest first', sortField: 'peak_valuation_euros', dir: 'desc' },
+  { id: 'most_elite_exposure', title: 'International Caps', description: 'Rank by international caps · most first', sortField: 'elite_exposure', dir: 'desc' },
+  { id: 'most_famous', title: 'Most Famous', description: 'Rank by fame · most famous first', sortField: 'fame_score', dir: 'desc' },
 ];
 
 function fieldValue(p, field) {

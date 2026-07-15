@@ -46,8 +46,18 @@ export interface RankingCategory {
   title: string;
   description: string;
   sortField: SortField;
+  /**
+   * Ranking is always top-value-first: #1 = the highest value for the field,
+   * #5 = the lowest. Kept as a field (rather than hardcoded 'desc') so a future
+   * category could invert without touching the sort code — but every shipped
+   * category is 'desc' so orientation stays consistent across days.
+   */
   sortDirection: 'asc' | 'desc';
   formatValue: (value: number) => string;
+  /** Micro tag shown on slot #1 to anchor the top end (e.g. "Most expensive"). */
+  topLabel: string;
+  /** Micro tag shown on slot #5 to anchor the bottom end (e.g. "Cheapest"). */
+  bottomLabel: string;
 }
 
 function formatRating(v: number): string {
@@ -62,38 +72,40 @@ function formatFame(v: number): string {
   return v.toFixed(1);
 }
 
+// Every category ranks top-value-first: #1 is the highest / most, #5 the lowest
+// / fewest. Orientation never flips between days, so the player only has to learn
+// the rule once. (The old ascending "Cheapest First" category was removed for
+// exactly this reason.)
 const CATEGORIES: RankingCategory[] = [
   {
     id: 'most_expensive',
     title: 'Most Expensive',
-    description: 'Rank by current market value (highest first)',
+    description: 'Rank by market value · priciest first',
     sortField: 'market_value',
     sortDirection: 'desc',
     formatValue: formatMarketValue,
-  },
-  {
-    id: 'cheapest',
-    title: 'Cheapest First',
-    description: 'Rank by current market value (lowest first)',
-    sortField: 'market_value',
-    sortDirection: 'asc',
-    formatValue: formatMarketValue,
+    topLabel: 'Most expensive',
+    bottomLabel: 'Cheapest',
   },
   {
     id: 'highest_rating',
     title: 'FIFA Rating',
-    description: 'Rank by peak FIFA/EAFC rating (highest first)',
+    description: 'Rank by peak game rating · highest first',
     sortField: 'peak_game_rating',
     sortDirection: 'desc',
     formatValue: formatRating,
+    topLabel: 'Highest rated',
+    bottomLabel: 'Lowest rated',
   },
   {
     id: 'peak_value',
     title: 'Peak Transfer Value',
-    description: 'Rank by career peak valuation (highest first)',
+    description: 'Rank by career peak value · highest first',
     sortField: 'peak_valuation_euros',
     sortDirection: 'desc',
     formatValue: formatMarketValue,
+    topLabel: 'Highest peak',
+    bottomLabel: 'Lowest peak',
   },
   {
     id: 'most_elite_exposure',
@@ -101,18 +113,22 @@ const CATEGORIES: RankingCategory[] = [
     // the previous "Senior Club Appearances" label graded knowledgeable
     // players wrong.
     title: 'International Caps',
-    description: 'Rank by international caps (most first)',
+    description: 'Rank by international caps · most first',
     sortField: 'elite_exposure',
     sortDirection: 'desc',
     formatValue: formatExposure,
+    topLabel: 'Most caps',
+    bottomLabel: 'Fewest caps',
   },
   {
     id: 'most_famous',
     title: 'Most Famous',
-    description: 'Rank by overall fame score (highest first)',
+    description: 'Rank by fame · most famous first',
     sortField: 'fame_score',
     sortDirection: 'desc',
     formatValue: formatFame,
+    topLabel: 'Most famous',
+    bottomLabel: 'Least famous',
   },
 ];
 
@@ -174,7 +190,7 @@ export function generateBlindRankingPuzzle(
   const category = CATEGORIES[Math.floor(rng() * CATEGORIES.length)];
 
   // Weekly difficulty band: household names early week, deep cuts on the
-  // weekend. A market-value floor keeps the "expensive/cheapest" categories
+  // weekend. A market-value floor keeps the "most expensive" category
   // meaningful; filterByFameBand widens the fame window if a band is too thin.
   const base = getAllPlayers().filter((p) => p.market_value >= 5_000_000 && isActivePlayer(p));
   // Skill tier (neutral 0 without play history) shifts the fame window by at
@@ -217,12 +233,18 @@ export interface RankingScore {
   adjacent: number;
 }
 
-/** Partial-credit scoring: exact position = 2, adjacent (off by one) = 1. */
-export function scoreRanking(userRanking: number[], correctOrder: number[]): RankingScore {
+/**
+ * Partial-credit scoring: exact position = 2, adjacent (off by one) = 1.
+ * A null entry marks an unplaced slot (e.g. after a give-up) and scores
+ * nothing — it is neither exact nor adjacent.
+ */
+export function scoreRanking(userRanking: (number | null)[], correctOrder: number[]): RankingScore {
   let exact = 0;
   let adjacent = 0;
   for (let i = 0; i < userRanking.length; i++) {
-    const correctIdx = correctOrder.indexOf(userRanking[i]);
+    const id = userRanking[i];
+    if (id == null) continue; // unplaced slot: no credit
+    const correctIdx = correctOrder.indexOf(id);
     if (correctIdx === i) exact++;
     else if (Math.abs(correctIdx - i) === 1) adjacent++;
   }
