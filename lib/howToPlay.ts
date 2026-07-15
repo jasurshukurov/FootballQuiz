@@ -54,7 +54,7 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
   missing11: {
     steps: [
       'A real match’s starting XI is on the pitch, names hidden.',
-      'Just type a starter’s name and it drops into their shirt, no tapping needed.',
+      'Search a starter and pick them from the suggestions; they drop into their shirt.',
       'Picking a name that never started costs one of your 3 lives.',
       'One hint per game reveals a slot’s position and first initial.',
     ],
@@ -75,8 +75,8 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
   toplists: {
     steps: [
       'Today’s famous ranking is hidden. Only ranks and numbers show.',
-      'Just type a name and its slot reveals instantly, in any order. Typing is always free.',
-      'Press GUESS for a deliberate attempt. A wrong one there costs one of your 5 lives.',
+      'Search a player and pick them from the suggestions, in any order.',
+      'A wrong pick or GUESS press costs one of your 5 lives.',
     ],
     footer:
       'Your rank badge climbs live with every name found. Full marks for naming everyone. One attempt per day, or hold Give Up to reveal the rest.',
@@ -114,8 +114,8 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
   careertimeline: {
     steps: [
       'A player’s career timeline is laid out with three of the middle clubs hidden.',
-      'Just type a club: if it matches any hidden stint it drops straight in. Tap a stint only to target it when a club repeats.',
-      'Picking a club that is not in the career costs a life; typing is always free.',
+      'Search a club and pick it from the suggestions; it fills any hidden stint it matches.',
+      'Picking a club that is not in the career costs a life. Tap a stint to target it when a club repeats.',
       'The lightbulb on a stint reveals the club’s first letter (−5 XP each).',
     ],
     footer: 'Find all three to win; spare lives boost your XP. Hold Give Up to reveal the answer.',

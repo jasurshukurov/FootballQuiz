@@ -24,7 +24,6 @@ import ScreenHeader from '@/components/ui/ScreenHeader';
 import PlayerSearchAutocomplete, {
   PlayerSearchAutocompleteHandle,
 } from '@/components/ui/PlayerSearchAutocomplete';
-import { foldName } from '@/lib/matchData';
 import LastChanceHint from '@/components/ui/LastChanceHint';
 import PracticePill from '@/components/ui/PracticePill';
 import PlayerCard from '@/components/ui/PlayerCard';
@@ -143,22 +142,8 @@ export default function WhoAreYaScreen() {
     [makeGuess, isPractice],
   );
 
-  // Type-to-solve: when the typed text folds exactly to the answer's FULL name,
-  // submit it through the same path a suggestion tap uses (grades correct,
-  // fires the same haptic/XP/streak). Full-name only — a surname shortcut would
-  // make this single-answer mode brute-typeable. A wrong name never auto-fires
-  // and still costs a guess only when its suggestion is explicitly picked.
-  const handleQueryChange = useCallback(
-    (text: string) => {
-      if (gameStatus !== 'playing' || !targetPlayer) return;
-      const folded = foldName(text);
-      if (folded.length < 2) return; // also swallows the clear()-fired onQueryChange('')
-      if (folded !== foldName(targetPlayer.name)) return;
-      handleSelectPlayer(targetPlayer);
-      searchRef.current?.clear();
-    },
-    [gameStatus, targetPlayer, handleSelectPlayer],
-  );
+  // Typing never auto-guesses (owner call 2026-07-15): a guess is made ONLY
+  // by tapping a suggestion row.
 
   // Hints are free for launch: no ad SDK ships, so no ad gate (an "(Ad)"
   // button that never shows an ad is an App Store rejection). Re-gate on
@@ -258,7 +243,6 @@ export default function WhoAreYaScreen() {
             ref={searchRef}
             players={allPlayers}
             onSelectPlayer={handleSelectPlayer}
-            onQueryChange={handleQueryChange}
             excludeIds={excludeIds}
             placeholder="Search player..."
           />

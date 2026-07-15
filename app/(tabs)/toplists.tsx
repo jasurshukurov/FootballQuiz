@@ -165,30 +165,9 @@ export default function TopListsScreen() {
 
   const handleSelectPlayer = useCallback((player: Player) => submitText(player.name), [submitText]);
 
-  // Type-to-reveal: on every keystroke, if the typed text already names a still
-  // hidden entry (same matchGuess as the deliberate path), fill that slot for
-  // free — no GUESS press, no life at stake. Typing is ALWAYS safe: a non-match
-  // does nothing, and an already-found match is a silent no-op. Clearing the box
-  // re-fires this with '', which the length guard below absorbs (no feedback loop).
-  const handleQueryChange = useCallback(
-    (text: string) => {
-      setGuess(text);
-      if (revealAll) return;
-      const trimmed = text.trim();
-      // matchGuess needs >= 3 chars; this also swallows the clear()'s '' callback.
-      if (trimmed.length < 3) return;
-      const idx = matchGuess(list, trimmed);
-      if (idx == null) return; // no match: typing costs nothing
-      if (foundIndices.has(idx)) return; // already revealed: silent no-op
-
-      // Fresh correct match. Start the clock and clear the box BEFORE revealing;
-      // the clear's re-entrant '' callback is guarded above.
-      if (!isPractice) useSolveTimeStore.getState().markStarted('toplists');
-      searchRef.current?.clear();
-      revealIndex(idx, { silentDuplicate: true });
-    },
-    [revealAll, isPractice, list, foundIndices, revealIndex],
-  );
+  // Typing never reveals a slot (owner call 2026-07-15): names land ONLY via
+  // a tapped suggestion or the GUESS button. Typing just tracks the raw text.
+  const handleQueryChange = useCallback((text: string) => setGuess(text), []);
 
   // Give up: reveal every remaining name and finish with what was found — a
   // graceful exit for a stalled board, scored on the names already named.

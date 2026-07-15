@@ -57,9 +57,6 @@ export default function CareerTimelineScreen() {
   const shareRef = useRef<View>(null);
   // Clears the club box after a typed name auto-fills its stint.
   const searchRef = useRef<ClubSearchAutocompleteHandle>(null);
-  // Pending debounced type-to-fill (armed by handleQueryChange, cancelled by
-  // any explicit fill/pick so the two paths never double-fire).
-  const typeFillTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dailyStreak = useDailyStateStore((s) => s.currentStreak);
   /** True while the current run IS the official daily (blob writes gate on it). */
   const isDailyRun = useRef(true);
@@ -167,7 +164,6 @@ export default function CareerTimelineScreen() {
       const node = nodes[index];
       if (!node.isHidden || node.isGuessed) return;
 
-      if (typeFillTimer.current) clearTimeout(typeFillTimer.current);
       triggerNotification(NotificationFeedbackType.Success);
       playCheer();
       setFeedback(null);
@@ -244,53 +240,9 @@ export default function CareerTimelineScreen() {
     [activeIdx, phase, puzzle, nodes, guessedCount, lives, hintsUsed, fillStint],
   );
 
-  // Type-to-fill: if the typed text exactly names a still-hidden stint's club,
-  // drop it in as a correct answer with no suggestion tap. Typing is ALWAYS
-  // free — a non-match does nothing and never costs a life (wrong clubs only
-  // cost when a suggestion is explicitly picked).
-  //
-  // DEBOUNCED: several club aliases are strict prefixes of full names ("Juve"
-  // -> Juventus, "Inter" -> Inter Milan), so firing per keystroke stole the
-  // fill mid-word while the user was still typing the long form. The fill only
-  // triggers after a short typing pause.
-  const TYPE_FILL_PAUSE_MS = 650;
-  // Timer callbacks must see CURRENT state, not the closure they were armed
-  // in — a ref refreshed every render sidesteps the stale-closure trap.
-  const typeFillState = useRef({ phase, puzzle, nodes, activeIdx, fillStint });
-  useEffect(() => {
-    typeFillState.current = { phase, puzzle, nodes, activeIdx, fillStint };
-  });
-  useEffect(
-    () => () => {
-      if (typeFillTimer.current) clearTimeout(typeFillTimer.current);
-    },
-    [],
-  );
-
-  const handleQueryChange = useCallback((text: string) => {
-    if (typeFillTimer.current) clearTimeout(typeFillTimer.current);
-    setFeedback(null); // typing again dismisses stale wrong-pick feedback
-    if (text.trim().length < 2) return;
-
-    typeFillTimer.current = setTimeout(() => {
-      const s = typeFillState.current;
-      if (s.phase !== 'playing' || !s.puzzle) return;
-
-      // Hidden, still-unsolved stints the typed text names. clubNamesMatch is
-      // the mode's own validator (canonical + alias groups), so it already
-      // accepts a club's shortened display name; no new fuzzy matcher here.
-      const matches = s.nodes
-        .map((node, index) => ({ node, index }))
-        .filter(({ node }) => node.isHidden && !node.isGuessed && clubNamesMatch(text, node.club));
-      if (matches.length === 0) return; // no match: typing costs nothing
-
-      // Same rule as an explicit pick: prefer the targeted stint when the same
-      // club repeats, else fill the earliest matching stint.
-      const target = matches.find(({ index }) => index === s.activeIdx) ?? matches[0];
-
-      s.fillStint(target.index);
-    }, TYPE_FILL_PAUSE_MS);
-  }, []);
+  // Typing never auto-fills (owner call 2026-07-15): a club is placed ONLY
+  // by tapping a suggestion row. Typing just dismisses stale feedback.
+  const handleQueryChange = useCallback(() => setFeedback(null), []);
 
   const handleGiveUp = useCallback(() => {
     if (phase !== 'playing' || !puzzle) return;

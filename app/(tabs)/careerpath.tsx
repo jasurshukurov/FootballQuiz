@@ -38,7 +38,7 @@ import FloodlightSweep from '@/components/ui/FloodlightSweep';
 import RetroButton from '@/components/ui/RetroButton';
 import ProximityChips from '@/components/career/ProximityChips';
 import { useTodaySolveTime } from '@/hooks/useSolveTimeStore';
-import { careerClueRank, normalizeGuess } from '@/lib/careerHelpers';
+import { careerClueRank } from '@/lib/careerHelpers';
 import ShareableCareerPathResult from '@/components/ShareableCareerPathResult';
 import Screen from '@/components/ui/Screen';
 import ScreenHeader from '@/components/ui/ScreenHeader';
@@ -124,23 +124,8 @@ export default function CareerScreen() {
     [makeGuess],
   );
 
-  // Type-to-solve: when the typed text folds exactly to the answer's FULL name,
-  // submit it as a correct guess with no suggestion tap. Full-name only — a
-  // surname shortcut would make this single-answer mode brute-typeable. A wrong
-  // name never auto-fires here and still costs an attempt only when its
-  // suggestion is explicitly picked. Mirrors handleSelectPlayer's correct path.
-  const handleQueryChange = useCallback(
-    (text: string) => {
-      if (gameStatus !== 'playing' || !currentPlayer) return;
-      const folded = normalizeGuess(text);
-      if (folded.length < 2) return; // also swallows the clear()-fired onQueryChange('')
-      if (folded !== normalizeGuess(currentPlayer.name)) return;
-      triggerImpact(ImpactFeedbackStyle.Medium);
-      makeGuess(currentPlayer.name);
-      searchRef.current?.clear();
-    },
-    [gameStatus, currentPlayer, makeGuess],
-  );
+  // Typing never auto-guesses (owner call 2026-07-15): a guess is made ONLY
+  // by tapping a suggestion row.
 
   const handleUnlockHint = useCallback(
     (hintId: string) => {
@@ -249,7 +234,6 @@ export default function CareerScreen() {
               ref={searchRef}
               players={allPlayers}
               onSelectPlayer={handleSelectPlayer}
-              onQueryChange={handleQueryChange}
               placeholder="Guess the player..."
               dropDirection="up"
             />

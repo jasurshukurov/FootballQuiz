@@ -160,20 +160,6 @@ export default function Missing11Screen() {
     () => buildSlotIndex(lineupNames, match?.match_id),
     [lineupNames, match],
   );
-  // Folded surname (last word) -> slots, so typing just "kelleher" can auto-fill.
-  // A surname shared by two starters maps to two slots and never auto-fires.
-  const surnameSlots = useMemo(() => {
-    const map = new Map<string, number[]>();
-    lineupNames.forEach((name, i) => {
-      const parts = foldName(name).split(/\s+/).filter(Boolean);
-      const surname = parts[parts.length - 1];
-      if (!surname) return;
-      const slots = map.get(surname);
-      if (slots) slots.push(i);
-      else map.set(surname, [i]);
-    });
-    return map;
-  }, [lineupNames]);
 
   // players_db id per slot, for the revealed player's portrait. Resolution
   // reuses the same identity paths as guessing: the alias layer (slotIndex.byId,
@@ -264,40 +250,8 @@ export default function Missing11Screen() {
     [gameState, slotIndex, revealedSlots, lives, finishGame],
   );
 
-  // Auto-fill from typing alone: on every keystroke, if the typed text names a
-  // hidden starter, that slot fills as a correct answer with no suggestion tap.
-  // Typing is ALWAYS free — a non-match does nothing, and never costs a life
-  // (wrong guesses only happen when a suggestion is explicitly picked).
-  const handleQueryChange = useCallback(
-    (text: string) => {
-      if (gameState !== 'playing') return;
-      const folded = foldName(text);
-      if (folded.length < 2) return;
-
-      // Full-name match first; then the surname of EXACTLY one still-hidden
-      // starter (an ambiguous shared surname stays inert until fully typed).
-      let slot = slotIndex.byName.get(folded);
-      if (slot === undefined) {
-        const hidden = (surnameSlots.get(folded) ?? []).filter((i) => !revealedSlots.has(i));
-        if (hidden.length === 1) slot = hidden[0];
-      }
-      if (slot === undefined) return; // no match: typing costs nothing
-      if (revealedSlots.has(slot)) return; // already placed: silent no-op
-
-      // Correct — same fill path as an explicit suggestion pick.
-      useSolveTimeStore.getState().markStarted('missing11');
-      triggerNotification(NotificationFeedbackType.Success);
-      const newRevealed = new Set(revealedSlots);
-      newRevealed.add(slot);
-      setRevealedSlots(newRevealed);
-      setFocusedSlot(null);
-      searchRef.current?.clear();
-      if (newRevealed.size === 11) {
-        finishGame(true, 11);
-      }
-    },
-    [gameState, slotIndex, surnameSlots, revealedSlots, finishGame],
-  );
+  // Typing never auto-fills a slot (owner call 2026-07-15): a starter is
+  // placed ONLY by tapping a suggestion row.
 
   // Tapping a slot reveals its position (a free recall nudge), never a guess.
   const handleSlotPress = useCallback(
@@ -450,7 +404,6 @@ export default function Missing11Screen() {
             ref={searchRef}
             players={guessPool}
             onSelectPlayer={handleGuessPlayer}
-            onQueryChange={handleQueryChange}
             placeholder="Type a starter's name..."
             dropDirection="up"
           />
