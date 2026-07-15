@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Image, Linking, StyleSheet, Text } from 'react-native';
+import { Linking, StyleSheet, Text } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -7,7 +7,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import GlassCard from '@/components/ui/GlassCard';
-import { type, spacing, borderRadius, motion } from '@/constants/theme';
+import PlayerPhoto from '@/components/ui/PlayerPhoto';
+import { type, spacing, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import { PhotoCredit } from '@/lib/photoCredits';
@@ -60,7 +61,7 @@ function GameOverCard({
           {isWin ? 'CORRECT!' : 'FULL TIME'}
         </Text>
 
-        {playerImage ? <Image source={{ uri: playerImage }} style={styles.image} /> : null}
+        {playerImage ? <PlayerPhoto url={playerImage} name={playerName} size={80} /> : null}
 
         <Text style={styles.playerName}>{playerName}</Text>
 
@@ -93,14 +94,6 @@ const createStyles = (c: ThemeColors) =>
       ...type.h2,
       textTransform: 'uppercase',
       letterSpacing: 2,
-    },
-    image: {
-      width: 80,
-      height: 80,
-      borderRadius: borderRadius.full,
-      borderWidth: 2,
-      borderColor: c.borderStrong,
-      marginTop: spacing.xs,
     },
     playerName: {
       ...type.h1,

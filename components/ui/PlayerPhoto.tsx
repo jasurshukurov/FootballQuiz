@@ -9,6 +9,9 @@ import { getPlayerPhoto } from '@/lib/playerPhotos';
 interface PlayerPhotoProps {
   /** players_db id; no photo (or a load failure) falls back to initials. */
   playerId?: string | number | null;
+  /** Explicit image URL — wins over the playerId lookup (Career Path photos
+   *  live in career_paths.json, a different id space). */
+  url?: string | null;
   /** Player name — drives the initials fallback. */
   name: string;
   size: number;
@@ -16,18 +19,24 @@ interface PlayerPhotoProps {
   blur?: number;
 }
 
+/** Wikimedia sports photos are often full-body action shots with the face in
+ *  the top fifth. The image is rendered taller than the circular frame and
+ *  top-anchored, so the visible circle favors the head instead of the torso
+ *  a center crop lands on. Headshots lose a sliver of chin at worst. */
+const CROP_HEIGHT_FACTOR = 1.4;
+
 /**
  * Circular player portrait with a same-footprint initials fallback, so
  * layouts never shift when a player has no licensed photo or the fetch
  * fails offline. Attribution: prominent placements pair this with the
  * photo's credit line; every photo is also listed on More -> Photo Credits.
  */
-export default function PlayerPhoto({ playerId, name, size, blur = 0 }: PlayerPhotoProps) {
+export default function PlayerPhoto({ playerId, url, name, size, blur = 0 }: PlayerPhotoProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const [failed, setFailed] = useState(false);
 
-  const photo = getPlayerPhoto(playerId);
+  const photoUrl = url || getPlayerPhoto(playerId)?.url;
 
   const initials = useMemo(
     () =>
@@ -46,7 +55,7 @@ export default function PlayerPhoto({ playerId, name, size, blur = 0 }: PlayerPh
     borderRadius: borderRadius.full,
   };
 
-  if (!photo || failed) {
+  if (!photoUrl || failed) {
     return (
       <View style={[styles.fallback, frame]}>
         {/* fontSize scales off the size prop — crest-style geometry, not type scale. */}
@@ -60,8 +69,9 @@ export default function PlayerPhoto({ playerId, name, size, blur = 0 }: PlayerPh
   return (
     <View style={[styles.photoFrame, frame]}>
       <Image
-        source={{ uri: photo.url }}
-        style={{ width: size, height: size }}
+        source={{ uri: photoUrl }}
+        style={{ width: size, height: size * CROP_HEIGHT_FACTOR }}
+        resizeMode="cover"
         blurRadius={blur}
         onError={() => setFailed(true)}
         accessibilityLabel={blur > 0 ? 'Blurred player photo' : `${name} photo`}
