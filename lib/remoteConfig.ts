@@ -7,6 +7,13 @@ export interface RemoteConfig {
   /** Kill switch for the global leaderboard (identity, sync and UI).
    *  Optional so older cached configs stay parseable; missing means enabled. */
   leaderboardEnabled?: boolean;
+  /** Kill switches for real club crest images (trademark exposure is managed
+   *  server-side: images + manifest live on the CDN, never in the binary).
+   *  Missing means OFF — the safe default for store review and stale caches.
+   *  Split per platform so web can show crests while the store apps stay
+   *  clean until legal clarity (owner decision 2026-07-16). */
+  clubLogosWeb?: boolean;
+  clubLogosNative?: boolean;
 }
 
 const DEFAULT_CONFIG: RemoteConfig = {
@@ -14,6 +21,8 @@ const DEFAULT_CONFIG: RemoteConfig = {
   disabled_modes: [],
   message: '',
   leaderboardEnabled: true,
+  clubLogosWeb: false,
+  clubLogosNative: false,
 };
 
 // Served via CloudFront (config bucket is private; OAC-only access).

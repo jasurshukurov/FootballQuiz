@@ -30,6 +30,14 @@ const BENIGN_CONSOLE = [
   /\[Fast Refresh\]/i,
   /favicon\.ico/i,
   /Failed to load resource: the server responded with a status of 404.*favicon/i,
+  // Club-logo manifest fetch from localhost is cross-origin; the sandboxed CI
+  // browser strips Access-Control-Allow-Origin from this one response
+  // (verified 2026-07-16: curl from the same CloudFront edge with identical
+  // headers receives the header, and other cross-origin fetches from the same
+  // page pass CORS). Production is same-origin so CORS never applies; on
+  // failure the app falls back to generic shields. Also matches the paired
+  // generic "Failed to load resource" line for the same URL.
+  /club-logos\/manifest\.json/i,
 ];
 export function isBenignConsole(text) {
   return BENIGN_CONSOLE.some((re) => re.test(text));
@@ -48,7 +56,10 @@ export async function newModeContext(browser) {
   const page = await context.newPage();
   const logs = { errors: [], pageerrors: [] };
   page.on('console', (m) => {
-    if (m.type() === 'error' && !isBenignConsole(m.text())) logs.errors.push(m.text());
+    // "Failed to load resource" messages carry the URL in location, not text —
+    // include it so URL-based benign patterns can match either.
+    const textWithUrl = `${m.text()} ${m.location()?.url ?? ''}`;
+    if (m.type() === 'error' && !isBenignConsole(textWithUrl)) logs.errors.push(m.text());
   });
   page.on('pageerror', (e) => logs.pageerrors.push(e.message));
   return { context, page, logs };

@@ -50,7 +50,7 @@ export default function PhotoCreditsScreen() {
   return (
     <Screen scroll={false}>
       <ScreenHeader
-        title="Photo Credits"
+        title="Credits & Trademarks"
         subtitle={`${total} player photos via Wikimedia Commons`}
       />
       <Text style={styles.intro}>
@@ -62,6 +62,19 @@ export default function PhotoCreditsScreen() {
         keyExtractor={(r) => r.key}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
+        ListFooterComponent={
+          <View style={styles.trademarkBlock}>
+            <Text style={styles.trademarkTitle}>Club names and badges</Text>
+            <Text style={styles.trademarkText}>
+              Football Trivia is an unofficial fan-made game. It is not affiliated with, endorsed
+              by, or sponsored by any football club, league, or governing body. All club names,
+              badges, and trademarks are the property of their respective owners and appear solely
+              to identify the clubs in quiz questions. If you are a rights holder and would like any
+              content reviewed or removed, contact support@footballtrivia.app and we will act
+              promptly.
+            </Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <Tappable
             onPress={() => {
@@ -94,6 +107,22 @@ const createStyles = (c: ThemeColors) =>
     },
     listContent: {
       paddingBottom: spacing.xxl,
+    },
+    trademarkBlock: {
+      marginTop: spacing.lg,
+      paddingTop: spacing.md,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: c.border,
+      gap: spacing.xs,
+    },
+    trademarkTitle: {
+      ...type.captionBold,
+      color: c.textPrimary,
+    },
+    trademarkText: {
+      ...type.micro,
+      color: c.textMuted,
+      lineHeight: 16,
     },
     row: {
       paddingVertical: spacing.sm,

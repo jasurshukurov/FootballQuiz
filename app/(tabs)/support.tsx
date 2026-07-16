@@ -286,8 +286,8 @@ export default function MoreScreen() {
         />
         <LinkRow
           icon="camera"
-          label="Photo credits"
-          sub="Player photos via Wikimedia Commons"
+          label="Credits & trademarks"
+          sub="Photo sources and club trademark notice"
           onPress={() => {
             router.push('/(tabs)/photocredits' as Href);
           }}

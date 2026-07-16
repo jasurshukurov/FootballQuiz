@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import { getTeamColors } from '@/data/teamColors';
+import { useClubLogoUrl } from '@/lib/clubLogos';
 import { getFlagEmoji } from '@/lib/countryFlags';
 import { useThemeColors } from '@/hooks/useTheme';
 
@@ -13,6 +14,9 @@ export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
   const colors = useThemeColors();
   // primary/secondary are real-world club colors (data, not theme).
   const { primary, secondary, pattern = 'circle' } = getTeamColors(teamName);
+  // Real crest, if the remote kill switch for this platform is on and the
+  // CDN manifest maps this club. Null otherwise → generic shield below.
+  const logoUrl = useClubLogoUrl(teamName);
 
   // National teams show their actual flag (Unicode emoji, IP-free) instead of
   // the generic club shield. fontSize here is crest geometry scaled off the
@@ -27,6 +31,19 @@ export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
           accessibilityLabel={`${teamName} flag`}>
           {flag}
         </Text>
+      </View>
+    );
+  }
+
+  if (logoUrl) {
+    return (
+      <View style={[styles.flagBox, { width: size, height: size * 1.15 }]}>
+        <Image
+          source={{ uri: logoUrl }}
+          resizeMode="contain"
+          style={{ width: size, height: size }}
+          accessibilityLabel={`${teamName} crest`}
+        />
       </View>
     );
   }
