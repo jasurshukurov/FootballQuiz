@@ -60,3 +60,6 @@ scripts/qa/playtest/revamp_a/
 scripts/qa/playtest/revamp_b/
 scripts/qa/playtest/reverify/
 data/backup_pre_audit_20260714/
+
+# Play Console service account key (secret, never commit)
+google-services-key.json
