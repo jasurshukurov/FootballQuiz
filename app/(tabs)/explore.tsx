@@ -452,6 +452,9 @@ export default function ExploreScreen() {
                 filter={(p) => !usedIds.has(p.id) && !activeCellWrongIds.includes(p.id)}
                 placeholder="Search any player…"
                 autoFocus
+                // Inline: the dialog card grows around the results instead of
+                // the list spilling past its rounded corners over Hint/Cancel.
+                listMode="inline"
               />
               <View style={layoutStyles.sheetFooter}>
                 <Tappable

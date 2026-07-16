@@ -66,12 +66,14 @@ export default function ChallengerCard({ player, visible, eyebrow }: ChallengerC
 // Layout-only styles stay module-scope.
 const layoutStyles = StyleSheet.create({
   card: {
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
+  // Kept tight: on a 844pt phone this card + 5 rank slots + Give Up must all
+  // clear the floating tab bar without scrolling.
   content: {
-    padding: spacing.lg,
+    padding: spacing.md,
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   teamRow: {
     flexDirection: 'row',

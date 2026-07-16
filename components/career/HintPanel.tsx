@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import GlassCard from '@/components/ui/GlassCard';
 import { spacing, type } from '@/constants/theme';
-import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import { HintButton } from '@/components/career/HintButton';
 
@@ -22,7 +21,6 @@ const HINTS = [
 
 function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: HintPanelProps) {
   const { colors } = useTheme();
-  const styles = useMemo(() => createStyles(colors), [colors]);
   const unlockedSet = useMemo(() => new Set(unlockedHints), [unlockedHints]);
   // No ad SDK ships, so no hint is ever ad-gated: the play-circle "watch ad"
   // badge is retired until real rewarded ads land.
@@ -61,7 +59,6 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
           ? `${freeHintsRemaining} free hint${freeHintsRemaining !== 1 ? 's' : ''} left`
           : 'Hints are on the house'}
       </Text>
-      <View style={styles.separator} />
       <View style={styles.row}>
         {renderHint(HINTS[0])}
         <View style={styles.gap} />
@@ -79,32 +76,29 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
 
 export const HintPanel = React.memo(HintPanelInner);
 
-const createStyles = (c: ThemeColors) =>
-  StyleSheet.create({
-    container: {
-      paddingHorizontal: spacing.lg,
-      paddingVertical: spacing.md,
-    },
-    freeText: {
-      ...type.captionBold,
-      textAlign: 'center',
-      marginBottom: spacing.sm,
-    },
-    separator: {
-      height: 1,
-      backgroundColor: c.border,
-      marginVertical: spacing.sm,
-    },
-    row: {
-      flexDirection: 'row',
-      backgroundColor: 'transparent',
-    },
-    gap: {
-      width: spacing.sm,
-      backgroundColor: 'transparent',
-    },
-    rowGap: {
-      height: spacing.sm,
-      backgroundColor: 'transparent',
-    },
-  });
+// Theme-independent since the separator went; plain module-scope styles.
+// Compact: this panel + search + Give Up share a phone screen with the
+// timeline; every point saved here is another visible career stint.
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  freeText: {
+    ...type.captionBold,
+    textAlign: 'center',
+    marginBottom: spacing.sm,
+  },
+  row: {
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+  },
+  gap: {
+    width: spacing.sm,
+    backgroundColor: 'transparent',
+  },
+  rowGap: {
+    height: spacing.sm,
+    backgroundColor: 'transparent',
+  },
+});

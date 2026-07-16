@@ -26,6 +26,30 @@ const HARD_SHORT_NAMES: Record<string, string> = {
   'Turn- und Sportgemeinschaft 1899 Hoffenheim Fußball-Spielbetriebs': 'Hoffenheim',
   'Verein für Bewegungsspiele Stuttgart 1893': 'Stuttgart',
   'Association sportive de Monaco Football Club': 'AS Monaco',
+  // Names generic stripping mangles ("Genoa Cricket and") or misses entirely.
+  // Note: phrases ending in an accented letter (Balompié, Fútbol) silently
+  // fail LEGAL_PHRASES' trailing \b (é is not \w), hence the hard entries.
+  'Genoa Cricket and Football Club': 'Genoa',
+  'Lille Olympique Sporting Club': 'Lille',
+  'Racing Club de Strasbourg Alsace': 'Strasbourg',
+  "Olympique Gymnaste Club Nice Côte d'Azur": 'OGC Nice',
+  "Angers Sporting Club de l'Ouest": 'Angers',
+  'RasenBallsport Leipzig': 'RB Leipzig',
+  'Athletic Club Bilbao': 'Athletic Bilbao',
+  'Real Club Celta de Vigo S. A. D.': 'Celta Vigo',
+  'Real Club Celta de Vigo': 'Celta Vigo',
+  'Football Club Lorient-Bretagne Sud': 'Lorient',
+  'Thonon Évian Grand Genève FC': 'Évian',
+  'FC Girondins Bordeaux': 'Bordeaux',
+  'FC Sochaux-Montbéliard': 'Sochaux',
+  'Atalanta Bergamasca Calcio S.p.a.': 'Atalanta',
+  'Rayo Vallecano de Madrid S. A. D.': 'Rayo Vallecano',
+  'Real Sociedad de Fútbol S.A.D.': 'Real Sociedad',
+  'Real Sociedad de Fútbol': 'Real Sociedad',
+  'Club Atlético de Madrid S.A.D.': 'Atlético Madrid',
+  'Club Atlético de Madrid': 'Atlético Madrid',
+  'Real Betis Balompié S.A.D.': 'Real Betis',
+  'Real Betis Balompié': 'Real Betis',
 };
 
 // Organizational phrases stripped wherever they appear (longest first so

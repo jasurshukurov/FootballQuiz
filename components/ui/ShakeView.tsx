@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -9,9 +10,11 @@ import Animated, {
 interface ShakeViewProps {
   shake: boolean;
   children: React.ReactNode;
+  /** Extra layout styles (e.g. flex:1 so a shaking area can share height). */
+  style?: StyleProp<ViewStyle>;
 }
 
-export default function ShakeView({ shake, children }: ShakeViewProps) {
+export default function ShakeView({ shake, children, style }: ShakeViewProps) {
   const translateX = useSharedValue(0);
 
   useEffect(() => {
@@ -31,5 +34,5 @@ export default function ShakeView({ shake, children }: ShakeViewProps) {
     transform: [{ translateX: translateX.value }],
   }));
 
-  return <Animated.View style={animatedStyle}>{children}</Animated.View>;
+  return <Animated.View style={[animatedStyle, style]}>{children}</Animated.View>;
 }

@@ -18,6 +18,11 @@ interface StatCardProps {
   stat: string;
   formattedValue: string;
   difficulty?: string; // "Easy" | "Medium" | "Hard" | "Expert"
+  /** Phone-height layout: tighter paddings + smaller type so two stacked
+   *  cards and the answer buttons all fit above the floating tab bar. */
+  compact?: boolean;
+  /** Very short viewports only: drop the portrait to buy back height. */
+  hidePhoto?: boolean;
 }
 
 const buildDifficultyColors = (c: ThemeColors): Record<string, { bg: string; text: string }> => ({
@@ -33,6 +38,8 @@ export default function StatCard({
   stat,
   formattedValue,
   difficulty,
+  compact = false,
+  hidePhoto = false,
 }: StatCardProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -40,16 +47,22 @@ export default function StatCard({
   const diffColor = difficulty ? difficultyColors[difficulty] : undefined;
 
   return (
-    <GlassCard style={layoutStyles.card}>
-      <View style={layoutStyles.photoWrap}>
-        <PlayerPhoto playerId={player.id} name={player.name} size={56} />
-      </View>
-      <Text style={styles.playerName} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={2}>
+    <GlassCard style={compact ? layoutStyles.cardCompact : layoutStyles.card}>
+      {!hidePhoto && (
+        <View style={layoutStyles.photoWrap}>
+          <PlayerPhoto playerId={player.id} name={player.name} size={compact ? 44 : 56} />
+        </View>
+      )}
+      <Text
+        style={compact ? styles.playerNameCompact : styles.playerName}
+        adjustsFontSizeToFit
+        minimumFontScale={0.7}
+        numberOfLines={compact ? 1 : 2}>
         {player.name}
       </Text>
       <View style={layoutStyles.teamRow}>
         <TeamCrest teamName={shortenClubName(player.current_team)} size={20} />
-        <Text style={styles.teamName} numberOfLines={2}>
+        <Text style={styles.teamName} numberOfLines={compact ? 1 : 2}>
           {shortenClubName(player.current_team)}
         </Text>
       </View>
@@ -61,10 +74,10 @@ export default function StatCard({
       <Text style={styles.statLabel}>{stat}</Text>
       {showValue ? (
         <PopInView>
-          <Text style={styles.statValue}>{formattedValue}</Text>
+          <Text style={compact ? styles.statValueCompact : styles.statValue}>{formattedValue}</Text>
         </PopInView>
       ) : (
-        <Text style={styles.statHidden}>?</Text>
+        <Text style={compact ? styles.statHiddenCompact : styles.statHidden}>?</Text>
       )}
     </GlassCard>
   );
@@ -77,6 +90,15 @@ const layoutStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 180,
+  },
+  // flex:1 lets two stacked cards split whatever height the phone leaves
+  // between the header and the pinned answer buttons.
+  cardCompact: {
+    flex: 1,
+    minHeight: 0,
+    padding: spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   photoWrap: {
     marginBottom: spacing.sm,
@@ -104,6 +126,15 @@ const createStyles = (c: ThemeColors) =>
       textAlign: 'center',
       marginBottom: spacing.sm,
     },
+    // flexShrink 0 on the compact text rows: inside the flexed card, overflow
+    // must clip at the card edge — never crush a line to 0 height.
+    playerNameCompact: {
+      ...type.h3,
+      color: c.textPrimary,
+      textAlign: 'center',
+      marginBottom: spacing.xs,
+      flexShrink: 0,
+    },
     teamName: {
       ...type.bodyBold,
       color: c.textSecondary,
@@ -124,9 +155,21 @@ const createStyles = (c: ThemeColors) =>
       color: c.accent,
       textAlign: 'center',
     },
+    statValueCompact: {
+      ...type.h1,
+      color: c.accent,
+      textAlign: 'center',
+      flexShrink: 0,
+    },
     statHidden: {
       ...type.display,
       color: c.textPrimary,
       textAlign: 'center',
+    },
+    statHiddenCompact: {
+      ...type.h1,
+      color: c.textPrimary,
+      textAlign: 'center',
+      flexShrink: 0,
     },
   });

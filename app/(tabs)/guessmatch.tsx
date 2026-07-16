@@ -345,11 +345,11 @@ const layoutStyles = StyleSheet.create({
   statusRow: {
     flexDirection: 'row',
     gap: spacing.sm,
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   lineup: {
     gap: spacing.xs,
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   hiddenBlock: {
     alignItems: 'center',
@@ -365,14 +365,14 @@ const layoutStyles = StyleSheet.create({
   revealButton: {
     alignSelf: 'center',
     minWidth: 220,
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   options: {
     gap: spacing.sm,
   },
   giveUpRow: {
     alignItems: 'center',
-    marginTop: spacing.lg,
+    marginTop: spacing.sm,
   },
   resultContainer: {
     alignItems: 'center',
@@ -402,13 +402,13 @@ const createStyles = (c: ThemeColors) =>
       flexDirection: 'row',
       alignItems: 'center',
       gap: spacing.md,
-      paddingVertical: spacing.md,
+      paddingVertical: spacing.sm,
       paddingHorizontal: spacing.md,
       borderRadius: borderRadius.lg,
       borderWidth: 1,
       borderColor: c.accentBorder,
       backgroundColor: c.bgElevated,
-      marginBottom: spacing.md,
+      marginBottom: spacing.sm,
     },
     teamName: {
       ...type.h2,
@@ -431,7 +431,9 @@ const createStyles = (c: ThemeColors) =>
       backgroundColor: c.bgCard,
     },
     statusValue: {
-      ...type.scoreLarge,
+      // score (not scoreLarge): on a phone the whole board — banner, status,
+      // lineup, 4 options, Give Up — must clear the floating tab bar.
+      ...type.score,
       color: c.textPrimary,
     },
     statusValueAccent: {

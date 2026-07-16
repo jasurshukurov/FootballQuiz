@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, useWindowDimensions } from 'react-native';
 import Animated, {
   FadeIn,
   useSharedValue,
@@ -95,6 +95,14 @@ export default function HigherLowerScreen() {
   const slideX = useSharedValue(0);
   const challengerOpacity = useSharedValue(1);
   const screenWidth = Dimensions.get('window').width;
+
+  // Phone layout: below ~560pt the two cards can't sit side by side, so they
+  // stack and flex-share the height between the header and the pinned answer
+  // buttons (nothing may hide behind the floating tab bar). The portraits go
+  // too: even a 44pt thumbnail makes the flexed cards overflow on an 844pt
+  // phone, and flexbox resolves that by crushing the player name to 0.
+  const { width: winWidth } = useWindowDimensions();
+  const stacked = winWidth < 560;
 
   const currentPlayer = queue[currentIndex];
   const challengerPlayer = queue[currentIndex + 1];
@@ -417,9 +425,9 @@ export default function HigherLowerScreen() {
       />
 
       {/* Cards */}
-      <ShakeView shake={shakeWrong}>
-        <Animated.View style={[styles.cardsContainer, slideStyle]}>
-          <View style={styles.cardWrapper}>
+      <ShakeView shake={shakeWrong} style={stacked ? layout.flexFill : undefined}>
+        <Animated.View style={[stacked ? styles.cardsColumn : styles.cardsRow, slideStyle]}>
+          <View style={stacked ? styles.cardWrapperStacked : styles.cardWrapper}>
             <Text style={styles.cardLabel}>CURRENT</Text>
             <StatCard
               player={currentPlayer}
@@ -427,14 +435,17 @@ export default function HigherLowerScreen() {
               stat="Market Value"
               formattedValue={formatMarketValue(currentPlayer.market_value)}
               difficulty={getPlayerDifficulty(currentPlayer)}
+              compact={stacked}
+              hidePhoto={stacked}
             />
           </View>
           <View style={styles.vsContainer}>
-            <View style={styles.vsPill}>
+            <View style={stacked ? styles.vsPillStacked : styles.vsPill}>
               <Text style={styles.vsText}>VS</Text>
             </View>
           </View>
-          <Animated.View style={[styles.cardWrapper, challengerAnimStyle]}>
+          <Animated.View
+            style={[stacked ? styles.cardWrapperStacked : styles.cardWrapper, challengerAnimStyle]}>
             <Text style={styles.cardLabel}>CHALLENGER</Text>
             <StatCard
               player={challengerPlayer}
@@ -442,13 +453,15 @@ export default function HigherLowerScreen() {
               stat="Market Value"
               formattedValue={formatMarketValue(challengerPlayer.market_value)}
               difficulty={getPlayerDifficulty(challengerPlayer)}
+              compact={stacked}
+              hidePhoto={stacked}
             />
           </Animated.View>
         </Animated.View>
       </ShakeView>
 
       {/* Buttons — result haptics fire in handleGuess, so no per-tap haptic here */}
-      <View style={styles.buttonsContainer}>
+      <View style={stacked ? styles.buttonsContainerStacked : styles.buttonsContainer}>
         <Tappable
           haptic="none"
           style={[
@@ -486,6 +499,14 @@ export default function HigherLowerScreen() {
   );
 }
 
+// Layout-only styles stay module-scope.
+const layout = StyleSheet.create({
+  flexFill: {
+    flex: 1,
+    minHeight: 0,
+  },
+});
+
 const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
   StyleSheet.create({
     centerFill: {
@@ -514,17 +535,31 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
     bestValueFlash: {
       color: c.streakBright,
     },
-    cardsContainer: {
+    cardsRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      flexWrap: 'wrap',
       justifyContent: 'center',
       gap: spacing.md,
       paddingVertical: spacing.xl,
     },
+    // Stacked phone layout: the column fills the space between header and the
+    // pinned buttons; each card flex-shares it so nothing overflows behind
+    // the floating tab bar.
+    cardsColumn: {
+      flex: 1,
+      minHeight: 0,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      gap: spacing.xs,
+      paddingVertical: spacing.sm,
+    },
     cardWrapper: {
       flex: 1,
       minWidth: 150,
+    },
+    cardWrapperStacked: {
+      flex: 1,
+      minHeight: 0,
     },
     cardLabel: {
       ...type.captionBold,
@@ -536,6 +571,7 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
     },
     vsContainer: {
       paddingHorizontal: spacing.sm,
+      alignItems: 'center',
     },
     vsPill: {
       backgroundColor: c.accentSoft,
@@ -545,6 +581,14 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       borderWidth: 1,
       borderColor: c.accentBorder,
       marginTop: spacing.xl,
+    },
+    vsPillStacked: {
+      backgroundColor: c.accentSoft,
+      borderRadius: borderRadius.full,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.xs / 2,
+      borderWidth: 1,
+      borderColor: c.accentBorder,
     },
     vsText: {
       ...type.h1,
@@ -557,6 +601,12 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       flexDirection: 'row',
       gap: spacing.md,
       paddingVertical: spacing.xl,
+    },
+    buttonsContainerStacked: {
+      flexDirection: 'row',
+      gap: spacing.md,
+      paddingTop: spacing.md,
+      paddingBottom: spacing.xs,
     },
     bigButton: {
       flex: 1,

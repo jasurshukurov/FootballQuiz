@@ -48,6 +48,10 @@ interface PlayerSearchAutocompleteProps {
   disabled?: boolean;
   autoFocus?: boolean;
   dropDirection?: 'down' | 'up';
+  /** 'overlay' (default) floats the results over whatever is below the input.
+   *  'inline' renders them in normal flow so a host dialog grows to contain
+   *  them instead of the list spilling past its rounded edges (Grid sheet). */
+  listMode?: 'overlay' | 'inline';
 }
 
 /**
@@ -70,6 +74,7 @@ const PlayerSearchAutocomplete = forwardRef<
     disabled = false,
     autoFocus = false,
     dropDirection = 'down',
+    listMode = 'overlay',
   },
   ref,
 ) {
@@ -184,14 +189,27 @@ const PlayerSearchAutocomplete = forwardRef<
           returnKeyType={Platform.OS === 'web' ? 'search' : 'none'}
         />
         {query.length > 0 && (
-          <Tappable onPress={handleClear} haptic="none" accessibilityLabel="Clear search">
+          <Tappable
+            onPress={handleClear}
+            haptic="none"
+            accessibilityLabel="Clear search"
+            // 18pt glyph alone is far below the 44pt touch minimum.
+            hitSlop={12}>
             <FontAwesome name="times-circle" size={18} color={colors.textMuted} />
           </Tappable>
         )}
       </View>
 
       {showDropdown && (
-        <View style={[styles.dropdown, isUp ? layout.dropdownUp : layout.dropdownDown]}>
+        <View
+          style={[
+            styles.dropdown,
+            listMode === 'inline'
+              ? layout.dropdownInline
+              : isUp
+                ? [layout.dropdownOverlay, layout.dropdownUp]
+                : [layout.dropdownOverlay, layout.dropdownDown],
+          ]}>
           <View style={styles.dropdownBg} />
           {Platform.OS !== 'web' ? (
             <BlurView
@@ -230,6 +248,12 @@ const layout = StyleSheet.create({
   searchIcon: {
     marginRight: spacing.sm,
   },
+  dropdownOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    zIndex: 100,
+  },
   dropdownDown: {
     top: '100%',
     marginTop: spacing.xs,
@@ -237,6 +261,9 @@ const layout = StyleSheet.create({
   dropdownUp: {
     bottom: '100%',
     marginBottom: spacing.xs,
+  },
+  dropdownInline: {
+    marginTop: spacing.xs,
   },
   list: {
     maxHeight: 296,
@@ -274,11 +301,8 @@ const createStyles = (c: ThemeColors) =>
       minHeight: 44,
       color: c.textPrimary,
     },
+    // Positioning lives in layout.dropdownOverlay / layout.dropdownInline.
     dropdown: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      zIndex: 100,
       maxHeight: 300,
       borderWidth: 1,
       borderColor: c.border,

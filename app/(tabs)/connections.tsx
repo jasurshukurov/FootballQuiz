@@ -610,6 +610,9 @@ const createStyles = (c: ThemeColors) =>
     spacer: {
       flex: 1,
       minHeight: spacing.lg,
+      // Capped: uncapped flex parked the controls at the very bottom of tall
+      // phones — a dead band above them, Give Up kissing the tab bar.
+      maxHeight: spacing.xxl * 2,
     },
     buttonRow: {
       flexDirection: 'row',

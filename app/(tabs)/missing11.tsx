@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { NotificationFeedbackType } from 'expo-haptics';
 
@@ -69,6 +69,15 @@ const POSITION_HINT: string[] = [
 export default function Missing11Screen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
+  // Size the pitch from the viewport so pitch + guess bar + hints fit above
+  // the floating tab bar on phones (~430pt of chrome around the pitch). The
+  // 280pt width floor keeps the 4-across jersey rows (64pt slots) usable —
+  // below it the screen just scrolls a little instead.
+  const { width: winW, height: winH } = useWindowDimensions();
+  const pitchWidth = Math.max(
+    280,
+    Math.min(Math.min(winW, 600) - spacing.lg * 2, (winH - 430) * 0.7),
+  );
   const [match, setMatch] = useState<Match | null>(null);
   const [teamSide, setTeamSide] = useState<'a' | 'b'>('a');
   const [revealedSlots, setRevealedSlots] = useState<Set<number>>(new Set());
@@ -380,15 +389,17 @@ export default function Missing11Screen() {
         </View>
       </View>
 
-      {/* Pitch */}
-      <SoccerPitch
-        match={match}
-        teamSide={teamSide}
-        revealedSlots={revealedSlots}
-        shakingSlot={null}
-        onSlotPress={handleSlotPress}
-        slotPhotoIds={slotPhotoIds}
-      />
+      {/* Pitch (width caps its aspect-ratio height — see pitchWidth above) */}
+      <View style={{ width: pitchWidth, alignSelf: 'center' }}>
+        <SoccerPitch
+          match={match}
+          teamSide={teamSide}
+          revealedSlots={revealedSlots}
+          shakingSlot={null}
+          onSlotPress={handleSlotPress}
+          slotPhotoIds={slotPhotoIds}
+        />
+      </View>
 
       {/* Guess bar (auto-places into the matching slot) + hints */}
       {gameState === 'playing' && (

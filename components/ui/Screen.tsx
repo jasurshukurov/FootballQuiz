@@ -68,7 +68,12 @@ export default function Screen({
   contentStyle,
 }: ScreenProps) {
   const insets = useSafeAreaInsets();
-  const paddingBottom = withTabBar ? TAB_BAR_HEIGHT + insets.bottom + spacing.lg : insets.bottom;
+  // TAB_BAR_HEIGHT + spacing.lg clears the floating pill exactly (its bottom
+  // offset is spacing.lg on web/Android); the extra spacing.md is breathing
+  // room so the last row never kisses the pill at full scroll.
+  const paddingBottom = withTabBar
+    ? TAB_BAR_HEIGHT + insets.bottom + spacing.lg + spacing.md
+    : insets.bottom;
   // Web has no notch inset, which left content glued to the browser edge —
   // give it a real top margin. Native keeps the safe-area value untouched.
   const paddingTop = Math.max(insets.top, Platform.OS === 'web' ? spacing.lg : 0) + spacing.sm;

@@ -79,6 +79,8 @@ export default function ScreenHeader({
               haptic="impact"
               accessibilityLabel="How to play"
               testID="how-to-play-button"
+              // Visual stays 32pt; hit area meets the 44pt touch minimum.
+              hitSlop={8}
               style={({ pressed }) => [
                 styles.infoButton,
                 pressed ? { backgroundColor: colors.bgCardPressed } : null,

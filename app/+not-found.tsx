@@ -13,7 +13,9 @@ export default function NotFoundScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
+      {/* headerShown false: the default nav header renders off-theme (white
+          bar) on web and the screen has its own link home. */}
+      <Stack.Screen options={{ title: 'Not found', headerShown: false }} />
       <Screen scroll={false} withTabBar={false} contentStyle={layout.content}>
         <View style={layout.body}>
           <Text style={layout.emoji}>{'⚽'}</Text>
