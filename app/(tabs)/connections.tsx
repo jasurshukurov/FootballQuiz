@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { NotificationFeedbackType } from 'expo-haptics';
 import RankBadge from '@/components/ui/RankBadge';
@@ -345,6 +345,12 @@ export default function ConnectionsScreen() {
 
   const won = solvedCategories.length >= 4;
 
+  // Shortest mobile-web viewports (Safari's URL bar eats ~180pt): the fixed
+  // layout can't fit the board + controls, so fall back to a scrolling page —
+  // otherwise Give Up ends up painted (unreachably) under the floating tab bar.
+  const { height: winHeight } = useWindowDimensions();
+  const shortViewport = winHeight < 600;
+
   const solveTimeMs = useTodaySolveTime('connections');
 
   const shareText = useMemo(
@@ -387,7 +393,7 @@ export default function ConnectionsScreen() {
   }
 
   return (
-    <Screen scroll={false}>
+    <Screen scroll={shortViewport}>
       <ScreenHeader
         eyebrow={
           isPractice ? 'Practice' : `Daily #${getDailyNumber(practiceDateToDate(practiceDate))}`
@@ -438,29 +444,28 @@ export default function ConnectionsScreen() {
       {/* Push controls to the bottom of the screen */}
       <View style={styles.spacer} />
 
-      {/* Hint — up to MAX_HINTS per game; label shows how many remain. */}
-      {!gameOver && (
-        <View style={styles.hintRow}>
-          <RetroButton
-            title={hintsUsed === 0 ? 'Hint' : `Hint (${MAX_HINTS - hintsUsed} left)`}
-            onPress={handleHint}
-            variant="secondary"
-            disabled={hintsUsed >= MAX_HINTS}
-          />
-        </View>
-      )}
-
-      {/* Action buttons */}
+      {/* One control row: Hint / Shuffle / Clear / Submit. Stacking Hint on
+          its own row pushed Give Up under the floating tab bar on phones. */}
       {!gameOver && (
         <View style={styles.buttonRow}>
           <View style={styles.buttonWrapper}>
-            <RetroButton title="Shuffle" onPress={handleShuffle} variant="secondary" />
+            <RetroButton
+              title={hintsUsed === 0 ? 'Hint' : `Hint (${MAX_HINTS - hintsUsed})`}
+              onPress={handleHint}
+              variant="secondary"
+              compact
+              disabled={hintsUsed >= MAX_HINTS}
+            />
+          </View>
+          <View style={styles.buttonWrapper}>
+            <RetroButton title="Shuffle" onPress={handleShuffle} variant="secondary" compact />
           </View>
           <View style={styles.buttonWrapper}>
             <RetroButton
-              title="Deselect All"
+              title="Clear"
               onPress={handleDeselectAll}
               variant="secondary"
+              compact
               disabled={selected.size === 0}
             />
           </View>
@@ -469,6 +474,7 @@ export default function ConnectionsScreen() {
               title="Submit"
               onPress={handleSubmit}
               variant="primary"
+              compact
               disabled={selected.size !== 4}
             />
           </View>
@@ -592,15 +598,11 @@ const createStyles = (c: ThemeColors) =>
       color: c.accentBright,
       textAlign: 'center',
     },
-    hintRow: {
-      alignItems: 'center',
-      marginBottom: spacing.sm,
-    },
     mistakesRow: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: spacing.xl,
+      marginTop: spacing.sm,
       gap: spacing.sm,
     },
     mistakesLabel: {
@@ -609,7 +611,7 @@ const createStyles = (c: ThemeColors) =>
     },
     spacer: {
       flex: 1,
-      minHeight: spacing.lg,
+      minHeight: spacing.sm,
       // Capped: uncapped flex parked the controls at the very bottom of tall
       // phones — a dead band above them, Give Up kissing the tab bar.
       maxHeight: spacing.xxl * 2,
@@ -624,7 +626,7 @@ const createStyles = (c: ThemeColors) =>
     },
     giveUpRow: {
       alignItems: 'center',
-      marginTop: spacing.md,
+      marginTop: spacing.sm,
     },
     modalCategories: {
       width: '100%',

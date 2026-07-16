@@ -261,6 +261,13 @@ export default function CareerScreen() {
             position={currentPlayer?.position}
             isWin={isWon}
           />
+          {/* The endless loop's primary CTA comes right after the reveal so it
+              lands inside the first viewport — buried under the summary +
+              share row + NEXT UP card it was ~2 screens of scrolling away
+              (user feedback 2026-07-15). */}
+          <View style={styles.replayButton}>
+            <RetroButton title="Next Player" onPress={resetGame} />
+          </View>
           <Animated.View entering={FadeIn.delay(150).duration(motion.base)}>
             <CareerResultSummary
               clueRank={clueRank}
@@ -282,10 +289,6 @@ export default function CareerScreen() {
           {/* Streak now lives in the progression column, so drop the duplicate
               badge here — keep confetti + NEXT UP + countdown. */}
           <GameOverExtras win={isWon} showStreak={false} currentModeKey="careerpath" />
-          {/* The endless loop: deal the next player. */}
-          <View style={styles.replayButton}>
-            <RetroButton title="Next" onPress={resetGame} />
-          </View>
           {/* Offscreen shareable view */}
           <View style={styles.offscreen}>
             <View ref={shareRef} collapsable={false}>
@@ -323,13 +326,13 @@ const createStyles = (c: ThemeColors) =>
       color: c.accent,
     },
     bottomSection: {
-      gap: spacing.md,
+      gap: spacing.sm,
     },
     attemptsRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginTop: spacing.md,
+      marginTop: spacing.sm,
     },
     timelineWrap: {
       flex: 1,
@@ -345,6 +348,7 @@ const createStyles = (c: ThemeColors) =>
       maxWidth: 440,
       alignSelf: 'center',
       gap: spacing.xs,
+      marginTop: spacing.md,
     },
     replayCaption: {
       ...type.micro,

@@ -12,9 +12,11 @@ interface HintPanelProps {
   freeHintsRemaining: number;
 }
 
+// Short labels: the four hints share ONE row on phones (a 2x2 grid cost the
+// timeline a whole club card of height), so every label must fit ~72pt.
 const HINTS = [
-  { hintId: 'SORT', label: 'Sort Timeline', icon: 'sort' },
-  { hintId: 'NATIONALITY', label: 'Nationality', icon: 'flag' },
+  { hintId: 'SORT', label: 'Sort', icon: 'sort' },
+  { hintId: 'NATIONALITY', label: 'Nation', icon: 'flag' },
   { hintId: 'POSITION', label: 'Position', icon: 'futbol-o' },
   { hintId: 'YEARS', label: 'Years', icon: 'calendar' },
 ] as const;
@@ -63,9 +65,7 @@ function HintPanelInner({ unlockedHints, onUnlockHint, freeHintsRemaining }: Hin
         {renderHint(HINTS[0])}
         <View style={styles.gap} />
         {renderHint(HINTS[1])}
-      </View>
-      <View style={styles.rowGap} />
-      <View style={styles.row}>
+        <View style={styles.gap} />
         {renderHint(HINTS[2])}
         <View style={styles.gap} />
         {renderHint(HINTS[3])}
@@ -78,16 +78,17 @@ export const HintPanel = React.memo(HintPanelInner);
 
 // Theme-independent since the separator went; plain module-scope styles.
 // Compact: this panel + search + Give Up share a phone screen with the
-// timeline; every point saved here is another visible career stint.
+// timeline; every point saved here is another visible career stint (a 2x2
+// grid cost ~52pt — one whole club card).
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
   },
   freeText: {
-    ...type.captionBold,
+    ...type.micro,
     textAlign: 'center',
-    marginBottom: spacing.sm,
+    marginBottom: spacing.xs,
   },
   row: {
     flexDirection: 'row',
@@ -95,10 +96,6 @@ const styles = StyleSheet.create({
   },
   gap: {
     width: spacing.sm,
-    backgroundColor: 'transparent',
-  },
-  rowGap: {
-    height: spacing.sm,
     backgroundColor: 'transparent',
   },
 });

@@ -11,7 +11,7 @@ import { ImpactFeedbackStyle, NotificationFeedbackType } from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { Player } from '@/types/player';
-import { spacing, borderRadius, type, motion } from '@/constants/theme';
+import { spacing, borderRadius, type, motion, touch } from '@/constants/theme';
 import { ThemeColors, ThemeShadows } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import Tappable from '@/components/ui/Tappable';
@@ -101,8 +101,13 @@ export default function HigherLowerScreen() {
   // buttons (nothing may hide behind the floating tab bar). The portraits go
   // too: even a 44pt thumbnail makes the flexed cards overflow on an 844pt
   // phone, and flexbox resolves that by crushing the player name to 0.
-  const { width: winWidth } = useWindowDimensions();
+  // Below ~620pt of height (mobile Safari with its URL bar eats ~180pt) even
+  // the compact cards overflow and centered content clips at BOTH ends — the
+  // name off the top, the value off the bottom — so `short` drops the
+  // CURRENT/CHALLENGER labels and the in-card pill/stat-label rows too.
+  const { width: winWidth, height: winHeight } = useWindowDimensions();
   const stacked = winWidth < 560;
+  const short = stacked && winHeight < 620;
 
   const currentPlayer = queue[currentIndex];
   const challengerPlayer = queue[currentIndex + 1];
@@ -428,7 +433,10 @@ export default function HigherLowerScreen() {
       <ShakeView shake={shakeWrong} style={stacked ? layout.flexFill : undefined}>
         <Animated.View style={[stacked ? styles.cardsColumn : styles.cardsRow, slideStyle]}>
           <View style={stacked ? styles.cardWrapperStacked : styles.cardWrapper}>
-            <Text style={styles.cardLabel}>CURRENT</Text>
+            {/* Stacked: no CURRENT/CHALLENGER eyebrows — the floating VS pill
+                overlapped them, and shown-value vs "?" already tells the two
+                cards apart. Wide layouts keep the labels. */}
+            {!stacked && <Text style={styles.cardLabel}>CURRENT</Text>}
             <StatCard
               player={currentPlayer}
               showValue={true}
@@ -437,16 +445,20 @@ export default function HigherLowerScreen() {
               difficulty={getPlayerDifficulty(currentPlayer)}
               compact={stacked}
               hidePhoto={stacked}
+              minimal={short}
             />
           </View>
-          <View style={styles.vsContainer}>
+          {/* Stacked: the pill floats over the seam between the cards instead
+              of occupying a band of its own — vertical space is the scarce
+              resource on phones. */}
+          <View style={stacked ? styles.vsContainerStacked : styles.vsContainer}>
             <View style={stacked ? styles.vsPillStacked : styles.vsPill}>
-              <Text style={styles.vsText}>VS</Text>
+              <Text style={stacked ? styles.vsTextStacked : styles.vsText}>VS</Text>
             </View>
           </View>
           <Animated.View
             style={[stacked ? styles.cardWrapperStacked : styles.cardWrapper, challengerAnimStyle]}>
-            <Text style={styles.cardLabel}>CHALLENGER</Text>
+            {!stacked && <Text style={styles.cardLabel}>CHALLENGER</Text>}
             <StatCard
               player={challengerPlayer}
               showValue={showChallengerValue}
@@ -455,6 +467,7 @@ export default function HigherLowerScreen() {
               difficulty={getPlayerDifficulty(challengerPlayer)}
               compact={stacked}
               hidePhoto={stacked}
+              minimal={short}
             />
           </Animated.View>
         </Animated.View>
@@ -466,6 +479,7 @@ export default function HigherLowerScreen() {
           haptic="none"
           style={[
             styles.bigButton,
+            stacked && styles.bigButtonStacked,
             styles.higherButton,
             gameState !== 'playing' && styles.bigButtonDisabled,
           ]}
@@ -479,6 +493,7 @@ export default function HigherLowerScreen() {
           haptic="none"
           style={[
             styles.bigButton,
+            stacked && styles.bigButtonStacked,
             styles.lowerButton,
             gameState !== 'playing' && styles.bigButtonDisabled,
           ]}
@@ -550,8 +565,8 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       minHeight: 0,
       alignItems: 'stretch',
       justifyContent: 'center',
-      gap: spacing.xs,
-      paddingVertical: spacing.sm,
+      gap: spacing.md,
+      paddingVertical: spacing.xs,
     },
     cardWrapper: {
       flex: 1,
@@ -573,6 +588,15 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       paddingHorizontal: spacing.sm,
       alignItems: 'center',
     },
+    // Floats over the seam between the stacked cards (absolute, so it costs
+    // zero height); zIndex keeps it painted above both card borders.
+    vsContainerStacked: {
+      position: 'absolute',
+      alignSelf: 'center',
+      top: '50%',
+      marginTop: -touch.min / 3,
+      zIndex: 2,
+    },
     vsPill: {
       backgroundColor: c.accentSoft,
       borderRadius: borderRadius.full,
@@ -583,12 +607,13 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       marginTop: spacing.xl,
     },
     vsPillStacked: {
-      backgroundColor: c.accentSoft,
+      backgroundColor: c.bgElevated,
       borderRadius: borderRadius.full,
-      paddingHorizontal: spacing.lg,
+      paddingHorizontal: spacing.md,
       paddingVertical: spacing.xs / 2,
       borderWidth: 1,
       borderColor: c.accentBorder,
+      ...shadows.cardShadow,
     },
     vsText: {
       ...type.h1,
@@ -596,6 +621,13 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       textShadowColor: c.accent,
       textShadowOffset: { width: 0, height: 0 },
       textShadowRadius: 12,
+    },
+    vsTextStacked: {
+      ...type.h3,
+      color: c.textPrimary,
+      textShadowColor: c.accent,
+      textShadowOffset: { width: 0, height: 0 },
+      textShadowRadius: 8,
     },
     buttonsContainer: {
       flexDirection: 'row',
@@ -605,7 +637,7 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
     buttonsContainerStacked: {
       flexDirection: 'row',
       gap: spacing.md,
-      paddingTop: spacing.md,
+      paddingTop: spacing.sm,
       paddingBottom: spacing.xs,
     },
     bigButton: {
@@ -618,6 +650,10 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
       gap: spacing.md,
       ...shadows.cardShadow,
     },
+    // Phone: touch.cta-height answer buttons — 72pt was stealing card space.
+    bigButtonStacked: {
+      minHeight: touch.cta,
+    },
     higherButton: {
       backgroundColor: c.accent,
     },
@@ -629,7 +665,7 @@ const createStyles = (c: ThemeColors, shadows: ThemeShadows) =>
     },
     giveUpRow: {
       alignItems: 'center',
-      marginTop: spacing.md,
+      marginTop: spacing.sm,
     },
     higherArrow: {
       ...type.h1,

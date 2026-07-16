@@ -221,17 +221,19 @@ export default function WhoAreYaScreen() {
         // of chrome height here comes straight out of the guess list below.
         <View style={styles.photoClue}>
           {/* The clue sharpens with every guess spent. Multiplicative decay
-              (×0.7 per guess: 25, 18, 12, 9, 6, 4, 3, 2), not linear steps —
-              25px vs 22px both read as identical mush, while a ~30% cut is
-              visible every time. Floors at 2 so it NEVER renders fully sharp
-              while playing. */}
+              (×0.56 per guess: 22, 12, 7, 4, 2, 1, 1, 1), not linear steps —
+              close blur values read as identical mush, while a ~45% cut is
+              visible every time. The old ×0.7 curve (25 → 18 → 12 → 9…) never
+              got recognizable before the run ended (user feedback 2026-07-15);
+              now mid-game is a real hint and the last chances are nearly
+              sharp. Floors at 1 so it never renders fully sharp while playing. */}
           {showPhoto && (
             <Animated.View entering={FadeIn.duration(motion.base)} style={styles.photoClueImage}>
               <PlayerPhoto
                 playerId={targetPlayer.id}
                 name={targetPlayer.name}
                 size={96}
-                blur={Math.max(2, Math.round(25 * Math.pow(0.7, guesses.length)))}
+                blur={Math.max(1, Math.round(22 * Math.pow(0.56, guesses.length)))}
               />
             </Animated.View>
           )}

@@ -23,6 +23,9 @@ interface StatCardProps {
   compact?: boolean;
   /** Very short viewports only: drop the portrait to buy back height. */
   hidePhoto?: boolean;
+  /** Shortest viewports (mobile Safari + URL bar): also drop the difficulty
+   *  pill and stat label so name/club/value never clip at the card edges. */
+  minimal?: boolean;
 }
 
 const buildDifficultyColors = (c: ThemeColors): Record<string, { bg: string; text: string }> => ({
@@ -40,6 +43,7 @@ export default function StatCard({
   difficulty,
   compact = false,
   hidePhoto = false,
+  minimal = false,
 }: StatCardProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -60,18 +64,22 @@ export default function StatCard({
         numberOfLines={compact ? 1 : 2}>
         {player.name}
       </Text>
-      <View style={layoutStyles.teamRow}>
+      <View style={compact ? layoutStyles.teamRowCompact : layoutStyles.teamRow}>
         <TeamCrest teamName={shortenClubName(player.current_team)} size={20} />
         <Text style={styles.teamName} numberOfLines={compact ? 1 : 2}>
           {shortenClubName(player.current_team)}
         </Text>
       </View>
-      {difficulty && diffColor && (
-        <View style={[layoutStyles.difficultyPill, { backgroundColor: diffColor.bg }]}>
+      {!minimal && difficulty && diffColor && (
+        <View
+          style={[
+            compact ? layoutStyles.difficultyPillCompact : layoutStyles.difficultyPill,
+            { backgroundColor: diffColor.bg },
+          ]}>
           <Text style={[styles.difficultyText, { color: diffColor.text }]}>{difficulty}</Text>
         </View>
       )}
-      <Text style={styles.statLabel}>{stat}</Text>
+      {!minimal && <Text style={styles.statLabel}>{stat}</Text>}
       {showValue ? (
         <PopInView>
           <Text style={compact ? styles.statValueCompact : styles.statValue}>{formattedValue}</Text>
@@ -109,11 +117,24 @@ const layoutStyles = StyleSheet.create({
     gap: spacing.sm,
     marginBottom: spacing.md,
   },
+  teamRowCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginBottom: spacing.xs,
+  },
   difficultyPill: {
     paddingHorizontal: spacing.sm + 2,
     paddingVertical: spacing.xs / 2,
     borderRadius: borderRadius.full,
     marginBottom: spacing.sm,
+    alignSelf: 'center',
+  },
+  difficultyPillCompact: {
+    paddingHorizontal: spacing.sm + 2,
+    paddingVertical: spacing.xs / 2,
+    borderRadius: borderRadius.full,
+    marginBottom: spacing.xs,
     alignSelf: 'center',
   },
 });
@@ -156,7 +177,7 @@ const createStyles = (c: ThemeColors) =>
       textAlign: 'center',
     },
     statValueCompact: {
-      ...type.h1,
+      ...type.h2,
       color: c.accent,
       textAlign: 'center',
       flexShrink: 0,
@@ -167,7 +188,7 @@ const createStyles = (c: ThemeColors) =>
       textAlign: 'center',
     },
     statHiddenCompact: {
-      ...type.h1,
+      ...type.h2,
       color: c.textPrimary,
       textAlign: 'center',
       flexShrink: 0,

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 
 import { borderRadius } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
@@ -23,14 +23,27 @@ interface PlayerPhotoProps {
  *  edges into transparency, which read as a dark vignette inside the frame
  *  (the card background showed through); oversizing the layer pushes that
  *  soft fringe outside the visible circle so the fill reads as the photo
- *  simply extending outward. Implemented with negative insets, NOT a
- *  transform: iOS Safari lets transformed children escape a border-radius +
- *  overflow-hidden clip (the blurred square painted outside the circle). */
-const FILL_SCALE = 1.7;
+ *  simply extending outward. 1.45 with the proportional blur below keeps the
+ *  fringe just outside the frame; the old 1.7 read as a jarring hyper-zoom
+ *  behind the sharp copy (user feedback 2026-07-15). Implemented with
+ *  negative insets, NOT a transform: iOS Safari lets transformed children
+ *  escape a border-radius + overflow-hidden clip (the blurred square painted
+ *  outside the circle). */
+const FILL_SCALE = 1.45;
 
 /** Fill blur grows with the frame: a fixed 18 turned small (40pt) slot
  *  portraits into a muddy smear; proportional keeps it an ambient glow. */
-const fillBlur = (size: number) => Math.max(6, Math.round(size * 0.14));
+const fillBlur = (size: number) => Math.max(8, Math.round(size * 0.18));
+
+/** iOS Safari also lets FILTERED (blurred) children paint outside a
+ *  border-radius + overflow-hidden clip — the fill square leaked around the
+ *  circle. A no-op alpha mask (fully opaque everywhere) forces WebKit to
+ *  composite the subtree through the rounded clip; Chrome/Firefox render it
+ *  unchanged. Web-only object so native StyleSheet validation never sees it. */
+const webClipFix =
+  Platform.OS === 'web'
+    ? ({ WebkitMaskImage: '-webkit-radial-gradient(white, black)' } as const)
+    : null;
 
 /**
  * Circular player portrait with a same-footprint initials fallback, so
@@ -74,7 +87,7 @@ export default function PlayerPhoto({ playerId, url, name, size, blur = 0 }: Pla
   }
 
   return (
-    <View style={[styles.photoFrame, frame]}>
+    <View style={[styles.photoFrame, frame, webClipFix as never]}>
       {/* Blur-fill square (owner call 2026-07-15): non-square photos are never
           cropped. A blurred, zoomed copy of the SAME image fills the frame,
           and the sharp copy sits on top letterboxed (contain), so the whole

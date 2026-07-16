@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-import { borderRadius, spacing, type } from '@/constants/theme';
+import { borderRadius, spacing, touch, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import Tappable from '@/components/ui/Tappable';
@@ -49,23 +49,27 @@ function HintButtonInner({
       accessibilityLabel={label}>
       {isLocked ? (
         <View style={styles.iconContainer}>
-          <FontAwesome name="lock" size={20} color={colors.textMuted} />
+          <FontAwesome name="lock" size={14} color={colors.textMuted} />
         </View>
       ) : isUnlocked ? (
         <View style={styles.iconContainer}>
-          <FontAwesome name="check" size={16} color={colors.textOnAccent} />
+          <FontAwesome name="check" size={14} color={colors.textOnAccent} />
         </View>
       ) : (
         <View style={styles.iconContainer}>
           <FontAwesome
             name={icon as React.ComponentProps<typeof FontAwesome>['name']}
-            size={16}
+            size={14}
             color={colors.accent}
           />
         </View>
       )}
 
-      <Text style={[styles.label, { color: textColor }]} numberOfLines={2}>
+      <Text
+        style={[styles.label, { color: textColor }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.8}>
         {label}
       </Text>
 
@@ -74,8 +78,6 @@ function HintButtonInner({
           <FontAwesome name="play-circle" size={14} color={colors.streak} />
         </View>
       )}
-
-      {!isPremium && !isUnlocked && !isLocked && <View style={styles.badgePlaceholder} />}
     </Tappable>
   );
 }
@@ -84,14 +86,17 @@ export const HintButton = React.memo(HintButtonInner);
 
 const createStyles = (c: ThemeColors) =>
   StyleSheet.create({
+    // Icon stacked over the label: four of these share one row on phones,
+    // so each gets ~72pt of width — a side-by-side icon+label doesn't fit.
     button: {
       flex: 1,
-      minHeight: 48,
+      minHeight: touch.min,
       borderRadius: borderRadius.lg,
-      flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: spacing.md,
-      paddingVertical: spacing.sm,
+      justifyContent: 'center',
+      paddingHorizontal: spacing.xs,
+      paddingVertical: spacing.xs,
+      gap: 2,
     },
     buttonAvailable: {
       backgroundColor: c.bgElevated,
@@ -114,22 +119,19 @@ const createStyles = (c: ThemeColors) =>
       opacity: 0.7,
     },
     iconContainer: {
-      width: 24,
+      height: 16,
       alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: 'transparent',
     },
     label: {
-      flex: 1,
-      ...type.captionBold,
+      ...type.micro,
       textAlign: 'center',
     },
     badge: {
-      width: 24,
-      alignItems: 'center',
-      backgroundColor: 'transparent',
-    },
-    badgePlaceholder: {
-      width: 24,
+      position: 'absolute',
+      top: spacing.xs,
+      right: spacing.xs,
       backgroundColor: 'transparent',
     },
   });

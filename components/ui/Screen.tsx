@@ -11,7 +11,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenBackground from '@/components/ui/ScreenBackground';
 import { spacing } from '@/constants/theme';
 
-export const TAB_BAR_HEIGHT = 64;
+// 56 (was 64): every point of chrome comes out of the play area on phones —
+// the pill still fits its icon + label rows comfortably (2026-07-15 density pass).
+export const TAB_BAR_HEIGHT = 56;
 
 /**
  * Desktop-web content column. At wide web viewports screen content is capped
@@ -75,8 +77,9 @@ export default function Screen({
     ? TAB_BAR_HEIGHT + insets.bottom + spacing.lg + spacing.md
     : insets.bottom;
   // Web has no notch inset, which left content glued to the browser edge —
-  // give it a real top margin. Native keeps the safe-area value untouched.
-  const paddingTop = Math.max(insets.top, Platform.OS === 'web' ? spacing.lg : 0) + spacing.sm;
+  // give it a real top margin (md: mobile-web viewports are short, so the old
+  // lg+sm=24pt band was play-area money). Native keeps the safe-area value.
+  const paddingTop = Math.max(insets.top, Platform.OS === 'web' ? spacing.md : 0) + spacing.xs;
   // Wide desktop web only: center content in a phone-ish column. undefined on
   // native / narrow web so those style arrays stay byte-identical. One 600pt
   // column for ALL wide web (with or without the sidebar) — a narrower

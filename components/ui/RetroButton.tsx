@@ -16,6 +16,9 @@ interface RetroButtonProps {
   /** Haptic fired on press, forwarded to Tappable: light impact (default),
    *  success notification, or none. */
   haptic?: TappableHaptic;
+  /** Dense control rows (4-up on phones): slims the horizontal padding and
+   *  drops the primary CTA to touch.min height. Still clears touch.min. */
+  compact?: boolean;
 }
 
 interface VariantTokens {
@@ -49,6 +52,7 @@ export default function RetroButton({
   variant = 'primary',
   disabled = false,
   haptic = 'impact',
+  compact = false,
 }: RetroButtonProps) {
   const { colors } = useTheme();
   const variants = useMemo(() => buildVariants(colors), [colors]);
@@ -62,15 +66,16 @@ export default function RetroButton({
   const containerStyle = useCallback(
     ({ pressed }: TappableState) => [
       styles.base,
+      compact && styles.baseCompact,
       {
         backgroundColor: disabled ? colors.bgCard : pressed ? tokens.bgPressed : tokens.bg,
         borderWidth: tokens.border ? 1 : 0,
         borderColor: tokens.border ?? 'transparent',
-        height: variant === 'primary' ? touch.cta : undefined,
+        height: variant === 'primary' && !compact ? touch.cta : undefined,
         opacity: disabled ? 0.5 : 1,
       },
     ],
-    [colors, tokens, variant, disabled],
+    [colors, tokens, variant, disabled, compact],
   );
 
   const labelStyle: TextStyle = { color: disabled ? colors.textMuted : tokens.label };
@@ -98,6 +103,10 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.lg,
     paddingHorizontal: spacing.xl,
     paddingVertical: spacing.md,
+  },
+  baseCompact: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
   },
   text: {
     ...type.bodyBold,

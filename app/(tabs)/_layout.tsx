@@ -57,8 +57,10 @@ export default function TabLayout() {
           // No-op on native (Text is non-selectable by default).
           userSelect: 'none' as const,
         },
+        // No extra item padding: the 56pt pill leaves exactly enough for the
+        // 24pt icon row + 14pt label after react-navigation's own 5pt paddings.
         tabBarItemStyle: {
-          paddingTop: spacing.xs,
+          paddingTop: 0,
         },
         tabBarStyle: {
           // Desktop web hides the floating pill entirely — the sidebar navigates.
@@ -84,8 +86,8 @@ export default function TabLayout() {
           borderColor: theme.colors.border,
           backgroundColor: theme.colors.bgElevated,
           opacity: 0.94,
-          paddingTop: spacing.xs,
-          paddingBottom: spacing.xs,
+          paddingTop: spacing.xs / 2,
+          paddingBottom: spacing.xs / 2,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 8 },
           shadowOpacity: 0.4,
