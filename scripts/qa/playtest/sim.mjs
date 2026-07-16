@@ -5,15 +5,19 @@ const require = createRequire(import.meta.url);
 
 const players = require('../../../data/players_db_v1.json');
 const fameById = require('../../../data/fame_by_id.json');
-const fameScores = require('../../../data/fame_scores.json');
-
-const norm = (s) =>
-  s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-
-const fameByNameMetrics = new Map();
-for (const e of fameScores) fameByNameMetrics.set(norm(e.name), e);
+const playerAges = require('../../../data/player_ages.json');
 
 const getFame = (p) => fameById[String(p.id)];
+
+// Mirror of lib/dailyPuzzle.ts getPlayerAge (manual parse of the
+// "YYYY-MM-DD HH:MM:SS" DOB strings).
+const playerAge = (p) => {
+  const dob = playerAges[String(p.id)];
+  if (!dob) return null;
+  const [y, m, d] = dob.slice(0, 10).split('-').map(Number);
+  if (!y || !m || !d) return null;
+  return Math.floor((Date.now() - Date.UTC(y, m - 1, d)) / (365.25 * 24 * 60 * 60 * 1000));
+};
 const fameScore = (p) => getFame(p)?.fame_score;
 const isActive = (p) => p.status !== 'retired';
 
@@ -60,14 +64,13 @@ function seededRandom(seed) {
 const CATEGORIES = [
   { id: 'most_expensive', title: 'Most Expensive', description: 'Rank by market value · priciest first', sortField: 'market_value', dir: 'desc' },
   { id: 'peak_value', title: 'Peak Transfer Value', description: 'Rank by career peak value · highest first', sortField: 'peak_valuation_euros', dir: 'desc' },
-  { id: 'most_famous', title: 'Most Famous', description: 'Rank by fame · most famous first', sortField: 'fame_score', dir: 'desc' },
+  { id: 'oldest', title: 'Oldest Player', description: 'Rank by age · oldest first', sortField: 'age', dir: 'desc' },
 ];
 
 function fieldValue(p, field) {
   if (field === 'market_value') return p.market_value;
-  if (field === 'fame_score') return getFame(p)?.fame_score ?? 0;
   if (field === 'peak_valuation_euros') return getFame(p)?.peak_valuation ?? 0;
-  return fameByNameMetrics.get(p.normalized_name || norm(p.name))?.metrics?.[field] ?? 0;
+  return playerAge(p) ?? 0;
 }
 
 export function generateBlindRankingPuzzle(seed) {

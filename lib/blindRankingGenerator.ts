@@ -1,6 +1,7 @@
 import { Player } from '@/types/player';
 import { getAllPlayers, isActivePlayer, getFameForPlayer } from './playerData';
 import { formatMarketValue } from './higherLowerGenerator';
+import { getPlayerAge } from './dailyPuzzle';
 import { getTodayDateString, seededShuffle } from './dailySeed';
 import {
   bandForDate,
@@ -9,37 +10,10 @@ import {
   skillAdjustedBand,
 } from './difficultyCurve';
 
-// fame_scores.json is kept ONLY for the ranking metrics not present in
-// fame_by_id.json (peak_game_rating, elite_exposure, wikipedia_pageviews).
-// fame_score and peak_valuation are joined by id (disambiguated) instead.
-const fameScoresData: FameEntry[] = require('@/data/fame_scores.json');
-
-interface FameEntry {
-  global_id: number;
-  name: string;
-  fame_score: number;
-  difficulty_tier: string;
-  is_modern: boolean;
-  metrics: Record<string, number>;
-}
-
-const fameByName: Map<string, FameEntry> = new Map();
-for (const entry of fameScoresData) {
-  const norm = entry.name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-  fameByName.set(norm, entry);
-}
-
-type SortField =
-  | 'market_value'
-  | 'fame_score'
-  | 'peak_game_rating'
-  | 'peak_valuation_euros'
-  | 'elite_exposure'
-  | 'wikipedia_pageviews';
+// Every sort field maps to REAL, externally verifiable data (owner call
+// 2026-07-15: no rankings over invented numbers). fame_score is still used
+// below \u2014 but only to pick the difficulty band, never as a displayed ranking.
+type SortField = 'market_value' | 'peak_valuation_euros' | 'age';
 
 export interface RankingCategory {
   id: string;
@@ -60,14 +34,20 @@ export interface RankingCategory {
   bottomLabel: string;
 }
 
-function formatFame(v: number): string {
-  return v.toFixed(1);
-}
-
 // Every category ranks top-value-first: #1 is the highest / most, #5 the lowest
 // / fewest. Orientation never flips between days, so the player only has to learn
 // the rule once. (The old ascending "Cheapest First" category was removed for
 // exactly this reason.)
+//
+// FACTUAL DATA ONLY (owner calls 2026-07-15): removed 'highest_rating'
+// ("Overall/FIFA Rating") and 'most_elite_exposure' ("International Caps") —
+// both SYNTHESIZED by scripts/etl/generate_popularity_metrics.js — and then
+// 'most_famous' (fame_score), which is our own composite index, not an
+// external fact. Surviving categories rank real-world data: market_value
+// (players_db), peak_valuation_euros (real MV/fees — the pool's
+// isActivePlayer + MV floor excludes the retired players whose peaks were
+// ETL-backfilled), and age (real DOBs in data/player_ages.json; players
+// without a DOB drop out via the val<=0 rule in collectSpaced).
 const CATEGORIES: RankingCategory[] = [
   {
     id: 'most_expensive',
@@ -79,16 +59,6 @@ const CATEGORIES: RankingCategory[] = [
     topLabel: 'Most expensive',
     bottomLabel: 'Cheapest',
   },
-  // REMOVED (owner call 2026-07-15): 'highest_rating' ("Overall/FIFA Rating",
-  // peak_game_rating) and 'most_elite_exposure' ("International Caps",
-  // elite_exposure). Both fields are SYNTHESIZED by
-  // scripts/etl/generate_popularity_metrics.js (randomInRange bucketed by
-  // market value/tier), not real-world data — displaying them as facts graded
-  // knowledgeable players wrong (e.g. Guehi "92 OVR"). The surviving
-  // categories rank REAL data only: market_value (players_db),
-  // peak_valuation_euros (real MV/fees — the pool's isActivePlayer + MV floor
-  // excludes the retired players whose peaks were ETL-backfilled), and
-  // fame_score (our own composite index, honestly labeled).
   {
     id: 'peak_value',
     title: 'Peak Transfer Value',
@@ -100,14 +70,14 @@ const CATEGORIES: RankingCategory[] = [
     bottomLabel: 'Lowest peak',
   },
   {
-    id: 'most_famous',
-    title: 'Most Famous',
-    description: 'Rank by fame · most famous first',
-    sortField: 'fame_score',
+    id: 'oldest',
+    title: 'Oldest Player',
+    description: 'Rank by age · oldest first',
+    sortField: 'age',
     sortDirection: 'desc',
-    formatValue: formatFame,
-    topLabel: 'Most famous',
-    bottomLabel: 'Least famous',
+    formatValue: (v) => `${v} yrs`,
+    topLabel: 'Oldest',
+    bottomLabel: 'Youngest',
   },
 ];
 
@@ -123,11 +93,9 @@ function seededRandom(seed: number): () => number {
 
 function getFieldValue(player: Player, field: SortField): number {
   if (field === 'market_value') return player.market_value;
-  // id-based (disambiguated) for the two fields fame_by_id carries.
-  if (field === 'fame_score') return getFameForPlayer(player)?.fame_score ?? 0;
+  // id-based (disambiguated) join for the peak carried by fame_by_id.
   if (field === 'peak_valuation_euros') return getFameForPlayer(player)?.peak_valuation ?? 0;
-  // remaining metrics only exist in fame_scores.json, joined by name.
-  return fameByName.get(player.normalized_name)?.metrics[field] ?? 0;
+  return getPlayerAge(player.id) ?? 0;
 }
 
 export interface BlindRankingPuzzle {
