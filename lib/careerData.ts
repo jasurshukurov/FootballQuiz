@@ -100,9 +100,17 @@ export function getCareerPlayersByTier(tier: DifficultyTier): RankedCareerPlayer
   return getAllCareerPlayers().filter((p) => p.tier === tier);
 }
 
-export function getRandomCareerPlayer(tier?: DifficultyTier): CareerPlayer {
+export function getRandomCareerPlayer(
+  tier?: DifficultyTier,
+  excludeIds?: readonly number[],
+): CareerPlayer {
   const pool = getGuessableCareerPlayers(tier);
-  return pool[Math.floor(Math.random() * pool.length)];
+  // Endless "Next" must feel fresh: skip recently dealt players. Only fall
+  // back to the full pool when the exclusion would empty it (tiny tier pools).
+  const exclude = new Set(excludeIds ?? []);
+  const fresh = pool.filter((p) => !exclude.has(p.id));
+  const candidates = fresh.length > 0 ? fresh : pool;
+  return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
 export function getDailyCareerPlayer(dayNumber: number): CareerPlayer {

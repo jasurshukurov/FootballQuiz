@@ -14,6 +14,14 @@ import {
 
 const MAX_ATTEMPTS = 3;
 
+// How many recently dealt players "Next" refuses to repeat. Small enough that
+// even a narrow tier pool (getRandomCareerPlayer falls back to the full pool
+// if the exclusion empties it) can absorb the exclusions.
+const RECENT_DEALS_REMEMBERED = 15;
+
+const rememberDealt = (recent: number[], id: number): number[] =>
+  [...recent.filter((r) => r !== id), id].slice(-RECENT_DEALS_REMEMBERED);
+
 interface CareerGameState {
   currentPlayer: CareerPlayer | null;
   scrambledCareer: CareerEntry[];
@@ -33,6 +41,9 @@ interface CareerGameState {
    *  app open it resets to false so startDailyGame's guard can't mistake a
    *  practice board (dailySeed null) for the official daily. */
   isPractice: boolean;
+  /** Last few dealt player ids (newest last) — random deals skip these so
+   *  "Next" never re-deals someone just played. Persisted (additive). */
+  recentPlayerIds: number[];
 
   totalPlayed: number;
   totalWon: number;
@@ -70,6 +81,7 @@ export const useCareerGameStore = create<CareerGameStore>()(
       selectedTier: null,
       dailySeed: null,
       isPractice: false,
+      recentPlayerIds: [],
 
       totalPlayed: 0,
       totalWon: 0,
@@ -77,7 +89,7 @@ export const useCareerGameStore = create<CareerGameStore>()(
       bestStreak: 0,
 
       startGame: (tier?: DifficultyTier) => {
-        const player = getRandomCareerPlayer(tier);
+        const player = getRandomCareerPlayer(tier, get().recentPlayerIds);
         const scrambled = scrambleCareer(player.career);
 
         set({
@@ -92,6 +104,7 @@ export const useCareerGameStore = create<CareerGameStore>()(
           selectedTier: tier ?? null,
           dailySeed: null,
           isPractice: true,
+          recentPlayerIds: rememberDealt(get().recentPlayerIds, player.id),
         });
       },
 
@@ -195,8 +208,13 @@ export const useCareerGameStore = create<CareerGameStore>()(
         // dailySeed is cleared (and isPractice isn't persisted), so the next
         // mount's startDailyGame restores/deals the true daily instead of
         // mistaking this random practice board for it.
-        const { selectedTier } = get();
-        const player = getRandomCareerPlayer(selectedTier ?? undefined);
+        const { selectedTier, recentPlayerIds, currentPlayer } = get();
+        // The player on the finished board counts as "recent" even if the run
+        // ends here — include it in the exclusion before dealing.
+        const exclude = currentPlayer
+          ? rememberDealt(recentPlayerIds, currentPlayer.id)
+          : recentPlayerIds;
+        const player = getRandomCareerPlayer(selectedTier ?? undefined, exclude);
         const scrambled = scrambleCareer(player.career);
 
         set({
@@ -211,6 +229,7 @@ export const useCareerGameStore = create<CareerGameStore>()(
           selectedTier: selectedTier,
           dailySeed: null,
           isPractice: true,
+          recentPlayerIds: rememberDealt(exclude, player.id),
         });
       },
 
@@ -249,6 +268,8 @@ export const useCareerGameStore = create<CareerGameStore>()(
         attemptsLeft: state.attemptsLeft,
         gameStatus: state.gameStatus,
         dailySeed: state.dailySeed,
+        // Additive: no-repeat window for endless "Next" deals.
+        recentPlayerIds: state.recentPlayerIds,
       }),
     },
   ),
