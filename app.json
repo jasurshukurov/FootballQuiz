@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0b3d20"
+      "backgroundColor": "#0A0F0C"
     },
     "ios": {
       "bundleIdentifier": "com.footballtrivia.app",
@@ -27,7 +27,7 @@
       "package": "com.footballtrivia.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#0b3d20"
+        "backgroundColor": "#0A0F0C"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
