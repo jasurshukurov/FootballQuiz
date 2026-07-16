@@ -34,6 +34,7 @@ import RetroButton from '@/components/ui/RetroButton';
 import { useManagerStore } from '@/hooks/useManagerStore';
 import { playCheer, playCrossbar } from '@/lib/sounds';
 import GiveUpButton from '@/components/ui/GiveUpButton';
+import ShowResultsPill from '@/components/ui/ShowResultsPill';
 import { TierBadge } from '@/components/career/TierBadge';
 import { getPlayerDifficultyTier } from '@/lib/dailyPuzzle';
 
@@ -274,10 +275,24 @@ export default function WhoAreYaScreen() {
         </Animated.View>
       )}
 
+      {/* Game over: the answer lives on the SCREEN too, not only in the sheet —
+          dismissing the sheet to study the guess table must never hide who it
+          was, and the pill reopens the full result. */}
       {!isPlaying && resultRank && (
         <PopInView delay={150}>
-          <RankBadge rank={resultRank} />
-          {!isPractice && <SolveTimeResult mode="who-are-ya" />}
+          <View style={styles.resultInline}>
+            {targetPlayer && (
+              <View style={styles.answerRow}>
+                <PlayerPhoto playerId={targetPlayer.id} name={targetPlayer.name} size={44} />
+                <Text style={styles.answerText}>
+                  The answer was <Text style={styles.answerName}>{targetPlayer.name}</Text>
+                </Text>
+              </View>
+            )}
+            <RankBadge rank={resultRank} />
+            {!isPractice && <SolveTimeResult mode="who-are-ya" />}
+            {!showModal && <ShowResultsPill onPress={() => setShowModal(true)} />}
+          </View>
         </PopInView>
       )}
 
@@ -383,6 +398,26 @@ const createStyles = (c: ThemeColors) =>
     hintText: {
       ...type.bodyBold,
       color: c.streak,
+    },
+    resultInline: {
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginBottom: spacing.sm,
+    },
+    answerRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.md,
+    },
+    answerText: {
+      ...type.body,
+      color: c.textSecondary,
+      flexShrink: 1,
+    },
+    answerName: {
+      ...type.bodyBold,
+      color: c.accent,
     },
     columnHeaders: {
       marginBottom: spacing.sm,

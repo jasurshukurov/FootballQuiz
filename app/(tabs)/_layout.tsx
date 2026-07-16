@@ -3,7 +3,7 @@ import { StyleSheet, View, Platform } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { borderRadius, type, spacing } from '@/constants/theme';
-import { useTheme, useThemeColors } from '@/hooks/useTheme';
+import { useTheme } from '@/hooks/useTheme';
 import {
   TAB_BAR_HEIGHT,
   WEB_CONTENT_MAX_WIDTH,
@@ -19,20 +19,19 @@ import { triggerImpact } from '@/lib/haptics';
 // Matches the column width minus the pill's usual spacing.xl side insets.
 const WIDE_TAB_BAR_WIDTH = WEB_CONTENT_MAX_WIDTH - spacing.xl * 2;
 
+// No active-state dot: in the 56pt pill it collided with the label and read
+// as a stray artifact (user report 2026-07-16). The accent tint on the
+// focused icon + label is the active indicator.
 function TabBarIcon({
   name,
   color,
-  focused,
 }: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
-  focused: boolean;
 }) {
-  const colors = useThemeColors();
   return (
     <View style={styles.iconContainer}>
       <FontAwesome size={18} name={name} color={color} />
-      {focused && <View style={[styles.activeIndicator, { backgroundColor: colors.accent }]} />}
     </View>
   );
 }
@@ -110,27 +109,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Today',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="calendar-check-o" color={color} focused={focused} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="calendar-check-o" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Stats',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="bar-chart" color={color} focused={focused} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="bar-chart" color={color} />,
         }}
       />
       <Tabs.Screen
         name="support"
         options={{
           title: 'More',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="ellipsis-h" color={color} focused={focused} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="ellipsis-h" color={color} />,
         }}
       />
       {/* Hidden from the tab bar (href: null) but still reachable via router.navigate;
@@ -189,15 +182,5 @@ const styles = StyleSheet.create({
     height: 24,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  // Absolutely positioned inside the icon container so the dot never adds to the
-  // item's stacked height (which was clipping the label inside the 64pt pill).
-  // backgroundColor applied inline from the active theme's accent.
-  activeIndicator: {
-    position: 'absolute',
-    bottom: 1,
-    width: 4,
-    height: 4,
-    borderRadius: borderRadius.full,
   },
 });

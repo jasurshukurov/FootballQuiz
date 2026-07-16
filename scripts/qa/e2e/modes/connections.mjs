@@ -1,4 +1,4 @@
-// Connections — sort 16 players into 4 hidden groups. 4 mistakes = loss. We
+// Connections — sort 16 players into 4 hidden groups. 6 mistakes = loss. We
 // play mixed-row selections to lose deterministically. Mode invariant: if a
 // "one away" near-miss occurs, the one-away banner is shown (conditional).
 import { goto, dismissTutorial, tapXY, leafTexts, pressButton, hasText } from '../helpers.mjs';
@@ -26,7 +26,8 @@ export async function play(page, t) {
   t.check('board renders 16 tiles', (await readTiles(page)).length >= 12, `${(await readTiles(page)).length} tiles read`);
 
   let submissions = 0, over = false, sawOneAway = false;
-  for (let round = 0; round < 8 && !over; round++) {
+  // Cap must exceed the 6-mistake loss path plus a couple of accidental solves.
+  for (let round = 0; round < 11 && !over; round++) {
     const tiles = await readTiles(page);
     if (tiles.length < 4) break;
     // Mix categories: one tile from up to 4 different rows.
@@ -37,7 +38,7 @@ export async function play(page, t) {
     for (let c = 0; pick.length < 4 && c < 8; c++) for (const r of rows) { if (r[c]) pick.push(r[c]); if (pick.length >= 4) break; }
     if (pick.length < 4) pick = tiles.slice(round % 4, (round % 4) + 4);
     pick = pick.slice(0, 4);
-    await pressButton(page, 'Deselect All', true).catch(() => {});
+    await pressButton(page, 'Clear', true).catch(() => {});
     for (const p of pick) await tapXY(page, p.x + 20, p.y, 250);
     await page.waitForTimeout(300);
     await pressButton(page, 'Submit', true);

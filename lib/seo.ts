@@ -43,7 +43,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
   '/connections': {
     title: 'Football Connections · Group 16 Players into 4 | Football Trivia',
     description:
-      'Sixteen footballers hide four secret groups. Find what connects them, from shared clubs to careers, in four mistakes or fewer. New puzzle daily.',
+      'Sixteen footballers hide four secret groups. Find what connects them, from shared clubs to careers, in six mistakes or fewer. New puzzle daily.',
   },
   '/toplists': {
     title: 'Top Lists · Name Everyone on the Football Ranking | Football Trivia',

@@ -1152,18 +1152,20 @@ export function isOneAway(
   return bestGroupOverlap(selectedNames, categories, solvedCategoryNames) === 3;
 }
 
-const CONNECTIONS_MAX_MISTAKES = 4;
+// Keep in sync with MAX_MISTAKES in app/(tabs)/connections.tsx and the
+// howToPlay/seo copy. 6 (was 4) since 2026-07-16.
+const CONNECTIONS_MAX_MISTAKES = 6;
 
 /**
  * Result rank for Connections, on the universal ladder. Score combines groups
- * found (0..4) with mistakes avoided (0..4) out of 8, so a clean 4/4 sweep is a
- * perfect Ballon d'Or and each mistake costs a fraction of a tier:
- *   4 groups, 0 mistakes = 8/8 → Ballon d'Or
- *   4 groups, 4 mistakes = 4/8 → First Team
- *   2 groups, 4 mistakes = 2/8 → Squad Rotation
+ * found (0..4) with mistakes avoided (0..6) out of 10, so a clean 4/4 sweep is
+ * a perfect Ballon d'Or and each mistake costs a fraction of a tier:
+ *   4 groups, 0 mistakes = 10/10 → Ballon d'Or
+ *   4 groups, 6 mistakes = 4/10 → mid-ladder
+ *   2 groups, 6 mistakes = 2/10 → Squad Rotation
  */
 export function connectionsRank(groupsFound: number, mistakes: number) {
   const mistakesAvoided = Math.max(0, CONNECTIONS_MAX_MISTAKES - mistakes);
   const score = Math.max(0, Math.min(4, groupsFound)) + mistakesAvoided;
-  return getRank(score, 8);
+  return getRank(score, 10);
 }

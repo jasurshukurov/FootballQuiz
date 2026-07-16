@@ -67,7 +67,7 @@ export const HOW_TO_PLAY: Record<string, HowToPlayContent> = {
       'Select four you think belong together, then submit.',
       '“One away…” means exactly three of your four were right.',
       'Stuck? Hint names a group’s theme; press it again to pre-select two of its players. Two hints per game.',
-      'Four mistakes end the game.',
+      'Six mistakes end the game.',
     ],
     footer:
       'Groups run yellow (easy) to purple (devious). A flawless bonus needs no mistakes and no hints. Hold Give Up to reveal the groups.',

@@ -34,6 +34,7 @@ import ScreenHeader from '@/components/ui/ScreenHeader';
 import { todayBandDisplay } from '@/components/ui/DifficultyBanner';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
+import ShowResultsPill from '@/components/ui/ShowResultsPill';
 import { spacing, borderRadius, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
@@ -43,7 +44,10 @@ import PracticePill from '@/components/ui/PracticePill';
 import { buildShareText } from '@/lib/sharing';
 import { playCheer } from '@/lib/sounds';
 
-const MAX_MISTAKES = 4;
+// 6 (was 4, owner call 2026-07-16): 16 unfamiliar names + devious groups made
+// 4 too punishing on hard boards. Keep in sync with CONNECTIONS_MAX_MISTAKES
+// in lib/connectionsGenerator.ts (rank mapping) and the howToPlay/seo copy.
+const MAX_MISTAKES = 6;
 /** Hints per game. Hint 1 reveals a group's theme; hint 2 also seeds 2 members. */
 const MAX_HINTS = 2;
 
@@ -343,6 +347,23 @@ export default function ConnectionsScreen() {
     }));
   }, [tileNames, selected, solvedNames]);
 
+  // Once the game ends the board itself reveals every remaining group (NYT
+  // behavior): the earned solves keep their order, the missed ones append in
+  // difficulty order. Score/share/rank all read solvedCategories, never this.
+  const boardSolved: SolvedCategory[] = useMemo(() => {
+    if (!gameOver || !puzzle) return solvedCategories;
+    const earned = new Set(solvedCategories.map((s) => s.name));
+    const missed = puzzle.categories
+      .filter((c) => !earned.has(c.name))
+      .sort((a, b) => a.difficulty - b.difficulty)
+      .map((c) => ({ name: c.name, difficulty: c.difficulty, playerNames: c.playerNames }));
+    return [...solvedCategories, ...missed];
+  }, [gameOver, puzzle, solvedCategories]);
+  const boardTiles: TileData[] = useMemo(
+    () => (gameOver ? tiles.map((t) => ({ ...t, solved: true })) : tiles),
+    [gameOver, tiles],
+  );
+
   const won = solvedCategories.length >= 4;
 
   // Shortest mobile-web viewports (Safari's URL bar eats ~180pt): the fixed
@@ -406,8 +427,8 @@ export default function ConnectionsScreen() {
       {isPractice && <PracticePill date={practiceDate} />}
 
       <ConnectionsBoard
-        tiles={tiles}
-        solvedCategories={solvedCategories}
+        tiles={boardTiles}
+        solvedCategories={boardSolved}
         onTilePress={handleTilePress}
         shaking={shaking}
         disabled={gameOver}
@@ -485,6 +506,13 @@ export default function ConnectionsScreen() {
       {!gameOver && (
         <View style={styles.giveUpRow}>
           <GiveUpButton onGiveUp={handleGiveUp} />
+        </View>
+      )}
+
+      {/* Sheet dismissed to study the revealed board: the way back in. */}
+      {gameOver && !showModal && (
+        <View style={styles.showResultsRow}>
+          <ShowResultsPill onPress={() => setShowModal(true)} />
         </View>
       )}
 
@@ -625,6 +653,10 @@ const createStyles = (c: ThemeColors) =>
       flex: 1,
     },
     giveUpRow: {
+      alignItems: 'center',
+      marginTop: spacing.sm,
+    },
+    showResultsRow: {
       alignItems: 'center',
       marginTop: spacing.sm,
     },

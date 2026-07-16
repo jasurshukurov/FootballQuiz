@@ -6,7 +6,6 @@ import { NotificationFeedbackType } from 'expo-haptics';
 import { Player } from '@/types/player';
 import { triggerImpact, triggerNotification } from '@/lib/haptics';
 import { shortenClubName } from '@/lib/clubNames';
-import Tappable from '@/components/ui/Tappable';
 import SoccerPitch from '@/components/games/SoccerPitch';
 import PlayerSearchAutocomplete, {
   PlayerSearchAutocompleteHandle,
@@ -30,7 +29,7 @@ import {
   foldName,
 } from '@/lib/matchData';
 import { Match } from '@/types/match';
-import { spacing, borderRadius, type, motion, touch } from '@/constants/theme';
+import { spacing, borderRadius, type, motion } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
 import { getModeSeed, createSeededRandom } from '@/lib/dailySeed';
@@ -44,6 +43,7 @@ import ShareableMissing11Result from '@/components/ShareableMissing11Result';
 import GameOverSheet from '@/components/ui/GameOverSheet';
 import LivesIndicator from '@/components/ui/LivesIndicator';
 import GiveUpButton from '@/components/ui/GiveUpButton';
+import ShowResultsPill from '@/components/ui/ShowResultsPill';
 import { buildShareText } from '@/lib/sharing';
 import { playWhistle, playCheer, playCrossbar } from '@/lib/sounds';
 import { getPlayerPhoto } from '@/lib/playerPhotos';
@@ -454,18 +454,12 @@ export default function Missing11Screen() {
         <RankBadge rank={getRank(foundCount, 11)} unit="players" />
         <SolveTimeResult mode="missing11" />
       </GameOverSheet>
+      {/* In-flow below the pitch (NOT an absolute overlay: absoluteFill anchors
+          to the scroll CONTENT, which parked the pill under the floating tab
+          bar on phones). */}
       {gameState !== 'playing' && pitchView && (
-        <Animated.View
-          entering={FadeIn.duration(motion.base)}
-          pointerEvents="box-none"
-          style={styles.showResultsWrap}>
-          <Tappable
-            haptic="none"
-            onPress={() => setPitchView(false)}
-            accessibilityLabel="Show results"
-            style={styles.showResultsPill}>
-            <Text style={styles.showResultsText}>Show results</Text>
-          </Tappable>
+        <Animated.View entering={FadeIn.duration(motion.base)} style={styles.showResultsRow}>
+          <ShowResultsPill onPress={() => setPitchView(false)} />
         </Animated.View>
       )}
 
@@ -601,30 +595,9 @@ const createStyles = (c: ThemeColors) =>
       ...type.bodyBold,
       color: c.streak,
     },
-    showResultsWrap: {
-      ...StyleSheet.absoluteFillObject,
-      justifyContent: 'flex-end',
+    showResultsRow: {
       alignItems: 'center',
-      paddingBottom: spacing.xxl,
-      zIndex: 10,
-    },
-    showResultsPill: {
-      minHeight: touch.min,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: spacing.xl,
-      paddingVertical: spacing.sm,
-      borderRadius: borderRadius.full,
-      borderWidth: 1,
-      borderColor: c.accentBorder,
-      backgroundColor: c.bgElevated,
-    },
-    showResultsText: {
-      ...type.captionBold,
-      color: c.accent,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-      userSelect: 'none',
+      marginTop: spacing.md,
     },
     offscreen: {
       position: 'absolute',
