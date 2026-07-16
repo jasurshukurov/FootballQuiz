@@ -540,6 +540,7 @@ const layoutStyles = StyleSheet.create({
   sheetAvoider: {
     flex: 1,
     justifyContent: 'flex-start',
+    paddingHorizontal: spacing.lg,
   },
   sheetFooter: {
     flexDirection: 'row',
@@ -640,7 +641,11 @@ const createStyles = (c: ThemeColors) =>
     },
     sheetPanel: {
       marginTop: spacing.xxl * 2,
-      marginHorizontal: spacing.lg,
+      // A dialog, not a sheet: on wide (desktop web) viewports it stays a
+      // compact centered card instead of stretching across the window.
+      width: '100%',
+      maxWidth: 480,
+      alignSelf: 'center',
       padding: spacing.lg,
       borderRadius: borderRadius.lg,
       borderWidth: 1,
