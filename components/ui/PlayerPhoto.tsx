@@ -19,8 +19,16 @@ interface PlayerPhotoProps {
   blur?: number;
 }
 
-/** Extra blur stacked on the background fill layer, beyond any clue blur. */
-const FILL_BLUR = 18;
+/** Zoom on the blurred fill layer. CSS/native blurs feather the image's own
+ *  edges into transparency, which read as a dark vignette inside the frame
+ *  (the card background showed through); scaling the layer pushes that soft
+ *  fringe outside the visible circle so the fill reads as the photo simply
+ *  extending outward. */
+const FILL_SCALE = 1.7;
+
+/** Fill blur grows with the frame: a fixed 18 turned small (40pt) slot
+ *  portraits into a muddy smear; proportional keeps it an ambient glow. */
+const fillBlur = (size: number) => Math.max(6, Math.round(size * 0.14));
 
 /**
  * Circular player portrait with a same-footprint initials fallback, so
@@ -72,9 +80,9 @@ export default function PlayerPhoto({ playerId, url, name, size, blur = 0 }: Pla
           frame edge-to-edge and the fill layer is invisible behind them. */}
       <Image
         source={{ uri: photoUrl }}
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill, { transform: [{ scale: FILL_SCALE }] }]}
         resizeMode="cover"
-        blurRadius={blur + FILL_BLUR}
+        blurRadius={blur + fillBlur(size)}
       />
       <Image
         source={{ uri: photoUrl }}

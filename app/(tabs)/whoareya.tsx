@@ -218,15 +218,18 @@ export default function WhoAreYaScreen() {
 
       {isPlaying && targetPlayer && hasPhoto && (
         <View style={styles.photoClue}>
-          {/* The clue sharpens with every guess spent (25 → 8 across the 8
-              attempts) but NEVER renders fully sharp while playing. */}
+          {/* The clue sharpens with every guess spent. Multiplicative decay
+              (×0.7 per guess: 25, 18, 12, 9, 6, 4, 3, 2), not linear steps —
+              25px vs 22px both read as identical mush, while a ~30% cut is
+              visible every time. Floors at 2 so it NEVER renders fully sharp
+              while playing. */}
           {showPhoto && (
             <Animated.View entering={FadeIn.duration(motion.base)} style={styles.photoClueImage}>
               <PlayerPhoto
                 playerId={targetPlayer.id}
                 name={targetPlayer.name}
                 size={120}
-                blur={Math.max(8, 25 - guesses.length * 3)}
+                blur={Math.max(2, Math.round(25 * Math.pow(0.7, guesses.length)))}
               />
             </Animated.View>
           )}
