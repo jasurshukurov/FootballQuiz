@@ -23,6 +23,10 @@ interface GameOverExtrasProps {
   showStreak?: boolean;
   /** Hide the confetti when the host surface fires its own at overlay level. */
   showConfetti?: boolean;
+  /** Called right before "Next up" navigates — hosts that live inside a Modal
+   *  MUST close it here, or the sheet stays painted over the next screen
+   *  (RN Modals sit above the navigator). */
+  onNavigate?: () => void;
 }
 
 /** The shared game-over flourish: confetti on a win, the current streak badge,
@@ -34,6 +38,7 @@ export default function GameOverExtras({
   currentModeKey,
   showStreak = true,
   showConfetti = true,
+  onNavigate,
 }: GameOverExtrasProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -47,7 +52,10 @@ export default function GameOverExtras({
         {showStreak && <StreakBadge streak={streak} />}
         {nextMode ? (
           <Tappable
-            onPress={() => router.push(nextMode.route as Href)}
+            onPress={() => {
+              onNavigate?.();
+              router.push(nextMode.route as Href);
+            }}
             hitSlop={0}
             hoverStyle={{ backgroundColor: colors.bgCardPressed }}
             style={({ pressed }) => [styles.nextUp, pressed && styles.nextUpPressed]}>

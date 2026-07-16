@@ -155,6 +155,9 @@ export default function GameOverSheet({
               currentModeKey={currentModeKey}
               showStreak={false}
               showConfetti={false}
+              // The sheet is a Modal: it must close before "Next up" routes,
+              // or it stays painted over the next game's screen.
+              onNavigate={onDismiss}
             />
           </ScrollView>
         </Animated.View>
