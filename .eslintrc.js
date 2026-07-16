@@ -1,6 +1,8 @@
 module.exports = {
   root: true,
-  ignorePatterns: ['scripts/qa/**', 'scripts/etl/**'],
+  // dist/ is the web export — after scripts/deploy_web.sh its .js files are
+  // gzipped in place (binary), which the parser chokes on.
+  ignorePatterns: ['scripts/qa/**', 'scripts/etl/**', 'dist/**'],
   extends: ['expo', 'plugin:@typescript-eslint/recommended', 'prettier'],
   plugins: ['@typescript-eslint', 'prettier'],
   parser: '@typescript-eslint/parser',
