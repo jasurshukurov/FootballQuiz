@@ -89,7 +89,26 @@ html, body {
   overscroll-behavior-y: none;
 }
 
-/* Text selection in the app accent instead of the browser default blue. */
+/* Game chrome is tap targets, not copy: without this, long-pressing a button
+   (most visibly the 700ms Give Up hold) makes iOS Safari select the label and
+   pop the copy callout instead of pressing. Per-component userSelect flags
+   can't cover every label, so kill selection at the root and re-enable it
+   only where typing happens. touch-action: manipulation also drops Safari's
+   double-tap-zoom wait so presses fire immediately. */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Text selection (inputs only, see above) in the app accent instead of the
+   browser default blue. */
 ::selection {
   background-color: rgba(34, 197, 94, 0.35);
   color: #F4F8F5;
