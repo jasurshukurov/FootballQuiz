@@ -15,6 +15,7 @@ import { useProStore } from '@/hooks/useProStore';
 import { purchasePro, restorePurchases } from '@/lib/purchases';
 import { deleteUserAccount } from '@/lib/accountDeletion';
 import { isSoundEnabled, setSoundEnabled } from '@/lib/sounds';
+import { useNavBarStore } from '@/hooks/useNavBarStore';
 import { isHapticsEnabled, setHapticsEnabled } from '@/lib/haptics';
 import { isNotificationsEnabled, setNotificationsEnabled } from '@/lib/notifications';
 
@@ -101,6 +102,8 @@ export default function MoreScreen() {
   const [loading, setLoading] = useState(false);
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [hapticsOn, setHapticsOn] = useState(isHapticsEnabled());
+  const navBarStyle = useNavBarStore((s) => s.style);
+  const setNavBarStyle = useNavBarStore((s) => s.setStyle);
   const [notificationsOn, setNotificationsOn] = useState(true);
 
   useEffect(() => {
@@ -252,6 +255,14 @@ export default function MoreScreen() {
           label="Haptics"
           value={hapticsOn}
           onValueChange={handleToggleHaptics}
+        />
+        {/* Classic = standard flush bottom bar; off = the floating pill that
+            minimizes while you scroll (see FloatingTabBar). */}
+        <ToggleRow
+          icon="navicon"
+          label="Classic tab bar"
+          value={navBarStyle === 'classic'}
+          onValueChange={(v) => setNavBarStyle(v ? 'classic' : 'float')}
         />
       </View>
 

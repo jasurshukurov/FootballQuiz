@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,6 +12,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenBackground from '@/components/ui/ScreenBackground';
 import { spacing } from '@/constants/theme';
+import { reportNavBarScroll, useNavBarStore } from '@/hooks/useNavBarStore';
 
 // 56 (was 64): every point of chrome comes out of the play area on phones —
 // the pill still fits its icon + label rows comfortably (2026-07-15 density pass).
@@ -70,12 +73,22 @@ export default function Screen({
   contentStyle,
 }: ScreenProps) {
   const insets = useSafeAreaInsets();
-  // TAB_BAR_HEIGHT + spacing.lg clears the floating pill exactly (its bottom
-  // offset is spacing.lg on web/Android); the extra spacing.md is breathing
-  // room so the last row never kisses the pill at full scroll.
+  const navStyle = useNavBarStore((s) => s.style);
+  // Float: TAB_BAR_HEIGHT + spacing.lg clears the floating pill exactly (its
+  // bottom offset is spacing.lg on web/Android); the extra spacing.md is
+  // breathing room so the last row never kisses the pill at full scroll.
+  // Classic: the bar sits flush at the bottom, so only its height (+ safe
+  // area, + breathing room) needs clearing.
   const paddingBottom = withTabBar
-    ? TAB_BAR_HEIGHT + insets.bottom + spacing.lg + spacing.md
+    ? navStyle === 'classic'
+      ? TAB_BAR_HEIGHT + insets.bottom + spacing.md
+      : TAB_BAR_HEIGHT + insets.bottom + spacing.lg + spacing.md
     : insets.bottom;
+
+  // Scroll-linked tab bar minimize (float style only; see useNavBarStore).
+  const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    reportNavBarScroll(e.nativeEvent.contentOffset.y);
+  }, []);
   // Web has no notch inset, which left content glued to the browser edge —
   // give it a real top margin (md: mobile-web viewports are short, so the old
   // lg+sm=24pt band was play-area money). Native keeps the safe-area value.
@@ -99,6 +112,8 @@ export default function Screen({
             contentStyle,
           ]}
           showsVerticalScrollIndicator={false}
+          onScroll={withTabBar ? handleScroll : undefined}
+          scrollEventThrottle={32}
           keyboardShouldPersistTaps="handled">
           {children}
         </ScrollView>

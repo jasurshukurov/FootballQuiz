@@ -1,101 +1,14 @@
-import React, { useMemo } from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Tabs } from 'expo-router';
-import { borderRadius, type, spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/useTheme';
-import {
-  TAB_BAR_HEIGHT,
-  WEB_CONTENT_MAX_WIDTH,
-  useIsWideWeb,
-  useIsDesktopWeb,
-} from '@/components/ui/Screen';
+import FloatingTabBar from '@/components/ui/FloatingTabBar';
+import { useIsDesktopWeb } from '@/components/ui/Screen';
 import ScreenBackground from '@/components/ui/ScreenBackground';
 import Sidebar from '@/components/ui/Sidebar';
 import { triggerImpact } from '@/lib/haptics';
 
-// On wide desktop web the floating pill is capped to the same centered column
-// as screen content (Screen.tsx) instead of spanning the whole monitor.
-// Matches the column width minus the pill's usual spacing.xl side insets.
-const WIDE_TAB_BAR_WIDTH = WEB_CONTENT_MAX_WIDTH - spacing.xl * 2;
-
-// No active-state dot: in the 56pt pill it collided with the label and read
-// as a stray artifact (user report 2026-07-16). The accent tint on the
-// focused icon + label is the active indicator.
-function TabBarIcon({
-  name,
-  color,
-}: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return (
-    <View style={styles.iconContainer}>
-      <FontAwesome size={18} name={name} color={color} />
-    </View>
-  );
-}
-
 export default function TabLayout() {
-  const theme = useTheme();
-  const isWideWeb = useIsWideWeb();
   const isDesktopWeb = useIsDesktopWeb();
-
-  const screenOptions = useMemo(
-    () =>
-      ({
-        headerShown: false,
-        tabBarActiveTintColor: theme.colors.accent,
-        tabBarInactiveTintColor: theme.colors.textMuted,
-        tabBarShowLabel: true,
-        tabBarLabelStyle: {
-          ...type.micro,
-          includeFontPadding: false,
-          marginTop: 0,
-          // Web: tab labels shouldn't be text-selectable when clicking around.
-          // No-op on native (Text is non-selectable by default).
-          userSelect: 'none' as const,
-        },
-        // No extra item padding: the 56pt pill leaves exactly enough for the
-        // 24pt icon row + 14pt label after react-navigation's own 5pt paddings.
-        tabBarItemStyle: {
-          paddingTop: 0,
-        },
-        tabBarStyle: {
-          // Desktop web hides the floating pill entirely — the sidebar navigates.
-          ...(isDesktopWeb ? { display: 'none' as const } : {}),
-          position: 'absolute' as const,
-          bottom: Platform.OS === 'ios' ? spacing.xl : spacing.lg,
-          // Wide web: fixed-width pill centered under the content column.
-          // Native / narrow web: unchanged full-width-minus-insets pill.
-          ...(isWideWeb
-            ? {
-                width: WIDE_TAB_BAR_WIDTH,
-                left: '50%' as const,
-                marginLeft: -WIDE_TAB_BAR_WIDTH / 2,
-              }
-            : {
-                left: spacing.xl,
-                right: spacing.xl,
-              }),
-          height: TAB_BAR_HEIGHT,
-          borderRadius: borderRadius.xxl,
-          borderTopWidth: 0,
-          borderWidth: 1,
-          borderColor: theme.colors.border,
-          backgroundColor: theme.colors.bgElevated,
-          opacity: 0.94,
-          paddingTop: spacing.xs / 2,
-          paddingBottom: spacing.xs / 2,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 8 },
-          shadowOpacity: 0.4,
-          shadowRadius: 16,
-          elevation: 12,
-        },
-      }) as const,
-    [theme, isWideWeb, isDesktopWeb],
-  );
 
   const tabs = (
     <Tabs
@@ -104,28 +17,13 @@ export default function TabLayout() {
           triggerImpact();
         },
       }}
-      screenOptions={screenOptions}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Today',
-          tabBarIcon: ({ color }) => <TabBarIcon name="calendar-check-o" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Stats',
-          tabBarIcon: ({ color }) => <TabBarIcon name="bar-chart" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="support"
-        options={{
-          title: 'More',
-          tabBarIcon: ({ color }) => <TabBarIcon name="ellipsis-h" color={color} />,
-        }}
-      />
+      // All bar presentation (float pill with scroll-minimize, classic flush
+      // bar, wide-web width cap, desktop-web hidden) lives in FloatingTabBar.
+      tabBar={(props) => <FloatingTabBar {...props} />}
+      screenOptions={{ headerShown: false }}>
+      <Tabs.Screen name="index" options={{ title: 'Today' }} />
+      <Tabs.Screen name="profile" options={{ title: 'Stats' }} />
+      <Tabs.Screen name="support" options={{ title: 'More' }} />
       {/* Hidden from the tab bar (href: null) but still reachable via router.navigate;
           give each a proper header title so it doesn't show the raw route name. */}
       <Tabs.Screen name="careerpath" options={{ href: null, title: 'Career Path' }} />
@@ -176,11 +74,5 @@ const styles = StyleSheet.create({
   },
   desktopMain: {
     flex: 1,
-  },
-  iconContainer: {
-    width: 40,
-    height: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
