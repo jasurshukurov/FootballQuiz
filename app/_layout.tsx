@@ -19,7 +19,7 @@ import '../global.css';
 import { useDailyStateStore } from '@/hooks/useDailyStateStore';
 import { useNotificationSetup } from '@/hooks/useNotificationSetup';
 import { initPurchases } from '@/lib/purchases';
-import { fetchRemoteConfig, RemoteConfig } from '@/lib/remoteConfig';
+import { fetchRemoteConfig, onConfigRefresh, RemoteConfig } from '@/lib/remoteConfig';
 import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
 import StreakRepairPrompt from '@/components/ui/StreakRepairPrompt';
 import MaintenanceScreen from '@/components/ui/MaintenanceScreen';
@@ -112,6 +112,12 @@ function RootLayoutNav() {
     fetchRemoteConfig().then((config) => {
       setRemoteConfig(config);
       // Expose globally so screens can read disabled_modes etc.
+      useRemoteConfigStore.getState().setConfig(config);
+    });
+    // First load serves the cached config; when the background network
+    // refresh lands, apply it live so flag flips don't need a second visit.
+    onConfigRefresh((config) => {
+      setRemoteConfig(config);
       useRemoteConfigStore.getState().setConfig(config);
     });
   }, [checkAndUpdateStreak]);

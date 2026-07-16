@@ -86,6 +86,51 @@ export function clubLogosEnabled(): boolean {
   return Platform.OS === 'web' ? !!config.clubLogosWeb : !!config.clubLogosNative;
 }
 
+const norm = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+
+// Derived per-manifest: normalized exact index + memoized fuzzy lookups.
+// Game surfaces pass display labels the manifest can't fully enumerate
+// ("Tottenham" for "Tottenham Hotspur"), so on an exact miss we accept a
+// containment match ONLY when every candidate key agrees on one file —
+// ambiguity (e.g. "United") stays a generic shield rather than risk the
+// wrong crest.
+let indexedManifest: LogoManifest | null = null;
+let normIndex = new Map<string, string>();
+let fuzzyCache = new Map<string, string | null>();
+
+function lookupFile(manifest: LogoManifest, teamName: string): string | null {
+  const exact = manifest.clubs[teamName];
+  if (exact) return exact;
+
+  if (indexedManifest !== manifest) {
+    indexedManifest = manifest;
+    normIndex = new Map();
+    fuzzyCache = new Map();
+    for (const [k, f] of Object.entries(manifest.clubs)) normIndex.set(norm(k), f);
+  }
+  const q = norm(teamName);
+  const normHit = normIndex.get(q);
+  if (normHit) return normHit;
+
+  const cached = fuzzyCache.get(q);
+  if (cached !== undefined) return cached;
+  let result: string | null = null;
+  if (q.length >= 4) {
+    const files = new Set<string>();
+    for (const [k, f] of normIndex) {
+      if (k.includes(q) || q.includes(k)) files.add(f);
+      if (files.size > 1) break;
+    }
+    if (files.size === 1) result = files.values().next().value ?? null;
+  }
+  fuzzyCache.set(q, result);
+  return result;
+}
+
 /**
  * URL of the real crest for a club-name string, or null (switch off, manifest
  * not loaded yet, or club not mapped — caller falls back to the generic
@@ -103,7 +148,7 @@ export function useClubLogoUrl(teamName: string): string | null {
     void loadManifest();
     return null;
   }
-  const file = manifest.clubs[teamName];
+  const file = lookupFile(manifest, teamName);
   return file ? `${LOGO_ORIGIN}${manifest.base}${file}` : null;
 }
 
@@ -112,3 +157,6 @@ export function __setManifestForTests(manifest: LogoManifest | null): void {
   loadStarted = manifest !== null;
   useClubLogoStore.setState({ manifest });
 }
+
+/** Test seam: the resolution logic without the hook wrapper. */
+export const __lookupFileForTests = lookupFile;

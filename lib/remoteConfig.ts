@@ -33,6 +33,15 @@ const STORAGE_KEY = 'remote-config-cache';
 let cachedConfig: RemoteConfig | null = null;
 let cachedAt = 0;
 
+/** Fired whenever a NETWORK copy of the config lands (including the background
+ *  refresh behind a served cache) — lets the app apply flag flips live instead
+ *  of on the next launch. Kill switches must propagate in both directions
+ *  without waiting for a restart. */
+let refreshListener: ((config: RemoteConfig) => void) | null = null;
+export function onConfigRefresh(listener: (config: RemoteConfig) => void): void {
+  refreshListener = listener;
+}
+
 export async function fetchRemoteConfig(): Promise<RemoteConfig> {
   // Return in-memory cache if fresh
   const now = Date.now();
@@ -64,6 +73,7 @@ async function refreshInBackground(): Promise<void> {
       cachedConfig = data;
       cachedAt = Date.now();
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      refreshListener?.(data);
     }
   } catch {}
 }
