@@ -16,8 +16,18 @@ DIST_ID=E3G0E4EMV5MBQQ
 echo "== export"
 npx expo export --platform web
 
+echo "== pre-compress JS (entry bundle exceeds CloudFront's 10MB dynamic-compression limit)"
+# gzip in place, keeping filenames: served with Content-Encoding: gzip below.
+find dist/_expo -name "*.js" -print0 | xargs -0 gzip -9 -n
+find dist/_expo -name "*.js.gz" -print0 | while IFS= read -r -d '' f; do mv "$f" "${f%.gz}"; done
+
 echo "== sync immutable hashed assets"
 aws s3 sync dist/_expo "$BUCKET/_expo" --only-show-errors \
+  --exclude "*" --include "*.js" \
+  --content-encoding gzip --content-type application/javascript \
+  --cache-control "public,max-age=31536000,immutable"
+aws s3 sync dist/_expo "$BUCKET/_expo" --only-show-errors \
+  --exclude "*.js" \
   --cache-control "public,max-age=31536000,immutable"
 aws s3 sync dist/assets "$BUCKET/assets" --only-show-errors \
   --cache-control "public,max-age=31536000,immutable"
