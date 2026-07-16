@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import PopInView from '@/components/ui/PopInView';
 import { spacing, borderRadius, type } from '@/constants/theme';
 import { ThemeColors } from '@/constants/themes';
 import { useTheme } from '@/hooks/useTheme';
+import { useClubLogoUrl } from '@/lib/clubLogos';
 import { JerseyIcon } from '@/components/career/JerseyIcon';
 
 export interface ClubStyle {
@@ -25,18 +26,33 @@ function CareerClubCardInner({ club, from, to, showYears, index }: CareerClubCar
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const style = getClubStyle(club);
+  // Real crest when the remote kill switch is on and the club is mapped;
+  // the color jersey stays as the fallback (and the accent bar always uses
+  // the club color either way).
+  const logoUrl = useClubLogoUrl(club);
   return (
     <PopInView delay={index * 100}>
       <View style={styles.card}>
         <View style={[styles.accent, { backgroundColor: style.primary }]} />
         <View style={styles.jerseyWrapper}>
-          <JerseyIcon
-            primary={style.primary}
-            secondary={style.secondary}
-            pattern={style.pattern}
-            width={36}
-            height={36}
-          />
+          {logoUrl ? (
+            <View style={styles.crestChip}>
+              <Image
+                source={{ uri: logoUrl }}
+                resizeMode="contain"
+                style={styles.crest}
+                accessibilityLabel={`${club} crest`}
+              />
+            </View>
+          ) : (
+            <JerseyIcon
+              primary={style.primary}
+              secondary={style.secondary}
+              pattern={style.pattern}
+              width={36}
+              height={36}
+            />
+          )}
         </View>
         <Text
           style={styles.clubName}
@@ -290,6 +306,22 @@ const createStyles = (c: ThemeColors) =>
     jerseyWrapper: {
       marginLeft: spacing.lg,
       marginRight: spacing.md,
+    },
+    // Light chip behind the crest: dark badges (Spurs, Inter) blend into the
+    // dark theme without it. Fixed light ground — crest art isn't themed.
+    crestChip: {
+      width: 38,
+      height: 38,
+      borderRadius: borderRadius.sm,
+      backgroundColor: '#F4F8F5',
+      borderWidth: 1,
+      borderColor: c.borderStrong,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    crest: {
+      width: 30,
+      height: 30,
     },
     clubName: {
       flex: 1,

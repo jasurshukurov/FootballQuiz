@@ -36,12 +36,24 @@ export default function TeamCrest({ teamName, size = 24 }: TeamCrestProps) {
   }
 
   if (logoUrl) {
+    // Real crests sit on a light chip: many badges are dark-on-transparent
+    // and would blend into the dark theme background. Fixed light ground —
+    // crest colors are real-world data, not themed.
     return (
-      <View style={[styles.flagBox, { width: size, height: size * 1.15 }]}>
+      <View
+        style={[
+          styles.crestChip,
+          {
+            width: size,
+            height: size * 1.15,
+            borderRadius: size * 0.22,
+            borderColor: colors.borderStrong,
+          },
+        ]}>
         <Image
           source={{ uri: logoUrl }}
           resizeMode="contain"
-          style={{ width: size, height: size }}
+          style={{ width: size * 0.78, height: size * 0.92 }}
           accessibilityLabel={`${teamName} crest`}
         />
       </View>
@@ -122,6 +134,12 @@ const styles = StyleSheet.create({
   flagBox: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  crestChip: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F4F8F5',
+    borderWidth: 1,
   },
   shield: {
     overflow: 'hidden',
