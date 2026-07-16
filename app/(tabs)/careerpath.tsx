@@ -189,7 +189,10 @@ export default function CareerScreen() {
   );
 
   return (
-    <Screen scroll={false}>
+    // Playing: fixed layout (timeline scrolls internally, search dropup).
+    // Finished: the result stack (card + summary + actions + Next) is taller
+    // than a phone, so the page itself must scroll or Next is unreachable.
+    <Screen scroll={isWon || isLost}>
       <ScreenHeader
         eyebrow="Endless"
         title="Career Path"
@@ -212,7 +215,10 @@ export default function CareerScreen() {
         </View>
       )}
 
-      <View style={styles.timelineWrap}>
+      {/* Playing: the timeline takes all free height (flex). Finished: the
+          page scrolls, where flex:1 collapses — pin a compact recap height
+          instead (it scrolls internally if the career is long). */}
+      <View style={isPlaying ? styles.timelineWrap : styles.timelineWrapDone}>
         <TimelineView career={scrambledCareer} showYears={showYears} isSorted={isSorted} />
         {isWon && <FloodlightSweep />}
       </View>
@@ -328,6 +334,11 @@ const createStyles = (c: ThemeColors) =>
     timelineWrap: {
       flex: 1,
       position: 'relative',
+    },
+    timelineWrapDone: {
+      height: 172,
+      position: 'relative',
+      marginBottom: spacing.sm,
     },
     replayButton: {
       width: '100%',

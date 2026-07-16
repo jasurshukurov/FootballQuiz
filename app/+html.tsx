@@ -10,7 +10,13 @@ export default function Root({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        {/* maximum-scale=1 stops iOS Safari's automatic zoom-in when an input
+            gains focus (which wrecked game layouts). Since iOS 10 pinch-zoom
+            ignores this cap, so accessibility zooming still works. */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
+        />
 
         {/* Player photos are hotlinked from Wikimedia — warm the connection
             before the first portrait request. */}
@@ -119,5 +125,12 @@ html, body {
 img {
   -webkit-user-drag: none;
   user-drag: none;
+}
+
+/* iOS Safari auto-zooms any focused input whose font-size is below 16px.
+   The app's body type is 15px, so force inputs to 16 — belt and braces with
+   the viewport maximum-scale cap above. */
+input, textarea, select {
+  font-size: 16px !important;
 }
 `;

@@ -217,6 +217,8 @@ export default function WhoAreYaScreen() {
       {isLastChance && <LastChanceHint />}
 
       {isPlaying && targetPlayer && hasPhoto && (
+        // Row (photo beside its toggle), not a stack: on phones every point
+        // of chrome height here comes straight out of the guess list below.
         <View style={styles.photoClue}>
           {/* The clue sharpens with every guess spent. Multiplicative decay
               (×0.7 per guess: 25, 18, 12, 9, 6, 4, 3, 2), not linear steps —
@@ -228,7 +230,7 @@ export default function WhoAreYaScreen() {
               <PlayerPhoto
                 playerId={targetPlayer.id}
                 name={targetPlayer.name}
-                size={120}
+                size={96}
                 blur={Math.max(2, Math.round(25 * Math.pow(0.7, guesses.length)))}
               />
             </Animated.View>
@@ -253,9 +255,14 @@ export default function WhoAreYaScreen() {
         </View>
       )}
 
-      {isPlaying && !hintUsed && guesses.length >= 2 && (
-        <View style={styles.hintButton}>
-          <RetroButton title="Get a Hint" onPress={handleHint} variant="secondary" />
+      {/* Hint + Give Up share one row — stacked they cost the guess list
+          ~100pt of height on phones. */}
+      {isPlaying && guesses.length >= 1 && (
+        <View style={styles.actionsRow}>
+          {!hintUsed && guesses.length >= 2 && (
+            <RetroButton title="Get a Hint" onPress={handleHint} variant="secondary" />
+          )}
+          <GiveUpButton onGiveUp={giveUp} />
         </View>
       )}
 
@@ -263,12 +270,6 @@ export default function WhoAreYaScreen() {
         <Animated.View entering={FadeIn.duration(motion.base)} style={styles.hintBox}>
           <Text style={styles.hintText}>{hintText}</Text>
         </Animated.View>
-      )}
-
-      {isPlaying && guesses.length >= 1 && (
-        <View style={styles.giveUpWrapper}>
-          <GiveUpButton onGiveUp={giveUp} />
-        </View>
       )}
 
       {!isPlaying && resultRank && (
@@ -352,15 +353,20 @@ const createStyles = (c: ThemeColors) =>
     },
     photoClue: {
       marginBottom: spacing.md,
+      flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'center',
-      gap: spacing.sm,
+      gap: spacing.md,
     },
     photoClueImage: {
       alignItems: 'center',
     },
-    hintButton: {
+    actionsRow: {
       marginBottom: spacing.md,
+      flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'center',
+      gap: spacing.md,
     },
     hintBox: {
       marginBottom: spacing.md,
@@ -375,10 +381,6 @@ const createStyles = (c: ThemeColors) =>
     hintText: {
       ...type.bodyBold,
       color: c.streak,
-    },
-    giveUpWrapper: {
-      marginBottom: spacing.md,
-      alignItems: 'center',
     },
     columnHeaders: {
       marginBottom: spacing.sm,

@@ -314,7 +314,10 @@ export default function AgentScreen() {
       : null;
 
   return (
-    <Screen scroll={false}>
+    // Scrollable: with a fixed layout the bottom-anchored hint/give-up drew
+    // OVER the options whenever the fee card + 4 options overflowed a phone
+    // viewport (flex overflow paints, it doesn't push).
+    <Screen>
       <ScreenHeader
         eyebrow={`Daily #${getDailyNumber()}`}
         title="Transfer Agent"
@@ -443,15 +446,17 @@ const layoutStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  // No flex: in the scrollable layout the hint/give-up flow naturally after
+  // the options instead of being pinned (and overlapped) at the bottom.
   body: {
-    flex: 1,
+    marginBottom: spacing.md,
   },
   scorePill: {
     alignItems: 'center',
   },
   feeCard: {
-    marginBottom: spacing.xl,
-    paddingVertical: spacing.xl,
+    marginBottom: spacing.md,
+    paddingVertical: spacing.md,
     alignItems: 'center',
   },
   hintButtonDisabled: {

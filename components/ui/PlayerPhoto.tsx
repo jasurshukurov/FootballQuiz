@@ -21,9 +21,11 @@ interface PlayerPhotoProps {
 
 /** Zoom on the blurred fill layer. CSS/native blurs feather the image's own
  *  edges into transparency, which read as a dark vignette inside the frame
- *  (the card background showed through); scaling the layer pushes that soft
- *  fringe outside the visible circle so the fill reads as the photo simply
- *  extending outward. */
+ *  (the card background showed through); oversizing the layer pushes that
+ *  soft fringe outside the visible circle so the fill reads as the photo
+ *  simply extending outward. Implemented with negative insets, NOT a
+ *  transform: iOS Safari lets transformed children escape a border-radius +
+ *  overflow-hidden clip (the blurred square painted outside the circle). */
 const FILL_SCALE = 1.7;
 
 /** Fill blur grows with the frame: a fixed 18 turned small (40pt) slot
@@ -80,7 +82,13 @@ export default function PlayerPhoto({ playerId, url, name, size, blur = 0 }: Pla
           frame edge-to-edge and the fill layer is invisible behind them. */}
       <Image
         source={{ uri: photoUrl }}
-        style={[StyleSheet.absoluteFill, { transform: [{ scale: FILL_SCALE }] }]}
+        style={{
+          position: 'absolute',
+          top: (-size * (FILL_SCALE - 1)) / 2,
+          left: (-size * (FILL_SCALE - 1)) / 2,
+          width: size * FILL_SCALE,
+          height: size * FILL_SCALE,
+        }}
         resizeMode="cover"
         blurRadius={blur + fillBlur(size)}
       />

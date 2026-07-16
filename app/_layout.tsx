@@ -23,7 +23,7 @@ import { fetchRemoteConfig, RemoteConfig } from '@/lib/remoteConfig';
 import { useRemoteConfigStore } from '@/hooks/useRemoteConfigStore';
 import StreakRepairPrompt from '@/components/ui/StreakRepairPrompt';
 import MaintenanceScreen from '@/components/ui/MaintenanceScreen';
-import { useTheme } from '@/hooks/useTheme';
+import { markThemeHydrated, useTheme } from '@/hooks/useTheme';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -67,6 +67,13 @@ function RootLayoutNav() {
   const checkAndUpdateStreak = useDailyStateStore((s) => s.checkAndUpdateStreak);
   const [remoteConfig, setRemoteConfig] = useState<RemoteConfig | null>(null);
   const theme = useTheme();
+
+  // Web: first client render matched the SSG (light) markup; this flip swaps
+  // every useTheme subscriber to the real device/persisted theme post-
+  // hydration. Without it, dark-scheme phones hydrated into a mixed UI.
+  useEffect(() => {
+    markThemeHydrated();
+  }, []);
 
   useNotificationSetup();
 
