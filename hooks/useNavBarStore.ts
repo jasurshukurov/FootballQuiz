@@ -4,15 +4,16 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 /**
  * Tab bar presentation preference.
+ *  - 'classic' — a standard flush, full-width bottom bar. Never minimizes.
+ *                The DEFAULT (owner call 2026-07-16).
  *  - 'float'   — the floating pill; minimizes to an icons-only bar while the
  *                user scrolls content down and restores on scroll-up / top /
  *                any tab press (iOS 26 / Instagram-style behavior).
- *  - 'classic' — a standard flush, full-width bottom bar. Never minimizes.
  */
 export type NavBarStyle = 'float' | 'classic';
 
 interface NavBarState {
-  /** Persisted user preference (More → Preferences → Classic tab bar). */
+  /** Persisted user preference (More → Preferences → Floating tab bar). */
   style: NavBarStyle;
   /** Ephemeral: true while the float pill is minimized. Never persisted. */
   collapsed: boolean;
@@ -26,7 +27,9 @@ interface NavBarActions {
 export const useNavBarStore = create<NavBarState & NavBarActions>()(
   persist(
     (set) => ({
-      style: 'float',
+      // Only reached when nothing is persisted: an explicit toggle choice
+      // always wins over a default change.
+      style: 'classic',
       collapsed: false,
       setStyle: (style) => set({ style, collapsed: false }),
       setCollapsed: (collapsed) => set({ collapsed }),

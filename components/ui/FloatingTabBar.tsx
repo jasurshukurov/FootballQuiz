@@ -38,10 +38,10 @@ const WIDE_TAB_BAR_WIDTH = WEB_CONTENT_MAX_WIDTH - spacing.xl * 2;
 /**
  * The one tab bar, replacing react-navigation's default. Two presentations,
  * user-selectable in More → Preferences:
- *  - float (default): the floating pill. While content scrolls down it
- *    minimizes to an icons-only 40pt bar (iOS/Instagram convention) and
- *    restores on scroll-up, back-at-top, or any tab press.
- *  - classic: flush full-width bottom bar, no rounding, no minimize.
+ *  - classic (default): flush full-width bottom bar, no rounding, no minimize.
+ *  - float: the floating pill. While content scrolls down it minimizes to an
+ *    icons-only 40pt bar (iOS/Instagram convention) and restores on
+ *    scroll-up, back-at-top, or any tab press.
  * Desktop web (>= 920) renders nothing — the sidebar navigates.
  */
 export default function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarProps) {

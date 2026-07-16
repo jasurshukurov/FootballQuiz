@@ -256,13 +256,13 @@ export default function MoreScreen() {
           value={hapticsOn}
           onValueChange={handleToggleHaptics}
         />
-        {/* Classic = standard flush bottom bar; off = the floating pill that
-            minimizes while you scroll (see FloatingTabBar). */}
+        {/* Off (default) = the classic flush bottom bar; on = the modern
+            floating pill that minimizes while you scroll (see FloatingTabBar). */}
         <ToggleRow
           icon="navicon"
-          label="Classic tab bar"
-          value={navBarStyle === 'classic'}
-          onValueChange={(v) => setNavBarStyle(v ? 'classic' : 'float')}
+          label="Floating tab bar"
+          value={navBarStyle === 'float'}
+          onValueChange={(v) => setNavBarStyle(v ? 'float' : 'classic')}
         />
       </View>
 
