@@ -218,14 +218,15 @@ export default function WhoAreYaScreen() {
 
       {isPlaying && targetPlayer && hasPhoto && (
         <View style={styles.photoClue}>
-          {/* Blur is the whole point: never render this sharp while playing. */}
+          {/* The clue sharpens with every guess spent (25 → 8 across the 8
+              attempts) but NEVER renders fully sharp while playing. */}
           {showPhoto && (
             <Animated.View entering={FadeIn.duration(motion.base)} style={styles.photoClueImage}>
               <PlayerPhoto
                 playerId={targetPlayer.id}
                 name={targetPlayer.name}
                 size={120}
-                blur={25}
+                blur={Math.max(8, 25 - guesses.length * 3)}
               />
             </Animated.View>
           )}
