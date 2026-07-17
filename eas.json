@@ -31,6 +31,7 @@
     "production": {
       "ios": {
         "appleId": "jasur.shukurov29@gmail.com",
+        "ascAppId": "6791862941",
         "appleTeamId": "5646SL68J2"
       },
       "android": {
