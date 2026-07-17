@@ -40,7 +40,7 @@ THE DAILY LINEUP
 • Top Lists, Career Timeline, Guess the Match, Blind Ranking, Market Movers, and The Agent — twelve modes in all.
 
 CLIMB THE RANKS
-Every correct answer earns XP. Rise from Amateur through Semi-Pro to World Class, keep your daily streak alive, and compare scores on the leaderboard.
+Every correct answer earns XP. Rise from Amateur through Semi-Pro to World Class and keep your daily streak alive.
 
 FREE TO PLAY
 No paywall. Play every mode, every day.
@@ -71,7 +71,7 @@ Football Trivia is an unofficial, fan-made quiz game. It is not affiliated with,
 
 - Contains ads: **No**
 - In-app purchases: **No**
-- Account required: No (anonymous Cognito identity created automatically)
-- Data collected: gameplay stats + anonymous identifier (leaderboard); no personal info, no tracking, no third-party ads SDKs
+- Account required: No
+- Data collected: gameplay stats stay on-device (leaderboard feature is OFF); no personal info, no tracking, no third-party ad SDKs
 - Target audience: 13+ (no age-gated content; trivia only)
 - ATT (iOS): not required — no tracking across apps/websites
