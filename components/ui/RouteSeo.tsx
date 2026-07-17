@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import Head from 'expo-router/head';
 import { usePathname } from 'expo-router';
 
@@ -7,12 +8,19 @@ import { canonicalUrl, getRouteSeo, SITE_NAME, SITE_URL } from '@/lib/seo';
 /**
  * Pathname-keyed SEO tags, rendered once from the root layout so every
  * statically exported page gets a unique title, description, canonical and
- * social tags (see lib/seo.ts for why this is centralized). No-op on native.
+ * social tags (see lib/seo.ts for why this is centralized).
+ *
+ * Web only: on iOS, mounting expo-router/head activates the ExpoHead
+ * (Handoff) module, which throws a visible "add the handoff origin" alert
+ * in Release builds when no origin is configured — and Handoff is a
+ * feature we don't use.
  */
 export default function RouteSeo() {
   const pathname = usePathname() ?? '/';
   const { title, description } = getRouteSeo(pathname);
   const url = canonicalUrl(pathname);
+
+  if (Platform.OS !== 'web') return null;
 
   return (
     <Head>
