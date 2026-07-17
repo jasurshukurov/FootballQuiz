@@ -23,12 +23,12 @@ import {
 } from '@/hooks/useThemeStore';
 
 describe('theme selection default', () => {
-  it('new installs default to following the device scheme', () => {
-    expect(DEFAULT_SELECTION).toBe('system');
-    expect(useThemeStore.getState().themeKey).toBe('system');
+  it('new installs default to the dark theme regardless of device scheme', () => {
+    expect(DEFAULT_SELECTION).toBe('floodlit');
+    expect(useThemeStore.getState().themeKey).toBe('floodlit');
   });
 
-  it('setTheme records an explicit choice and can return to system', () => {
+  it('setTheme records an explicit choice and can opt into system', () => {
     useThemeStore.getState().setTheme('vintage');
     expect(useThemeStore.getState().themeKey).toBe('vintage');
     useThemeStore.getState().setTheme('system');
@@ -70,16 +70,20 @@ describe('resolveTheme — explicit selection ignores the OS scheme', () => {
   });
 });
 
-describe('migrateThemeStore — v0 -> v1 keeps the user choice', () => {
+describe('migrateThemeStore — v2 keeps explicit choices, retires system default', () => {
   it('carries an existing explicit theme forward unchanged (no reset)', () => {
     expect(migrateThemeStore({ themeKey: 'floodlit' })).toEqual({ themeKey: 'floodlit' });
     expect(migrateThemeStore({ themeKey: 'vintage' })).toEqual({ themeKey: 'vintage' });
     expect(migrateThemeStore({ themeKey: 'daybreak' })).toEqual({ themeKey: 'daybreak' });
   });
 
-  it('missing/corrupt persisted state falls back to the system default', () => {
-    expect(migrateThemeStore(null)).toEqual({ themeKey: 'system' });
-    expect(migrateThemeStore(undefined)).toEqual({ themeKey: 'system' });
-    expect(migrateThemeStore({})).toEqual({ themeKey: 'system' });
+  it("a persisted 'system' (the old install default) migrates to the dark default", () => {
+    expect(migrateThemeStore({ themeKey: 'system' })).toEqual({ themeKey: 'floodlit' });
+  });
+
+  it('missing/corrupt persisted state falls back to the dark default', () => {
+    expect(migrateThemeStore(null)).toEqual({ themeKey: 'floodlit' });
+    expect(migrateThemeStore(undefined)).toEqual({ themeKey: 'floodlit' });
+    expect(migrateThemeStore({})).toEqual({ themeKey: 'floodlit' });
   });
 });

@@ -11,8 +11,13 @@ import { DEFAULT_THEME, THEMES, Theme, ThemeKey } from '@/constants/themes';
  */
 export type ThemeSelection = ThemeKey | 'system';
 
-/** New installs follow the device scheme by default. */
-export const DEFAULT_SELECTION: ThemeSelection = 'system';
+/**
+ * New installs get the dark default theme regardless of the device scheme
+ * (owner decision 2026-07-17: OS-light rendering surfaced real visual bugs;
+ * dark is the designed-first experience). Following the device stays
+ * available as the explicit "Match device" choice in the theme picker.
+ */
+export const DEFAULT_SELECTION: ThemeSelection = DEFAULT_THEME;
 
 /** Concrete themes the OS scheme maps to when the selection is 'system'. */
 export const SYSTEM_DARK_THEME: ThemeKey = 'floodlit';
@@ -45,14 +50,15 @@ interface ThemeActions {
 type ThemeStore = ThemeState & ThemeActions;
 
 /**
- * v0 → v1 migration. v0 persisted an explicit theme key (one of the 4 real
- * themes) under `themeKey`. Carry it forward UNCHANGED so existing users keep
- * their choice — they are never reset to 'system'. Only fresh installs (no
- * persisted state, so migrate is never called) get the DEFAULT_SELECTION.
+ * v0/v1 → v2 migration. Explicit theme keys carry forward UNCHANGED — a user
+ * who picked a theme keeps it. A persisted 'system' is migrated to the dark
+ * default: it was the pre-v2 install default, not a deliberate choice for the
+ * overwhelming majority, and the owner treats OS-light-by-default as a bug.
+ * Anyone who wants OS-following back re-picks "Match device" in settings.
  */
 export function migrateThemeStore(persisted: unknown): ThemeState {
   const prev = persisted as Partial<ThemeState> | null | undefined;
-  if (prev && typeof prev.themeKey === 'string') {
+  if (prev && typeof prev.themeKey === 'string' && prev.themeKey !== 'system') {
     return { themeKey: prev.themeKey as ThemeSelection };
   }
   return { themeKey: DEFAULT_SELECTION };
@@ -68,7 +74,7 @@ export const useThemeStore = create<ThemeStore>()(
     {
       name: 'theme-storage',
       storage: createJSONStorage(() => AsyncStorage),
-      version: 1,
+      version: 2,
       migrate: (persistedState) => migrateThemeStore(persistedState),
       partialize: (state) => ({ themeKey: state.themeKey }),
     },
