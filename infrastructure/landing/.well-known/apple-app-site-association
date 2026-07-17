@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appIDs": ["TEAM_ID.com.footballtrivia.app"],
+        "appIDs": ["5646SL68J2.me.shukurov.footballtrivia"],
         "paths": ["/share/*"]
       }
     ]

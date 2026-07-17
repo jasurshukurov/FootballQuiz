@@ -14,7 +14,7 @@
       "backgroundColor": "#0A0F0C"
     },
     "ios": {
-      "bundleIdentifier": "com.footballtrivia.app",
+      "bundleIdentifier": "me.shukurov.footballtrivia",
       "supportsTablet": false,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -24,7 +24,7 @@
       ]
     },
     "android": {
-      "package": "com.footballtrivia.app",
+      "package": "me.shukurov.footballtrivia",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#0A0F0C"
