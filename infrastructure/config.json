@@ -2,5 +2,7 @@
   "maintenance_mode": false,
   "disabled_modes": [],
   "message": "",
-  "leaderboardEnabled": true
+  "leaderboardEnabled": true,
+  "clubLogosWeb": true,
+  "clubLogosNative": true
 }
